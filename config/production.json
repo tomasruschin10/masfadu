@@ -1,0 +1,13 @@
+{
+  "server": {
+    "port": 443
+  },
+  "enviroment": "production",
+  "database": {
+    "host": "",
+    "port": 3306,
+    "username": "",
+    "password": "",
+    "database": ""
+  }
+}

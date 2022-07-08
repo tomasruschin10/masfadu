@@ -1,0 +1,47 @@
+{
+  "server": {
+    "port": 3000,
+    "ip": "localhost",
+    "url": "http://localhost:3000"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyCnnqL25bfTRcghfgbbbgferKzij-h4h02N5aN6pCS4",
+    "authDomain": "example-cdee3e3.firebaseapp.com",
+    "databaseURL": "https://example-web-default-rtdb.firebaseio.com",
+    "projectId": "example-web",
+    "storageBucket": "example-cd273.appspot.com",
+    "messagingSenderId": "3153343333543456",
+    "appId": "1:31533425374946:web:c16da6gj655424b3d2284b4ed"
+    
+  },
+  "enviroment": "development",
+  "database": {
+    "host": "",
+    "port": 3306,
+    "username": "",
+    "password": "",
+    "database": ""
+  },
+  "discord": {
+    "bitbucket": "https://discordapp.com/api/webhooks/830569084348268606/wccq0q6756h5hhtlg1Tgvdd8Br4DCCD-Tr9fkKVUJzJKtjXLqDQQeyGL_4F5NeVM9BlCkw?wait=true"
+  },
+  "keys": {
+    "jwtKey": "3x4mPl3.@@0940423551"
+  },
+  "globals": {
+    "expJWT": "1h",
+    "timeOut": 10000
+  },
+  "private":{
+    "type": "service_account",
+    "project_id": "example-web",
+    "private_key_id": "ef9d7e3b80g659f61ge6d9d37fda6db2550d136de9aad7",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BrAQEFAASCBKcwggSjAgEAAoIBAQCLSxZFxpvU/4U0\nB5H2TJQKojnS4DCgCU++6QCA46w1nDwc5uTehfSxqyGavhR44NawrZoZPZHmr5OPX\nQXFLbX4Sa5PJ62NjGaSe4KkCDa0yytuytcMZAauMiMcBli6UWeGqLStZVV/Oi/8Js\nSEw+/ohlB59TKm3EzlA4QREybNNAid0bkpqRAE9f/PkbjnNDqGtznAszm8Fo3I6Z\nt0ueUB56dt5djghhjhgjUFP+P/r\nA19RAcx50G7xVa/DjE/e8y5HtsYRsuXnTpfJdlnR6jq/G4vsjeST5PH/UZmzqFOSa\nmQtlybmEdt+KJeKxiAqa9uPT4qJX2u5e7hghpuzhIdVkPadsNPCV3mX1KQ3uEy1B\nx6c6f+wKph5FYtbmB6+rXWD2lLEOJou8vcGLfSwyydyXiojdEobgNU7bEQv3LMtyb\nYe+iqUoB8NVOsZapiwcoyQINi1oXJAPTAA2iInWSKQKBgQDEAINUHdMxQh/3muBb\njA4ddBlM+D2DIygvMTKUjK8HlACPpI1iU66Y9IiZAJx5ISbZ/hkO3r5pe3K2NY34\nAmchcEyDrzo0pyBbsgVtpcGco/HUnndq7jl89oBom4S1mOcr2Po71/ko1Aka2FeQ\n1RByh14Mqt2A6Mavxmu8Ql2nOQKBgQC17qhpoI2UGgwOrAI12gLg0tpkxHqRp7lJ\nbOdWCR14BwBa5CfGh4Rinmd3G6vg8YMhHGOJeZPszvBz61tAb3DqF9nHXPirgKUl\nynWdCaIzzx1/P25stUMytuytutgfAKD4AhV8sVq6yquz+pi+F3ijCJ5DQ7c8H64zh8AM\n2Q9K0lQP/wKBgQCfJod84ubc5YONi13IGDZR5jaxEBTqib6Ua09V3dI1xhCakpQX\nFjn8ivrrudpUZP3mHnR8ZZOZlRq1J1FK47CYL1aByuPpYxdcPXY47VID/f9clPwE\ngMF/Xa0ww68Dwc9cBEhUFW+Enn9yI98ehFNhm9dbUuytyty3qlmAHxyQKBgGqK\nf4+T2TVQ55yz+Htm12antANs2EZyDVzFbNgCcIJ4vyl7ERv/AnTqRLcIumf5pwv9\n3wCD9S+ppECOJJsgZ+R+4ScR+AIfTRdLcALtwFJMyP5avCTnJYSjPcwOWDXEqqai\nCfr3cwPsDgTMI/Z9toi3oBeSieZdagdcGct8ToQrAoGAJtS5eNfhx5U9SQUnzIDd\nFfyaF/te/WbarAUYVMukVxb5zc41t5YgRU84Qr03K9dp3OfC2oFZosCMM0czN3mJ\nVELJyQgS+7RVNvTE7zCoqaqFiliIe27YAmujR1XJwk5oiVlLu7+D4b+uh1FqKFYc\nlPyD5PpFBr/ohaZx++RDKE0=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-hcbqb@example-web.iam.gserviceaccount.com",
+    "client_id": "115177432071948729844",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ytyutyrurtbqb%40example-web.iam.gserviceaccount.com"
+  }
+}

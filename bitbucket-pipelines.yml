@@ -1,0 +1,84 @@
+image: node:14
+clone:
+ depth: full
+pipelines:
+ default:
+   - step:
+      script: 
+         -  echo "This default script will run when something is pushed to this branch"
+ custom:
+    1-a-tag-release-candidate:  
+      - variables: 
+          - name: TagName           
+      - step: 
+          name: Tag last dev commmit as release candidate
+          script:
+            - git fetch -v
+            - git checkout dev
+            - echo "RC TAG = $TagName.$BITBUCKET_BUILD_NUMBER"
+            - git tag $TagName.$BITBUCKET_BUILD_NUMBER.rc
+            - git push --tags origin 
+    1-b-tag-hotfix:  
+      - variables: 
+          - name: TagName           
+      - step: 
+          name: Tag hotfix commmit
+          script:
+            - git fetch -v
+            - git checkout stage
+            - echo "RC TAG = $TagName.$BITBUCKET_BUILD_NUMBER"
+            - git tag $TagName.$BITBUCKET_BUILD_NUMBER.hotfix
+            - git push --tags origin 
+    2-promote-code-to-stage:  
+      - variables: 
+          - name: TagName
+      - step: 
+          name: Promote code to stage branch
+          script:
+            - git remote set-url origin https://${APP_USER}:${APP_SECRET}@bitbucket.org/${BITBUCKET_REPO_FULL_NAME}.git
+            - git fetch -v
+            - git checkout stage
+            - git merge $TagName
+            - git push origin stage
+    3-promote-code-to-prod:  
+      - variables: 
+          - name: TagName
+      - step: 
+          name: Create release branch from stage RC
+          script:
+            - git remote set-url origin https://${APP_USER}:${APP_SECRET}@bitbucket.org/${BITBUCKET_REPO_FULL_NAME}.git
+            - git fetch -v
+            - git checkout stage
+            - git checkout -b release/$TagName
+            - git merge stage
+            - git push origin release/$TagName
+            - echo $TagName > ./rcTag.txt
+          artifacts:
+            - rcTag.txt
+      - step:
+          name: Deploy to Production
+          trigger: manual
+          script:
+            - export RC_TAG=$(cat ./rcTag.txt)
+            - echo "Release Candidate TAG = $RC_TAG"
+            - git checkout release/$RC_TAG
+            - git push https://heroku:${APP_SECRET}@git.heroku.com/${BITBUCKET_REPO_FULL_NAME}.git HEAD:master
+      - step:
+          name: Integrate to master
+          trigger: manual
+          script:
+            - git remote set-url origin https://${APP_USER}:${APP_SECRET}@bitbucket.org/${BITBUCKET_REPO_FULL_NAME}.git
+            - export RC_TAG=$(cat ./rcTag.txt)
+            - echo "Release Candidate TAG = $RC_TAG"   
+            - git checkout master
+            - git merge $RC_TAG
+            - git push origin master
+ branches:
+    develop:
+    - step:
+        name: Heroku Testing Deployment
+        deployment: Staging
+        caches:
+          - node
+        script:
+         - git push https://heroku:$HEROKU_API_KEY_PROD@git.heroku.com/$HEROKU_APP_NAME_PROD.git HEAD:master
