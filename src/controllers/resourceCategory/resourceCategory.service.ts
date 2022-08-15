@@ -1,0 +1,44 @@
+import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { ResourceCategoryRepository } from '../../modules/database/repositories/resourceCategoryRepository.service';
+@Injectable()
+export class ResourceCategoryService {
+
+    constructor(
+        private readonly resourceCategoryRepository: ResourceCategoryRepository
+    ) {}
+
+    async create(request: any){
+
+      const resourceCategory = await this.resourceCategoryRepository.create(request)
+      if (!resourceCategory) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+
+      return resourceCategory;
+   }
+
+   async getAll(subject){
+      const resourceCategorys = await this.resourceCategoryRepository.getAll(subject)
+      return resourceCategorys;
+   }
+
+   async getById(id:number){
+      const resourceCategory = await this.resourceCategoryRepository.getById(id)
+      return resourceCategory;
+   }
+
+   async update(id:number, request: any){
+
+      const resourceCategory = await this.resourceCategoryRepository.update(id, request)
+
+      return resourceCategory;
+   }
+
+   async delete(id: number){
+      const resourceCategory = await this.resourceCategoryRepository.delete(id)
+
+
+      return {statusCode: 200, message: 'removed'}
+   }
+
+     
+
+}

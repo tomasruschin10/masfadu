@@ -14,9 +14,9 @@ export class Image {
   name: string;
 
   @CreateDateColumn({type: "timestamp"})
-    created_at: Moment
+  created_at: Moment
 
   @UpdateDateColumn({type: "timestamp", nullable: true})
-    updated_at: Moment
+  updated_at: Moment
 
 }

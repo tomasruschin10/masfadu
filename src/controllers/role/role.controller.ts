@@ -24,7 +24,7 @@ export class RoleController {
     }
 
     
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get('all')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: roleDto})
@@ -33,7 +33,7 @@ export class RoleController {
     }
 
     
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get(':id')
     @ApiParam({name: 'id', required: true, description: 'Record Identifier'})
     @ApiResponse ({status: 500, description: 'Server Error'})

@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, ParseIntPipe, Put, Param, Delete, UnauthorizedException} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, ParseIntPipe, Put, Param, Delete, UnauthorizedException, UploadedFile, UseInterceptors} from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as CryptoJS from 'crypto-js';
 import { WinstonLogger } from '@payk/nestjs-winston';
@@ -11,12 +11,14 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { IRegisterBody, IUpdateBody } from './interfaces/auth.interfaces';
 import { ExtractJwt } from 'passport-jwt';
 import { TokenDto, AuthUserDtoDto, authRegisterDto, authUserDto, authUpdateDto } from './dto/AuthUserDto.dto';
+import { FirestorageService } from '../firestorage/firestorage.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     private readonly logger = new WinstonLogger(AuthController.name);
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, private firestorageService: FirestorageService) {}
 
     @UseGuards(LocalAuthGuard)
     @Post('login')
@@ -43,14 +45,9 @@ export class AuthController {
           throw new UnauthorizedException();
       }
       
-      const newToken =  jwt.sign({
-        userData: response
-    }, config.get("keys.jwtKey"), {
-        expiresIn: config.get("globals.expJWT")
-    });
+      const newToken =  await this.generateToken(response);
       return res.status(HttpStatus.OK).json({token: newToken});
     }
-
 
     // @UseGuards(JwtAuthGuard)
     @Post('register')
@@ -58,9 +55,14 @@ export class AuthController {
     @ApiResponse ({status: 401, description: 'Not authenticated'})
     @ApiResponse({status: 400, description: 'Incorrect Data'})
     @ApiResponse({status: 200, description: 'Correct Registration', type: authUserDto})
-    async register(@Body() req : authRegisterDto) {
+    @UseInterceptors(FileInterceptor('image'))
+    async register(@Body() req : authRegisterDto, @UploadedFile() file: Express.Multer.File, @Response() res) {
       const registerBody: IRegisterBody = req;
-      return await this.authService.register(registerBody);
+      let fileUploaded = await this.uploadFile(file)
+      let user = await this.authService.register(registerBody, fileUploaded);
+
+      const token =  await this.generateToken(user);
+      return res.status(HttpStatus.OK).json({token: token});
     }
 
     @UseGuards(JwtAuthGuard)
@@ -71,9 +73,11 @@ export class AuthController {
     @ApiResponse({status: 400, description: 'Incorrect Data'})
     @ApiResponse({status: 404, description: 'Record not found'})
     @ApiResponse({status: 200, description: 'Updated Registration', type: authUserDto})
-    async update(@Param('id', ParseIntPipe) id: number, @Body() req : authUpdateDto) {
+    @UseInterceptors(FileInterceptor('image'))
+    async update(@Param('id') id: number | string, @Body() req : authUpdateDto, @UploadedFile() file: Express.Multer.File) {
       const updateBody: IUpdateBody = req;
-      return await this.authService.update(id, updateBody);
+      let fileUploaded = await this.uploadFile(file)
+      return await this.authService.update(id, updateBody, fileUploaded);
     }
 
     @UseGuards(JwtAuthGuard)
@@ -83,8 +87,24 @@ export class AuthController {
     @ApiResponse ({status: 401, description: 'Not authenticated'})
     @ApiResponse({status: 404, description: 'Record not found'})
     @ApiResponse({status: 200, description: 'Record Removed'})
-    async delete(@Param('id', ParseIntPipe) id: number) {
+    async delete(@Param('id') id: number | string) {
       return await this.authService.delete(id);
     }
 
+    async uploadFile(file) {
+      if(file){
+        let tm = Date.now();
+        return await this.firestorageService.uploadFile('users', file, tm);
+      }else{
+        return false
+      }
+    }
+
+    async generateToken(data) {
+      return jwt.sign({
+          userData: data
+      }, config.get("keys.jwtKey"), {
+          expiresIn: config.get("globals.expJWT")
+      });
+    }
 }

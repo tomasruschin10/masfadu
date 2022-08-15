@@ -1,5 +1,4 @@
 import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
-import { UserRepository } from 'src/modules/database/repositories/userRepository.service';
 import { RoleRepository } from '../../modules/database/repositories/roleRepository.service';
 @Injectable()
 export class RoleService {

@@ -10,6 +10,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
 import { ExpressAdapter } from '@nestjs/platform-express';
+import { ValidationPipe } from '@nestjs/common';
 
 const crPath = '/home/nodejs/public.crt';
 const pkPath = '/home/nodejs/private.key';
@@ -37,10 +38,10 @@ async function bootstrap() {
   };
   // Initialize the firebase admin app
   
-  // admin.initializeApp({
-  //   credential: admin.credential.cert(adminConfig),
-  //   databaseURL: config.get("firebase.databaseURL"),
-  // });
+  admin.initializeApp({
+    credential: admin.credential.cert(adminConfig),
+    databaseURL: config.get("firebase.databaseURL"),
+  });
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
@@ -48,7 +49,8 @@ async function bootstrap() {
   const port = parseInt(config.get("server.port"));
 
   app.enableCors();
-  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER))
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.init();
 

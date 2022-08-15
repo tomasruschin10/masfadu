@@ -9,7 +9,7 @@ import { userDto } from './dto/UserDto.dto';
 export class UserController {
     constructor(private userService: UserService) {}
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get('all/:id?')
     @ApiParam({name: 'id', required: true, description: 'Role identifier (optional)'})
     @ApiResponse({status: 500, description: 'Server Error'})
@@ -19,7 +19,7 @@ export class UserController {
     }
 
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get(':id')
     @ApiParam({name: 'id', required: true, description: 'Record Identifier'})
     @ApiResponse({status: 500, description: 'Server Error'})

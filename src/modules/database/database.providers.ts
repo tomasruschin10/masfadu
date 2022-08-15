@@ -4,6 +4,20 @@ import * as config from "config";
 import { Image } from 'src/models/image.entity';
 import { Role } from 'src/models/role.entity';
 import { UserRole } from 'src/models/userRole.entity';
+import { Activity } from 'src/models/activity.entity';
+import { Advertisement } from 'src/models/advertisement.entity';
+import { Career } from 'src/models/career.entity';
+import { Feedback } from 'src/models/feedback.entity';
+import { Notice } from 'src/models/notice.entity';
+import { Notification } from 'src/models/notification.entity';
+import { OfferCategory } from 'src/models/offerCategory.entity';
+import { Offer } from 'src/models/offer.entity';
+import { SubjectCategory } from 'src/models/subjectCategory.entity';
+import { Subject } from 'src/models/subject.entity';
+import { UserSubject } from 'src/models/userSubject.entity';
+import { ResourceCategory } from 'src/models/resourceCategory.entity';
+import { Resource } from 'src/models/resource.entity';
+import { Partner } from 'src/models/partner.entity';
 
 interface IEnvironmentConfig {
     db: IDBConfig;
@@ -39,7 +53,7 @@ interface IEnvironmentConfig {
 export function extendDatabaseConfig(source: IEnvironmentConfig){
   const DB_CONFIG: any = {};
   Object.assign(DB_CONFIG, source.db, {entities: [
-    User, Image, Role, UserRole]});
+    User, Image, Role, UserRole, Activity, Partner, Advertisement, Career, Feedback, Notice, Notification, OfferCategory, Offer, SubjectCategory, Subject, UserSubject, ResourceCategory, Resource]});
 
     return DB_CONFIG;
 }

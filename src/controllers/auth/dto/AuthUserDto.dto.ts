@@ -1,32 +1,92 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Image } from '../../../models/image.entity';
-import { Role } from '../../../models/role.entity';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class authRegisterDto {
     @ApiProperty()
-    username:string
+    @IsNotEmpty()
+    @IsString()
+    username: string;
 
     @ApiProperty()
-    password:string
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+    
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    password: string;
+    
+    @ApiProperty()
+    name: string;
+    
+    @ApiProperty()
+    lastname: string;
 
     @ApiProperty()
-    name: string
+    phone: string;
 
     @ApiProperty()
+    instagram: string;
+
+    @ApiProperty()
+    web: string;
+
+    @ApiProperty()
+    uid: string;
+
+    @ApiProperty()
+    career_id: number;
+
+    @ApiProperty()
+    image: Express.Multer.File;
+
+    @ApiProperty()
+    device_token: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
     role_id: number
 } 
 export class authUpdateDto {
     @ApiProperty()
-    username:string
+    username: string;
 
     @ApiProperty()
-    password:string
+    email: string;
+    
+    @ApiProperty()
+    password: string;
+    
+    @ApiProperty()
+    newpassword: string;
+    
+    @ApiProperty()
+    name: string;
+    
+    @ApiProperty()
+    lastname: string;
 
     @ApiProperty()
-    newpassword:string
+    phone: string;
 
     @ApiProperty()
-    name: string
+    instagram: string;
+
+    @ApiProperty()
+    web: string;
+
+    @ApiProperty()
+    uid: string;
+
+    @ApiProperty()
+    career_id: number;
+
+    @ApiProperty()
+    image: Express.Multer.File;
+
+    @ApiProperty()
+    device_token: string;
 } 
 
 export class authUserDto {
@@ -35,12 +95,45 @@ export class authUserDto {
   
     @ApiProperty()
     username: string;
-  
+
+    @ApiProperty()
+    email: string;
+    
     @ApiProperty()
     password: string;
-  
+    
     @ApiProperty()
-    name: string;   
+    name: string;
+    
+    @ApiProperty()
+    lastname: string;
+
+    @ApiProperty()
+    phone: string;
+
+    @ApiProperty()
+    instagram: string;
+
+    @ApiProperty()
+    web: string;
+
+    @ApiProperty()
+    uid: string;
+
+    @ApiProperty()
+    active: number;
+
+    @ApiProperty()
+    career_id: number;
+
+    @ApiProperty()
+    image_id: number;
+
+    @ApiProperty()
+    remember_token: string;
+
+    @ApiProperty()
+    device_token: string;  
   
     @ApiProperty()
     created_at: Date

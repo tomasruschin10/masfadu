@@ -16,7 +16,7 @@ export class FirestorageService {
   async uploadFile(bucket, file, tm?) {
     let time = ''
     tm? time = tm:null
-    var storageRef = await admin.storage().bucket(`gs://example.appspot.com`).file(`${bucket}/${time+file.originalname}`)
+    var storageRef = await admin.storage().bucket(`gs://fadu-1c40d.appspot.com`).file(`${bucket}/${time+file.originalname}`)
     const blobWriter = storageRef.createWriteStream({
       metadata: {
           contentType: file.mimetype
@@ -41,7 +41,7 @@ export class FirestorageService {
 
   async remove(bucket) {
     
-    await admin.storage().bucket(`gs://example.appspot.com`).file(bucket).delete();
+    await admin.storage().bucket(`gs://fadu-1c40d.appspot.com`).file(bucket).delete();
 
     return `removed`;
   }

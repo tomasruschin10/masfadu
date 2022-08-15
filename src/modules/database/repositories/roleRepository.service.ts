@@ -1,13 +1,13 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import {InjectRepository} from "@nestjs/typeorm";
-import {InsertResult, UpdateResult, Repository, Connection} from "typeorm";
-import * as moment from "moment";
+import { Repository } from "typeorm";
 import { Role } from '../../../models/role.entity';
+import { SharedService } from 'src/modules/shared/shared.service';
 @Injectable()
 export class RoleRepository {
     constructor(
         @Inject('ROLE_REPOSITORY')
-        private rolesRepository: Repository<Role>
+        private rolesRepository: Repository<Role>,
+        private sharedService: SharedService
     ) {}
 
 
@@ -21,9 +21,7 @@ export class RoleRepository {
     }
 
     async getAll(): Promise<Role[] | string> {
-        const roles = await this.rolesRepository.find()
-        
-        return roles
+        return await this.rolesRepository.find();
     }
 
 
@@ -37,11 +35,11 @@ export class RoleRepository {
 
 
     async update(id: number, request): Promise<any> {
-        const role = await this.rolesRepository.findOne(id);
+        let role = await this.rolesRepository.findOne(id);
         if (!role)
             throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
         
-        request.name ? role.name = request.name : role.name = role.name;
+        role = await this.sharedService.updateObject(role, request)
 
         await this.rolesRepository.save(role);
 
