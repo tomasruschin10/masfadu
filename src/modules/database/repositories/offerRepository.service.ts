@@ -20,12 +20,18 @@ export class OfferRepository {
         return offer
     }
 
-    async getAll(career): Promise<Offer[] | string> {
+    async getAll(career, data): Promise<Offer[] | string> {
+        let query='o.offer_category_id != 1 AND o.offer_category_id != 2'
+        console.log(data.userData.userRole[0].role_id)
+        if(data.userData.userRole[0].role_id!=2)
+            query=''
+        
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career}`:'')
+            .where(career ? `oo.career_id = ${career} `:'')
+            .where(query)
             .getMany()
     }
 
