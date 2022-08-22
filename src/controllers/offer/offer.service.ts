@@ -20,8 +20,8 @@ export class OfferService {
       return offer;
    }
 
-   async getAll(career){
-      const offers = await this.offerRepository.getAll(career)
+   async getAll(career, data){
+      const offers = await this.offerRepository.getAll(career, data)
       return offers;
    }
 
