@@ -18,7 +18,6 @@ import { ResourceRepository } from 'src/modules/database/repositories/resourceRe
 import { PartnerRepository } from 'src/modules/database/repositories/partnerRepository.service';
 import { OpinionRepository } from 'src/modules/database/repositories/opinionRepository.service';
 import { OpinionTagRepository } from 'src/modules/database/repositories/opinionTagRepository.service';
-import { BalancePartnerRepository } from 'src/modules/database/repositories/balancePartnerRepository.service';
 import { TagRepository } from 'src/modules/database/repositories/tagRepository.service';
 import { BalanceRepository } from 'src/modules/database/repositories/balanceRepository.service';
 export const repositories = [
@@ -41,7 +40,6 @@ export const repositories = [
     ResourceRepository,
     PartnerRepository,
     BalanceRepository,
-    BalancePartnerRepository,
     OpinionRepository,
     TagRepository,
     OpinionTagRepository,

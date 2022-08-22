@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Moment } from 'moment';
 import { Offer } from './offer.entity';
 import { Advertisement } from './advertisement.entity';
-import { BalancePartner } from './balancePartner.entity';
+import { Partner } from './partner.entity';
 
 @Entity({ name: 'balances' })
 export class Balance {
@@ -16,6 +16,9 @@ export class Balance {
 
     @Column()
     amount: number
+
+    @Column()
+    partner_id: number
 
     @Column({ nullable: true })
     offer_id: number
@@ -46,10 +49,10 @@ export class Balance {
     })
     advertisement: Advertisement;
 
-    @OneToMany(() => BalancePartner, balancePartner => balancePartner.id, { cascade: true })
+    @OneToMany(() => Partner, partner => partner.id, { cascade: true })
     @JoinColumn({
-        name: 'id',
-        referencedColumnName: 'balance_id'
+        name: 'partner_id',
+        referencedColumnName: 'id'
     })
-    balancePartner: BalancePartner[];
+    partner: Partner[];
 }

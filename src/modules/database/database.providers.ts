@@ -20,7 +20,6 @@ import { Resource } from 'src/models/resource.entity';
 import { Partner } from 'src/models/partner.entity';
 import { Balance } from 'src/models/balance.entity';
 import { Tag } from 'src/models/tag.entity';
-import { BalancePartner } from 'src/models/balancePartner.entity';
 import { OpinionTag } from 'src/models/opinionTag.entity';
 import { Opinion } from 'src/models/opinion.entity';
 
@@ -50,7 +49,7 @@ export const SERVER_CONFIG = {
     database: config.get("database.database"),
     logging: true,
     synchronize: env === 'development' ? false : true,
-    // synchronize:  true, 
+    //synchronize:  true, 
     autoLoadEntities: true
 
   }
@@ -62,7 +61,7 @@ export function extendDatabaseConfig(source: IEnvironmentConfig) {
       User, Image, Role, UserRole, Activity, Partner, Advertisement, Career,
       Feedback, Notice, Notification, OfferCategory, Offer, SubjectCategory,
       Subject, UserSubject, ResourceCategory, Resource,
-      Balance, Opinion, Tag, BalancePartner, OpinionTag]
+      Balance, Opinion, Tag, OpinionTag]
   });
 
   return DB_CONFIG;
