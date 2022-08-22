@@ -16,6 +16,11 @@ import { UserSubjectRepository } from 'src/modules/database/repositories/userSub
 import { ResourceCategoryRepository } from 'src/modules/database/repositories/resourceCategoryRepository.service';
 import { ResourceRepository } from 'src/modules/database/repositories/resourceRepository.service';
 import { PartnerRepository } from 'src/modules/database/repositories/partnerRepository.service';
+import { OpinionRepository } from 'src/modules/database/repositories/opinionRepository.service';
+import { OpinionTagRepository } from 'src/modules/database/repositories/opinionTagRepository.service';
+import { BalancePartnerRepository } from 'src/modules/database/repositories/balancePartnerRepository.service';
+import { TagRepository } from 'src/modules/database/repositories/tagRepository.service';
+import { BalanceRepository } from 'src/modules/database/repositories/balanceRepository.service';
 export const repositories = [
     UserRepository,
     UserRoleRepository,
@@ -34,5 +39,11 @@ export const repositories = [
     UserSubjectRepository,
     ResourceCategoryRepository,
     ResourceRepository,
-    PartnerRepository
+    PartnerRepository,
+    BalanceRepository,
+    BalancePartnerRepository,
+    OpinionRepository,
+    TagRepository,
+    OpinionTagRepository,
+
 ]
