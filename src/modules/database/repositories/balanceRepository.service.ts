@@ -22,14 +22,12 @@ export class BalanceRepository {
 
     async getAll(): Promise<Balance[] | string> {
         return await this.balancesRepository.createQueryBuilder('c')
-            .innerJoinAndSelect('c.image', 'ci')
             .getMany()
     }
 
 
     async getById(id): Promise<Balance | string> {
         const balance = await this.balancesRepository.createQueryBuilder('c')
-            .innerJoinAndSelect('c.image', 'ci')
             .where(`c.id = ${id}`)
             .getOne()
         if (!balance) {

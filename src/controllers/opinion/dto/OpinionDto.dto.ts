@@ -15,9 +15,16 @@ export class opinionCreateDto {
 
     @ApiProperty()
     @IsNotEmpty()
+    student_id: number;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    subject_id: number;
+
+    @ApiProperty()
+    @IsNotEmpty()
     @IsArray()
-    @IsObject()
-    opinionTag: [];
+    tags: [];
 
     @ApiProperty()
     @IsNotEmpty()
@@ -33,6 +40,12 @@ export class opinionUpdateDto {
     description: string;
 
     @ApiProperty()
+    student_id: number;
+
+    @ApiProperty()
+    subject_id: number;
+
+    @ApiProperty()
     professor: string;
 } 
 
@@ -45,6 +58,12 @@ export class opinionDto {
 
     @ApiProperty()
     description: string;
+
+    @ApiProperty()
+    student_id: number;
+
+    @ApiProperty()
+    subject_id: number;
 
     @ApiProperty()
     professor: string;

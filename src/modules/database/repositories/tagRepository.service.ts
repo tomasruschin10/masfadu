@@ -22,14 +22,12 @@ export class TagRepository {
 
     async getAll(): Promise<Tag[] | string> {
         return await this.tagsRepository.createQueryBuilder('c')
-            .innerJoinAndSelect('c.image', 'ci')
             .getMany()
     }
 
 
     async getById(id): Promise<Tag | string> {
         const tag = await this.tagsRepository.createQueryBuilder('c')
-            .innerJoinAndSelect('c.image', 'ci')
             .where(`c.id = ${id}`)
             .getOne()
         if (!tag) {

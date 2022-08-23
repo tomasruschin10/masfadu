@@ -3,6 +3,8 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Moment } from 'moment';
 import { OpinionTag } from './opinionTag.entity';
 import { Tag } from './tag.entity';
+import { User } from './user.entity';
+import { Subject } from './subject.entity';
 
 @Entity({ name: 'opinions' })
 export class Opinion {
@@ -11,10 +13,16 @@ export class Opinion {
     id: number
 
     @Column()
-    tittle: string
+    title: string
 
     @Column()
     description: string
+
+    @Column()
+    student_id: number
+
+    @Column()
+    subject_id: number
 
     @Column({ nullable: true })
     professor: string
@@ -34,5 +42,19 @@ export class Opinion {
         referencedColumnName: 'opinion_id'
     })
     opinionTag: OpinionTag[];
+
+    @ManyToOne(() => User, student => student.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'student_id',
+        referencedColumnName: 'id'
+    })
+    student: User;
+
+    @ManyToOne(() => Subject, subject => subject.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'subject_id',
+        referencedColumnName: 'id'
+    })
+    subject: Subject;
 
 }

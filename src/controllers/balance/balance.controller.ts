@@ -5,15 +5,13 @@ import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { balanceBody } from './interfaces/balance.interfaces';
 import { balanceDto, balanceCreateDto, balanceUpdateDto } from './dto/BalanceDto.dto';
-import { FirestorageService } from '../firestorage/firestorage.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import * as jwt from 'jsonwebtoken';
 
 @ApiTags('Balance')
 @Controller('balance')
 export class BalanceController {
   
-    constructor(private balanceService: BalanceService, private firestorageService: FirestorageService) {}
+    constructor(private balanceService: BalanceService) {}
 
     
     @UseGuards(JwtAuthGuard)
@@ -31,8 +29,7 @@ export class BalanceController {
     @Get('all')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: balanceDto})
-    async getAll(@Headers() header) {
-      const data : any = jwt.decode(header.authorization.replace('Bearer ', ''));
+    async getAll() {
       return await this.balanceService.getAll();
     }
 
@@ -56,10 +53,9 @@ export class BalanceController {
     @ApiResponse({status: 404, description: 'Record not found'})
     @ApiResponse({status: 200, description: 'Updated Registration', type: balanceDto})
     @UseInterceptors(FileInterceptor('image'))
-    async update(@Param('id', ParseIntPipe) id: number, @Body() req : balanceUpdateDto, @UploadedFile() file: Express.Multer.File) {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() req : balanceUpdateDto) {
       const updateBody: balanceBody = req;
-      let fileUploaded = file ? await this.uploadFile(file) : null
-      return await this.balanceService.update(id, updateBody, fileUploaded);
+      return await this.balanceService.update(id, updateBody);
     }
 
     
@@ -71,15 +67,6 @@ export class BalanceController {
     @ApiResponse({status: 200, description: 'Record Removed', type: balanceDto})
     async delete(@Param('id', ParseIntPipe) id: number) {
       return await this.balanceService.delete(id);
-    }
-    
-    async uploadFile(file) {
-      if(file){
-        let tm = Date.now();
-        return await this.firestorageService.uploadFile('balances', file, tm);
-      }else{
-        throw new BadRequestException(['Image file is required'])
-      }
     }
 
 }

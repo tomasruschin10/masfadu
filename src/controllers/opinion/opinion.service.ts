@@ -1,60 +1,70 @@
 import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
-import { ImageRepository } from 'src/modules/database/repositories/imageRepository.service';
+import { OpinionTagRepository } from 'src/modules/database/repositories/opinionTagRepository.service';
+import { TagRepository } from 'src/modules/database/repositories/tagRepository.service';
 import { OpinionRepository } from '../../modules/database/repositories/opinionRepository.service';
-import { FirestorageService } from '../firestorage/firestorage.service';
 @Injectable()
 export class OpinionService {
 
-    constructor(
-        private readonly opinionRepository: OpinionRepository,
-        private readonly imageRepository: ImageRepository,
-        private firestorageService: FirestorageService
-    ) {}
+   constructor(
+      private readonly opinionRepository: OpinionRepository,
+      private readonly tagRepository: TagRepository,
+      private readonly opinionTagRepository: OpinionTagRepository,
 
-    async create(request: any, file){
-      request.image_id = (await this.imageRepository.create(file)).id
+   ) { }
+
+   async create(request: any) {
+      const tags = request.tags
+      delete request.tags
 
       const opinion = await this.opinionRepository.create(request)
-      if (!opinion) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!opinion) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
 
-      return opinion;
-   }
-
-   async getAll(){
-      const opinions = await this.opinionRepository.getAll()
-      return opinions;
-   }
-
-   async getById(id:number){
-      const opinion = await this.opinionRepository.getById(id)
-      return opinion;
-   }
-
-   async update(id:number, request: any, file){
-
-      const opinion = await this.opinionRepository.update(id, request)
-
-      if (file) {
-         await this.deleteFirebase(opinion.image_id)
-         await this.imageRepository.update(opinion.image_id, file)
+      for (let index = 0; index < tags.length; index++) {
+         const tag = tags[index];
+         this.addTags(tag, opinion.id)         
       }
 
       return opinion;
    }
 
-   async delete(id: number){
-      const opinion = await this.opinionRepository.delete(id)
-      await this.deleteFirebase(opinion.image_id)
-      await this.imageRepository.delete(opinion.image_id)
+   async addTags(tag, opinion_id) {
+      //Si viene con id, existe. Si no, es nuevo.
 
-      return {statusCode: 200, message: 'removed'}
+      if (!tag.id) {
+         const newTag = await this.tagRepository.create(tag)
+         if (!newTag) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
+         else this.opinionTagRepository.saveOpinionTag(opinion_id, newTag.id)
+      } 
+
+      else this.opinionTagRepository.saveOpinionTag(opinion_id, tag.id)
    }
 
-   async deleteFirebase(image_id) {
-      let image = await this.imageRepository.getById(image_id)
+   async getAll() {
+      const opinions = await this.opinionRepository.getAll()
+      return opinions;
+   }
 
-      image? await this.firestorageService.remove(image.name): null
-      return true
-   }     
+   async getById(id: number) {
+      const opinion = await this.opinionRepository.getById(id)
+      return opinion;
+   }
+
+   async update(id: number, request: any) {
+      let tags = request.tag
+      delete request.tag
+
+      const opinion = await this.opinionRepository.update(id, request)
+      if (!opinion) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
+
+      tags.forEach(tag => { this.addTags(tag, opinion.id) })
+
+      return opinion;
+   }
+
+   async delete(id: number) {
+      const opinion = await this.opinionRepository.delete(id)
+
+      return { statusCode: 200, message: 'removed' }
+   }
 
 }
