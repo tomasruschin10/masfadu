@@ -27,6 +27,9 @@ export class Opinion {
     @Column({ nullable: true })
     professor: string
 
+    @Column({ nullable: true })
+    answer_to_id: number
+
     @CreateDateColumn({ type: "timestamp" })
     created_at: Moment
 
@@ -56,5 +59,12 @@ export class Opinion {
         referencedColumnName: 'id'
     })
     subject: Subject;
+
+    @ManyToOne(() => Opinion, answerTo => answerTo.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'answer_to_id',
+        referencedColumnName: 'id'
+    })
+    answerTo: Opinion;
 
 }

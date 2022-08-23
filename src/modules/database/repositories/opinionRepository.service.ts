@@ -6,22 +6,22 @@ import { SharedService } from 'src/modules/shared/shared.service';
 export class OpinionRepository {
     constructor(
         @Inject('OPINION_REPOSITORY')
-        private opinionsRepository: Repository<Opinion>,
+        private opinionRepository: Repository<Opinion>,
         private sharedService: SharedService
     ) { }
 
 
     async create(request): Promise<any> {
         //save opinion
-        const opinion = await this.opinionsRepository.create(request)
-        await this.opinionsRepository.save(opinion)
+        const opinion = await this.opinionRepository.create(request)
+        await this.opinionRepository.save(opinion)
 
         //return
         return opinion
     }
 
     async getAll(id): Promise<Opinion[] | string> {
-        return await this.opinionsRepository.createQueryBuilder('o')
+        return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
             .where(id ? `ot.tag_id = ${id}` : '')
@@ -30,7 +30,7 @@ export class OpinionRepository {
 
 
     async getById(id): Promise<Opinion | string> {
-        const opinion = await this.opinionsRepository.createQueryBuilder('o')
+        const opinion = await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
             .where(`o.id = ${id}`)
@@ -41,10 +41,13 @@ export class OpinionRepository {
         return opinion;
     }
 
+    async findOpinion(id): Promise<Opinion | string> {
+        return await this.opinionRepository.findOne(id)
+    }
 
 
     async update(id: number, request): Promise<any> {
-        let opinion = await this.opinionsRepository.createQueryBuilder('o')
+        let opinion = await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
             .where(`o.id = ${id}`)
@@ -55,16 +58,16 @@ export class OpinionRepository {
 
         opinion = await this.sharedService.updateObject(opinion, request)
 
-        await this.opinionsRepository.save(opinion);
+        await this.opinionRepository.save(opinion);
 
         return opinion;
     }
 
     async delete(id): Promise<any> {
-        const opinion = await this.opinionsRepository.findOne(id);
+        const opinion = await this.opinionRepository.findOne(id);
         if (!opinion)
             throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
-        await this.opinionsRepository.delete(opinion.id);
+        await this.opinionRepository.delete(opinion.id);
 
         return opinion;
 
