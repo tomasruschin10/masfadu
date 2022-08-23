@@ -15,14 +15,9 @@ export class opinionCreateDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    student_id: number;
-
-    @ApiProperty()
-    @IsNotEmpty()
     subject_id: number;
 
     @ApiProperty()
-    @IsNotEmpty()
     @IsArray()
     tags: [];
 
@@ -38,9 +33,6 @@ export class opinionUpdateDto {
 
     @ApiProperty()
     description: string;
-
-    @ApiProperty()
-    student_id: number;
 
     @ApiProperty()
     subject_id: number;

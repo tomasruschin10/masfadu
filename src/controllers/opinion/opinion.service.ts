@@ -12,31 +12,34 @@ export class OpinionService {
 
    ) { }
 
-   async create(request: any) {
+   async create(request: any, user_id: any) {
       const tags = request.tags
       delete request.tags
+
+      request.student_id = user_id
 
       const opinion = await this.opinionRepository.create(request)
       if (!opinion) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
 
-      for (let index = 0; index < tags.length; index++) {
-         const tag = tags[index];
-         this.addTags(tag, opinion.id)         
+      for (let i = 0; i < tags.length; i++) {
+         const tag = tags[i];
+         await this.addTags(tag, opinion.id)
       }
 
       return opinion;
    }
 
-   async addTags(tag, opinion_id) {
-      //Si viene con id, existe. Si no, es nuevo.
+   async addTags(tag: any, opinion_id: any) {
+      try {
+         await this.tagRepository.getById(tag.id)
+         await this.opinionTagRepository.saveOpinionTag(opinion_id, tag.id)
 
-      if (!tag.id) {
+      } catch (error) {
          const newTag = await this.tagRepository.create(tag)
          if (!newTag) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
-         else this.opinionTagRepository.saveOpinionTag(opinion_id, newTag.id)
-      } 
+         else await this.opinionTagRepository.saveOpinionTag(opinion_id, newTag.id)
+      }
 
-      else this.opinionTagRepository.saveOpinionTag(opinion_id, tag.id)
    }
 
    async getAll() {

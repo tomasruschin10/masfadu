@@ -5,13 +5,13 @@ import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { opinionBody } from './interfaces/opinion.interfaces';
 import { opinionDto, opinionCreateDto, opinionUpdateDto } from './dto/OpinionDto.dto';
-import { FirestorageService } from '../firestorage/firestorage.service';
+import * as jwt from 'jsonwebtoken';
 
 @ApiTags('Opinion')
 @Controller('opinion')
 export class OpinionController {
   
-    constructor(private opinionService: OpinionService, private firestorageService: FirestorageService) {}
+    constructor(private opinionService: OpinionService) {}
 
     
     @UseGuards(JwtAuthGuard)
@@ -19,9 +19,10 @@ export class OpinionController {
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 400, description: 'Incorrect Data'})
     @ApiResponse({status: 200, description: 'Correct Registration', type: opinionDto})
-    async create(@Body() req : opinionCreateDto) {
+    async create(@Body() req : opinionCreateDto, @Headers() header) {
+      const data : any = jwt.decode(header.authorization.replace('Bearer ', ''));
       const createBody: opinionBody = req;
-      return await this.opinionService.create(createBody);
+      return await this.opinionService.create(createBody, data.userData.id);
     }
 
     
