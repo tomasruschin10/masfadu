@@ -26,7 +26,7 @@ export class TagController {
 
     
     @UseGuards(JwtAuthGuard)
-    @Get('all')
+    @Get('all/:id?')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: tagDto})
     async getAll() {

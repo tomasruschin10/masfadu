@@ -17,8 +17,8 @@ export class BalanceService {
       return balance;
    }
 
-   async getAll(){
-      const balances = await this.balanceRepository.getAll()
+   async getAll(id){
+      const balances = await this.balanceRepository.getAll(id)
       return balances;
    }
 

@@ -27,11 +27,11 @@ export class OpinionController {
 
     
     @UseGuards(JwtAuthGuard)
-    @Get('all')
+    @Get('all/:id?')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: opinionDto})
-    async getAll() {
-      return await this.opinionService.getAll();
+    async getAll(@Param('id') id: number) {
+      return await this.opinionService.getAll(id);
     }
 
     

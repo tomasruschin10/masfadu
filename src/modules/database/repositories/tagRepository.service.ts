@@ -36,6 +36,10 @@ export class TagRepository {
         return tag;
     }
 
+    async findTag(id): Promise<Tag | string> {
+        return await this.tagsRepository.findOne(id)
+    }
+
 
     async update(id: number, request): Promise<any> {
         let tag = await this.tagsRepository.findOne(id);

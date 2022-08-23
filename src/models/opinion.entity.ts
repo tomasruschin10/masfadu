@@ -36,12 +36,12 @@ export class Opinion {
     
     // Relations
 
-    @OneToMany(() => OpinionTag, opinionTag => opinionTag.id, { cascade: true })
+    @OneToMany(() => OpinionTag, opinionTags => opinionTags.opinion, { cascade: true })
     @JoinColumn({
         name: 'id',
         referencedColumnName: 'opinion_id'
     })
-    opinionTag: OpinionTag[];
+    opinionTags: OpinionTag[];
 
     @ManyToOne(() => User, student => student.id, { onDelete: 'CASCADE' })
     @JoinColumn({

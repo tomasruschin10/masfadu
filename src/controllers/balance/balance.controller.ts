@@ -26,11 +26,11 @@ export class BalanceController {
 
     
     @UseGuards(JwtAuthGuard)
-    @Get('all')
+    @Get('all/:id?')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: balanceDto})
-    async getAll() {
-      return await this.balanceService.getAll();
+    async getAll(@Param('id') id: number) {
+      return await this.balanceService.getAll(id);
     }
 
     

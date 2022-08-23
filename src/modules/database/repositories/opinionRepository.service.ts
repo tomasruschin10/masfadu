@@ -20,17 +20,20 @@ export class OpinionRepository {
         return opinion
     }
 
-    async getAll(): Promise<Opinion[] | string> {
-        return await this.opinionsRepository.createQueryBuilder('c')
-            .innerJoinAndSelect('c.image', 'ci')
+    async getAll(id): Promise<Opinion[] | string> {
+        return await this.opinionsRepository.createQueryBuilder('o')
+            .leftJoinAndSelect('o.opinionTags', 'ot')
+            .leftJoinAndSelect('ot.tag', 't')
+            .where(id ? `ot.tag_id = ${id}` : '')
             .getMany()
     }
 
 
     async getById(id): Promise<Opinion | string> {
-        const opinion = await this.opinionsRepository.createQueryBuilder('c')
-            .innerJoinAndSelect('c.image', 'ci')
-            .where(`c.id = ${id}`)
+        const opinion = await this.opinionsRepository.createQueryBuilder('o')
+            .leftJoinAndSelect('o.opinionTags', 'ot')
+            .leftJoinAndSelect('ot.tag', 't')
+            .where(`o.id = ${id}`)
             .getOne()
         if (!opinion) {
             throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
@@ -39,8 +42,14 @@ export class OpinionRepository {
     }
 
 
+
     async update(id: number, request): Promise<any> {
-        let opinion = await this.opinionsRepository.findOne(id);
+        let opinion = await this.opinionsRepository.createQueryBuilder('o')
+            .leftJoinAndSelect('o.opinionTags', 'ot')
+            .leftJoinAndSelect('ot.tag', 't')
+            .where(`o.id = ${id}`)
+            .getOne()
+
         if (!opinion)
             throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
 

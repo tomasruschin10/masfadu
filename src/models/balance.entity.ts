@@ -49,7 +49,7 @@ export class Balance {
     })
     advertisement: Advertisement;
 
-    @OneToMany(() => Partner, partner => partner.id, { cascade: true })
+    @ManyToOne(() => Partner, partner => partner.id, { cascade: true })
     @JoinColumn({
         name: 'partner_id',
         referencedColumnName: 'id'

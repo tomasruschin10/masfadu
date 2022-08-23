@@ -38,6 +38,9 @@ export class opinionUpdateDto {
     subject_id: number;
 
     @ApiProperty()
+    tags: [];
+
+    @ApiProperty()
     professor: string;
 } 
 
