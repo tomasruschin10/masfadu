@@ -22,11 +22,19 @@ export class OpinionRepository {
 
     // proximamente mas de un tag
     //
-    async getAll(id): Promise<Opinion[] | string> {
+    async getAll(data): Promise<Opinion[] | string> {
+        console.log(data)
+        let query = `ot.tag_id = ${data.tag_id} && o.student_id = ${data.student_id}`
+
+        if (!data.student_id || !data.tag_id) {
+            if (!data.tag_id) query = query.replace(`ot.tag_id = ${data.tag_id}`, "")
+            if (!data.student_id) query = query.replace(`o.student_id = ${data.student_id}`, "")
+            query = query.replace('&&', "")
+        }
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
-            .where(id ? `ot.tag_id = ${id}` : '')
+            .where(query)
             .getMany()
     }
 

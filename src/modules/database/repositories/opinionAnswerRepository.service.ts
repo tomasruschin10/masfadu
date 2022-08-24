@@ -21,11 +21,11 @@ export class OpinionAnswerRepository {
     }
 
     async getAll(data): Promise<OpinionAnswer[] | string> {
-        let query = `a.student_id = ${data.student_id} && a.opinion_id = ${data.opinion_id}`
+        let query = `a.opinion_id = ${data.opinion_id} && a.student_id = ${data.student_id}`
 
         if (!data.student_id || !data.opinion_id) {
-            if (!data.student_id) query = query.replace(`a.student_id = ${data.student_id}`, "")
             if (!data.opinion_id) query = query.replace(`a.opinion_id = ${data.opinion_id}`, "")
+            if (!data.student_id) query = query.replace(`a.student_id = ${data.student_id}`, "")
             query = query.replace('&&', "")
         }
 

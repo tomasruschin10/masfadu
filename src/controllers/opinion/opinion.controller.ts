@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, UseInterceptors, UploadedFile, BadRequestException, Headers} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, UseInterceptors, UploadedFile, BadRequestException, Headers, Query} from '@nestjs/common';
 
 import { OpinionService } from './opinion.service';
 import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
@@ -27,11 +27,12 @@ export class OpinionController {
 
     
     @UseGuards(JwtAuthGuard)
-    @Get('all/:id?')
+    @Get('all/')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: opinionDto})
-    async getAll(@Param('id') id: number) {
-      return await this.opinionService.getAll(id);
+    async getAll(@Query('tag_id') tag_id: number, @Query('student_id') student_id: number) {
+      let data = { tag_id: tag_id, student_id: student_id }
+      return await this.opinionService.getAll(data);
     }
 
     

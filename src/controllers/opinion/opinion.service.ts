@@ -37,8 +37,8 @@ export class OpinionService {
       return tag;
    }
 
-   async getAll(id) {
-      const opinions = await this.opinionRepository.getAll(id)
+   async getAll(data) {
+      const opinions = await this.opinionRepository.getAll(data)
       return opinions;
    }
 
