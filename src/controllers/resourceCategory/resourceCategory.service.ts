@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { ResourceCategoryRepository } from '../../modules/database/repositories/resourceCategoryRepository.service';
 @Injectable()
 export class ResourceCategoryService {
@@ -10,7 +10,7 @@ export class ResourceCategoryService {
     async create(request: any){
 
       const resourceCategory = await this.resourceCategoryRepository.create(request)
-      if (!resourceCategory) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!resourceCategory) throw new BadRequestException(['incorrect data'])     
 
       return resourceCategory;
    }

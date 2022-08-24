@@ -2,7 +2,8 @@
   "server": {
     "port": 3000,
     "ip": "localhost",
-    "url": "http://localhost:3000"
+    "url": "http://localhost:3000",
+    "url-web": "https://fadu-1c40d.web.app"
   },
   "firebase": {
     "apiKey": "AIzaSyCnnqL25bfTRcghfgbbbgferKzij-h4h02N5aN6pCS4",
@@ -16,10 +17,10 @@
   },
   "enviroment": "development",
   "database": {
-    "host": "",
+    "host": "142.93.52.40",
     "port": 3306,
-    "username": "",
-    "password": "",
+    "username": "poscloud_user",
+    "password": "JfcxynNaxy$@",
     "database": "fadu_db"
   },
   "discord": {

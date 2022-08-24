@@ -24,8 +24,8 @@ import { FirestorageModule } from './controllers/firestorage/firestorage.module'
         pool: true,
         tls: { secureProtocol: "TLSv1_method" },
         auth: {
-          user: "hello@millionsolutions.dev",
-          pass: "crisa141214",
+          user: "ruizgarcesariel@gmail.com",
+          pass: "cwzxatrmeqinoigc",
         },
       },
       defaults: {

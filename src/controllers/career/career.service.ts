@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { ImageRepository } from 'src/modules/database/repositories/imageRepository.service';
 import { CareerRepository } from '../../modules/database/repositories/careerRepository.service';
 import { FirestorageService } from '../firestorage/firestorage.service';
@@ -15,7 +15,7 @@ export class CareerService {
       request.image_id = (await this.imageRepository.create(file)).id
 
       const career = await this.careerRepository.create(request)
-      if (!career) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!career) throw new BadRequestException(['incorrect data'])     
 
       return career;
    }

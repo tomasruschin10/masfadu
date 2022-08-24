@@ -2,10 +2,13 @@ import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nes
 import {WinstonLogger} from "@payk/nestjs-winston";
 import { UserRepository } from 'src/modules/database/repositories/userRepository.service';
 import * as bcrytp from 'bcrypt'
+import * as config from "config";
 import { IRegisterBody, IUpdateBody } from './interfaces/auth.interfaces';
 import { UserRoleRepository } from 'src/modules/database/repositories/userRoleRepository.service';
 import { ImageRepository } from 'src/modules/database/repositories/imageRepository.service';
 import { FirestorageService } from '../firestorage/firestorage.service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { MailPasswordHtml } from 'src/utils/html/mail_password';
 @Injectable()
 export class AuthService {
    private readonly logger = new WinstonLogger(AuthService.name);
@@ -14,6 +17,8 @@ export class AuthService {
       private readonly userRepository: UserRepository,
       private readonly userRoleRepository: UserRoleRepository,
       private readonly imageRepository: ImageRepository,
+      private mailerService : MailerService,
+      private mailPasswordHtml: MailPasswordHtml,
       private firestorageService: FirestorageService
    ) {}
 
@@ -79,5 +84,42 @@ export class AuthService {
 
       image? await this.firestorageService.remove(image.name): null
       return true
+   }
+
+   async rememberPass(email){
+      let user = await this.userRepository.findUsername(email)
+      if(!user) throw new HttpException('No existe usuario', HttpStatus.NOT_FOUND)
+      let date = (new Date()).toLocaleString('es', {day: 'numeric', month: 'long', year: 'numeric'})
+
+      let token = await bcrytp.hash(`remember${email}${Date.now()}`, 12);
+
+      let url = config.get("server.url-web")
+      let html = this.mailPasswordHtml.html
+
+      html = html.replace(/{{name}}/gi, user.name)
+      html = html.replace(/{{token}}/gi, token)
+      html = html.replace(/{{date}}/gi, date)
+      html = html.replace(/{{url}}/gi, url)
+
+
+      await this.userRepository.update(user.id, {remember_token: token});
+      await this.mailerService.sendMail({
+         to:user.email,
+         subject:'Olvidaste tu contraseña?',
+         from:'Fadu',
+         html: html
+      })
+      return token
+   }
+
+   async deleteToken(token){
+      return await this.userRepository.deleteToken(token)
+   }
+
+   async updatePassToken(id, request){
+      if(request.password != request.repeat_password) throw new BadRequestException(['Contraseñas no coinciden'])
+
+      return await this.userRepository.updatePassToken(id, request.password)
+      
    }
 }
