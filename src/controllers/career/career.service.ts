@@ -12,10 +12,12 @@ export class CareerService {
     ) {}
 
     async create(request: any, file){
-      request.image_id = (await this.imageRepository.create(file)).id
+      let image =(await this.imageRepository.create(file))
+      request.image_id = image.id
 
       const career = await this.careerRepository.create(request)
-      if (!career) throw new BadRequestException(['incorrect data'])     
+      if (!career) throw new BadRequestException(['incorrect data'])
+      career.image_url=image.url
 
       return career;
    }
@@ -34,10 +36,12 @@ export class CareerService {
 
       const career = await this.careerRepository.update(id, request)
 
+      
       if (file) {
          await this.deleteFirebase(career.image_id)
          await this.imageRepository.update(career.image_id, file)
       }
+      career.image_url=(await this.imageRepository.getById(career.image_id)).url
 
       return career;
    }
