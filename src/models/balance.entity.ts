@@ -11,7 +11,7 @@ export class Balance {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type:'text' })
     description: string
 
     @Column()
