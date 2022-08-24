@@ -22,9 +22,7 @@ export class BalanceRepository {
 
     async getAll(id): Promise<Balance[] | string> {
         return await this.balancesRepository.createQueryBuilder('c')
-            .leftJoinAndSelect('c.partner', 'cp')
             .leftJoinAndSelect('c.offer', 'co')
-            .leftJoinAndSelect('c.advertisement', 'ca')
             .where(id ? `cp.id = ${id}` : '')
             .getMany()
     }

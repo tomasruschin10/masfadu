@@ -14,11 +14,8 @@ export class Balance {
     @Column({ nullable: true, type:'text' })
     description: string
 
-    @Column()
+    @Column({default: 0})
     amount: number
-
-    @Column()
-    partner_id: number
 
     @Column({ nullable: true })
     offer_id: number
@@ -38,18 +35,4 @@ export class Balance {
         referencedColumnName: 'id'
     })
     offer: Offer;
-
-    @ManyToOne(() => Advertisement, advertisement => advertisement.id, { onDelete: 'CASCADE' })
-    @JoinColumn({
-        name: 'advertisement_id',
-        referencedColumnName: 'id'
-    })
-    advertisement: Advertisement;
-
-    @ManyToOne(() => Partner, partner => partner.id, { cascade: true })
-    @JoinColumn({
-        name: 'partner_id',
-        referencedColumnName: 'id'
-    })
-    partner: Partner[];
 }

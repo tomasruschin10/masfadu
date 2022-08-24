@@ -11,11 +11,8 @@ export class balanceCreateDto {
     amount: number
 
     @ApiProperty()
-    offer_id: number
-
-    @ApiProperty()
     @IsNotEmpty()
-    partner_id: number
+    offer_id: number
 }
 
 export class balanceUpdateDto {
@@ -27,9 +24,6 @@ export class balanceUpdateDto {
 
     @ApiProperty()
     offer_id: number
-
-    @ApiProperty()
-    partner_id: number
 } 
 
 export class balanceDto {
