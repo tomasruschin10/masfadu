@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { NoticeRepository } from '../../modules/database/repositories/noticeRepository.service';
 @Injectable()
 export class NoticeService {
@@ -10,7 +10,7 @@ export class NoticeService {
     async create(request: any){
 
       const notice = await this.noticeRepository.create(request)
-      if (!notice) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!notice) throw new BadRequestException(['incorrect data'])     
 
       return notice;
    }

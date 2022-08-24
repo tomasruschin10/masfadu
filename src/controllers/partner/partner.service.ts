@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { PartnerRepository } from '../../modules/database/repositories/partnerRepository.service';
 @Injectable()
 export class PartnerService {
@@ -10,7 +10,7 @@ export class PartnerService {
     async create(request: any){
 
       const partner = await this.partnerRepository.create(request)
-      if (!partner) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!partner) throw new BadRequestException(['incorrect data'])     
 
       return partner;
    }

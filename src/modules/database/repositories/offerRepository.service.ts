@@ -8,24 +8,30 @@ export class OfferRepository {
         @Inject('OFFER_REPOSITORY')
         private offersRepository: Repository<Offer>,
         private sharedService: SharedService
-    ) {}
+    ) { }
 
 
-    async create(request): Promise<any>{
+    async create(request): Promise<any> {
         //save offer
         const offer = await this.offersRepository.create(request)
         await this.offersRepository.save(offer)
-        
+
         //return
         return offer
     }
 
-    async getAll(career): Promise<Offer[] | string> {
+    async getAll(career, data): Promise<Offer[] | string> {
+        let query = 'o.offer_category_id != 1 AND o.offer_category_id != 2'
+
+        if (data.userData.userRole[0].role_id != 2)
+            query = ''
+
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career}`:'')
+            .where(career ? `oo.career_id = ${career} ` : '')
+            .where(query)
             .getMany()
     }
 
@@ -38,7 +44,7 @@ export class OfferRepository {
             .where(`o.id = ${id}`)
             .getOne()
         if (!offer) {
-            throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
+            throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
         }
         return offer;
     }
@@ -47,8 +53,8 @@ export class OfferRepository {
     async update(id: number, request): Promise<any> {
         let offer = await this.offersRepository.findOne(id);
         if (!offer)
-            throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
-        
+            throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
+
         offer = await this.sharedService.updateObject(offer, request)
 
         await this.offersRepository.save(offer);
@@ -59,7 +65,7 @@ export class OfferRepository {
     async delete(id): Promise<any> {
         const offer = await this.offersRepository.findOne(id);
         if (!offer)
-            throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
+            throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
         await this.offersRepository.delete(offer.id);
 
         return offer;
@@ -71,7 +77,7 @@ export class OfferRepository {
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 1`:'o.offer_category_id = 1')
+            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1')
             .getMany()
     }
 
@@ -80,7 +86,7 @@ export class OfferRepository {
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 2`:'o.offer_category_id = 2')
+            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 2` : 'o.offer_category_id = 2')
             .getMany()
     }
 

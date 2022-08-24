@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { RoleRepository } from '../../modules/database/repositories/roleRepository.service';
 @Injectable()
 export class RoleService {
@@ -10,7 +10,7 @@ export class RoleService {
     async create(request: any){
 
       const role = await this.roleRepository.create(request)
-      if (!role) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!role) throw new BadRequestException(['incorrect data'])     
 
       return role;
    }

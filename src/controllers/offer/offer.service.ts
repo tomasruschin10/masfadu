@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { ImageRepository } from 'src/modules/database/repositories/imageRepository.service';
 import { OfferRepository } from '../../modules/database/repositories/offerRepository.service';
 import { FirestorageService } from '../firestorage/firestorage.service';
@@ -15,13 +15,13 @@ export class OfferService {
       request.image_id = (await this.imageRepository.create(file)).id
 
       const offer = await this.offerRepository.create(request)
-      if (!offer) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!offer) throw new BadRequestException(['incorrect data'])     
 
       return offer;
    }
 
-   async getAll(career){
-      const offers = await this.offerRepository.getAll(career)
+   async getAll(career, data){
+      const offers = await this.offerRepository.getAll(career, data)
       return offers;
    }
 

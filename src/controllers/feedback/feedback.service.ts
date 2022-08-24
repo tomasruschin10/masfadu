@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
+import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { FeedbackRepository } from '../../modules/database/repositories/feedbackRepository.service';
 @Injectable()
 export class FeedbackService {
@@ -10,7 +10,7 @@ export class FeedbackService {
     async create(request: any){
 
       const feedback = await this.feedbackRepository.create(request)
-      if (!feedback) throw new HttpException('incorrect data',HttpStatus.BAD_REQUEST)   
+      if (!feedback) throw new BadRequestException(['incorrect data'])     
 
       return feedback;
    }

@@ -8,6 +8,7 @@ import * as config from "config";
 import { JwtStrategy } from './jwt.strategy';
 import { SharedModule } from 'src/modules/shared/shared.module';
 import { FirestorageService } from '../firestorage/firestorage.service';
+import { MailPasswordHtml } from 'src/utils/html/mail_password';
 
 @Module({
     controllers: [AuthController],
@@ -16,7 +17,7 @@ import { FirestorageService } from '../firestorage/firestorage.service';
             secret: config.get("keys.jwtKey"),
             signOptions: { expiresIn: config.get("globals.expJWT") },
         }), SharedModule],
-    providers: [AuthService, LocalStrategy, JwtStrategy, FirestorageService],
+    providers: [AuthService, LocalStrategy, JwtStrategy, FirestorageService, MailPasswordHtml],
     exports:[JwtStrategy]
 })
 export class AuthModule {}

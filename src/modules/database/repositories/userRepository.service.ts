@@ -111,4 +111,31 @@ export class UserRepository {
 
     }
 
+    async deleteToken(token){
+        let user = await this.usersRepository.createQueryBuilder('u')
+        .where('u.remember_token = :token',{token})
+        .getOne();
+
+        if(!user) throw new HttpException('error! wrong token or expired',HttpStatus.NOT_FOUND);
+
+        user.remember_token = null
+        await this.usersRepository.save(user);
+
+        return user
+    }
+
+    async updatePassToken(id, password) : Promise<User | any>{
+
+        let user = await this.usersRepository.createQueryBuilder('u')
+            .where('u.id = :id',{id})
+            .getOne();
+
+        if(!user) throw new HttpException('error! record not found',HttpStatus.NOT_FOUND);
+        
+        let hash = await bcrypt.hash(password, 12);
+        user.password = hash
+        await this.usersRepository.save(user);
+        return 'success'
+    }
+
 }
