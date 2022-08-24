@@ -20,6 +20,8 @@ export class OpinionRepository {
         return opinion
     }
 
+    // proximamente mas de un tag
+    //
     async getAll(id): Promise<Opinion[] | string> {
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')

@@ -20,6 +20,7 @@ import { OpinionRepository } from 'src/modules/database/repositories/opinionRepo
 import { OpinionTagRepository } from 'src/modules/database/repositories/opinionTagRepository.service';
 import { TagRepository } from 'src/modules/database/repositories/tagRepository.service';
 import { BalanceRepository } from 'src/modules/database/repositories/balanceRepository.service';
+import { OpinionAnswerRepository } from 'src/modules/database/repositories/opinionAnswerRepository.service';
 export const repositories = [
     UserRepository,
     UserRoleRepository,
@@ -43,5 +44,6 @@ export const repositories = [
     OpinionRepository,
     TagRepository,
     OpinionTagRepository,
+    OpinionAnswerRepository,
 
 ]

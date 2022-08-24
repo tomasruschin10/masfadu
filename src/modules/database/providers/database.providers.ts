@@ -22,6 +22,7 @@ import { Balance } from 'src/models/balance.entity';
 import { Opinion } from 'src/models/opinion.entity';
 import { Tag } from 'src/models/tag.entity';
 import { OpinionTag } from 'src/models/opinionTag.entity';
+import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
 
 export const databaseProviders = [ 
   {
@@ -127,6 +128,11 @@ export const databaseProviders = [
   {
     provide: 'OPINION_TAG_REPOSITORY',
     useFactory: (connection: Connection) => connection.getRepository(OpinionTag),
+    inject: ['DbConnectionToken'],
+  },
+  {
+    provide: 'OPINION_ANSWER_REPOSITORY',
+    useFactory: (connection: Connection) => connection.getRepository(OpinionAnswer),
     inject: ['DbConnectionToken'],
   },
   {

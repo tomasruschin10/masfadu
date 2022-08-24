@@ -7,6 +7,7 @@ import { NoticeModule } from "src/controllers/notice/notice.module";
 import { OfferModule } from "src/controllers/offer/offer.module";
 import { OfferCategoryModule } from "src/controllers/offerCategory/offerCategory.module";
 import { OpinionModule } from "src/controllers/opinion/opinion.module";
+import { OpinionAnswerModule } from "src/controllers/opinionAnswer/opinionAnswer.module";
 import { PartnerModule } from "src/controllers/partner/partner.module";
 import { ResourceModule } from "src/controllers/resource/resource.module";
 import { ResourceCategoryModule } from "src/controllers/resourceCategory/resourceCategory.module";
@@ -36,4 +37,5 @@ export const controllers = [
     BalanceModule,
     OpinionModule,
     TagModule,
+    OpinionAnswerModule
 ]
