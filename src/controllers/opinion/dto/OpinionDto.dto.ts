@@ -25,9 +25,6 @@ export class opinionCreateDto {
     @IsNotEmpty()
     @IsString()
     professor: string;
-
-    @ApiProperty()
-    answer_to_id: number;
 }
 
 export class opinionUpdateDto {
@@ -65,9 +62,6 @@ export class opinionDto {
 
     @ApiProperty()
     professor: string;
-    
-    @ApiProperty()
-    answer_to_id: number;
   
     @ApiProperty()
     created_at: Date

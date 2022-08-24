@@ -16,22 +16,15 @@ export class OpinionService {
       const tags = request.tags
       delete request.tags
       request.student_id = user_id
-      let answerTo = await this.opinionRepository.findOpinion(request.answer_to_id)
-      if(!!answerTo){
-         var opinion = await this.opinionRepository.create(request)
-         if (!opinion) {
-            throw new BadRequestException(['incorrect data'])
-         } else {
-            for (let tag of tags) {
-               await this.addTags(tag, opinion.id)
-            }
-            opinion = await this.opinionRepository.getById(opinion.id)
-         }
+      var opinion = await this.opinionRepository.create(request)
+      if (!opinion) {
+         throw new BadRequestException(['incorrect data'])
       } else {
-         throw new BadRequestException(['Can\'t answer to an opinion that does\'nt exist'])
+         for (let tag of tags) {
+            await this.addTags(tag, opinion.id)
+         }
+         opinion = await this.opinionRepository.getById(opinion.id)
       }
-
-      
       return opinion;
    }
 
