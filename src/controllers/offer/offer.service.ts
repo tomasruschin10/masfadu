@@ -17,7 +17,7 @@ export class OfferService {
       const offer = await this.offerRepository.create(request)
       if (!offer) throw new BadRequestException(['incorrect data'])     
 
-      return offer;
+      return await this.getById(offer.id);
    }
 
    async getAll(career, data){
@@ -39,7 +39,7 @@ export class OfferService {
          await this.imageRepository.update(offer.image_id, file)
       }
 
-      return offer;
+      return await this.getById(offer.id);
    }
 
    async delete(id: number){

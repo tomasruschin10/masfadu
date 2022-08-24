@@ -31,7 +31,7 @@ export class OfferCategoryController {
     @ApiResponse({status: 200, description: 'Correct', type: offerCategoryDto})
     async getAll(@Headers() header) {
       const data : any = jwt.decode(header.authorization.replace('Bearer ', ''));
-      return await this.offerCategoryService.getAll(data.userData.userRole[0].role_id);
+      return await this.offerCategoryService.getAll(data.userData.userRole[0].role_id, data.userData.career_id);
     }
 
     
