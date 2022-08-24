@@ -22,6 +22,7 @@ import { Balance } from 'src/models/balance.entity';
 import { Tag } from 'src/models/tag.entity';
 import { OpinionTag } from 'src/models/opinionTag.entity';
 import { Opinion } from 'src/models/opinion.entity';
+import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
 
 interface IEnvironmentConfig {
   db: IDBConfig;
@@ -61,7 +62,7 @@ export function extendDatabaseConfig(source: IEnvironmentConfig) {
       User, Image, Role, UserRole, Activity, Partner, Advertisement, Career,
       Feedback, Notice, Notification, OfferCategory, Offer, SubjectCategory,
       Subject, UserSubject, ResourceCategory, Resource,
-      Balance, Opinion, Tag, OpinionTag]
+      Balance, Opinion, Tag, OpinionTag, OpinionAnswer]
   });
 
   return DB_CONFIG;

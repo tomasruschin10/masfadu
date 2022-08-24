@@ -22,7 +22,6 @@ export class opinionCreateDto {
     tags: [];
 
     @ApiProperty()
-    @IsNotEmpty()
     @IsString()
     professor: string;
 }
@@ -52,6 +51,7 @@ export class opinionDto {
     title: string;
 
     @ApiProperty()
+
     description: string;
 
     @ApiProperty()

@@ -11,7 +11,7 @@ export class Balance {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({ nullable: true })
     description: string
 
     @Column()
@@ -22,9 +22,6 @@ export class Balance {
 
     @Column({ nullable: true })
     offer_id: number
-
-    @Column({ nullable: true })
-    advertisement_id: number
 
     @CreateDateColumn({ type: "timestamp" })
     created_at: Moment

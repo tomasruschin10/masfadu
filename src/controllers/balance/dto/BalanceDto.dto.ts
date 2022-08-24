@@ -3,7 +3,6 @@ import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class balanceCreateDto {
     @ApiProperty()
-    @IsNotEmpty()
     @IsString()
     description: string;
 
@@ -13,9 +12,6 @@ export class balanceCreateDto {
 
     @ApiProperty()
     offer_id: number
-
-    @ApiProperty()
-    advertisement_id: number
 
     @ApiProperty()
     @IsNotEmpty()
@@ -33,9 +29,6 @@ export class balanceUpdateDto {
     offer_id: number
 
     @ApiProperty()
-    advertisement_id: number
-
-    @ApiProperty()
     partner_id: number
 } 
 
@@ -44,16 +37,13 @@ export class balanceDto {
     id: number;
 
     @ApiProperty()
-    name: string;
+    description: string;
 
     @ApiProperty()
     amount: number
 
     @ApiProperty()
     offer_id: number
-
-    @ApiProperty()
-    advertisement_id: number
   
     @ApiProperty()
     created_at: Date
