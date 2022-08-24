@@ -21,17 +21,13 @@ export class OfferRepository {
     }
 
     async getAll(career, data): Promise<Offer[] | string> {
-        let query = 'o.offer_category_id != 1 AND o.offer_category_id != 2'
-
-        if (data.userData.userRole[0].role_id != 2)
-            query = ''
 
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
             .where(career ? `oo.career_id = ${career} ` : '')
-            .where(query)
+            .where('o.offer_category_id != 1 AND o.offer_category_id != 2')
             .getMany()
     }
 
@@ -77,7 +73,7 @@ export class OfferRepository {
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1')
+            .where(career ? `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1')
             .getMany()
     }
 
@@ -86,7 +82,7 @@ export class OfferRepository {
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 2` : 'o.offer_category_id = 2')
+            .where(career ? `o.career_id = ${career} AND o.offer_category_id = 2` : 'o.offer_category_id = 2')
             .getMany()
     }
 
