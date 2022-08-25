@@ -26,9 +26,8 @@ export class OpinionAnswerService {
    //{ description: 'hola', opinion_id: 2, student_id: 1 }
 
    async createActivity(request: any, user_id: any, header: any) {
-      console.log(request.opinion_id)
-      let student_id = (await this.opinionRepository.getById(request.opinion_id)).student_id
-      let recipient = (await this.userRepository.findById(student_id)).username
+      let recipient_id = (await this.opinionRepository.getById(request.opinion_id)).student_id
+      let recipient = (await this.userRepository.findById(recipient_id)).username
       let sender = (await this.userRepository.findById(request.student_id)).username
 
       let activity = {
@@ -42,7 +41,7 @@ export class OpinionAnswerService {
 
       let notification = {
          title: 'Te han respondido',
-         user_to: student_id,
+         user_to: recipient_id,
          message:`¡Hey, @${sender} comentó en tu hilo!`
       }
       await this.sharedService.sendNotification(notification, header)
