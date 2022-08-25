@@ -14,12 +14,11 @@ export class BalanceService {
    async create(request: any) {
       const balance = await this.balanceRepository.create(request)
       if (!balance) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
-      return balance;
+      return await this.getById(balance.id);
    }
 
    async getAll(id) {
       let balances = await this.balanceRepository.getAll(id) 
-      balances.unshift(this.totalAmount(balances))
       return balances;
    }
 
@@ -40,7 +39,7 @@ export class BalanceService {
 
       const balance = await this.balanceRepository.update(id, request)
 
-      return balance;
+      return await this.getById(balance.id);
    }
 
    async delete(id: number) {

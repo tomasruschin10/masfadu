@@ -1,7 +1,7 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { Moment } from 'moment';
 import { Career } from './career.entity';
+import { Subject } from './subject.entity';
 
 @Entity({name:'subject_categories'})
 export class SubjectCategory {
@@ -28,4 +28,11 @@ export class SubjectCategory {
       referencedColumnName: 'id'
   })
   career: Career;
+
+  @OneToMany(() => Subject, subject => subject.subjectCategory ,{cascade: true})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'subject_category_id'
+  })
+  subject: Subject[];
 }

@@ -15,8 +15,8 @@ export class SubjectCategoryService {
       return subjectCategory;
    }
 
-   async getAll(){
-      const subjectCategorys = await this.subjectCategoryRepository.getAll()
+   async getAll(data, id){
+      const subjectCategorys = await this.subjectCategoryRepository.getAll(data, id)
       return subjectCategorys;
    }
 

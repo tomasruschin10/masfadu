@@ -1,8 +1,6 @@
-
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { Moment } from 'moment';
 import { SubjectCategory } from './subjectCategory.entity';
-import { Career } from './career.entity';
 import { UserSubject } from './userSubject.entity';
 
 @Entity({name:'subjects'})

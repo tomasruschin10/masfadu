@@ -34,6 +34,8 @@ export class OpinionRepository {
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
             .innerJoinAndSelect('o.subject','os')
+            .innerJoinAndSelect('o.student','s')
+            .innerJoinAndSelect('s.image','si')
             .where(query)
             .getMany()
     }

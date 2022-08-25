@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { Repository } from "typeorm";
+import { Connection, Repository } from "typeorm";
 import { Balance } from '../../../models/balance.entity';
 import { SharedService } from 'src/modules/shared/shared.service';
 @Injectable()
@@ -7,7 +7,8 @@ export class BalanceRepository {
     constructor(
         @Inject('BALANCE_REPOSITORY')
         private balancesRepository: Repository<Balance>,
-        private sharedService: SharedService
+        private sharedService: SharedService,
+        private conection: Connection
     ) { }
 
 
@@ -20,16 +21,27 @@ export class BalanceRepository {
         return balance
     }
 
-    async getAll(id): Promise<Balance[] | string> {
-        return await this.balancesRepository.createQueryBuilder('c')
+    async getAll(id): Promise<Balance[] | any> {
+        let res = {data: null, total: null}
+        let balance =  await this.balancesRepository.createQueryBuilder('c')
             .leftJoinAndSelect('c.offer', 'co')
-            .where(id ? `cp.id = ${id}` : '')
+            .leftJoinAndSelect('co.partner', 'cop')
+            .leftJoinAndSelect('co.offerCategory', 'coo')
+            .where(id ? `co.partner_id = ${id}` : '')
             .getMany()
+        
+        let total = await this.conection.query(`SELECT sum(c.amount) as total from balances as c inner join offers as co on co.id = c.offer_id ${id ? `where co.partner_id = ${id}` : ''}`)
+        res.data = balance
+        res.total = parseInt(total[0].total)
+        return res
     }
 
 
     async getById(id): Promise<Balance | string> {
         const balance = await this.balancesRepository.createQueryBuilder('c')
+            .leftJoinAndSelect('c.offer', 'co')
+            .leftJoinAndSelect('co.partner', 'cop')
+            .leftJoinAndSelect('co.offerCategory', 'coo')
             .where(`c.id = ${id}`)
             .getOne()
         if (!balance) {

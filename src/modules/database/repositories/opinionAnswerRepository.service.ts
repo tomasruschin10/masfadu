@@ -30,6 +30,7 @@ export class OpinionAnswerRepository {
         }
 
         return await this.opinionAnswersRepository.createQueryBuilder('a')
+            .innerJoinAndSelect('a.student', 'as')
             .where(query)
             .getMany()
     }
