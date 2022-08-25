@@ -5,7 +5,7 @@ import { repositories } from './providers/repositories.providers';
 import { SharedService } from './shared.service';
 
 @Module({
-    imports: [ DatabaseModule, HttpModule],
+    imports: [ DatabaseModule, HttpModule,],
   providers: [ SharedService, ...databaseProviders, ...repositories ],
   exports: [...repositories, SharedService],
 })

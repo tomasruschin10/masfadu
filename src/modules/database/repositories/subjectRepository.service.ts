@@ -29,7 +29,7 @@ export class SubjectRepository {
     }
 
 
-    async getById(id): Promise<Subject | string> {
+    async getById(id): Promise<Subject | any> {
         const subject = await this.subjectsRepository.createQueryBuilder('s')
             .innerJoinAndSelect('s.subjectCategory', 'ss')
             .leftJoinAndSelect('s.userSubject', 'su')

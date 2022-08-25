@@ -2,13 +2,11 @@ import { Injectable, Inject, HttpStatus, HttpException, BadRequestException } fr
 import { Repository } from "typeorm";
 import { User } from '../../../models/user.entity';
 import * as bcrypt from 'bcrypt'
-import { SharedService } from 'src/modules/shared/shared.service';
 @Injectable()
 export class UserRepository {
     constructor(
         @Inject('USER_REPOSITORY')
-        private usersRepository: Repository<User>,
-        private sharedService: SharedService
+        private usersRepository: Repository<User>
     ) {}
 
     async findUsername(uoe:string): Promise<User>{
@@ -94,12 +92,24 @@ export class UserRepository {
             delete request.password
         }        
             
-        user = await this.sharedService.updateObject(user, request)
+        user = await this.updateObject(user, request)
 
         await this.usersRepository.save(user);
 
         return user;
     } 
+    
+    async updateObject(object, request) {
+        Object.keys(object).map(key => {
+            if (request[key] || request[key] == 0) {
+                if (request[key] != '') {
+                    object[key] = request[key]
+                }
+            }
+        })
+
+        return object
+    }
 
     async delete(id): Promise<any> {
         const user = await this.usersRepository.createQueryBuilder('u').where(isNaN(id)? `u.uid = '${id}' `:` u.id = ${id}`).getOne();

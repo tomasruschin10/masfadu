@@ -39,7 +39,7 @@ export class OpinionRepository {
     }
 
 
-    async getById(id): Promise<Opinion | string> {
+    async getById(id): Promise<Opinion | any> {
         const opinion = await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
