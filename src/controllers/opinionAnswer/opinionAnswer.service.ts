@@ -20,20 +20,22 @@ export class OpinionAnswerService {
       const opinionAnswer = await this.opinionAnswerRepository.create(request)
       if (!opinionAnswer) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
 
-      await this.createActivity(request, user_id, header)
+      await this.createActivity(request.opinion_id, header)
       return opinionAnswer;
    }
    //{ description: 'hola', opinion_id: 2, student_id: 1 }
 
-   async createActivity(request: any, user_id: any, header: any) {
-      let recipient_id = (await this.opinionRepository.getById(request.opinion_id)).student_id
-      let recipient = (await this.userRepository.findById(recipient_id)).username
-      let sender = (await this.userRepository.findById(request.student_id)).username
+   async createActivity(opinion_id: any, header: any) {
+      let data = await this.opinionAnswerRepository.getById(opinion_id)
+      let recipient_id = data.opinion.student_id
+      let recipient_username = data.opinion.student.username
+      let sender_id = data.student_id
+      let sender_username = data.student.username
 
       let activity = {
-         user_id: user_id,
+         user_id: sender_id,
          action: 'Comentaste',
-         description: `el hilo de @${recipient}`,
+         description: `el hilo de @${recipient_username}`,
          type: 'Comentario'
       }
       await this.activityRepository.create(activity)
@@ -42,7 +44,7 @@ export class OpinionAnswerService {
       let notification = {
          title: 'Te han respondido',
          user_to: recipient_id,
-         message:`¡Hey, @${sender} comentó en tu hilo!`
+         message: `¡Hey, @${sender_username} comentó en tu hilo!`
       }
       await this.sharedService.sendNotification(notification, header)
 
