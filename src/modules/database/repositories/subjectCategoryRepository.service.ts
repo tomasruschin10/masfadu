@@ -25,6 +25,7 @@ export class SubjectCategoryRepository {
         return await this.subjectCategorysRepository.createQueryBuilder('s')
             .leftJoinAndSelect('s.subject', 'ss')
             .leftJoinAndSelect('ss.userSubject', 'ssu')
+            .where(id? `s.career_id = ${id}`:'')
             // .where(data.userData.userRole[0].role_id == 2 ? `ssu.user_id = ${data.userData.id}`:'')
             .getMany()
         //.leftJoinAndSelect('s.userSubject', 'su'); solo del estudiante que pregunta
