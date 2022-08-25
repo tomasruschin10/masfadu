@@ -60,7 +60,7 @@ export class OpinionService {
    }
 
    async getAll(data) {
-      const opinions = await this.opinionRepository.getAll(data)
+      let opinions = await this.opinionRepository.getAll(data)
       return opinions;
    }
 
