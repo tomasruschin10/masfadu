@@ -31,6 +31,7 @@ export class OpinionAnswerRepository {
 
         return await this.opinionAnswersRepository.createQueryBuilder('a')
             .innerJoinAndSelect('a.student', 'as')
+            .innerJoinAndSelect('as.image', 'asi')
             .where(query)
             .getMany()
     }
@@ -39,6 +40,7 @@ export class OpinionAnswerRepository {
     async getById(id): Promise<OpinionAnswer | any> {
         const opinionAnswer = await this.opinionAnswersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.student', 'os')
+            .innerJoinAndSelect('os.image', 'osi')
             .innerJoinAndSelect('o.opinion', 'oo')
             .innerJoinAndSelect('oo.student', 'oos')
             .where(`o.id = ${id}`)

@@ -21,7 +21,7 @@ export class OpinionAnswerService {
       if (!opinionAnswer) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
 
       await this.createActivity(request.opinion_id, header)
-      return opinionAnswer;
+      return await this.getById(opinionAnswer.id);
    }
    //{ description: 'hola', opinion_id: 2, student_id: 1 }
 
@@ -64,7 +64,7 @@ export class OpinionAnswerService {
 
       const opinionAnswer = await this.opinionAnswerRepository.update(id, request)
 
-      return opinionAnswer;
+      return await this.getById(opinionAnswer.id);
    }
 
    async delete(id: number) {

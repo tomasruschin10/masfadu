@@ -50,10 +50,14 @@ export class AuthService {
       const user = await this.userRepository.register(request)
       await this.userRoleRepository.saveUserRole(user.id, request.role_id)
 
+      if (!request.uid){
+         await this.update(user.id, {uid: user.id}, null)
+      }
+
       return await this.userRepository.findById(user.id);
    }
 
-   async update(id:number | string, request: IUpdateBody, file){
+   async update(id:number | string, request: IUpdateBody | any, file){
 
       let user = await this.userRepository.update(id, request)
 

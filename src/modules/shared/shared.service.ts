@@ -38,8 +38,10 @@ export class SharedService {
         let title = request.title
         let user_to = request.user_to
         let user = await this.userRepository.findById(user_to)
-        if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
-        if (!user.device_token) throw new HttpException('User device token not found', HttpStatus.NOT_FOUND)
+        // if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+        // if (!user.device_token) throw new HttpException('User device token not found', HttpStatus.NOT_FOUND)
+        if (!user) return 'User not found'
+        if (!user.device_token) return 'User device token not found'
         const requestConfig = {
             headers: {
                 'Content-Type': 'application/json',
