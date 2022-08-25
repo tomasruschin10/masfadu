@@ -17,6 +17,7 @@ export class OfferCategoryRepository {
         await this.offerCategorysRepository.save(offerCategory)
 
         //return
+        //Hacer una id en el getAll del repositorio de OfferCategories
         return offerCategory
     }
 

@@ -21,7 +21,9 @@ export class SubjectCategoryRepository {
     }
 
     async getAll(): Promise<SubjectCategory[] | string> {
-        return await this.subjectCategorysRepository.find();
+        return await this.subjectCategorysRepository.find()
+        //.leftJoinAndSelect('s.userSubject', 'su'); solo del estudiante que pregunta
+        // filtrar las categorias por el id de la carrera del etudiante
     }
 
 

@@ -22,7 +22,7 @@ export class OpinionAnswerController {
   async create(@Body() req: opinionAnswerCreateDto, @Headers() header) {
     const data: any = jwt.decode(header.authorization.replace('Bearer ', ''));
     const createBody: opinionAnswerBody = req;
-    return await this.opinionAnswerService.create(createBody, data.userData.id);
+    return await this.opinionAnswerService.create(createBody, data.userData.id, header);
   }
 
 

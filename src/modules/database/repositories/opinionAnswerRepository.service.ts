@@ -35,9 +35,12 @@ export class OpinionAnswerRepository {
     }
 
 
-    async getById(id): Promise<OpinionAnswer | string> {
-        const opinionAnswer = await this.opinionAnswersRepository.createQueryBuilder('c')
-            .where(`c.id = ${id}`)
+    async getById(id): Promise<OpinionAnswer | any> {
+        const opinionAnswer = await this.opinionAnswersRepository.createQueryBuilder('o')
+            .innerJoinAndSelect('o.student', 'os')
+            .innerJoinAndSelect('o.opinion', 'oo')
+            .innerJoinAndSelect('oo.student', 'oos')
+            .where(`o.id = ${id}`)
             .getOne()
         if (!opinionAnswer) {
             throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);

@@ -1,5 +1,7 @@
 import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
+import { ActivityRepository } from 'src/modules/database/repositories/activityRepository.service';
 import { OpinionTagRepository } from 'src/modules/database/repositories/opinionTagRepository.service';
+import { SubjectRepository } from 'src/modules/database/repositories/subjectRepository.service';
 import { TagRepository } from 'src/modules/database/repositories/tagRepository.service';
 import { OpinionRepository } from '../../modules/database/repositories/opinionRepository.service';
 @Injectable()
@@ -7,8 +9,10 @@ export class OpinionService {
 
    constructor(
       private readonly opinionRepository: OpinionRepository,
-      private readonly tagRepository: TagRepository,
       private readonly opinionTagRepository: OpinionTagRepository,
+      private readonly tagRepository: TagRepository,
+      private readonly activityRepository: ActivityRepository,
+      private readonly subjectRepository: SubjectRepository,
 
    ) { }
 
@@ -25,7 +29,25 @@ export class OpinionService {
          }
          opinion = await this.opinionRepository.getById(opinion.id)
       }
+
+      await this.createActivity(opinion, user_id)
+
       return opinion;
+   }
+
+   async createActivity(opinion: any, user_id: any) {
+
+
+      let subject = await this.subjectRepository.getById(opinion.subject_id)
+      let activity = {
+         user_id: user_id,
+         action: 'Comentaste',
+         description: `en la materia ${subject.name}`,
+         type: 'Comentario'
+      }
+
+      await this.activityRepository.create(activity)
+
    }
 
    async addTags(tag: any, opinion_id: any) {
@@ -38,7 +60,7 @@ export class OpinionService {
    }
 
    async getAll(data) {
-      const opinions = await this.opinionRepository.getAll(data)
+      let opinions = await this.opinionRepository.getAll(data)
       return opinions;
    }
 

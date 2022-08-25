@@ -22,8 +22,7 @@ export class OpinionRepository {
 
     // proximamente mas de un tag
     //
-    async getAll(data): Promise<Opinion[] | string> {
-        console.log(data)
+    async getAll(data): Promise<Opinion[] | any> {
         let query = `ot.tag_id = ${data.tag_id} && o.student_id = ${data.student_id}`
 
         if (!data.student_id || !data.tag_id) {
@@ -34,12 +33,13 @@ export class OpinionRepository {
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
+            .innerJoinAndSelect('o.subject','os')
             .where(query)
             .getMany()
     }
 
 
-    async getById(id): Promise<Opinion | string> {
+    async getById(id): Promise<Opinion | any> {
         const opinion = await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
