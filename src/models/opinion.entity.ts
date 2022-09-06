@@ -11,6 +11,9 @@ export class Opinion {
 
     @PrimaryGeneratedColumn()
     id: number
+    
+    @Column({nullable: true})
+    anonymous: number;
 
     @Column()
     title: string
