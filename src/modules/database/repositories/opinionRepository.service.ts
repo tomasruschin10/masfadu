@@ -35,6 +35,13 @@ export class OpinionRepository {
             if (query != "") query += '&&'
             query += `o.subject_id = ${data.subject_id}`
         }
+        let sql = await this.opinionRepository.createQueryBuilder('o')
+            .orderBy('o.id', 'DESC')
+            .select(['o.id'])
+            .limit(data.limit)
+            .offset(data.offset)
+            .getMany()
+            
 
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
@@ -43,9 +50,7 @@ export class OpinionRepository {
             .innerJoinAndSelect('o.student', 's')
             .innerJoinAndSelect('s.image', 'si')
             .orderBy('o.id', 'DESC')
-            .where(query)
-            .limit(data.limit)
-            .offset(data.offset)
+            .where(`o.id between ${sql[sql.length - 1].id} and ${sql[0].id}`)
             .getManyAndCount()
 
     }
