@@ -1,6 +1,7 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { Moment } from 'moment';
+import { Image } from './image.entity';
 
 @Entity({name:'notices'})
 export class Notice {
@@ -9,6 +10,9 @@ export class Notice {
 
   @Column()
   name: string;
+
+  @Column()
+  image_id: number;
 
   @Column({type: 'datetime'})
   date_start: Date;
@@ -21,4 +25,12 @@ export class Notice {
 
   @UpdateDateColumn({type: "timestamp", nullable: true})
   updated_at: Moment
+
+  
+  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE'})
+  @JoinColumn({
+      name: 'image_id',
+      referencedColumnName: 'id'
+  })
+  image: Image;
 }
