@@ -23,21 +23,31 @@ export class OpinionRepository {
     // proximamente mas de un tag
     //
     async getAll(data): Promise<Opinion[] | any> {
-        let query = `ot.tag_id = ${data.tag_id} && o.student_id = ${data.student_id}`
+        let query = ""
 
-        if (!data.student_id || !data.tag_id) {
-            if (!data.tag_id) query = query.replace(`ot.tag_id = ${data.tag_id}`, "")
-            if (!data.student_id) query = query.replace(`o.student_id = ${data.student_id}`, "")
-            query = query.replace('&&', "")
+        if (data.tag_id) { query += `ot.tag_id = ${data.tag_id}` }
+
+        if (data.student_id) {
+            if (query != "") query += '&&'
+            query += `o.student_id = ${data.student_id}`
         }
+        if (data.subject_id) {
+            if (query != "") query += '&&'
+            query += `o.subject_id = ${data.subject_id}`
+        }
+
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .leftJoinAndSelect('ot.tag', 't')
-            .innerJoinAndSelect('o.subject','os')
-            .innerJoinAndSelect('o.student','s')
-            .innerJoinAndSelect('s.image','si')
+            .innerJoinAndSelect('o.subject', 'os')
+            .innerJoinAndSelect('o.student', 's')
+            .innerJoinAndSelect('s.image', 'si')
+            .orderBy('o.id', 'DESC')
             .where(query)
-            .getMany()
+            .limit(data.limit)
+            .offset(data.offset)
+            .getManyAndCount()
+
     }
 
 
