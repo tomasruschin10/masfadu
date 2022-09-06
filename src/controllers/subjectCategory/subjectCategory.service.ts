@@ -50,13 +50,16 @@ export class SubjectCategoryService {
       let points = 0
       let count = 0
       let total = 0
+      
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
          for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].subject.length; j++) {
                total++
                data[i].subject[j].userSubject = userSubjects.find(a => a.subject_id == data[i].subject[j].id)
                if (data[i].subject[j].userSubject) {
-                  on++
+                  if(data[i].subject[j].userSubject.score>=4) {
+                     on++
+                  }
                   if(data[i].subject[j].userSubject.score) {
                      count++
                      points += data[i].subject[j].userSubject.score
