@@ -23,25 +23,53 @@ export class OpinionRepository {
     // proximamente mas de un tag
     //
     async getAll(data): Promise<Opinion[] | any> {
+        let queryTags = ""
+        //me trae los array como string ¿?
+        if (data.tags) {
+            for (let tag of data.tags) {
+                if (queryTags != "") queryTags += ' or '
+                queryTags += `ot.tag_id = ${tag}`
+            }
+        }
+
+
         let query = ""
-
-        if (data.tag_id) { query += `ot.tag_id = ${data.tag_id}` }
-
+        if (data.tag_id) {
+            query += `ot.tag_id = ${data.tag_id}`
+        }
         if (data.student_id) {
-            if (query != "") query += '&&'
+            if (query != "") query += ' and '
             query += `o.student_id = ${data.student_id}`
         }
         if (data.subject_id) {
-            if (query != "") query += '&&'
+            if (query != "") query += ' and '
             query += `o.subject_id = ${data.subject_id}`
         }
+
+
         let sql = await this.opinionRepository.createQueryBuilder('o')
-            .orderBy('o.id', 'DESC')
+            .leftJoinAndSelect('o.opinionTags', 'ot')
             .select(['o.id'])
+            .where(queryTags)
+            .distinct(true)
+            .orderBy('o.id', 'DESC')
             .limit(data.limit)
             .offset(data.offset)
             .getMany()
-            
+
+
+        let queryOpinion = ""
+        for (let opinion of sql) {
+            if (queryOpinion != "") queryOpinion += ' or '
+            queryOpinion += `o.id = ${opinion.id}`
+        }
+
+        if (queryTags != "") {
+            query == "" ? query = queryOpinion : query += ` and (${queryOpinion})`
+        } else {
+            if (query != "") query = ' and '
+            query += `o.id between ${sql[sql.length - 1].id} and ${sql[0].id}`
+        }
 
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
@@ -49,10 +77,9 @@ export class OpinionRepository {
             .innerJoinAndSelect('o.subject', 'os')
             .innerJoinAndSelect('o.student', 's')
             .innerJoinAndSelect('s.image', 'si')
+            .where(query)
             .orderBy('o.id', 'DESC')
-            .where(`o.id between ${sql[sql.length - 1].id} and ${sql[0].id}`)
-            .getManyAndCount()
-
+            .getMany()
     }
 
 
