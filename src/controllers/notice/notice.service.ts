@@ -32,7 +32,7 @@ export class NoticeService {
    async update(id: number, request: any, file) {
       let notice = await this.noticeRepository.update(id, request)
       if (file) {
-         notice.image_id != 1 ? await this.deleteFirebase(notice.image_id) : null
+         await this.deleteFirebase(notice.image_id)
 
          if (notice.image_id && notice.image_id != 1) {
             await this.imageRepository.update(notice.image_id, file)
