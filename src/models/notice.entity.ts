@@ -27,7 +27,7 @@ export class Notice {
   updated_at: Moment
 
   
-  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'image_id',
       referencedColumnName: 'id'

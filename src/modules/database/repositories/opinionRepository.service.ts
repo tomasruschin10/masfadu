@@ -34,9 +34,6 @@ export class OpinionRepository {
 
 
         let query = ""
-        if (data.tag_id) {
-            query += `ot.tag_id = ${data.tag_id}`
-        }
         if (data.student_id) {
             if (query != "") query += ' and '
             query += `o.student_id = ${data.student_id}`
