@@ -9,6 +9,9 @@ export class opinionCreateDto {
     title: string;
 
     @ApiProperty()
+    anonymous: number;
+
+    @ApiProperty()
     @IsNotEmpty()
     @IsString()
     description: string;
@@ -31,6 +34,9 @@ export class opinionUpdateDto {
     title: string;
 
     @ApiProperty()
+    anonymous: number;
+
+    @ApiProperty()
     description: string;
 
     @ApiProperty()
@@ -51,6 +57,7 @@ export class opinionDto {
     title: string;
 
     @ApiProperty()
+    anonymous: number;
 
     description: string;
 

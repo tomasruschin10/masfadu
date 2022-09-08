@@ -8,6 +8,9 @@ export class noticeCreateDto {
     name: string
 
     @ApiProperty()
+    image: Express.Multer.File
+
+    @ApiProperty()
     @IsNotEmpty()
     @IsDateString()
     date_start: Date;
@@ -23,6 +26,9 @@ export class noticeUpdateDto {
     name: string
 
     @ApiProperty()
+    image: Express.Multer.File
+
+    @ApiProperty()
     date_start: Date;
 
     @ApiProperty()
@@ -35,6 +41,9 @@ export class noticeDto {
 
     @ApiProperty()
     name: string
+    
+    @ApiProperty()
+    image: Express.Multer.File
 
     @ApiProperty()
     date_start: Date;

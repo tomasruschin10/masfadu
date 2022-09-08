@@ -31,9 +31,9 @@ export class OpinionController {
   @ApiResponse({ status: 500, description: 'Server Error' })
   @ApiResponse({ status: 200, description: 'Correct', type: opinionDto })
   async getAll(@Query() query: {
-     tag_id: number, student_id: number, subject_id: number,
+     tags: any, student_id: number, subject_id: number,
      limit: number, offset: number
-    }) {
+    }) {    
     return await this.opinionService.getAll(query);
   }
 

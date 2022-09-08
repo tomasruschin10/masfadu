@@ -20,8 +20,8 @@ export class OfferService {
       return await this.getById(offer.id);
    }
 
-   async getAll(career, data){
-      const offers = await this.offerRepository.getAll(career, data)
+   async getAll(career, search?){
+      const offers = await this.offerRepository.getAll(career, search)
       return offers;
    }
 

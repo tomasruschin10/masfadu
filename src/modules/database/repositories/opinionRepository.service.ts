@@ -24,17 +24,38 @@ export class OpinionRepository {
     //
     async getAll(data): Promise<Opinion[] | any> {
         let query = ""
-
-        if (data.tag_id) { query += `ot.tag_id = ${data.tag_id}` }
+        //me trae los array como string ¿?
+        if (data.tags) {
+            query = "("
+            for (let tag of data.tags) {
+                if (query != "(") query += ' OR '
+                query += `ot.tag_id = ${tag}`
+            }
+            query += ")"
+        }
 
         if (data.student_id) {
-            if (query != "") query += '&&'
+            if (query != "") query += ' AND '
             query += `o.student_id = ${data.student_id}`
         }
         if (data.subject_id) {
-            if (query != "") query += '&&'
+            if (query != "") query += ' AND '
             query += `o.subject_id = ${data.subject_id}`
         }
+
+
+        let sql = await this.opinionRepository.createQueryBuilder('o')
+            .leftJoinAndSelect('o.opinionTags', 'ot')
+            .select(['o.id'])
+            .where(query)
+            .distinct(true)
+            .orderBy('o.id', 'DESC')
+            .limit(data.limit)
+            .offset(data.offset)
+            .getMany()
+
+        if (query != "") query += ' AND '
+        query += `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
 
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
@@ -42,12 +63,9 @@ export class OpinionRepository {
             .innerJoinAndSelect('o.subject', 'os')
             .innerJoinAndSelect('o.student', 's')
             .innerJoinAndSelect('s.image', 'si')
-            .orderBy('o.id', 'DESC')
             .where(query)
-            .limit(data.limit)
-            .offset(data.offset)
-            .getManyAndCount()
-
+            .orderBy('o.id', 'DESC')
+            .getMany()
     }
 
 
