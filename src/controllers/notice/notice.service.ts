@@ -1,16 +1,18 @@
 import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
 import { ImageRepository } from 'src/modules/database/repositories/imageRepository.service';
 import { NoticeRepository } from '../../modules/database/repositories/noticeRepository.service';
+import { FirestorageService } from '../firestorage/firestorage.service';
 @Injectable()
 export class NoticeService {
 
    constructor(
       private readonly noticeRepository: NoticeRepository,
-      private readonly imageRepository: ImageRepository
+      private readonly imageRepository: ImageRepository,
+      private readonly firestorageService: FirestorageService,
    ) { }
 
    async create(request: any, image) {
-      request.image_id = image ? (await this.imageRepository.create(image)).id : 1
+      request.image_id =(await this.imageRepository.create(image)).id
       const notice = await this.noticeRepository.create(request)
       if (!notice) throw new BadRequestException(['incorrect data'])
 
@@ -27,18 +29,37 @@ export class NoticeService {
       return notice;
    }
 
-   async update(id: number, request: any) {
+   async update(id: number, request: any, file) {
+      let notice = await this.noticeRepository.update(id, request)
+      if (file) {
+         notice.image_id != 1 ? await this.deleteFirebase(notice.image_id) : null
 
-      const notice = await this.noticeRepository.update(id, request)
+         if (notice.image_id && notice.image_id != 1) {
+            await this.imageRepository.update(notice.image_id, file)
+         } else {
+            let img = await this.imageRepository.create(file)
+            notice = await this.noticeRepository.update(id, { image_id: img.id })
+         }
+
+      }
+
 
       return notice;
    }
 
    async delete(id: number) {
       const notice = await this.noticeRepository.delete(id)
+      await this.deleteFirebase(notice.image_id)
 
 
       return { statusCode: 200, message: 'removed' }
+   }
+
+   async deleteFirebase(image_id) {
+      let image = await this.imageRepository.getById(image_id)
+
+      image ? await this.firestorageService.remove(image.name) : null
+      return true
    }
 
 

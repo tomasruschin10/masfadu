@@ -21,8 +21,9 @@ export class OfferRepository {
     }
 
     async getAll(career, search): Promise<Offer[] | string> {
-        let query = `o.offer_category_id != 1 AND o.offer_category_id != 2 AND o.career_id = ${career} `
-        search ? query += `AND (o.description LIKE '%${search}%')` : ''
+        let query = 'o.offer_category_id != 1 AND o.offer_category_id != 2'
+        career ? query += ` AND o.career_id = ${career}` : ''
+        search ? query += ` AND (o.description LIKE '%${search}%')` : ''
 
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')

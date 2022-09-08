@@ -30,7 +30,7 @@ export class OfferController {
 
     
     @UseGuards(JwtAuthGuard)
-    @Get('all/')
+    @Get('all')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: offerDto})
     async getAll(@Headers() header, @Query() query: {search: string}) {

@@ -58,9 +58,11 @@ export class NoticeController {
     @ApiResponse({status: 400, description: 'Incorrect Data'})
     @ApiResponse({status: 404, description: 'Record not found'})
     @ApiResponse({status: 200, description: 'Updated Registration', type: noticeDto})
-    async update(@Param('id', ParseIntPipe) id: number, @Body() req : noticeUpdateDto) {
+    @UseInterceptors(FileInterceptor('image'))
+    async update(@Param('id', ParseIntPipe) id: number, @Body() req : noticeUpdateDto,@UploadedFile() file: Express.Multer.File) {
       const updateBody: noticeBody = req;
-      return await this.noticeService.update(id, updateBody);
+      let fileUploaded = await this.uploadFile(file)
+      return await this.noticeService.update(id, updateBody, fileUploaded);
     }
 
     
@@ -79,7 +81,7 @@ export class NoticeController {
         let tm = Date.now();
         return await this.firestorageService.uploadFile('users', file, tm);
       }else{
-        return false
+        throw new HttpException('Needed a Image',HttpStatus.NOT_FOUND)
       }
     }
 

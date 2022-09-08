@@ -23,23 +23,23 @@ export class OpinionRepository {
     // proximamente mas de un tag
     //
     async getAll(data): Promise<Opinion[] | any> {
-        let queryTags = ""
+        let query = ""
         //me trae los array como string ¿?
         if (data.tags) {
+            query = "("
             for (let tag of data.tags) {
-                if (queryTags != "") queryTags += ' or '
-                queryTags += `ot.tag_id = ${tag}`
+                if (query != "(") query += ' OR '
+                query += `ot.tag_id = ${tag}`
             }
+            query += ")"
         }
 
-
-        let query = ""
         if (data.student_id) {
-            if (query != "") query += ' and '
+            if (query != "") query += ' AND '
             query += `o.student_id = ${data.student_id}`
         }
         if (data.subject_id) {
-            if (query != "") query += ' and '
+            if (query != "") query += ' AND '
             query += `o.subject_id = ${data.subject_id}`
         }
 
@@ -47,26 +47,15 @@ export class OpinionRepository {
         let sql = await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')
             .select(['o.id'])
-            .where(queryTags)
+            .where(query)
             .distinct(true)
             .orderBy('o.id', 'DESC')
             .limit(data.limit)
             .offset(data.offset)
             .getMany()
 
-
-        let queryOpinion = ""
-        for (let opinion of sql) {
-            if (queryOpinion != "") queryOpinion += ' or '
-            queryOpinion += `o.id = ${opinion.id}`
-        }
-
-        if (queryTags != "") {
-            query == "" ? query = queryOpinion : query += ` and (${queryOpinion})`
-        } else {
-            if (query != "") query = ' and '
-            query += `o.id between ${sql[sql.length - 1].id} and ${sql[0].id}`
-        }
+        if (query != "") query += ' AND '
+        query += `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
 
         return await this.opinionRepository.createQueryBuilder('o')
             .leftJoinAndSelect('o.opinionTags', 'ot')

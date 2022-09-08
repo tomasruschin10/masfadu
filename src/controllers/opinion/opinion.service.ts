@@ -21,18 +21,15 @@ export class OpinionService {
       delete request.tags
       request.student_id = user_id
       var opinion = await this.opinionRepository.create(request)
-      if (!opinion) {
-         throw new BadRequestException(['incorrect data'])
-      } else {
-         let oldTag = [0]
-         for (let tag of tags) {
-            if (oldTag.indexOf(tag.id)==-1)
-            
-               oldTag.push((await this.addTags(tag, opinion.id)).tag_id)
-         }
-         
-         opinion = await this.opinionRepository.getById(opinion.id)
+      if (!opinion) throw new BadRequestException(['incorrect data'])
+
+      let oldTag = [0]
+      for (let tag of tags) {
+         if (!oldTag.some(a => a == tag.id))
+            oldTag.push((await this.addTags(tag, opinion.id)).tag_id)
       }
+
+      opinion = await this.opinionRepository.getById(opinion.id)
 
       await this.createActivity(opinion, user_id)
 

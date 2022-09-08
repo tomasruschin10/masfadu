@@ -12,7 +12,7 @@ export class Opinion {
     @PrimaryGeneratedColumn()
     id: number
     
-    @Column({nullable: true})
+    @Column({default: 1, type: 'boolean', nullable: true})
     anonymous: number;
 
     @Column()
