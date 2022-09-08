@@ -24,9 +24,13 @@ export class OpinionService {
       if (!opinion) {
          throw new BadRequestException(['incorrect data'])
       } else {
+         let oldTag = [0]
          for (let tag of tags) {
-            await this.addTags(tag, opinion.id)
+            if (oldTag.indexOf(tag.id)==-1)
+            
+               oldTag.push((await this.addTags(tag, opinion.id)).tag_id)
          }
+         
          opinion = await this.opinionRepository.getById(opinion.id)
       }
 
