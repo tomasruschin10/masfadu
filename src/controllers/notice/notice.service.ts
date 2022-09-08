@@ -12,7 +12,7 @@ export class NoticeService {
    ) { }
 
    async create(request: any, image) {
-      request.image_id =(await this.imageRepository.create(image)).id
+      request.image_id = (await this.imageRepository.create(image)).id
       const notice = await this.noticeRepository.create(request)
       if (!notice) throw new BadRequestException(['incorrect data'])
 
@@ -33,14 +33,7 @@ export class NoticeService {
       let notice = await this.noticeRepository.update(id, request)
       if (file) {
          await this.deleteFirebase(notice.image_id)
-
-         if (notice.image_id && notice.image_id != 1) {
-            await this.imageRepository.update(notice.image_id, file)
-         } else {
-            let img = await this.imageRepository.create(file)
-            notice = await this.noticeRepository.update(id, { image_id: img.id })
-         }
-
+         await this.imageRepository.update(notice.image_id, file)
       }
 
 
