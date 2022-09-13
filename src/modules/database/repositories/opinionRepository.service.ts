@@ -33,10 +33,12 @@ export class OpinionRepository {
             .limit(data.limit)
             .offset(data.offset)
             .getMany()
-
+        // return sql
         if (sql.length > 0) {
             // if (query != "") query += ' AND '
-            query = `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
+            // query = `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
+            query = ''
+            sql.map(a => { query += query ? ` OR o.id = ${a.id}`: `o.id = ${a.id}`})
 
             return await this.opinionRepository.createQueryBuilder('o')
                 .leftJoinAndSelect('o.opinionTags', 'ot')
