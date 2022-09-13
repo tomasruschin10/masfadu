@@ -23,13 +23,12 @@ export class SubjectRepository {
     async getAll(career): Promise<Subject[] | string> {
         return await this.subjectsRepository.createQueryBuilder('s')
             .innerJoinAndSelect('s.subjectCategory', 'ss')
-            .leftJoinAndSelect('s.userSubject', 'su')
             .where(career ? `ss.career_id = ${career}`:'')
             .getMany()
     }
 
 
-    async getById(id): Promise<Subject | string> {
+    async getById(id): Promise<Subject | any> {
         const subject = await this.subjectsRepository.createQueryBuilder('s')
             .innerJoinAndSelect('s.subjectCategory', 'ss')
             .leftJoinAndSelect('s.userSubject', 'su')

@@ -17,11 +17,11 @@ export class OfferService {
       const offer = await this.offerRepository.create(request)
       if (!offer) throw new BadRequestException(['incorrect data'])     
 
-      return offer;
+      return await this.getById(offer.id);
    }
 
-   async getAll(career, data){
-      const offers = await this.offerRepository.getAll(career, data)
+   async getAll(career?, search?){
+      const offers = await this.offerRepository.getAll(career, search)
       return offers;
    }
 
@@ -39,7 +39,7 @@ export class OfferService {
          await this.imageRepository.update(offer.image_id, file)
       }
 
-      return offer;
+      return await this.getById(offer.id);
    }
 
    async delete(id: number){
@@ -50,12 +50,12 @@ export class OfferService {
       return {statusCode: 200, message: 'removed'}
    }
 
-   async getWorkOffers(career){
+   async getWorkOffers(career?){
       const offers = await this.offerRepository.getWorkOffers(career)
       return offers;
    }
 
-   async getCourseOffers(career){
+   async getCourseOffers(career?){
       const offers = await this.offerRepository.getCourseOffers(career)
       return offers;
    }

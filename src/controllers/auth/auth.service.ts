@@ -9,6 +9,7 @@ import { ImageRepository } from 'src/modules/database/repositories/imageReposito
 import { FirestorageService } from '../firestorage/firestorage.service';
 import { MailerService } from '@nestjs-modules/mailer';
 import { MailPasswordHtml } from 'src/utils/html/mail_password';
+import { MailPasswordCodeHtml } from 'src/utils/html/mail_password_code';
 @Injectable()
 export class AuthService {
    private readonly logger = new WinstonLogger(AuthService.name);
@@ -19,6 +20,7 @@ export class AuthService {
       private readonly imageRepository: ImageRepository,
       private mailerService : MailerService,
       private mailPasswordHtml: MailPasswordHtml,
+      private mailPasswordCodeHtml: MailPasswordCodeHtml,
       private firestorageService: FirestorageService
    ) {}
 
@@ -50,10 +52,14 @@ export class AuthService {
       const user = await this.userRepository.register(request)
       await this.userRoleRepository.saveUserRole(user.id, request.role_id)
 
+      if (!request.uid){
+         await this.update(user.id, {uid: user.id}, null)
+      }
+
       return await this.userRepository.findById(user.id);
    }
 
-   async update(id:number | string, request: IUpdateBody, file){
+   async update(id:number | string, request: IUpdateBody | any, file){
 
       let user = await this.userRepository.update(id, request)
 
@@ -91,10 +97,17 @@ export class AuthService {
       if(!user) throw new HttpException('No existe usuario', HttpStatus.NOT_FOUND)
       let date = (new Date()).toLocaleString('es', {day: 'numeric', month: 'long', year: 'numeric'})
 
-      let token = await bcrytp.hash(`remember${email}${Date.now()}`, 12);
-
       let url = config.get("server.url-web")
-      let html = this.mailPasswordHtml.html
+      let html
+      let token
+      
+      if(user.userRole[0].role_id == 2) {
+         token = (Math.random() + 1).toString(36).substring(7).toUpperCase().substring(0,5);
+         html = this.mailPasswordCodeHtml.html
+      }else{
+         token = await bcrytp.hash(`remember${email}${Date.now()}`, 12);
+         html = this.mailPasswordHtml.html
+      }
 
       html = html.replace(/{{name}}/gi, user.name)
       html = html.replace(/{{token}}/gi, token)

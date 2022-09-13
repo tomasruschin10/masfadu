@@ -20,18 +20,17 @@ export class OfferRepository {
         return offer
     }
 
-    async getAll(career, data): Promise<Offer[] | string> {
+    async getAll(career?, search?): Promise<Offer[] | string> {
         let query = 'o.offer_category_id != 1 AND o.offer_category_id != 2'
-
-        if (data.userData.userRole[0].role_id != 2)
-            query = ''
+        career ? query += ` AND o.career_id = ${career}` : ''
+        search ? query += ` AND (o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')` : ''
 
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} ` : '')
             .where(query)
+            .orderBy('o.id', 'DESC')
             .getMany()
     }
 
@@ -72,21 +71,21 @@ export class OfferRepository {
 
     }
 
-    async getWorkOffers(career): Promise<Offer[] | string> {
+    async getWorkOffers(career?): Promise<Offer[] | string> {
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1')
+            .where(career ? `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1')
             .getMany()
     }
 
-    async getCourseOffers(career): Promise<Offer[] | string> {
+    async getCourseOffers(career?): Promise<Offer[] | string> {
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `oo.career_id = ${career} AND o.offer_category_id = 2` : 'o.offer_category_id = 2')
+            .where(career ? `o.career_id = ${career} AND o.offer_category_id = 2` : 'o.offer_category_id = 2')
             .getMany()
     }
 

@@ -30,7 +30,7 @@ export class ResourceCategoryRepository {
     }
 
 
-    async getById(id): Promise<ResourceCategory | string> {
+    async getById(id): Promise<ResourceCategory | any> {
         const resourceCategory = await this.resourceCategorysRepository.findOne(id)
         if (!resourceCategory) {
             throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 

@@ -20,8 +20,12 @@ export class UserSubjectRepository {
         return userSubject
     }
 
-    async getAll(): Promise<UserSubject[] | string> {
-        return await this.userSubjectsRepository.find();
+    async getAll(id?,career_id?): Promise<UserSubject[] | any> {
+        return await this.userSubjectsRepository.createQueryBuilder('u')
+            .innerJoin('u.subject', 'us')
+            .innerJoin('us.subjectCategory', 'usc')
+            .where(id ? `u.user_id = ${id} AND usc.career_id = ${career_id} `:'')
+            .getMany();
     }
 
 
