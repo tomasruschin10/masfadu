@@ -20,7 +20,7 @@ export class OfferRepository {
         return offer
     }
 
-    async getAll(career, search): Promise<Offer[] | string> {
+    async getAll(career?, search?): Promise<Offer[] | string> {
         let query = 'o.offer_category_id != 1 AND o.offer_category_id != 2'
         career ? query += ` AND o.career_id = ${career}` : ''
         search ? query += ` AND (o.description LIKE '%${search}%')` : ''
@@ -71,7 +71,7 @@ export class OfferRepository {
 
     }
 
-    async getWorkOffers(career): Promise<Offer[] | string> {
+    async getWorkOffers(career?): Promise<Offer[] | string> {
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
@@ -80,7 +80,7 @@ export class OfferRepository {
             .getMany()
     }
 
-    async getCourseOffers(career): Promise<Offer[] | string> {
+    async getCourseOffers(career?): Promise<Offer[] | string> {
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')

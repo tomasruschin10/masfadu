@@ -32,7 +32,7 @@ export class OpinionController {
   @ApiResponse({ status: 200, description: 'Correct', type: opinionDto })
   async getAll(@Query() query: {
      tags: any, student_id: number, subject_id: number,
-     limit: number, offset: number
+     limit: number, offset: number, search: string
     }) {    
     return await this.opinionService.getAll(query);
   }

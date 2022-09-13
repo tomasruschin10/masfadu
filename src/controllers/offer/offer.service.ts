@@ -20,7 +20,7 @@ export class OfferService {
       return await this.getById(offer.id);
    }
 
-   async getAll(career, search?){
+   async getAll(career?, search?){
       const offers = await this.offerRepository.getAll(career, search)
       return offers;
    }
@@ -50,12 +50,12 @@ export class OfferService {
       return {statusCode: 200, message: 'removed'}
    }
 
-   async getWorkOffers(career){
+   async getWorkOffers(career?){
       const offers = await this.offerRepository.getWorkOffers(career)
       return offers;
    }
 
-   async getCourseOffers(career){
+   async getCourseOffers(career?){
       const offers = await this.offerRepository.getCourseOffers(career)
       return offers;
    }
