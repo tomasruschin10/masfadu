@@ -35,8 +35,8 @@ export class OpinionRepository {
             .getMany()
 
         if (sql.length > 0) {
-            if (query != "") query += ' AND '
-            query += `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
+            // if (query != "") query += ' AND '
+            query = `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
 
             return await this.opinionRepository.createQueryBuilder('o')
                 .leftJoinAndSelect('o.opinionTags', 'ot')
