@@ -23,8 +23,37 @@ export class OpinionRepository {
     // proximamente mas de un tag
     //
     async getAll(data): Promise<Opinion[] | any> {
+        let query = this.makeQuery(data)
+        let sql = await this.opinionRepository.createQueryBuilder('o')
+            .leftJoinAndSelect('o.opinionTags', 'ot')
+            .select(['o.id'])
+            .where(query)
+            .distinct(true)
+            .orderBy('o.id', 'DESC')
+            .limit(data.limit)
+            .offset(data.offset)
+            .getMany()
+
+        if (sql.length > 0) {
+            if (query != "") query += ' AND '
+            query += `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
+
+            return await this.opinionRepository.createQueryBuilder('o')
+                .leftJoinAndSelect('o.opinionTags', 'ot')
+                .leftJoinAndSelect('ot.tag', 't')
+                .innerJoinAndSelect('o.subject', 'os')
+                .innerJoinAndSelect('o.student', 's')
+                .innerJoinAndSelect('s.image', 'si')
+                .where(query)
+                .orderBy('o.id', 'DESC')
+                .getMany()
+        }
+        return []
+    }
+
+    makeQuery(data) {
+
         let query = ""
-        //me trae los array como string ¿?
         if (data.tags) {
             query = "("
             for (let tag of data.tags) {
@@ -42,30 +71,11 @@ export class OpinionRepository {
             if (query != "") query += ' AND '
             query += `o.subject_id = ${data.subject_id}`
         }
-
-
-        let sql = await this.opinionRepository.createQueryBuilder('o')
-            .leftJoinAndSelect('o.opinionTags', 'ot')
-            .select(['o.id'])
-            .where(query)
-            .distinct(true)
-            .orderBy('o.id', 'DESC')
-            .limit(data.limit)
-            .offset(data.offset)
-            .getMany()
-
-        if (query != "") query += ' AND '
-        query += `o.id between ${sql[sql.length - 1].id} AND ${sql[0].id}`
-
-        return await this.opinionRepository.createQueryBuilder('o')
-            .leftJoinAndSelect('o.opinionTags', 'ot')
-            .leftJoinAndSelect('ot.tag', 't')
-            .innerJoinAndSelect('o.subject', 'os')
-            .innerJoinAndSelect('o.student', 's')
-            .innerJoinAndSelect('s.image', 'si')
-            .where(query)
-            .orderBy('o.id', 'DESC')
-            .getMany()
+        if (data.search) {
+            if (query != "") query += ' AND '
+            query += `(o.description LIKE '%${data.search}%' OR o.title LIKE '%${data.search}%')`
+        }
+        return query
     }
 
 

@@ -12,7 +12,7 @@ export class OpinionAnswerService {
       private readonly activityRepository: ActivityRepository,
       private readonly userRepository: UserRepository,
       private readonly opinionRepository: OpinionRepository,
-      private readonly sharedService: SharedService,
+      private readonly sharedService: SharedService, 
    ) { }
 
    async create(request: any, user_id: any, header) {
@@ -20,13 +20,13 @@ export class OpinionAnswerService {
       const opinionAnswer = await this.opinionAnswerRepository.create(request)
       if (!opinionAnswer) throw new HttpException('incorrect data', HttpStatus.BAD_REQUEST)
 
-      await this.createActivity(request.opinion_id, header)
+      await this.createActivity(opinionAnswer.id, header)
       return await this.getById(opinionAnswer.id);
    }
    //{ description: 'hola', opinion_id: 2, student_id: 1 }
 
-   async createActivity(opinion_id: any, header: any) {
-      let data = await this.opinionAnswerRepository.getById(opinion_id)
+   async createActivity(answer_opinion_id: any, header: any) {
+      let data = await this.opinionAnswerRepository.getById(answer_opinion_id)
       let recipient_id = data.opinion.student_id
       let recipient_username = data.opinion.student.username
       let sender_id = data.student_id
