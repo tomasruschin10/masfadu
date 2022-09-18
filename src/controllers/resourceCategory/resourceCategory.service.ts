@@ -15,8 +15,8 @@ export class ResourceCategoryService {
       return resourceCategory;
    }
 
-   async getAll(subject){
-      const resourceCategorys = await this.resourceCategoryRepository.getAll(subject)
+   async getAll(data){
+      const resourceCategorys = await this.resourceCategoryRepository.getAll(data)
       return resourceCategorys;
    }
 

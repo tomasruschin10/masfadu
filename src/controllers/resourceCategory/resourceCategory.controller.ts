@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, Query, Headers} from '@nestjs/common';
 
 import { ResourceCategoryService } from './resourceCategory.service';
 import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
@@ -25,11 +25,11 @@ export class ResourceCategoryController {
 
     
     // @UseGuards(JwtAuthGuard)
-    @Get('all/:subject?')
+    @Get('all/')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: resourceCategoryDto})
-    async getAll(@Param('subject') subject: number) {
-      return await this.resourceCategoryService.getAll(subject);
+    async getAll(@Query() data: {subject: number,search: string}) {
+      return await this.resourceCategoryService.getAll(data);
     }
 
     

@@ -74,8 +74,10 @@ export class OfferRepository {
     async getWorkOffers(career, search): Promise<Offer[] | string> {
         let query = ""
         career ? query += `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1'
-        query != "" ? query += ' AND ' : ''
-        search ? query += `(o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')` : ''
+        if (search) {
+            query != "" ? query += ' AND ' : ''
+            query += `(o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')`
+        }
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
@@ -87,8 +89,10 @@ export class OfferRepository {
     async getCourseOffers(career, search): Promise<Offer[] | string> {
         let query = ""
         career ? query += `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1'
-        query != "" ? query += ' AND ' : ''
-        search ? query += `(o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')` : ''
+        if (search) {
+            query != "" ? query += ' AND ' : ''
+            query += `(o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')`
+        }
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
