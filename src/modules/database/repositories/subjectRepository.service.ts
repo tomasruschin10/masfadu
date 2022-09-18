@@ -24,6 +24,7 @@ export class SubjectRepository {
         return await this.subjectsRepository.createQueryBuilder('s')
             .innerJoinAndSelect('s.subjectCategory', 'ss')
             .where(career ? `ss.career_id = ${career}`:'')
+            .loadRelationCountAndMap("s.opinionsCount", "s.opinions")
             .getMany()
     }
 
