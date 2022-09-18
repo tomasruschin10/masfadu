@@ -20,7 +20,7 @@ export class OfferRepository {
         return offer
     }
 
-    async getAll(career?, search?): Promise<Offer[] | string> {
+    async getAll(career, search): Promise<Offer[] | string> {
         let query = 'o.offer_category_id != 1 AND o.offer_category_id != 2'
         career ? query += ` AND o.career_id = ${career}` : ''
         search ? query += ` AND (o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')` : ''
@@ -71,21 +71,29 @@ export class OfferRepository {
 
     }
 
-    async getWorkOffers(career?): Promise<Offer[] | string> {
+    async getWorkOffers(career, search): Promise<Offer[] | string> {
+        let query = ""
+        career ? query += `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1'
+        query != "" ? query += ' AND ' : ''
+        search ? query += `(o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')` : ''
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1')
+            .where(query)
             .getMany()
     }
 
-    async getCourseOffers(career?): Promise<Offer[] | string> {
+    async getCourseOffers(career, search): Promise<Offer[] | string> {
+        let query = ""
+        career ? query += `o.career_id = ${career} AND o.offer_category_id = 1` : 'o.offer_category_id = 1'
+        query != "" ? query += ' AND ' : ''
+        search ? query += `(o.description LIKE '%${search}%' OR o.title LIKE '%${search}%')` : ''
         return await this.offersRepository.createQueryBuilder('o')
             .innerJoinAndSelect('o.offerCategory', 'oo')
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
-            .where(career ? `o.career_id = ${career} AND o.offer_category_id = 2` : 'o.offer_category_id = 2')
+            .where(query)
             .getMany()
     }
 
