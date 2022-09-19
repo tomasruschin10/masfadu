@@ -47,6 +47,7 @@ export class OpinionRepository {
                 .innerJoinAndSelect('o.student', 's')
                 .innerJoinAndSelect('s.image', 'si')
                 .where(query)
+                .loadRelationCountAndMap("o.answersCount", "o.answers")
                 .orderBy('o.id', 'DESC')
                 .getMany()
         }

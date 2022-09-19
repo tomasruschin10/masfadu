@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Moment } from 'moment';
 import { SubjectCategory } from './subjectCategory.entity';
 import { UserSubject } from './userSubject.entity';
+import { Opinion } from './opinion.entity';
 
 @Entity({name:'subjects'})
 export class Subject {
@@ -34,4 +35,11 @@ export class Subject {
       referencedColumnName: 'subject_id'
   })
   userSubject: UserSubject[];
+
+  @OneToMany(() => Opinion, opinions => opinions.subject ,{cascade: true})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'subject_id'
+  })
+  opinions: Opinion[];
 }

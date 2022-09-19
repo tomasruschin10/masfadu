@@ -5,6 +5,7 @@ import { OpinionTag } from './opinionTag.entity';
 import { Tag } from './tag.entity';
 import { User } from './user.entity';
 import { Subject } from './subject.entity';
+import { OpinionAnswer } from './opinionAnswer.entity';
 
 @Entity({ name: 'opinions' })
 export class Opinion {
@@ -46,18 +47,24 @@ export class Opinion {
     })
     opinionTags: OpinionTag[];
 
-    @ManyToOne(() => User, student => student.id, { onDelete: 'CASCADE' })
+    @ManyToOne(() => User, student => student.id, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
     @JoinColumn({
         name: 'student_id',
         referencedColumnName: 'id'
     })
     student: User;
 
-    @ManyToOne(() => Subject, subject => subject.id, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Subject, subject => subject.id, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
     @JoinColumn({
         name: 'subject_id',
         referencedColumnName: 'id'
     })
     subject: Subject;
 
+    @OneToMany(() => OpinionAnswer, answers => answers.opinion, { cascade: true })
+    @JoinColumn({
+        name: 'id',
+        referencedColumnName: 'opinion_id'
+    })
+    answers: OpinionAnswer[];
 }
