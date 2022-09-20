@@ -3,6 +3,7 @@ import { AuthModule } from "src/controllers/auth/auth.module";
 import { BalanceModule } from "src/controllers/balance/balance.module";
 import { CareerModule } from "src/controllers/career/career.module";
 import { FeedbackModule } from "src/controllers/feedback/feedback.module";
+import { LostObjectModule } from "src/controllers/lostObject/lostObject.module";
 import { NoticeModule } from "src/controllers/notice/notice.module";
 import { OfferModule } from "src/controllers/offer/offer.module";
 import { OfferCategoryModule } from "src/controllers/offerCategory/offerCategory.module";
@@ -37,5 +38,6 @@ export const controllers = [
     BalanceModule,
     OpinionModule,
     TagModule,
-    OpinionAnswerModule
+    OpinionAnswerModule,
+    LostObjectModule
 ]
