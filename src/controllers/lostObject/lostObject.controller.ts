@@ -30,12 +30,13 @@ export class LostObjectController {
     return await this.lostObjectService.create(createBody, imageUploaded);
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Get('all/:search?')
   @ApiResponse({ status: 500, description: 'Server Error' })
   @ApiResponse({ status: 200, description: 'Correct', type: lostObjectDto })
-  async getAll(@Param('id') search: string) {
+  async getAll(@Param('search') search) {
+    console.log(search);
+    
     return await this.lostObjectService.getAll(search);
   }
 

@@ -30,8 +30,9 @@ export class LostObjectRepository {
 
 
     async getById(id): Promise<LostObject | string> {
-        const lostObject = await this.lostObjectsRepository.createQueryBuilder('t')
-            .where(`t.id = ${id}`)
+        const lostObject = await this.lostObjectsRepository.createQueryBuilder('l')
+            .leftJoinAndSelect('l.image', 'li')
+            .where(`l.id = ${id}`)
             .getOne()
         if (!lostObject) {
             throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
