@@ -23,6 +23,7 @@ import { Opinion } from 'src/models/opinion.entity';
 import { Tag } from 'src/models/tag.entity';
 import { OpinionTag } from 'src/models/opinionTag.entity';
 import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
+import { LostObject } from 'src/models/lostObject.entity';
 
 export const databaseProviders = [ 
   {
@@ -138,6 +139,11 @@ export const databaseProviders = [
   {
     provide: 'TAG_REPOSITORY',
     useFactory: (connection: Connection) => connection.getRepository(Tag),
+    inject: ['DbConnectionToken'],
+  },
+  {
+    provide: 'LOST_OBJECT_REPOSITORY',
+    useFactory: (connection: Connection) => connection.getRepository(LostObject),
     inject: ['DbConnectionToken'],
   },
 ];
