@@ -23,6 +23,7 @@ export class LostObjectRepository {
     async getAll(search): Promise<LostObject[] | string> {
         return await this.lostObjectsRepository.createQueryBuilder('l')
             .leftJoinAndSelect('l.image', 'li')
+            .leftJoinAndSelect('l.user', 'lu')
             .where(search ? `l.description LIKE '%${search}%' OR l.title LIKE '%${search}%'` : '')
             .orderBy('l.id', 'DESC')
             .getMany()
@@ -32,6 +33,7 @@ export class LostObjectRepository {
     async getById(id): Promise<LostObject | string> {
         const lostObject = await this.lostObjectsRepository.createQueryBuilder('l')
             .leftJoinAndSelect('l.image', 'li')
+            .leftJoinAndSelect('l.user', 'lu')
             .where(`l.id = ${id}`)
             .getOne()
         if (!lostObject) {

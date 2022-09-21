@@ -2,11 +2,15 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { Moment } from 'moment';
 import { Image } from './image.entity';
+import { User } from './user.entity';
 
 @Entity({name:'lost_objects'})
 export class LostObject {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({nullable: true})
+  user_id: number;
 
   @Column({nullable: true})
   title: string;
@@ -31,4 +35,11 @@ export class LostObject {
       referencedColumnName: 'id'
   })
   image: Image;
+
+  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE'})
+  @JoinColumn({
+      name: 'user_id',
+      referencedColumnName: 'id'
+  })
+  user: User;
 }

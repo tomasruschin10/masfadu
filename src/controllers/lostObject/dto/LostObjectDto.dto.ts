@@ -4,6 +4,10 @@ import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 export class lostObjectCreateDto {
     @ApiProperty()
     @IsNotEmpty()
+    user_id:number;
+
+    @ApiProperty()
+    @IsNotEmpty()
     @IsString()
     title: string;
 
@@ -30,6 +34,9 @@ export class lostObjectUpdateDto {
 export class lostObjectDto {
     @ApiProperty()
     id: number;
+
+    @ApiProperty()
+    user_id:number;
 
     @ApiProperty()
     title: string;
