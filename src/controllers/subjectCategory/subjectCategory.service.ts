@@ -50,14 +50,19 @@ export class SubjectCategoryService {
       let points = 0
       let count = 0
       let total = 0
-      let correlations = []
 
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
       for (let i = 0; i < data.length; i++) {
+         delete data[i].created_at
+         delete data[i].updated_at
          for (let j = 0; j < data[i].subject.length; j++) {
+            delete data[i].subject[j].created_at
+            delete data[i].subject[j].updated_at
             total++
             data[i].subject[j].userSubject = userSubjects.find(a => a.subject_id == data[i].subject[j].id)
             if (data[i].subject[j].userSubject) {
+               delete data[i].subject[j].userSubject.created_at
+               delete data[i].subject[j].userSubject.updated_at
                if (data[i].subject[j].userSubject.score >= 4) {
                   on++
                }
@@ -69,22 +74,18 @@ export class SubjectCategoryService {
             if (data[i].subject[j].subject_id) {
                let subject_id = data[i].subject[j].subject_id
                let subjectData
-               subjectData = data.map(category => category.subject.find(subject => subject.id == subject_id))
-               subjectData.map(subject => {
-                  if (subject && subject.userSubject) {
-                     if (subject.userSubject.finish && subject.userSubject.score >= 4) {
-                        correlations.push({
-                           mainSubject_id: subject.id, mainName: subject.name,
-                           subject_id: data[i].subject[j].id, name: data[i].subject[j].name, available: true
-                        })
-                     } else {
-                        correlations.push({
-                           mainSubject_id: subject.id, mainName: subject.name,
-                           subject_id: data[i].subject[j].id, name: data[i].subject[j].name, available: false
-                        })
-                     }
-                  }
+               data.map(category => {
+                  subjectData = category.subject.find(subject => subject.id == subject_id) || subjectData
                })
+               if (subjectData) {
+                  if (subjectData && subjectData.userSubject && subjectData.userSubject.finish && subjectData.userSubject.score >= 4) {
+                     data[i].subject[j].available = true
+                     data[i].subject[j].mainSubject = subjectData.name
+                  }else{
+                     data[i].subject[j].available = false
+                     data[i].subject[j].mainSubject = subjectData.name
+                  }
+               }
             }
          }
       }
@@ -95,7 +96,6 @@ export class SubjectCategoryService {
       res.total = total
       res.on = on
       res.data = data
-      res.correlations = correlations
       return res
    }
 
