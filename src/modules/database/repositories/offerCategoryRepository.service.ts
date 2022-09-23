@@ -21,8 +21,13 @@ export class OfferCategoryRepository {
         return offerCategory
     }
 
-    async getAll(role_id, career_id): Promise<OfferCategory[] | string> {
+    async getAll(role_id, career_id, search): Promise<OfferCategory[] | string> {
+        let where ='o.id != 1 AND o.id != 2'
         let query
+
+        if(career_id) where+=` AND oo.career_id = ${career_id}`
+        if(search) where+=` AND (oo.title LIKE '%${search}%' OR oo.description LIKE '%${search}%')`
+
         if (role_id == 1) {
             query = await this.offerCategorysRepository.createQueryBuilder('o')
                 .getMany()
@@ -31,7 +36,7 @@ export class OfferCategoryRepository {
                 .leftJoinAndSelect('o.offers', 'oo')
                 .leftJoinAndSelect('oo.image', 'ooi')
                 .leftJoinAndSelect('oo.partner', 'oop')
-                .where(career_id ? `oo.career_id = ${career_id} AND o.id != 1 AND o.id != 2`:'o.id != 1 AND o.id != 2')
+                .where(where)
                 .getMany()
         }
 

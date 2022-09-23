@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, Headers} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, Headers, Query} from '@nestjs/common';
 
 import { OfferCategoryService } from './offerCategory.service';
 import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
@@ -29,9 +29,9 @@ export class OfferCategoryController {
     @Get('all')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: offerCategoryDto})
-    async getAll(@Headers() header) {
+    async getAll(@Headers() header, @Query() query: {search: string}) {
       const data : any = jwt.decode(header.authorization.replace('Bearer ', ''));
-      return await this.offerCategoryService.getAll(data.userData.userRole[0].role_id, data.userData.career_id);
+      return await this.offerCategoryService.getAll(data.userData.userRole[0].role_id, data.userData.career_id, query.search);
     }
 
     

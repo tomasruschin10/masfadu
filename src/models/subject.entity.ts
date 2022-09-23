@@ -9,6 +9,9 @@ export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({nullable: true})
+  subject_id: number;
+
   @Column()
   name: string;
 
@@ -28,6 +31,13 @@ export class Subject {
       referencedColumnName: 'id'
   })
   subjectCategory: SubjectCategory;
+
+  @ManyToOne(() => Subject, subject => subject.id ,{cascade: true})
+  @JoinColumn({
+      name: 'subject_id',
+      referencedColumnName: 'id'
+  })
+  subject: Subject;
 
   @OneToMany(() => UserSubject, userSubject => userSubject.subject ,{cascade: true})
   @JoinColumn({

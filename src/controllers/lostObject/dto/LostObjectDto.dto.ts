@@ -3,7 +3,6 @@ import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class lostObjectCreateDto {
     @ApiProperty()
-    @IsNotEmpty()
     user_id:number;
 
     @ApiProperty()
