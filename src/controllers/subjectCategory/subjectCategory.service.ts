@@ -71,11 +71,17 @@ export class SubjectCategoryService {
                let subjectData
                subjectData = data.map(category => category.subject.find(subject => subject.id == subject_id))
                subjectData.map(subject => {
-                  if (subject) {
+                  if (subject && subject.userSubject) {
                      if (subject.userSubject.finish && subject.userSubject.score >= 4) {
-                        correlations.push({ mainSubject_id: subject.id, mainName: subject.name, subject_id: data[i].subject[j].id, name: data[i].subject[j].name, available: true })
+                        correlations.push({
+                           mainSubject_id: subject.id, mainName: subject.name,
+                           subject_id: data[i].subject[j].id, name: data[i].subject[j].name, available: true
+                        })
                      } else {
-                        correlations.push({ mainSubject_id: subject.id, mainName: subject.name, subject_id: data[i].subject[j].id, name: data[i].subject[j].name, available: false })
+                        correlations.push({
+                           mainSubject_id: subject.id, mainName: subject.name,
+                           subject_id: data[i].subject[j].id, name: data[i].subject[j].name, available: false
+                        })
                      }
                   }
                })
