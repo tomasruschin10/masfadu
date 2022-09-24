@@ -52,6 +52,7 @@ export class SubjectCategoryService {
       let total = 0
 
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
+      data[0].available = true
       for (let i = 0; i < data.length; i++) {
          let allFinished = true
          delete data[i].created_at
@@ -98,9 +99,11 @@ export class SubjectCategoryService {
                }
             }
          }
-         data[i].finish = allFinished
-         if (data[i].finish && parseFloat((points / count).toFixed(2)) < 4) {
-            data[i].finish = false
+         if (parseFloat((points / count).toFixed(2)) < 4) {
+            allFinished = false
+         }
+         if ( i + 1 < data.length) {
+            data[i + 1].available = allFinished
          }
       }
 
