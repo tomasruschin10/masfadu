@@ -99,6 +99,9 @@ export class SubjectCategoryService {
             }
          }
          data[i].finish = allFinished
+         if (data[i].finish && parseFloat((points / count).toFixed(2)) < 4) {
+            data[i].finish = false
+         }
       }
 
       if (points && count) {
