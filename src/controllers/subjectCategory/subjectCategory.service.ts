@@ -52,7 +52,9 @@ export class SubjectCategoryService {
       let total = 0
 
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
+      data[0].available = true
       for (let i = 0; i < data.length; i++) {
+         let allFinished = true
          delete data[i].created_at
          delete data[i].updated_at
          for (let j = 0; j < data[i].subject.length; j++) {
@@ -71,9 +73,12 @@ export class SubjectCategoryService {
                   points += data[i].subject[j].userSubject.score
                }
             }
+            if ((!data[i].subject[j].userSubject || data[i].subject[j].userSubject.finish == false) && allFinished) {
+               allFinished = false
+            }
+            let subjectData
             if (data[i].subject[j].subject_id) {
                let subject_id = data[i].subject[j].subject_id
-               let subjectData
                data.map(category => {
                   subjectData = category.subject.find(subject => subject.id == subject_id) || subjectData
                })
@@ -81,12 +86,24 @@ export class SubjectCategoryService {
                   if (subjectData && subjectData.userSubject && subjectData.userSubject.finish && subjectData.userSubject.score >= 4) {
                      data[i].subject[j].available = true
                      data[i].subject[j].mainSubject = subjectData.name
-                  }else{
-                     data[i].subject[j].available = false
+                  } else {
                      data[i].subject[j].mainSubject = subjectData.name
+                     data[i].subject[j].available = false
                   }
                }
+            } else {
+               if ((i > 1 && data[i - 1].finish && !data[i].subject[j].available) || i == 0) {
+                  data[i].subject[j].available = true
+               } else {
+                  data[i].subject[j].available = false
+               }
             }
+         }
+         if (parseFloat((points / count).toFixed(2)) < 4) {
+            allFinished = false
+         }
+         if ( i + 1 < data.length) {
+            data[i + 1].available = allFinished
          }
       }
 
