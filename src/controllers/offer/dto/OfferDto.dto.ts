@@ -8,6 +8,9 @@ export class offerCreateDto {
     title: string;
 
     @ApiProperty()
+    point: number;
+
+    @ApiProperty()
     @IsNotEmpty()
     offer_category_id: number;
 
@@ -38,6 +41,9 @@ export class offerUpdateDto {
     title: string;
 
     @ApiProperty()
+    point: number;
+
+    @ApiProperty()
     offer_category_id: number;
 
     @ApiProperty()
@@ -62,6 +68,9 @@ export class offerDto {
 
     @ApiProperty()
     title: string;
+
+    @ApiProperty()
+    point: number;
 
     @ApiProperty()
     offer_category_id: number;
