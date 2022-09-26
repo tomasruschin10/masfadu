@@ -17,7 +17,7 @@ export class AdvertisementService {
       const advertisement = await this.advertisementRepository.create(request)
       if (!advertisement) throw new BadRequestException(['incorrect data'])     
 
-      return advertisement;
+      return await this.advertisementRepository.getById(advertisement.id);
    }
 
    async getAll(active){
@@ -39,7 +39,7 @@ export class AdvertisementService {
          await this.imageRepository.update(advertisement.image_id, file)
       }
 
-      return advertisement;
+      return await this.advertisementRepository.getById(advertisement.id);
    }
 
    async delete(id: number){

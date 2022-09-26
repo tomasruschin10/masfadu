@@ -3,7 +3,7 @@ import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Respons
 import { SubjectService } from './subject.service';
 import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { subjectBody } from './interfaces/subject.interfaces';
+import { subjectBody, subjectUpdateBody } from './interfaces/subject.interfaces';
 import { subjectDto, subjectCreateDto, subjectUpdateDto } from './dto/SubjectDto.dto';
 import * as jwt from 'jsonwebtoken';
 
@@ -47,15 +47,15 @@ export class SubjectController {
 
     
     @UseGuards(JwtAuthGuard)
-    @Put('update/:id')
+    @Put('update')
     @ApiParam({name: 'id', required: true, description: 'Record Identifier'})
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 400, description: 'Incorrect Data'})
     @ApiResponse({status: 404, description: 'Record not found'})
     @ApiResponse({status: 200, description: 'Updated Registration', type: subjectDto})
-    async update(@Param('id', ParseIntPipe) id: number, @Body() req : subjectUpdateDto) {
-      const updateBody: subjectBody = req;
-      return await this.subjectService.update(id, updateBody);
+    async update(@Body() req : subjectUpdateDto) {
+      const updateBody: subjectUpdateBody = req;
+      return await this.subjectService.update(updateBody);
     }
 
     

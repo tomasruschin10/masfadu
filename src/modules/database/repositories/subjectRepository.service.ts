@@ -64,4 +64,15 @@ export class SubjectRepository {
 
     }
 
+    async deleteMany(data): Promise<any> {
+        try {
+            await this.subjectsRepository.createQueryBuilder().delete().where(`id IN(${data})`).execute()
+        } catch (error) {
+            
+        }
+
+        return 'success';
+
+    }
+
 }

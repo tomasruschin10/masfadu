@@ -16,7 +16,7 @@ export class NoticeService {
       const notice = await this.noticeRepository.create(request)
       if (!notice) throw new BadRequestException(['incorrect data'])
 
-      return notice;
+      return await this.noticeRepository.getById(notice.id);
    }
 
    async getAll(active) {
@@ -37,7 +37,7 @@ export class NoticeService {
       }
 
 
-      return notice;
+      return await this.noticeRepository.getById(notice.id);
    }
 
    async delete(id: number) {

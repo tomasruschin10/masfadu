@@ -32,7 +32,7 @@ export class Subject {
   })
   subjectCategory: SubjectCategory;
 
-  @ManyToOne(() => Subject, subject => subject.id ,{cascade: true})
+  @ManyToOne(() => Subject, subject => subject.id , {onDelete: 'CASCADE'})
   @JoinColumn({
       name: 'subject_id',
       referencedColumnName: 'id'
