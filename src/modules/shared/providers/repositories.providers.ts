@@ -21,6 +21,7 @@ import { OpinionTagRepository } from 'src/modules/database/repositories/opinionT
 import { TagRepository } from 'src/modules/database/repositories/tagRepository.service';
 import { BalanceRepository } from 'src/modules/database/repositories/balanceRepository.service';
 import { OpinionAnswerRepository } from 'src/modules/database/repositories/opinionAnswerRepository.service';
+import { LostObjectRepository } from 'src/modules/database/repositories/lostObjectRepository.service';
 export const repositories = [
     UserRepository,
     UserRoleRepository,
@@ -45,5 +46,5 @@ export const repositories = [
     TagRepository,
     OpinionTagRepository,
     OpinionAnswerRepository,
-
+    LostObjectRepository
 ]

@@ -29,7 +29,7 @@ export class Balance {
 
     //relations
 
-    @ManyToOne(() => Offer, offer => offer.id, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Offer, offer => offer.id, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
     @JoinColumn({
         name: 'offer_id',
         referencedColumnName: 'id'

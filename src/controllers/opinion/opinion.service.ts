@@ -22,7 +22,6 @@ export class OpinionService {
       request.student_id = user_id
       var opinion = await this.opinionRepository.create(request)
       if (!opinion) throw new BadRequestException(['incorrect data'])
-
       let oldTag = [0]
       for (let tag of tags) {
          if (!oldTag.some(a => a == tag.id))
@@ -52,8 +51,11 @@ export class OpinionService {
    }
 
    async addTags(tag: any, opinion_id: any) {
+      if (tag.id && !await this.tagRepository.findTag(tag.id)) return "not existent id"
+      let tagByName = await this.tagRepository.findTag(tag.name.toUpperCase())
+      if (tag.name && tagByName) tag.id = (await this.tagRepository.findTag(tag.name.toUpperCase())).id
       if (!tag.id) {
-         let newTag = await this.tagRepository.create({ name: tag.name })
+         let newTag = await this.tagRepository.create({ name: tag.name.toUpperCase() })
          tag.id = newTag.id
       }
       tag = await this.opinionTagRepository.create(opinion_id, tag.id)

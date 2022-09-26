@@ -1,24 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class subjectCreateDto {
     @ApiProperty()
+    @IsArray()
     @IsNotEmpty()
-    @IsString()
-    name: string;
-
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsNumber()
-    subject_category_id: number;
+    data: Array<subjectBody>
 } 
 
 export class subjectUpdateDto {
     @ApiProperty()
-    name: string;
+    @IsArray()
+    data: Array<subjectBody>
 
     @ApiProperty()
-    subject_category_id: number;
+    @IsArray()
+    deleteData: Array<number>
 } 
 
 export class subjectDto {
@@ -36,4 +33,18 @@ export class subjectDto {
 
     @ApiProperty()
     updated_at: Date
+}
+
+class subjectBody {
+    @ApiProperty()
+    name: string
+
+    @ApiProperty()
+    subject_category_id: number
+
+    @ApiProperty()
+    subject_id: number
+
+    @ApiProperty()
+    subject_key: number
 }

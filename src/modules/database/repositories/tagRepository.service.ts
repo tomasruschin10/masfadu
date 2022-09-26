@@ -20,15 +20,21 @@ export class TagRepository {
         return tag
     }
 
+    async findTag(tag: string): Promise<Tag> {
+        return this.tagsRepository.createQueryBuilder('t')
+            .where(`t.name = '${tag}' OR t.id = '${tag}'`)
+            .getOne();
+    }
+
     async getAll(): Promise<Tag[] | string> {
-        return await this.tagsRepository.createQueryBuilder('c')
+        return await this.tagsRepository.createQueryBuilder('t')
             .getMany()
     }
 
 
     async getById(id): Promise<Tag | string> {
-        const tag = await this.tagsRepository.createQueryBuilder('c')
-            .where(`c.id = ${id}`)
+        const tag = await this.tagsRepository.createQueryBuilder('t')
+            .where(`t.id = ${id}`)
             .getOne()
         if (!tag) {
             throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
@@ -36,9 +42,6 @@ export class TagRepository {
         return tag;
     }
 
-    async findTag(id): Promise<Tag | string> {
-        return await this.tagsRepository.findOne(id)
-    }
 
 
     async update(id: number, request): Promise<any> {

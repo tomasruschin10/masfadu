@@ -2,11 +2,15 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Moment } from 'moment';
 import { SubjectCategory } from './subjectCategory.entity';
 import { UserSubject } from './userSubject.entity';
+import { Opinion } from './opinion.entity';
 
 @Entity({name:'subjects'})
 export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({nullable: true})
+  subject_id: number;
 
   @Column()
   name: string;
@@ -28,10 +32,24 @@ export class Subject {
   })
   subjectCategory: SubjectCategory;
 
+  @ManyToOne(() => Subject, subject => subject.id , {onDelete: 'CASCADE'})
+  @JoinColumn({
+      name: 'subject_id',
+      referencedColumnName: 'id'
+  })
+  subject: Subject;
+
   @OneToMany(() => UserSubject, userSubject => userSubject.subject ,{cascade: true})
   @JoinColumn({
       name: 'id',
       referencedColumnName: 'subject_id'
   })
   userSubject: UserSubject[];
+
+  @OneToMany(() => Opinion, opinions => opinions.subject ,{cascade: true})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'subject_id'
+  })
+  opinions: Opinion[];
 }

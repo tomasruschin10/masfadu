@@ -28,14 +28,14 @@ export class OpinionAnswer {
     
     // Relations
 
-    @ManyToOne(() => Opinion, opinion => opinion.id, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Opinion, opinion => opinion.id, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
     @JoinColumn({
         name: 'opinion_id',
         referencedColumnName: 'id'
     })
     opinion: Opinion;
 
-    @ManyToOne(() => User, student => student.id, { onDelete: 'CASCADE' })
+    @ManyToOne(() => User, student => student.id, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
     @JoinColumn({
         name: 'student_id',
         referencedColumnName: 'id'

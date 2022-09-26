@@ -23,7 +23,7 @@ export class NoticeRepository {
     async getAll(active): Promise<Notice[] | string> {
         let date = new Date(Date.now()).toISOString()
         return await this.noticesRepository.createQueryBuilder('n')
-            // .innerJoinAndSelect('n.image', 'ni')
+            .innerJoinAndSelect('n.image', 'ni')
             .where(active && active == 'active' ? `n.date_start <= '${date}' && n.date_end >= '${date}'`:'')
             .orderBy('n.id', 'DESC')
             .getMany()
@@ -32,7 +32,7 @@ export class NoticeRepository {
 
     async getById(id): Promise<Notice | string> {
         const notice = await this.noticesRepository.createQueryBuilder('n')
-            // .innerJoinAndSelect('n.image', 'ni')
+            .innerJoinAndSelect('n.image', 'ni')
             .where(`n.id = ${id}`)
             .getOne()
         if (!notice) {

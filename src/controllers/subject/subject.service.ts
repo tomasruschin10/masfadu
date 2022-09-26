@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, HttpException, BadRequestException } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { SubjectRepository } from '../../modules/database/repositories/subjectRepository.service';
 @Injectable()
 export class SubjectService {
@@ -8,11 +8,21 @@ export class SubjectService {
     ) {}
 
     async create(request: any){
+      let created = {}
+      for (let i = 0; i < request.data.length; i++) {
+         let body: any = {
+            name: request.data[i].name,
+            subject_category_id: request.data[i].subject_category_id
+         }
+         if (request.data[i].subject_key || request.data[i].subject_key == 0) {
+            body.subject_id = created[`${request.data[i].subject_key}`].id
+         }
 
-      const subject = await this.subjectRepository.create(request)
-      if (!subject) throw new BadRequestException(['incorrect data'])     
+         let subject = await this.subjectRepository.create(body) 
+         created[`${i}`] = subject
+      }  
 
-      return subject;
+      return {statusCode: HttpStatus.OK, message: created};
    }
 
    async getAll(career){
@@ -25,9 +35,27 @@ export class SubjectService {
       return subject;
    }
 
-   async update(id:number, request: any){
+   async update(request: any){
+      let created = {}
+      let subject
+      for (let i = 0; i < request.data.length; i++) {
+         let body: any = {
+            name: request.data[i].name,
+            subject_category_id: request.data[i].subject_category_id,
+            subject_id : request.data[i].subject_id
+         }
+         if ((request.data[i].subject_key || request.data[i].subject_key == 0) && !body.subject_id) {
+            body.subject_id = created[`${request.data[i].subject_key}`].id
+         }
+         if (request.data[i].id) {
+            subject = await this.subjectRepository.update(request.data[i].id, body)
+         }else{
+            subject = await this.subjectRepository.create(body) 
+         }
+         created[`${i}`] = subject
+      }
 
-      const subject = await this.subjectRepository.update(id, request)
+      await this.subjectRepository.deleteMany(request.deleteData)
 
       return subject;
    }

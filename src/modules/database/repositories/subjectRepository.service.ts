@@ -24,6 +24,7 @@ export class SubjectRepository {
         return await this.subjectsRepository.createQueryBuilder('s')
             .innerJoinAndSelect('s.subjectCategory', 'ss')
             .where(career ? `ss.career_id = ${career}`:'')
+            .loadRelationCountAndMap("s.opinionsCount", "s.opinions")
             .getMany()
     }
 
@@ -60,6 +61,17 @@ export class SubjectRepository {
         await this.subjectsRepository.delete(subject.id);
 
         return subject;
+
+    }
+
+    async deleteMany(data): Promise<any> {
+        try {
+            await this.subjectsRepository.createQueryBuilder().delete().where(`id IN(${data})`).execute()
+        } catch (error) {
+            
+        }
+
+        return 'success';
 
     }
 

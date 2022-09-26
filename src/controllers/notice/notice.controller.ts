@@ -61,7 +61,8 @@ export class NoticeController {
     @UseInterceptors(FileInterceptor('image'))
     async update(@Param('id', ParseIntPipe) id: number, @Body() req : noticeUpdateDto,@UploadedFile() file: Express.Multer.File) {
       const updateBody: noticeBody = req;
-      let fileUploaded = await this.uploadFile(file)
+      let fileUploaded
+      if (file) fileUploaded = await this.uploadFile(file)
       return await this.noticeService.update(id, updateBody, fileUploaded);
     }
 

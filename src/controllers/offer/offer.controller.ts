@@ -79,18 +79,18 @@ export class OfferController {
     @Get('all/work')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: offerDto})
-    async getWorkOffers(@Headers() header) {
+    async getWorkOffers(@Headers() header, @Query() query: {search: string}) {
       const data : any = jwt.decode(header.authorization.replace('Bearer ', ''));
-      return await this.offerService.getWorkOffers(data.userData.career_id);
+      return await this.offerService.getWorkOffers(data.userData.career_id, query.search);
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('all/course')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: offerDto})
-    async getCourseOffers(@Headers() header) {
+    async getCourseOffers(@Headers() header, @Query() query: {search: string}) {
       const data : any = jwt.decode(header.authorization.replace('Bearer ', ''));
-      return await this.offerService.getCourseOffers(data.userData.career_id);
+      return await this.offerService.getCourseOffers(data.userData.career_id, query.search);
     }
 
     async uploadFile(file) {

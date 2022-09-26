@@ -15,8 +15,8 @@ export class OfferCategoryService {
       return offerCategory;
    }
 
-   async getAll(role_id, career_id){
-      const offerCategorys = await this.offerCategoryRepository.getAll(role_id, career_id)
+   async getAll(role_id, career_id, search){
+      const offerCategorys = await this.offerCategoryRepository.getAll(role_id, career_id, search)
       return offerCategorys;
    }
 
