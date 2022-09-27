@@ -24,6 +24,8 @@ export class AdvertisementRepository {
         let date = new Date(Date.now()).toISOString()
         return await this.advertisementsRepository.createQueryBuilder('a')
             .innerJoinAndSelect('a.image', 'ai')
+            .innerJoinAndSelect('a.partner', 'ap')
+            .innerJoinAndSelect('a.career', 'ac')
             .where(active && active == 'active' ? `a.date_start <= '${date}' && a.date_end >= '${date}'`:'')
             .orderBy('a.id', 'DESC')
             .getMany()
@@ -33,6 +35,8 @@ export class AdvertisementRepository {
     async getById(id): Promise<Advertisement | string> {
         const advertisement = await this.advertisementsRepository.createQueryBuilder('a')
             .innerJoinAndSelect('a.image', 'ai')
+            .innerJoinAndSelect('a.partner', 'ap')
+            .innerJoinAndSelect('a.career', 'ac')
             .where(`a.id = ${id}`)
             .getOne()
         if (!advertisement) {
