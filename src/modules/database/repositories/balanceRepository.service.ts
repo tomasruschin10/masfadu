@@ -28,6 +28,7 @@ export class BalanceRepository {
             .leftJoinAndSelect('co.partner', 'cop')
             .leftJoinAndSelect('co.offerCategory', 'coo')
             .where(id ? `co.partner_id = ${id}` : '')
+            .orderBy('c.id', 'DESC')
             .getMany()
         
         let total = await this.conection.query(`SELECT sum(c.amount) as total from balances as c inner join offers as co on co.id = c.offer_id ${id ? `where co.partner_id = ${id}` : ''}`)

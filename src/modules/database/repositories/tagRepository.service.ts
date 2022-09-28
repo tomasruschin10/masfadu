@@ -28,6 +28,7 @@ export class TagRepository {
 
     async getAll(): Promise<Tag[] | string> {
         return await this.tagsRepository.createQueryBuilder('t')
+            .orderBy('t.id', 'DESC')
             .getMany()
     }
 

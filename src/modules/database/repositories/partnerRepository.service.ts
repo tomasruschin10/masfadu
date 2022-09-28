@@ -21,7 +21,9 @@ export class PartnerRepository {
     }
 
     async getAll(): Promise<Partner[] | string> {
-        return await this.partnersRepository.find();
+        return await this.partnersRepository.createQueryBuilder('p')
+        .orderBy('p.id', 'DESC')
+        .getMany()
     }
 
 

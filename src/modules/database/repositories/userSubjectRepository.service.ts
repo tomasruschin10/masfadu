@@ -25,6 +25,7 @@ export class UserSubjectRepository {
             .innerJoin('u.subject', 'us')
             .innerJoin('us.subjectCategory', 'usc')
             .where(id ? `u.user_id = ${id} AND usc.career_id = ${career_id} `:'')
+            .orderBy('u.id', 'DESC')
             .getMany();
     }
 

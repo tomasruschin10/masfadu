@@ -23,6 +23,7 @@ export class CareerRepository {
     async getAll(): Promise<Career[] | string> {
         return await this.careersRepository.createQueryBuilder('c')
             .innerJoinAndSelect('c.image', 'ci')
+            .orderBy('c.id', 'DESC')
             .getMany()
     }
 

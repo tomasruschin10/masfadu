@@ -81,6 +81,7 @@ export class OfferRepository {
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
             .where(query)
+            .orderBy('o.id', 'DESC')
             .getMany()
     }
 
@@ -94,6 +95,7 @@ export class OfferRepository {
             .leftJoinAndSelect('o.image', 'oi')
             .leftJoinAndSelect('o.partner', 'op')
             .where(query)
+            .orderBy('o.id', 'DESC')
             .getMany()
     }
 }

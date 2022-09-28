@@ -25,6 +25,7 @@ export class ResourceRepository {
             .innerJoinAndSelect('r.user', 'ru')
             .innerJoinAndSelect('r.image', 'ri')
             .innerJoinAndSelect('r.resourceCategory', 'rr')
+            .orderBy('r.id', 'DESC')
             .getMany()
     }
 

@@ -25,6 +25,7 @@ export class SubjectRepository {
             .innerJoinAndSelect('s.subjectCategory', 'ss')
             .where(career ? `ss.career_id = ${career}`:'')
             .loadRelationCountAndMap("s.opinionsCount", "s.opinions")
+            .orderBy('s.id', 'DESC')
             .getMany()
     }
 
