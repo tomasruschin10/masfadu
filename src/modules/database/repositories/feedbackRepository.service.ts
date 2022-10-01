@@ -23,6 +23,7 @@ export class FeedbackRepository {
     async getAll(): Promise<Feedback[] | string> {
         return await this.feedbacksRepository.createQueryBuilder('f')
             .innerJoinAndSelect('f.user', 'fu')
+            .orderBy('f.id', 'DESC')
             .getMany()
     }
 
