@@ -39,7 +39,7 @@ export class OfferController {
     }
 
     
-    @UseGuards(JwtAuthGuard)
+    //@UseGuards(JwtAuthGuard)
     @Get(':id')
     @ApiParam({name: 'id', required: true, description: 'Record Identifier'})
     @ApiResponse ({status: 500, description: 'Server Error'})
