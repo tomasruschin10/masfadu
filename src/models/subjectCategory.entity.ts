@@ -22,7 +22,7 @@ export class SubjectCategory {
 
   //relations
 
-  @ManyToOne(() => Career, career => career.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Career, career => career.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'career_id',
       referencedColumnName: 'id'

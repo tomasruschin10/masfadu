@@ -35,21 +35,21 @@ export class Advertisement {
   updated_at: Moment
 
   //relations
-  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'image_id',
       referencedColumnName: 'id'
   })
   image: Image;
 
-  @ManyToOne(() => Career, career => career.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Career, career => career.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'career_id',
       referencedColumnName: 'id'
   })
   career: Career;
 
-  @ManyToOne(() => Partner, partner => partner.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Partner, partner => partner.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'partner_id',
       referencedColumnName: 'id'
