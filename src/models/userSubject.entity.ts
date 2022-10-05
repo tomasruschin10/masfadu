@@ -3,6 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Moment } from 'moment';
 import { User } from './user.entity';
 import { Subject } from './subject.entity';
+import { ExtraScore } from './extraScore.entity';
 
 @Entity({name:'user_subjects'})
 export class UserSubject {
@@ -28,17 +29,24 @@ export class UserSubject {
   updated_at: Moment
 
   //relations
-  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'user_id',
       referencedColumnName: 'id'
   })
   user: User;
 
-  @ManyToOne(() => Subject, subject => subject.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Subject, subject => subject.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'subject_id',
       referencedColumnName: 'id'
   })
   subject: Subject;
+
+  @OneToMany(() => ExtraScore, extra_score => extra_score.user_subject, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'extra_score_id'
+  })
+  extra_score: ExtraScore[];
 }

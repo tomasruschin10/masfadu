@@ -22,6 +22,7 @@ export class UserSubjectRepository {
 
     async getAll(id?,career_id?): Promise<UserSubject[] | any> {
         return await this.userSubjectsRepository.createQueryBuilder('u')
+            .leftJoinAndSelect('u.extra_score', 'ue')
             .innerJoin('u.subject', 'us')
             .innerJoin('us.subjectCategory', 'usc')
             .where(id ? `u.user_id = ${id} AND usc.career_id = ${career_id} `:'')

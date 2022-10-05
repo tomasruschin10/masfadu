@@ -27,7 +27,7 @@ export class Activity {
   updated_at: Moment
 
   //relations
-  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'user_id',
       referencedColumnName: 'id'

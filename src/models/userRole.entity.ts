@@ -24,7 +24,7 @@ export class UserRole {
 
   //relations
 
-  @ManyToOne(() => User, user => user.userRole , {onDelete: 'CASCADE'})
+  @ManyToOne(() => User, user => user.userRole , {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'user_id',
       referencedColumnName: 'id'
