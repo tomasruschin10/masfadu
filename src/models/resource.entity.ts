@@ -33,28 +33,28 @@ export class Resource {
   updated_at: Moment
 
   //relations
-  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'user_id',
       referencedColumnName: 'id'
   })
   user: User;
 
-  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'image_id',
       referencedColumnName: 'id'
   })
   image: Image;
 
-  @ManyToOne(() => Subject, subject => subject.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Subject, subject => subject.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'subject_id',
       referencedColumnName: 'id'
   })
   subject: Subject;
 
-  @ManyToOne(() => ResourceCategory, resourceCategory => resourceCategory.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => ResourceCategory, resourceCategory => resourceCategory.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'resource_category_id',
       referencedColumnName: 'id'

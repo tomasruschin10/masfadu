@@ -29,14 +29,14 @@ export class LostObject {
 
 //   //relations
 
-  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'image_id',
       referencedColumnName: 'id'
   })
   image: Image;
 
-  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => User, user => user.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'user_id',
       referencedColumnName: 'id'
