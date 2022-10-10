@@ -15,7 +15,7 @@ export class Subject {
   @Column()
   name: string;
 
-  @Column()
+  @Column({nullable: true})
   info: string;
 
   @Column()
