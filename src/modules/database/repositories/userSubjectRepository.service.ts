@@ -41,12 +41,14 @@ export class UserSubjectRepository {
 
 
     async update(id: number, request): Promise<any> {
-        let userSubject = await this.userSubjectsRepository.findOne(id);
+        // console.log(request)
+        let userSubject: any = await this.userSubjectsRepository.findOne(id);
         if (!userSubject)
             throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
         
+        if (request.score == 0) userSubject.score = 0
         userSubject = await this.sharedService.updateObject(userSubject, request)
-
+        // console.log(userSubject)
         await this.userSubjectsRepository.save(userSubject);
 
         return userSubject;
