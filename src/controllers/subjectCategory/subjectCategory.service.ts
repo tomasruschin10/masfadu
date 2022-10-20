@@ -68,7 +68,7 @@ export class SubjectCategoryService {
                if (data[i].subject[j].userSubject.score >= 4) {
                   on++
                }
-               if (data[i].subject[j].userSubject.score) {
+               if (data[i].subject[j].userSubject.score != 0) {
                   count++
                   points += data[i].subject[j].userSubject.score
                }

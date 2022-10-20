@@ -8,7 +8,7 @@ export class UserSubjectService {
     ) {}
 
     async create(request: any){
-
+      if (request.score && request.score >= 4) request.finish = 1
       const userSubject = await this.userSubjectRepository.create(request)
       if (!userSubject) throw new BadRequestException(['incorrect data'])     
 
@@ -26,7 +26,7 @@ export class UserSubjectService {
    }
 
    async update(id:number, request: any){
-
+      if (request.score && request.score >= 4) request.finish = 1
       const userSubject = await this.userSubjectRepository.update(id, request)
 
       return userSubject;
