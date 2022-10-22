@@ -83,7 +83,7 @@ export class SubjectCategoryService {
                   subjectData = category.subject.find(subject => subject.id == subject_id) || subjectData
                })
                if (subjectData) {
-                  if (subjectData && subjectData.userSubject && subjectData.userSubject.finish && subjectData.userSubject.score >= 4) {
+                  if (subjectData.userSubject?.finish && subjectData.userSubject.score >= 4) {
                      data[i].subject[j].available = true
                      data[i].subject[j].mainSubject = subjectData.name
                   } else {
@@ -92,7 +92,7 @@ export class SubjectCategoryService {
                   }
                }
             } else {
-               if ((i > 1 && data[i - 1].finish && !data[i].subject[j].available) || i == 0) {
+               if ((i > 0 && data[i].available ) || i == 0) {
                   data[i].subject[j].available = true
                } else {
                   data[i].subject[j].available = false
