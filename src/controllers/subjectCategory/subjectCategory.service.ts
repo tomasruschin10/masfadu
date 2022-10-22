@@ -52,6 +52,11 @@ export class SubjectCategoryService {
       let total = 0
 
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
+      data.map((category, i) => {
+         category.subject.map((subject, j) => {
+            data[i].subject[j].userSubject = userSubjects.find(a => a.subject_id == subject.id)
+         })
+      })    
       data[0].available = true
       for (let i = 0; i < data.length; i++) {
          let allFinished = true
@@ -61,7 +66,6 @@ export class SubjectCategoryService {
             delete data[i].subject[j].created_at
             delete data[i].subject[j].updated_at
             total++
-            data[i].subject[j].userSubject = userSubjects.find(a => a.subject_id == data[i].subject[j].id)
             if (data[i].subject[j].userSubject) {
                delete data[i].subject[j].userSubject.created_at
                delete data[i].subject[j].userSubject.updated_at
@@ -83,16 +87,15 @@ export class SubjectCategoryService {
                   subjectData = category.subject.find(subject => subject.id == subject_id) || subjectData
                })
                if (subjectData) {
+                  data[i].subject[j].mainSubject = subjectData.name
                   if (subjectData.userSubject?.finish && subjectData.userSubject.score >= 4) {
                      data[i].subject[j].available = true
-                     data[i].subject[j].mainSubject = subjectData.name
                   } else {
-                     data[i].subject[j].mainSubject = subjectData.name
                      data[i].subject[j].available = false
                   }
                }
             } else {
-               if ((i > 0 && data[i].available ) || i == 0) {
+               if ((i > 0 && data[i].available) || i == 0) {
                   data[i].subject[j].available = true
                } else {
                   data[i].subject[j].available = false
@@ -102,7 +105,7 @@ export class SubjectCategoryService {
          if (parseFloat((points / count).toFixed(2)) < 4) {
             allFinished = false
          }
-         if ( i + 1 < data.length) {
+         if (i + 1 < data.length) {
             data[i + 1].available = allFinished
          }
       }
