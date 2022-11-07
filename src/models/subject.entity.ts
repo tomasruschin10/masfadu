@@ -42,6 +42,13 @@ export class Subject {
   })
   subject: Subject;
 
+  @OneToMany(() => Subject, subject => subject.subject, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'subject_id'
+  })
+  subjects: Subject[];
+
   @OneToMany(() => UserSubject, userSubject => userSubject.subject ,{cascade: true})
   @JoinColumn({
       name: 'id',

@@ -21,12 +21,14 @@ export class SubjectCategoryRepository {
         return subjectCategory
     }
 
-    async getAll(data, id): Promise<SubjectCategory[] | any> {
+    async getAll(id): Promise<SubjectCategory[] | any> {
 
         return await this.subjectCategorysRepository.createQueryBuilder('s')
             .leftJoinAndSelect('s.subject', 'ss')
+            .leftJoinAndSelect('ss.subjects', 'subjects')
+            .leftJoinAndSelect('ss.mainSubject', 'mainSubject')
             .loadRelationCountAndMap("ss.opinionsCount", "ss.opinions")
-            .where(id? `s.career_id = ${id}`:'')
+            .where(id ? `s.career_id = ${id}` : '')
             // .where(data.userData.userRole[0].role_id == 2 ? `ssu.user_id = ${data.userData.id}`:'')
             .getMany()
         //.leftJoinAndSelect('s.userSubject', 'su'); solo del estudiante que pregunta
