@@ -26,7 +26,7 @@ export class SubjectCategoryRepository {
         return await this.subjectCategorysRepository.createQueryBuilder('s')
             .leftJoinAndSelect('s.subject', 'ss')
             .leftJoinAndSelect('ss.subjects', 'subjects')
-            .leftJoinAndSelect('ss.mainSubject', 'mainSubject')
+            .leftJoinAndSelect('ss.subject', 'mainSubject')
             .loadRelationCountAndMap("ss.opinionsCount", "ss.opinions")
             .where(id ? `s.career_id = ${id}` : '')
             // .where(data.userData.userRole[0].role_id == 2 ? `ssu.user_id = ${data.userData.id}`:'')

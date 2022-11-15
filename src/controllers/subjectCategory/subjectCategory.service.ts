@@ -45,19 +45,20 @@ export class SubjectCategoryService {
    }
 
    async addStudentExtraInfo(userData, data) {
-      let res = { data: null, total: null, on: null, prom: null, correlations: null }
+      let res = { data: null, total: null, on: null, prom: null }
       let on = 0
       let points = 0
       let count = 0
       let total = 0
-      let corelative = {}
 
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
 
       for (let i = 0; i < data.length; i++) {
          delete data[i].created_at
          delete data[i].updated_at
-         let c_available = false
+         data[i].available = data[i].available || i == 0
+         let allFinished = true
+         let available = false
          for (let j = 0; j < data[i].subject.length; j++) {
             data[i].subject[j].userSubject = userSubjects.find(a => a.subject_id == data[i].subject[j].id);
 
@@ -67,41 +68,31 @@ export class SubjectCategoryService {
             delete data[i].subject[j].userSubject?.updated_at
             delete data[i].subject[j].mainSubject?.created_at
             delete data[i].subject[j].mainSubject?.updated_at
-
-            let s_available = true
-            for (let k = 0; k < data[i].subject[j].subjects.length; k++) {
-               delete data[i].subject[j].subjects[k]?.created_at
-               delete data[i].subject[j].subjects[k]?.updated_at
-               let s_data = (userSubjects.find(a => a.subject_id == data[i].subject[j].subjects[k].id))
-
-               data[i].subject[j].subjects[k].score = s_data?.score
-               data[i].subject[j].subjects[k].finish = s_data?.finish
-               s_available = (s_data?.score >= 4) && s_available
-            }
-            data[i].subject[j].available = s_available
-            c_available = s_available || c_available
-         }
-         data[i].available = c_available
-      }
-      data[0].available = true
-      for (let i = 0; i < data.length; i++) {
-         let allFinished = true
-         let available = false
-         for (let j = 0; j < data[i].subject.length; j++) {
             total++
-            if (data[i].subject[j].userSubject) {
-               if (data[i].subject[j].userSubject.score != 0) {
-                  count++
-                  points += data[i].subject[j].userSubject.score
-               }
-               if (data[i].subject[j].userSubject.score >= 4) {
+            if (data[i].subject[j].userSubject?.score > 0) {
+               count++
+               points += data[i].subject[j].userSubject.score
+               if (data[i].subject[j].userSubject?.score >= 4) {
                   on++
-                  available = true
-               } else { allFinished = false }
-            }
-         }
-         data[i].available = data[i].available || available
+               }
+            } else { allFinished = false }
 
+            let subjects = data[i].subject[j].subjects
+            let s_available = false
+            for (let k = 0; k < subjects.length; k++) {
+               delete subjects[k]?.created_at
+               delete subjects[k]?.updated_at
+               let s_data = (userSubjects.find(a => a.subject_id == subjects[k].id))
+
+               subjects[k].score = s_data?.score
+               subjects[k].finish = s_data?.finish
+               s_available = (s_data?.score >= 4) && (s_available || k == 0)
+            }
+
+            available = available || s_available || data[i].available
+            data[i].subject[j].available = s_available || (subjects.length == 0 && data[i].available)
+         }
+         data[i].available = available
          if (i + 1 < data.length) {
             data[i + 1].available = data[i + 1].available || allFinished
          }
