@@ -2,6 +2,7 @@ import { AdvertisementModule } from "src/controllers/advertisement/advertisement
 import { AuthModule } from "src/controllers/auth/auth.module";
 import { BalanceModule } from "src/controllers/balance/balance.module";
 import { CareerModule } from "src/controllers/career/career.module";
+import { ExtraScoreModule } from "src/controllers/extraScore/extraScore.module";
 import { FeedbackModule } from "src/controllers/feedback/feedback.module";
 import { LostObjectModule } from "src/controllers/lostObject/lostObject.module";
 import { NoticeModule } from "src/controllers/notice/notice.module";
@@ -32,6 +33,7 @@ export const controllers = [
     SubjectModule,
     SubjectCategoryModule,
     UserSubjectModule,
+    ExtraScoreModule,
     PartnerModule,
     ResourceCategoryModule,
     ResourceModule,

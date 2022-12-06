@@ -12,7 +12,8 @@ export class SubjectService {
       for (let i = 0; i < request.data.length; i++) {
          let body: any = {
             name: request.data[i].name,
-            subject_category_id: request.data[i].subject_category_id
+            subject_category_id: request.data[i].subject_category_id,
+            info: request.data[i].info
          }
          if (request.data[i].subject_key || request.data[i].subject_key == 0) {
             body.subject_id = created[`${request.data[i].subject_key}`].id
@@ -42,7 +43,8 @@ export class SubjectService {
          let body: any = {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
-            subject_id : request.data[i].subject_id
+            subject_id : request.data[i].subject_id,
+            info: request.data[i].info
          }
          if ((request.data[i].subject_key || request.data[i].subject_key == 0) && !body.subject_id) {
             body.subject_id = created[`${request.data[i].subject_key}`].id

@@ -21,7 +21,9 @@ export class NotificationRepository {
     }
 
     async getAll(): Promise<Notification[] | string> {
-        return await this.notificationsRepository.find();
+        return await this.notificationsRepository.createQueryBuilder('n')
+        .orderBy('n.id', 'DESC')
+        .getMany()
     }
 
 

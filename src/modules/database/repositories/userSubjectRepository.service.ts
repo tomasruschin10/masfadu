@@ -22,9 +22,11 @@ export class UserSubjectRepository {
 
     async getAll(id?,career_id?): Promise<UserSubject[] | any> {
         return await this.userSubjectsRepository.createQueryBuilder('u')
+            .leftJoinAndSelect('u.extra_score', 'ue')
             .innerJoin('u.subject', 'us')
             .innerJoin('us.subjectCategory', 'usc')
             .where(id ? `u.user_id = ${id} AND usc.career_id = ${career_id} `:'')
+            .orderBy('u.id', 'DESC')
             .getMany();
     }
 
@@ -39,12 +41,14 @@ export class UserSubjectRepository {
 
 
     async update(id: number, request): Promise<any> {
-        let userSubject = await this.userSubjectsRepository.findOne(id);
+        // console.log(request)
+        let userSubject: any = await this.userSubjectsRepository.findOne(id);
         if (!userSubject)
             throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
         
+        if (request.score == 0) userSubject.score = 0
         userSubject = await this.sharedService.updateObject(userSubject, request)
-
+        // console.log(userSubject)
         await this.userSubjectsRepository.save(userSubject);
 
         return userSubject;

@@ -16,7 +16,7 @@ export class LostObjectService {
 
       const lostObject = await this.lostObjectRepository.create(request)
       if (!lostObject) throw new BadRequestException(['incorrect data']) 
-      return lostObject;
+      return await this.getById(lostObject.id);
    }
 
    async getAll(search) {

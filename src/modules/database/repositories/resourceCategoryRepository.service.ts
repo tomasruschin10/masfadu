@@ -32,6 +32,7 @@ export class ResourceCategoryRepository {
             .leftJoinAndSelect('rr.user', 'rru')
             .leftJoinAndSelect('rr.image', 'rri')
             .where(query)
+            .orderBy('r.id', 'DESC')
             .getMany()
     }
 

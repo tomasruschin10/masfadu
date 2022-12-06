@@ -6,64 +6,67 @@ import { OfferCategory } from './offerCategory.entity';
 import { Partner } from './partner.entity';
 import { Career } from './career.entity';
 
-@Entity({name:'offers'})
+@Entity({ name: 'offers' })
 export class Offer {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({nullable: true})
-  title: string;
+    @Column({ nullable: true, default: 0 })
+    point: number;
 
-  @Column()
-  offer_category_id: number;
+    @Column({ nullable: true })
+    title: string;
 
-  @Column()
-  career_id: number;
+    @Column()
+    offer_category_id: number;
 
-  @Column()
-  partner_id: number;
+    @Column()
+    career_id: number;
 
-  @Column({nullable: true, type: 'longtext'})
-  description: string;
+    @Column()
+    partner_id: number;
 
-  @Column({nullable: true})
-  url: string;
+    @Column({ nullable: true, type: 'longtext' })
+    description: string;
 
-  @Column()
-  image_id: number;
+    @Column({ nullable: true })
+    url: string;
 
-  @CreateDateColumn({type: "timestamp"})
-  created_at: Moment
+    @Column()
+    image_id: number;
 
-  @UpdateDateColumn({type: "timestamp", nullable: true})
-  updated_at: Moment
+    @CreateDateColumn({ type: "timestamp" })
+    created_at: Moment
 
-  //relations
-  @ManyToOne(() => OfferCategory, offerCategory => offerCategory.id, {onDelete: 'CASCADE'})
-  @JoinColumn({
-      name: 'offer_category_id',
-      referencedColumnName: 'id'
-  })
-  offerCategory: OfferCategory;
+    @UpdateDateColumn({ type: "timestamp", nullable: true })
+    updated_at: Moment
 
-  @ManyToOne(() => Image, image => image.id, {onDelete: 'CASCADE'})
-  @JoinColumn({
-      name: 'image_id',
-      referencedColumnName: 'id'
-  })
-  image: Image;
+    //relations
+    @ManyToOne(() => OfferCategory, offerCategory => offerCategory.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'offer_category_id',
+        referencedColumnName: 'id'
+    })
+    offerCategory: OfferCategory;
 
-  @ManyToOne(() => Partner, partner => partner.id, {onDelete: 'CASCADE'})
-  @JoinColumn({
-      name: 'partner_id',
-      referencedColumnName: 'id'
-  })
-  partner: Partner;
+    @ManyToOne(() => Image, image => image.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'image_id',
+        referencedColumnName: 'id'
+    })
+    image: Image;
 
-  @ManyToOne(() => Career, career => career.id, {onDelete: 'CASCADE'})
-  @JoinColumn({
-      name: 'career_id',
-      referencedColumnName: 'id'
-  })
-  career: Career;
+    @ManyToOne(() => Partner, partner => partner.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'partner_id',
+        referencedColumnName: 'id'
+    })
+    partner: Partner;
+
+    @ManyToOne(() => Career, career => career.id, { onDelete: 'CASCADE' })
+    @JoinColumn({
+        name: 'career_id',
+        referencedColumnName: 'id'
+    })
+    career: Career;
 }

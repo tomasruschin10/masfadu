@@ -24,6 +24,7 @@ import { Tag } from 'src/models/tag.entity';
 import { OpinionTag } from 'src/models/opinionTag.entity';
 import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
 import { LostObject } from 'src/models/lostObject.entity';
+import { ExtraScore } from 'src/models/extraScore.entity';
 
 export const databaseProviders = [ 
   {
@@ -104,6 +105,11 @@ export const databaseProviders = [
   {
     provide: 'USER_SUBJECT_REPOSITORY',
     useFactory: (connection: Connection) => connection.getRepository(UserSubject),
+    inject: ['DbConnectionToken'],
+  },
+  {
+    provide: 'EXTRA_SCORE_REPOSITORY',
+    useFactory: (connection: Connection) => connection.getRepository(ExtraScore),
     inject: ['DbConnectionToken'],
   },
   {

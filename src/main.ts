@@ -46,7 +46,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
   
-  const port = parseInt(config.get("server.port"));
+  const port = process.env.PORT || parseInt(config.get("server.port"));
 
   app.enableCors();
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));

@@ -33,6 +33,7 @@ export class OpinionAnswerRepository {
             .innerJoinAndSelect('a.student', 'as')
             .innerJoinAndSelect('as.image', 'asi')
             .where(query)
+            .orderBy('a.id', 'DESC')
             .getMany()
     }
 

@@ -8,27 +8,29 @@ export class RoleRepository {
         @Inject('ROLE_REPOSITORY')
         private rolesRepository: Repository<Role>,
         private sharedService: SharedService
-    ) {}
+    ) { }
 
 
-    async create(request): Promise<any>{
+    async create(request): Promise<any> {
         //save role
         const role = await this.rolesRepository.create(request)
         await this.rolesRepository.save(role)
-        
+
         //return
         return role
     }
 
     async getAll(): Promise<Role[] | string> {
-        return await this.rolesRepository.find();
+        return await this.rolesRepository.createQueryBuilder('r')
+            .orderBy('r.id', 'DESC')
+            .getMany()
     }
 
 
     async getById(id): Promise<Role | string> {
         const role = await this.rolesRepository.findOne(id)
         if (!role) {
-            throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
+            throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
         }
         return role;
     }
@@ -37,8 +39,8 @@ export class RoleRepository {
     async update(id: number, request): Promise<any> {
         let role = await this.rolesRepository.findOne(id);
         if (!role)
-            throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
-        
+            throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
+
         role = await this.sharedService.updateObject(role, request)
 
         await this.rolesRepository.save(role);
@@ -49,7 +51,7 @@ export class RoleRepository {
     async delete(id): Promise<any> {
         const role = await this.rolesRepository.findOne(id);
         if (!role)
-            throw new HttpException('error! record not found',HttpStatus.NOT_FOUND); 
+            throw new HttpException('error! record not found', HttpStatus.NOT_FOUND);
         await this.rolesRepository.delete(role.id);
 
         return role;

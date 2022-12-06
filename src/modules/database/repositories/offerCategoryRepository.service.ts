@@ -37,6 +37,7 @@ export class OfferCategoryRepository {
                 .leftJoinAndSelect('oo.image', 'ooi')
                 .leftJoinAndSelect('oo.partner', 'oop')
                 .where(where)
+                .orderBy('o.id', 'DESC')
                 .getMany()
         }
 

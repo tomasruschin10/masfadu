@@ -15,6 +15,9 @@ export class Subject {
   @Column()
   name: string;
 
+  @Column({nullable: true})
+  info: string;
+
   @Column()
   subject_category_id: number;
 
@@ -25,19 +28,26 @@ export class Subject {
   updated_at: Moment
 
   //relations
-  @ManyToOne(() => SubjectCategory, subjectCategory => subjectCategory.id, {onDelete: 'CASCADE'})
+  @ManyToOne(() => SubjectCategory, subjectCategory => subjectCategory.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'subject_category_id',
       referencedColumnName: 'id'
   })
   subjectCategory: SubjectCategory;
 
-  @ManyToOne(() => Subject, subject => subject.id , {onDelete: 'CASCADE'})
+  @ManyToOne(() => Subject, subject => subject.id , {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'subject_id',
       referencedColumnName: 'id'
   })
   subject: Subject;
+
+  @OneToMany(() => Subject, subject => subject.subject, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'subject_id'
+  })
+  subjects: Subject[];
 
   @OneToMany(() => UserSubject, userSubject => userSubject.subject ,{cascade: true})
   @JoinColumn({

@@ -23,6 +23,7 @@ export class ActivityRepository {
     async getAll(id): Promise<Activity[] | string> {
         return await this.activitysRepository.createQueryBuilder('a')
             .where(id ? `a.user_id = ${id}` : '')
+            .orderBy('a.id', 'DESC')
             .getMany()
     }
 

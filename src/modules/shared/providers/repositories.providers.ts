@@ -22,6 +22,7 @@ import { TagRepository } from 'src/modules/database/repositories/tagRepository.s
 import { BalanceRepository } from 'src/modules/database/repositories/balanceRepository.service';
 import { OpinionAnswerRepository } from 'src/modules/database/repositories/opinionAnswerRepository.service';
 import { LostObjectRepository } from 'src/modules/database/repositories/lostObjectRepository.service';
+import { ExtraScoreRepository } from 'src/modules/database/repositories/extraScoreRepository.service';
 export const repositories = [
     UserRepository,
     UserRoleRepository,
@@ -38,6 +39,7 @@ export const repositories = [
     SubjectCategoryRepository,
     SubjectRepository,
     UserSubjectRepository,
+    ExtraScoreRepository,
     ResourceCategoryRepository,
     ResourceRepository,
     PartnerRepository,

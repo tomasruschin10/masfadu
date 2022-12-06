@@ -17,6 +17,7 @@ export class UserRepository {
             .leftJoinAndSelect('u.image', 'ui')
             // .where('u.email = :uoe',{ uoe})
             .where('u.username = :uoe OR u.email = :uoe',{ uoe})
+            .orderBy('u.id', 'DESC')
             .getOne();
     }
 
@@ -50,6 +51,7 @@ export class UserRepository {
             .leftJoinAndSelect('u.career', 'uc')
             .leftJoinAndSelect('u.image', 'ui')
             .where(id ? `ur.role_id = ${id}`:'')
+            .orderBy('u.id', 'DESC')
             .getMany()
     }
 
