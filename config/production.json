@@ -4,10 +4,10 @@
   },
   "enviroment": "production",
   "database": {
-    "host": "",
+    "host": "142.93.52.40",
     "port": 3306,
-    "username": "",
-    "password": "",
-    "database": ""
+    "username": "poscloud_user",
+    "password": "JfcxynNaxy$@",
+    "database": "fadu_db"
   }
 }
