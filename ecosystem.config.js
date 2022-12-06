@@ -1,12 +1,12 @@
 module.exports = {
     apps : [
         {
-            name: "gl-api",
+            name: "fadu-api",
             script: "npm start",
             watch: false,
             env: {
-                "PORT": 8500,
-                "IP": "104.236.92.29",
+                "PORT": 3000,
+                "IP": "164.92.100.215",
                 "NODE_ENV": "production"
             }
         }
