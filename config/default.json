@@ -17,11 +17,11 @@
   },
   "enviroment": "development",
   "database": {
-    "host": "142.93.52.40",
-    "port": 3306,
-    "username": "poscloud_user",
-    "password": "JfcxynNaxy$@",
-    "database": "fadu_db"
+    "host": "db-mysql-fadu-do-user-13229506-0.b.db.ondigitalocean.com",
+    "port": 25060,
+    "username": "doadmin",
+    "password": "AVNS_4P4KadUP0O673rs3fxf",
+    "database": "defaultdb"
   },
   "discord": {
     "bitbucket": "https://discordapp.com/api/webhooks/830569084348268606/wccq0q6756h5hhtlg1Tgvdd8Br4DCCD-Tr9fkKVUJzJKtjXLqDQQeyGL_4F5NeVM9BlCkw?wait=true"
