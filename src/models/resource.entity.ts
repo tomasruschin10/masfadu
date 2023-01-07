@@ -23,6 +23,12 @@ export class Resource {
   @Column()
   subject_id: number;
 
+  @Column({ nullable: true})
+  url: string;
+
+  @Column({type: 'longtext', nullable: true})
+  html: string;
+
   @Column()
   resource_category_id: number;
 

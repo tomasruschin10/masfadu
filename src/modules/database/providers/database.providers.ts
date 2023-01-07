@@ -25,6 +25,7 @@ import { OpinionTag } from 'src/models/opinionTag.entity';
 import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
 import { LostObject } from 'src/models/lostObject.entity';
 import { ExtraScore } from 'src/models/extraScore.entity';
+import { Config } from 'src/models/config.entity';
 
 export const databaseProviders = [ 
   {
@@ -152,4 +153,9 @@ export const databaseProviders = [
     useFactory: (connection: Connection) => connection.getRepository(LostObject),
     inject: ['DbConnectionToken'],
   },
+  {
+    provide: 'CONFIG_REPOSITORY',
+    useFactory: (connection: Connection) => connection.getRepository(Config),
+    inject: ['DbConnectionToken'],
+  }
 ];

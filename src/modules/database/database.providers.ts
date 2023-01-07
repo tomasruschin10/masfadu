@@ -25,6 +25,7 @@ import { Opinion } from 'src/models/opinion.entity';
 import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
 import { LostObject } from 'src/models/lostObject.entity';
 import { ExtraScore } from 'src/models/extraScore.entity';
+import { Config } from 'src/models/config.entity';
 
 interface IEnvironmentConfig {
   db: IDBConfig;
@@ -52,7 +53,7 @@ export const SERVER_CONFIG = {
     database: config.get("database.database"),
     logging: true,
     synchronize: env === 'development' ? false : true,
-    //synchronize:  true, 
+    // synchronize:  true, 
     autoLoadEntities: true
 
   }
@@ -64,7 +65,7 @@ export function extendDatabaseConfig(source: IEnvironmentConfig) {
       User, Image, Role, UserRole, Activity, Partner, Advertisement, Career,
       Feedback, Notice, Notification, OfferCategory, Offer, SubjectCategory,
       Subject, UserSubject, ExtraScore, ResourceCategory, Resource,
-      Balance, Opinion, Tag, OpinionTag, OpinionAnswer, LostObject]
+      Balance, Opinion, Tag, OpinionTag, OpinionAnswer, LostObject, Config]
   });
 
   return DB_CONFIG;

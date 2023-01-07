@@ -21,6 +21,12 @@ export class resourceCreateDto {
 
     @ApiProperty()
     image: Express.Multer.File
+
+    @ApiProperty()
+    url: string;
+
+    @ApiProperty()
+    html: string;
 }
 
 export class resourceUpdateDto {
@@ -38,6 +44,12 @@ export class resourceUpdateDto {
 
     @ApiProperty()
     image: Express.Multer.File
+
+    @ApiProperty()
+    url: string;
+
+    @ApiProperty()
+    html: string;
 } 
 
 export class resourceDto {
@@ -58,6 +70,12 @@ export class resourceDto {
 
     @ApiProperty()
     image_id: number
+
+    @ApiProperty()
+    url: string;
+
+    @ApiProperty()
+    html: string;
   
     @ApiProperty()
     created_at: Date
