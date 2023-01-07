@@ -18,6 +18,9 @@ export class Subject {
   @Column({nullable: true})
   info: string;
 
+  @Column({nullable: true})
+  url: string;
+
   @Column()
   subject_category_id: number;
 
