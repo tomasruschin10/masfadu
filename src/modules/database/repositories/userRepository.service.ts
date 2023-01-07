@@ -150,4 +150,10 @@ export class UserRepository {
         return 'success'
     }
 
+    async getUsersTokens() : Promise<User[]> {
+        return await this.usersRepository.createQueryBuilder('user')
+            .where('user.device_token IS NOT NULL')
+            .getMany();
+    }
+
 }

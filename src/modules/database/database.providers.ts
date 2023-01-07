@@ -26,6 +26,7 @@ import { OpinionAnswer } from 'src/models/opinionAnswer.entity';
 import { LostObject } from 'src/models/lostObject.entity';
 import { ExtraScore } from 'src/models/extraScore.entity';
 import { Config } from 'src/models/config.entity';
+import { GeneralNotification } from 'src/models/generalNotification.entity';
 
 interface IEnvironmentConfig {
   db: IDBConfig;
@@ -65,7 +66,7 @@ export function extendDatabaseConfig(source: IEnvironmentConfig) {
       User, Image, Role, UserRole, Activity, Partner, Advertisement, Career,
       Feedback, Notice, Notification, OfferCategory, Offer, SubjectCategory,
       Subject, UserSubject, ExtraScore, ResourceCategory, Resource,
-      Balance, Opinion, Tag, OpinionTag, OpinionAnswer, LostObject, Config]
+      Balance, Opinion, Tag, OpinionTag, OpinionAnswer, LostObject, Config, GeneralNotification]
   });
 
   return DB_CONFIG;
