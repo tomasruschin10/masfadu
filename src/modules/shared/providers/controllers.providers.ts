@@ -5,6 +5,7 @@ import { CareerModule } from "src/controllers/career/career.module";
 import { ConfigModule } from "src/controllers/config/config.module";
 import { ExtraScoreModule } from "src/controllers/extraScore/extraScore.module";
 import { FeedbackModule } from "src/controllers/feedback/feedback.module";
+import { GeneralNotificationModule } from "src/controllers/generalNotification/generalNotification.module";
 import { LostObjectModule } from "src/controllers/lostObject/lostObject.module";
 import { NoticeModule } from "src/controllers/notice/notice.module";
 import { OfferModule } from "src/controllers/offer/offer.module";
@@ -43,5 +44,6 @@ export const controllers = [
     TagModule,
     OpinionAnswerModule,
     LostObjectModule,
-    ConfigModule
+    ConfigModule,
+    GeneralNotificationModule
 ]

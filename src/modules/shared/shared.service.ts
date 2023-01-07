@@ -33,11 +33,11 @@ export class SharedService {
         return object
     }
 
-    async sendNotification(request, bearer) {
+    async sendNotification(request, userData?) {
         // let userInfo: any = jwt.decode(bearer.substring(7))
         let title = request.title
         let user_to = request.user_to
-        let user = await this.userRepository.findById(user_to)
+        let user = userData ? userData : await this.userRepository.findById(user_to)
         // if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
         // if (!user.device_token) throw new HttpException('User device token not found', HttpStatus.NOT_FOUND)
         if (!user) return 'User not found'
