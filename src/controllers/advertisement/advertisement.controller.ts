@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, UseInterceptors, UploadedFile, BadRequestException} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, UseInterceptors, UploadedFile, BadRequestException, Query} from '@nestjs/common';
 
 import { AdvertisementService } from './advertisement.service';
 import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
@@ -32,7 +32,8 @@ export class AdvertisementController {
     @Get('all/:active?')
     @ApiResponse ({status: 500, description: 'Server Error'})
     @ApiResponse({status: 200, description: 'Correct', type: advertisementDto})
-    async getAll(@Param('active') active: string) {
+    async getAll(@Param('active') active: string, @Query('key') key: string) {
+      if (key) return await this.advertisementService.getByKey(key);
       return await this.advertisementService.getAll(active);
     }
 

@@ -11,6 +11,9 @@ export class advertisementCreateDto {
     url: string
 
     @ApiProperty()
+    key: string
+
+    @ApiProperty()
     @IsNotEmpty()
     career_id: number
 
@@ -37,6 +40,9 @@ export class advertisementUpdateDto {
     url: string
 
     @ApiProperty()
+    key: string
+
+    @ApiProperty()
     career_id: number
 
     @ApiProperty()
@@ -58,6 +64,9 @@ export class advertisementDto {
 
     @ApiProperty()
     url: string
+
+    @ApiProperty()
+    key: string
 
     @ApiProperty()
     partner_id: number

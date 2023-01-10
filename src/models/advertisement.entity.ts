@@ -22,6 +22,9 @@ export class Advertisement {
   @Column()
   url: string;
 
+  @Column({nullable: true})
+  key: string;
+
   @Column({type: 'datetime'})
   date_start: Date;
 
