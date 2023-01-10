@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, ParseIntPipe, Put, Param, Delete, UnauthorizedException, UploadedFile, UseInterceptors, Query} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, ParseIntPipe, Put, Param, Delete, UnauthorizedException, UploadedFile, UseInterceptors, Query, BadRequestException} from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as CryptoJS from 'crypto-js';
 import { WinstonLogger } from '@payk/nestjs-winston';
@@ -89,6 +89,15 @@ export class AuthController {
     @ApiResponse({status: 200, description: 'Record Removed'})
     async delete(@Param('id') id: number | string) {
       return await this.authService.delete(id);
+    }
+
+    @Put('update-device-token/:id')
+    @ApiResponse ({status: 500, description: 'Server Error'})
+    @ApiResponse({status: 400, description: 'Incorrect Data'})
+    @ApiResponse({status: 200, description: 'Success'})
+    async updateDeviceToken(@Param('id') id: number, @Body() req) {
+      if (!req.token) throw new BadRequestException(['token is required and can not be empty']);
+      return await this.authService.updateDeviceToken(id, req.token);
     }
 
     @Post('remember-password')

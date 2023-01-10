@@ -78,6 +78,11 @@ export class AuthService {
       return await this.userRepository.findById(id);
    }
 
+   async updateDeviceToken(id: number, token) {
+      await this.userRepository.update(id, {device_token: token})
+      return await this.userRepository.findById(id);
+   }
+
    async delete(id: number | string){
       const user = await this.userRepository.delete(id)
       user.image_id != 1 ?await this.deleteFirebase(user.image_id) : null

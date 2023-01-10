@@ -25,6 +25,11 @@ export class AdvertisementService {
       return advertisements;
    }
 
+   async getByKey(key){
+      const advertisements = await this.advertisementRepository.getByKey(key)
+      return advertisements;
+   }
+
    async getById(id:number){
       const advertisement = await this.advertisementRepository.getById(id)
       return advertisement;
