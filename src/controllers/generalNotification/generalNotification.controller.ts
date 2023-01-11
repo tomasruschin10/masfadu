@@ -1,10 +1,11 @@
-import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, HttpStatus, Post, Request, Response, Res, UseGuards, Put, Param, ParseIntPipe, Delete, Headers} from '@nestjs/common';
 
 import { GeneralNotificationService } from './generalNotification.service';
 import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { generalNotificationBody } from './interfaces/generalNotification.interfaces';
 import { generalNotificationDto, generalNotificationCreateDto } from './dto/GeneralNotificationDto.dto';
+import * as jwt from 'jsonwebtoken';
 
 @ApiTags('GeneralNotification')
 @Controller('general-notification')
@@ -30,6 +31,16 @@ export class GeneralNotificationController {
     @ApiResponse({status: 200, description: 'Correct', type: generalNotificationDto})
     async getAll() {
       return await this.generalNotificationService.getAll();
+    }
+
+    
+    @UseGuards(JwtAuthGuard)
+    @Get('user')
+    @ApiResponse ({status: 500, description: 'Server Error'})
+    @ApiResponse({status: 200, description: 'Correct', type: generalNotificationDto})
+    async getUserNotification(@Headers() header) {
+      const data: any = jwt.decode(header.authorization.replace('Bearer ', ''));
+      return await this.generalNotificationService.getUserNotification(data.userData.id);
     }
 
     

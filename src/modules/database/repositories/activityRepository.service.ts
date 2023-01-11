@@ -59,4 +59,12 @@ export class ActivityRepository {
 
     }
 
+    async getByUser(user): Promise<Activity[]> {
+        return await this.activitysRepository.createQueryBuilder('a')
+            .where(`a.user_id = ${user}`)
+            .orderBy('a.id', 'DESC')
+            .limit(50)
+            .getMany()
+    }
+
 }
