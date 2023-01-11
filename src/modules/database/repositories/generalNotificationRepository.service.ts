@@ -58,4 +58,11 @@ export class GeneralNotificationRepository {
 
     }
 
+    async getLimit(): Promise<GeneralNotification[]> {
+        return await this.generalNotificationsRepository.createQueryBuilder('r')
+            .orderBy('r.id', 'DESC')
+            .limit(50)
+            .getMany()
+    }
+
 }

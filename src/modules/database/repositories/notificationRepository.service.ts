@@ -58,4 +58,12 @@ export class NotificationRepository {
 
     }
 
+    async getByUser(user): Promise<Notification[]> {
+        return await this.notificationsRepository.createQueryBuilder('n')
+        .where(`n.user_id = ${user}`)
+        .orderBy('n.id', 'DESC')
+        .limit(50)
+        .getMany()
+    }
+
 }
