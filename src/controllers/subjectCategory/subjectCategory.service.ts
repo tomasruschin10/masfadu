@@ -45,7 +45,7 @@ export class SubjectCategoryService {
    }
 
    async addStudentExtraInfo(userData, data) {
-      let res = { data: null, total: null, on: null, prom: null }
+      let res = { data: [], total: null, on: null, prom: null }
       let on = 0
       let points = 0
       let count = 0
@@ -54,48 +54,88 @@ export class SubjectCategoryService {
       let userSubjects = await this.userSubjectRepository.getAll(userData.id, userData.career_id)
 
       for (let i = 0; i < data.length; i++) {
-         delete data[i].created_at
-         delete data[i].updated_at
-         data[i].available = data[i].available || i == 0
+         let cat = data[i]
+         // set categoty data
+         let category = {
+            id: cat.id,	
+            name: cat.name,
+            career_id: cat.career_id,
+            subject: [],
+            available: cat.available || i == 0
+         }
          let allFinished = true
-         let available = false
-         for (let j = 0; j < data[i].subject.length; j++) {
-            data[i].subject[j].userSubject = userSubjects.find(a => a.subject_id == data[i].subject[j].id);
 
-            delete data[i].subject[j].created_at
-            delete data[i].subject[j].updated_at
-            delete data[i].subject[j].userSubject?.created_at
-            delete data[i].subject[j].userSubject?.updated_at
-            delete data[i].subject[j].mainSubject?.created_at
-            delete data[i].subject[j].mainSubject?.updated_at
+         // add subject data
+         for (let j = 0; j < cat.subject.length; j++) {
+            let sub = cat.subject[j]
+            let userSub = userSubjects.find(a => a.subject_id == sub.id)
+            let subjectCompleted = true
+            let subject = {
+               id: sub.id,
+               name: sub.name,
+               prefix: sub.prefix,
+               info: sub.info,
+               subject_category_id: sub.subject_category_id,
+               available: false,
+               userSubject: null,
+               subjectParents: []
+            }
             total++
-            if (data[i].subject[j].userSubject?.score > 0) {
-               count++
-               points += data[i].subject[j].userSubject.score
-               if (data[i].subject[j].userSubject?.score >= 4) {
-                  on++
+
+            //set userSubject data
+            if (userSub) {
+               subject.userSubject = {
+                  id: userSub.id,
+                  user_id: userSub.user_id,
+                  subject_id: userSub.subject_id,
+                  score: userSub.score,
+                  finish: userSub.finish,
+                  extra_score: userSub.extra_score
                }
-            } else { allFinished = false }
-
-            let subjects = data[i].subject[j].subjects
-            let s_available = false
-            for (let k = 0; k < subjects.length; k++) {
-               delete subjects[k]?.created_at
-               delete subjects[k]?.updated_at
-               let s_data = (userSubjects.find(a => a.subject_id == subjects[k].id))
-
-               subjects[k].score = s_data?.score
-               subjects[k].finish = s_data?.finish
-               s_available = (s_data?.score >= 4) && (s_available || k == 0)
+               if (subject.userSubject.score) {
+                  points+= subject.userSubject.score
+                  count++
+               }
+               if (subject.userSubject.score >= 4) {
+                  on++
+               }else {
+                  subjectCompleted = false
+               }
+            } else {
+               subjectCompleted = false
             }
 
-            available = available || s_available || data[i].available
-            data[i].subject[j].available = s_available || (subjects.length == 0 && data[i].available)
+            //apply subject parents conditions
+            if (i == 0 && sub.subjectParent.length == 0) {
+               subject.available = true
+            }else {
+               let allParentsCompleted = true
+               for (let parent of sub.subjectParent) {
+                  let userParentSub = userSubjects.find(a => a.subject_id == parent.id)
+                  let parentCompleted = true
+                  if (!userParentSub || userParentSub.score < 4) {
+                     parentCompleted = false
+                     subjectCompleted = false
+                     allParentsCompleted = false
+                  }
+                  subject.subjectParents.push({
+                     id: parent.id,
+                     name: parent.name,
+                     completed: parentCompleted
+                  })
+               }
+               subject.available = allParentsCompleted && (category.available || sub.subjectParent.length)
+            }
+            category.subject.push(subject)
+            if (!subjectCompleted) {
+               allFinished = false
+            }
+
          }
-         data[i].available = available
-         if (i + 1 < data.length) {
-            data[i + 1].available = data[i + 1].available || allFinished
+         if (allFinished && data[i + 1]) {
+            data[i + 1]['available'] = true
          }
+         res.data.push(category)
       }
 
       if (points && count) {
@@ -103,7 +143,6 @@ export class SubjectCategoryService {
       }
       res.total = total
       res.on = on
-      res.data = data
       return res
    }
 

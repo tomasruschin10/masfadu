@@ -12,7 +12,7 @@ export class SubjectCategory {
   name: string;
 
   @Column()
-  career_id;
+  career_id: number;
 
   @CreateDateColumn({type: "timestamp"})
   created_at: Moment

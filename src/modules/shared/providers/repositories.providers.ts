@@ -25,6 +25,7 @@ import { LostObjectRepository } from 'src/modules/database/repositories/lostObje
 import { ExtraScoreRepository } from 'src/modules/database/repositories/extraScoreRepository.service';
 import { ConfigRepository } from 'src/modules/database/repositories/configRepository.service';
 import { GeneralNotificationRepository } from 'src/modules/database/repositories/generalNotificationRepository.service';
+import { SubjectParentRepository } from 'src/modules/database/repositories/subjectParentRepository.service';
 export const repositories = [
     UserRepository,
     UserRoleRepository,
@@ -52,5 +53,6 @@ export const repositories = [
     OpinionAnswerRepository,
     LostObjectRepository,
     ConfigRepository,
-    GeneralNotificationRepository
+    GeneralNotificationRepository,
+    SubjectParentRepository
 ]

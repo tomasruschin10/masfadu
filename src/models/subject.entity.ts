@@ -3,20 +3,21 @@ import { Moment } from 'moment';
 import { SubjectCategory } from './subjectCategory.entity';
 import { UserSubject } from './userSubject.entity';
 import { Opinion } from './opinion.entity';
+import { SubjectParent } from './subjectParent.entity';
 
 @Entity({name:'subjects'})
 export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable: true})
-  subject_id: number;
-
   @Column()
   name: string;
 
   @Column({nullable: true})
   info: string;
+
+  @Column({nullable: true})
+  prefix: string;
 
   @Column({nullable: true})
   url: string;
@@ -38,20 +39,6 @@ export class Subject {
   })
   subjectCategory: SubjectCategory;
 
-  @ManyToOne(() => Subject, subject => subject.id , {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  @JoinColumn({
-      name: 'subject_id',
-      referencedColumnName: 'id'
-  })
-  subject: Subject;
-
-  @OneToMany(() => Subject, subject => subject.subject, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
-  @JoinColumn({
-      name: 'id',
-      referencedColumnName: 'subject_id'
-  })
-  subjects: Subject[];
-
   @OneToMany(() => UserSubject, userSubject => userSubject.subject ,{cascade: true})
   @JoinColumn({
       name: 'id',
@@ -65,4 +52,11 @@ export class Subject {
       referencedColumnName: 'subject_id'
   })
   opinions: Opinion[];
+
+  @OneToMany(() => SubjectParent, subjectParent => subjectParent.subject ,{cascade: true})
+  @JoinColumn({
+      name: 'id',
+      referencedColumnName: 'subject_id'
+  })
+  subjectParent: SubjectParent[];
 }

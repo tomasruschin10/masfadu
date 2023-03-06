@@ -1,27 +1,45 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { SubjectParentRepository } from 'src/modules/database/repositories/subjectParentRepository.service';
 import { SubjectRepository } from '../../modules/database/repositories/subjectRepository.service';
 @Injectable()
 export class SubjectService {
 
     constructor(
-        private readonly subjectRepository: SubjectRepository
+        private readonly subjectRepository: SubjectRepository,
+        private readonly subjectParentRepository: SubjectParentRepository
     ) {}
 
     async create(request: any){
       let created = {}
       for (let i = 0; i < request.data.length; i++) {
+         let subjectParents = []
          let body: any = {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
             info: request.data[i].info,
             url: request.data[i].url
          }
-         if (request.data[i].subject_key || request.data[i].subject_key == 0) {
-            body.subject_id = created[`${request.data[i].subject_key}`].id
+         for (let parent of request.data[i].subject_parents) {
+            if (parent.key || parent.key == 0 || parent.id) {
+               if (parent.key || parent.key == 0) {
+                  subjectParents.push(created[`${parent.key}`].id)
+               }
+               if (parent.id) {
+                  subjectParents.push(parent.id)
+               }
+            }
          }
 
          let subject = await this.subjectRepository.create(body) 
          created[`${i}`] = subject
+         
+         // save parents
+         for (let subjectParent of subjectParents) {
+            await this.subjectRepository.create({
+               subject_id: subject.id,
+               subject_parent_id: subjectParent
+            })
+         }
       }  
 
       return {statusCode: HttpStatus.OK, message: created};
@@ -39,8 +57,9 @@ export class SubjectService {
 
    async update(request: any){
       let created = {}
-      let subject
       for (let i = 0; i < request.data.length; i++) {
+         let subject
+         let subjectParents = []
          let body: any = {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
@@ -48,8 +67,15 @@ export class SubjectService {
             info: request.data[i].info,
             url: request.data[i].url
          }
-         if ((request.data[i].subject_key || request.data[i].subject_key == 0) && !body.subject_id) {
-            body.subject_id = created[`${request.data[i].subject_key}`].id
+         for (let parent of request.data[i].subject_parents) {
+            if (parent.key || parent.key == 0 || parent.id) {
+               if (parent.key || parent.key == 0) {
+                  subjectParents.push(created[`${parent.key}`].id)
+               }
+               if (parent.id) {
+                  subjectParents.push(parent.id)
+               }
+            }
          }
          if (request.data[i].id) {
             subject = await this.subjectRepository.update(request.data[i].id, body)
@@ -57,11 +83,19 @@ export class SubjectService {
             subject = await this.subjectRepository.create(body) 
          }
          created[`${i}`] = subject
+         // save parents
+         await this.subjectParentRepository.deleteMany(request.data[i].delete_parents, subject.id)
+         for (let subjectParent of subjectParents) {
+            await this.subjectRepository.create({
+               subject_id: subject.id,
+               subject_parent_id: subjectParent
+            })
+         }
       }
 
       await this.subjectRepository.deleteMany(request.deleteData)
 
-      return subject;
+      return created;
    }
 
    async delete(id: number){

@@ -2,7 +2,6 @@ import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository } from "typeorm";
 import { SubjectCategory } from '../../../models/subjectCategory.entity';
 import { SharedService } from 'src/modules/shared/shared.service';
-import { User } from 'src/models/user.entity';
 @Injectable()
 export class SubjectCategoryRepository {
     constructor(
@@ -25,8 +24,7 @@ export class SubjectCategoryRepository {
 
         return await this.subjectCategorysRepository.createQueryBuilder('s')
             .leftJoinAndSelect('s.subject', 'ss')
-            .leftJoinAndSelect('ss.subjects', 'subjects')
-            .leftJoinAndSelect('ss.subject', 'mainSubject')
+            .leftJoinAndSelect('ss.subjectParent', 'ssp')
             .loadRelationCountAndMap("ss.opinionsCount", "ss.opinions")
             .where(id ? `s.career_id = ${id}` : '')
             // .where(data.userData.userRole[0].role_id == 2 ? `ssu.user_id = ${data.userData.id}`:'')
