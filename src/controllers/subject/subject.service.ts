@@ -13,7 +13,7 @@ export class SubjectService {
       let created = {}
       for (let i = 0; i < request.data.length; i++) {
          let subjectParents = []
-         let body: any = {
+         let body = {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
             info: request.data[i].info,
@@ -36,7 +36,7 @@ export class SubjectService {
          
          // save parents
          for (let subjectParent of subjectParents) {
-            await this.subjectRepository.create({
+            await this.subjectParentRepository.create({
                subject_id: subject.id,
                subject_parent_id: subjectParent
             })
@@ -61,7 +61,7 @@ export class SubjectService {
       for (let i = 0; i < request.data.length; i++) {
          let subject
          let subjectParents = []
-         let body: any = {
+         let body = {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
             info: request.data[i].info,
@@ -87,7 +87,7 @@ export class SubjectService {
          // save parents
          await this.subjectParentRepository.deleteMany(request.data[i].delete_parents, subject.id)
          for (let subjectParent of subjectParents) {
-            await this.subjectRepository.create({
+            await this.subjectParentRepository.create({
                subject_id: subject.id,
                subject_parent_id: subjectParent
             })
