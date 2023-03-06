@@ -17,7 +17,8 @@ export class SubjectService {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
             info: request.data[i].info,
-            url: request.data[i].url
+            url: request.data[i].url,
+            prefix: request.data[i].prefix
          }
          for (let parent of request.data[i].subject_parents) {
             if (parent.key || parent.key == 0 || parent.id) {
@@ -63,9 +64,9 @@ export class SubjectService {
          let body: any = {
             name: request.data[i].name,
             subject_category_id: request.data[i].subject_category_id,
-            subject_id : request.data[i].subject_id,
             info: request.data[i].info,
-            url: request.data[i].url
+            url: request.data[i].url,
+            prefix: request.data[i].prefix
          }
          for (let parent of request.data[i].subject_parents) {
             if (parent.key || parent.key == 0 || parent.id) {
