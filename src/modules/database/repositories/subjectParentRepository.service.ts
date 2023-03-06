@@ -59,11 +59,11 @@ export class SubjectParentRepository {
 
     }
 
-    async deleteMany(data): Promise<any> {
+    async deleteMany(data, id): Promise<any> {
         try {
             await this.subjectParentsRepository.createQueryBuilder()
                 .delete()
-                .where(`id IN(${data})`)
+                .where(`subject_id = ${id} AND subject_parent_id IN(${data})`)
                 .execute()
         } catch (error) {
             
