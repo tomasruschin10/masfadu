@@ -20,7 +20,7 @@ export class SubjectService {
             url: request.data[i].url,
             prefix: request.data[i].prefix
          }
-         for (let parent of request.data[i].subject_parents) {
+         for (let parent of request.data[i].subjectParent) {
             if (parent.key || parent.key == 0 || parent.id) {
                if (parent.key || parent.key == 0) {
                   subjectParents.push(created[`${parent.key}`].id)
@@ -68,7 +68,7 @@ export class SubjectService {
             url: request.data[i].url,
             prefix: request.data[i].prefix
          }
-         for (let parent of request.data[i].subject_parents) {
+         for (let parent of request.data[i].subjectParent) {
             if (parent.key || parent.key == 0 || parent.id) {
                if (parent.key || parent.key == 0) {
                   subjectParents.push(created[`${parent.key}`].id)
@@ -85,7 +85,7 @@ export class SubjectService {
          }
          created[`${i}`] = subject
          // save parents
-         await this.subjectParentRepository.deleteMany(request.data[i].delete_parents, subject.id)
+         await this.subjectParentRepository.deleteMany(request.data[i].deleteParent, subject.id)
          for (let subjectParent of subjectParents) {
             await this.subjectParentRepository.create({
                subject_id: subject.id,

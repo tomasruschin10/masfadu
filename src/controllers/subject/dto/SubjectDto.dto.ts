@@ -43,7 +43,7 @@ class subjectBody {
     subject_category_id: number
 
     @ApiProperty()
-    subject_parents: subjectParent[]
+    subjectParent: subjectParent[]
 }
 
 class subjectParent {
