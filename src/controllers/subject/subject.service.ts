@@ -85,7 +85,7 @@ export class SubjectService {
          }
          created[`${i}`] = subject
          // save parents
-         await this.subjectParentRepository.deleteMany(request.data[i].deleteParent)
+         await this.subjectParentRepository.deleteMany(request.data[i].deleteParent, subject.id)
          for (let subjectParent of subjectParents) {
             await this.subjectParentRepository.create({
                subject_id: subject.id,
