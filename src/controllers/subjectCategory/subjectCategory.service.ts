@@ -111,7 +111,7 @@ export class SubjectCategoryService {
             }else {
                let allParentsCompleted = true
                for (let parent of sub.subjectParent) {
-                  let userParentSub = userSubjects.find(a => a.subject_id == parent.subject.id)
+                  let userParentSub = userSubjects.find(a => a.subject_id == parent.parent.id)
                   let parentCompleted = true
                   if (!userParentSub || userParentSub.score < 4) {
                      parentCompleted = false
@@ -119,8 +119,8 @@ export class SubjectCategoryService {
                      allParentsCompleted = false
                   }
                   subject.subjectParents.push({
-                     id: parent.subject.id,
-                     name: parent.subject.name,
+                     id: parent.parent.id,
+                     name: parent.parent.name,
                      completed: parentCompleted
                   })
                }
