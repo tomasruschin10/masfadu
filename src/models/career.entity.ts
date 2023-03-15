@@ -12,6 +12,9 @@ export class Career {
   name: string;
 
   @Column()
+  description_url: string;
+
+  @Column()
   image_id: number;
 
   @CreateDateColumn({type: "timestamp"})

@@ -8,12 +8,18 @@ export class careerCreateDto {
     name: string;
 
     @ApiProperty()
+    description_url: string;
+
+    @ApiProperty()
     image: Express.Multer.File
 }
 
 export class careerUpdateDto {
     @ApiProperty()
     name: string;
+
+    @ApiProperty()
+    description_url: string;
 
     @ApiProperty()
     image: Express.Multer.File
@@ -25,6 +31,9 @@ export class careerDto {
 
     @ApiProperty()
     name: string
+
+    @ApiProperty()
+    description_url: string
 
     @ApiProperty()
     image_id: number
