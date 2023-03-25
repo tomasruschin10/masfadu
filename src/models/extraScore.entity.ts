@@ -23,11 +23,10 @@ export class ExtraScore {
   updated_at: Moment
 
   //relations
-
-  @ManyToOne(() => UserSubject, user_subject => user_subject.id ,{cascade: true})
+  @ManyToOne(() => UserSubject, user_subject => user_subject.id, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   @JoinColumn({
       name: 'user_subject_id',
       referencedColumnName: 'id'
   })
-  user_subject: UserSubject
+  user_subject: UserSubject;
 }
