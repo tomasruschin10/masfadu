@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "58870024888",
+    "project_id": "fadu-1c40d",
+    "storage_bucket": "fadu-1c40d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58870024888:android:80773ee8d5f79eb808424d",
+        "android_client_info": {
+          "package_name": "dev.millionsolutions.faduapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58870024888-9kjr3cuc1ol7e9okdcrvmtrl3jap2e9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.millionsolutions.faduapp",
+            "certificate_hash": "e39aae53e5bbc1feb4fb6da9472cccfa3bba1780"
+          }
+        },
+        {
+          "client_id": "58870024888-jltdo7pnna5a43nm8f6lueg8k93ikona.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9-sJg4yaPHyNBuOc_ZkXgniYYoSDgbBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58870024888-jltdo7pnna5a43nm8f6lueg8k93ikona.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

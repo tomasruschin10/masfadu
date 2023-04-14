@@ -1,0 +1,59 @@
+{
+	"expo": {
+		"name": "Mas Fadu",
+		"slug": "fadu-app",
+		"version": "1.0.19",
+		"orientation": "portrait",
+		"scheme": "faduapp",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"bundleIdentifier": "dev.millionsolutions.faduapp",
+			"supportsTablet": true,
+			"buildNumber": "11",
+			"googleServicesFile": "./GoogleService-Info.plist",
+			"config": {
+				"googleSignIn": {
+					"reservedClientId": "com.googleusercontent.apps.58870024888-du941l9hrkvv3jnfsupdk1b8avk66vq2"
+				}
+			},
+			"infoPlist": {
+				"CFBundleAllowMixedLocalizations": true,
+				"ASAuthorizationAppleIDButton": "Continuar con apple"
+			}
+		},
+		"android": {
+			"package": "dev.millionsolutions.faduapp",
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			},
+			"versionCode": 10,
+			"googleServicesFile": "./google-services.json"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "2bfc0692-6252-4838-9f07-89d85e41d98a"
+			}
+		},
+		"plugins": [
+			["expo-build-properties",
+			{
+				"ios": {
+					"useFrameworks": "static"
+				}
+			}]
+		]
+	}
+}
