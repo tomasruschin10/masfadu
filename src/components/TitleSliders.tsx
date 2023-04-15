@@ -1,20 +1,52 @@
-import { Box, Text, useTheme } from 'native-base';
-import { AntDesign } from '@expo/vector-icons';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Box, Text, useTheme } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
-export default function TitleSliders({navigateTo, title, to, navigation, more= true}) {
-    const {colors }: any = useTheme();
-    
-	return (
-        <Box mx={2} justifyContent={"space-between"} alignItems={'center'} flexDirection={"row"}>
-			<Text fontWeight={700} fontFamily="Manrope" fontSize={"xl"}>{title}</Text>
+export default function TitleSliders({
+  navigateTo,
+  title,
+  to,
+  navigation,
+  more = true,
+}) {
+  const { colors }: any = useTheme();
 
-			{more ? <TouchableOpacity onPress={() => navigation.navigate(navigateTo)}>
-				<Box flexDirection={"row"} alignItems={'center'} bg={'#F2FDFB'} rounded={'full'} pl={3} pr={2}>
-					<Text mr={1} fontWeight={600} fontSize={16} fontFamily="Manrope" color={colors.alternativeText} py={1} style={{paddingBottom: 7}}>más</Text>
-					<AntDesign name="arrowright" size={17} color={colors.alternativeText} />
-				</Box>
-			</TouchableOpacity> : null}
-		</Box>
-    )
+  return (
+    <Box
+      mx={4}
+      style={{ marginBottom: 3 }}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+      flexDirection={"row"}
+    >
+      <Text fontWeight={700} fontFamily="Manrope" style={{ fontSize: 16 }}>
+        {title}
+      </Text>
+
+      {more ? (
+        <TouchableOpacity onPress={() => navigation.navigate(navigateTo)}>
+          <Box
+            flexDirection={"row"}
+            alignItems={"center"}
+            bg={"#f2fdfb"}
+            rounded={"full"}
+            pl={3}
+            pr={3}
+          >
+            <Text
+              style={{
+                fontSize: 12,
+                color: "#ec7245",
+                marginRight: 2,
+                padding: 2,
+              }}
+            >
+              ver más
+            </Text>
+            <AntDesign name="arrowright" size={12} color={"#ec7245"} />
+          </Box>
+        </TouchableOpacity>
+      ) : null}
+    </Box>
+  );
 }

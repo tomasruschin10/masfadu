@@ -1,63 +1,158 @@
 import { Box, Text, useTheme } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity, Platform, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { useEventNavigation } from "../context";
 
 const styles = StyleSheet.create({
-	container: {
-		bottom: 0,
-		position: "absolute",
-	},
-	shadow: {
-		backgroundColor: "white", 
-		borderRadius: 18,
-		elevation: 3,
-		shadowColor: 'gray',
-		shadowOffset: { width: 0, height: 0 },
-		shadowRadius: 2
-	},
-	items: {
-		alignItems: 'center',
-		backgroundColor: 'rgba(41, 114, 254, 0.1);',
-		borderRadius: 12,
-		flexDirection: "row",
-		paddingHorizontal: 12,
-		paddingVertical: 8
-	}
-})
+  container: {
+    bottom: 0,
+    position: "absolute",
+  },
+});
 
 export default function BottomTab({ route, navigation }) {
-	const { colors }: any = useTheme();
-	const { name } = route;
-	return (
-		<Box
-			safeAreaBottom
-			mb={2}
-			width={"100%"}
-			px={6}
-			style={[styles.container, Platform.OS == "android" ? { paddingBottom: 24 } : { paddingBottom: 24 }]}
-		>
-			<Box py={4} px={4} shadow={5} style={styles.shadow}>
-				<Box flexDirection={"row"} justifyContent={"space-between"}>
-					<TouchableOpacity onPress={() => name !== 'Home' ? navigation.navigate("Home") : null} style={styles.items}>
-						<MaterialIcons name="home" size={23} color={colors.brand.principal} />
-						<Box ml={1} justifyContent={"center"}>
-							<Text fontWeight={'bold'} fontFamily={'SourceSansPro'} fontSize={'15.76'} color={"brand.principal"}>{" "}Inicio</Text>
-						</Box>
-					</TouchableOpacity>
+  const { colors }: any = useTheme();
+  const { name } = route;
 
-					<TouchableOpacity style={styles.items} onPress={() => navigation.navigate("AboutSubject")}>
-						<MaterialIcons name="format-list-bulleted" size={22} color={colors.brand.principal} />
-					</TouchableOpacity>
-					
-					<TouchableOpacity onPress={() => name !== "Subsections" ? navigation.navigate('Subsections', { title: 'Opiniones de materias' }):navigation.navigate('Subsections', { title: 'Opiniones de materias' }) } style={styles.items}>
-						<MaterialIcons name="message" size={22} color={colors.brand.principal} />
-					</TouchableOpacity>
+  const { navigationEvent: event, setNavigationEvent: setEvent } =
+    useEventNavigation();
 
-					<TouchableOpacity onPress={() => navigation.navigate("Menu")} style={styles.items}>
-						<MaterialIcons name="apps" size={22} color={colors.brand.principal} />
-					</TouchableOpacity>
-				</Box>
-			</Box>
-		</Box>
-	);
+  return (
+    <Box
+      safeAreaBottom
+      width={"100%"}
+      style={[
+        styles.container,
+        // Platform.OS == "android"
+        //   ? { paddingBottom: 24 }
+        //   : { paddingBottom: 24 },
+      ]}
+    >
+      <Box
+        py={4}
+        px={8}
+        shadow={0}
+        style={{
+          backgroundColor: "#fff",
+          bottom: 0,
+          position: "absolute",
+          width: "100%",
+        }}
+      >
+        <Box flexDirection={"row"} justifyContent={"space-between"}>
+          <TouchableOpacity
+            onPress={() => {
+              name !== "Home" ? navigation.navigate("Home") : null;
+              setEvent("inicio");
+            }}
+            style={{
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <MaterialIcons
+              name="home"
+              size={26}
+              color={event == "inicio" ? "#eb5e29" : "#d1d5d9"}
+            />
+
+            <Box justifyContent={"center"}>
+              <Text
+                fontFamily={"SourceSansPro"}
+                fontSize={"12"}
+                color={event == "inicio" ? "#eb5e29" : "#d1d5d9"}
+              >
+                Inicio
+              </Text>
+            </Box>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+            onPress={() => {
+              navigation.navigate("AboutSubject");
+              setEvent("opiniones");
+            }}
+          >
+            <MaterialCommunityIcons
+              name="emoticon-happy"
+              size={26}
+              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
+            />
+
+            <Text
+              fontFamily={"SourceSansPro"}
+              fontSize={"12"}
+              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
+            >
+              Opiniones
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setEvent("materias");
+              name !== "Subsections"
+                ? navigation.navigate("Subsections", {
+                    title: "Opiniones de materias",
+                  })
+                : navigation.navigate("Subsections", {
+                    title: "Opiniones de materias",
+                  });
+            }}
+            style={{
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <FontAwesome5
+              name="book-open"
+              size={26}
+              color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
+            />
+
+            <Text
+              fontFamily={"SourceSansPro"}
+              fontSize={"12"}
+              color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
+            >
+              Materias
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setEvent("menu");
+              navigation.navigate("Menu");
+            }}
+            style={{
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <MaterialIcons
+              name="star"
+              size={26}
+              color={event == "menu" ? "#eb5e29" : "#d1d5d9"}
+            />
+
+            <Text
+              fontFamily={"SourceSansPro"}
+              fontSize={"12"}
+              color={event == "menu" ? "#eb5e29" : "#d1d5d9"}
+            >
+              Menú
+            </Text>
+          </TouchableOpacity>
+        </Box>
+      </Box>
+    </Box>
+  );
 }
