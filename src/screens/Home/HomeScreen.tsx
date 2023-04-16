@@ -265,7 +265,7 @@ function HomeScreen({ route, navigation }) {
   return (
     <Container>
       <HeaderPerfil
-        statusBarColor="#ffffff"
+        statusBarColor="#e8eef4"
         barStyle="dark-content"
         navigation={navigation}
       />

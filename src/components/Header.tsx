@@ -29,8 +29,8 @@ export function HeaderBack({ ...props }) {
 
   return (
     <>
-      <StatusBar backgroundColor="#e8eef3" barStyle="dark-content" />
-      <Box safeAreaTop bg="#ffffff" />
+      <StatusBar backgroundColor="#e8eef4" barStyle="dark-content" />
+      <Box safeAreaTop bg="#e8eef4" />
 
       <HStack px="5" py="3" w="100%" maxW="350" alignItems={"flex-start"}>
         {canGoBack() && (
@@ -82,7 +82,10 @@ export function HeaderPerfil({ ...props }) {
 
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor={"#e8eef4"} barStyle={props.barStyle} />
+      <StatusBar
+        backgroundColor={props.statusBarColor}
+        barStyle={props.barStyle}
+      />
       <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} bg={"#e8eef4"} />
       <Box justifyContent={"space-between"} px={4} flexDirection={"row"} pb={2}>
         <Avatar bg="#e8eef4" source={{ uri: userdata.image.url }} size="md">

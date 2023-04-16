@@ -72,40 +72,9 @@ export default function BottomTab({ route, navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={{
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-            onPress={() => {
-              navigation.navigate("AboutSubject");
-              setEvent("opiniones");
-            }}
-          >
-            <MaterialCommunityIcons
-              name="emoticon-happy"
-              size={26}
-              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
-            />
-
-            <Text
-              fontFamily={"SourceSansPro"}
-              fontSize={"12"}
-              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
-            >
-              Opiniones
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
             onPress={() => {
               setEvent("materias");
-              name !== "Subsections"
-                ? navigation.navigate("Subsections", {
-                    title: "Opiniones de materias",
-                  })
-                : navigation.navigate("Subsections", {
-                    title: "Opiniones de materias",
-                  });
+              navigation.navigate("AboutSubject");
             }}
             style={{
               alignItems: "center",
@@ -124,6 +93,37 @@ export default function BottomTab({ route, navigation }) {
               color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
             >
               Materias
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+            onPress={() => {
+              setEvent("opiniones");
+              name !== "Subsections"
+                ? navigation.navigate("Subsections", {
+                    title: "Opiniones de materias",
+                  })
+                : navigation.navigate("Subsections", {
+                    title: "Opiniones de materias",
+                  });
+            }}
+          >
+            <MaterialCommunityIcons
+              name="emoticon-happy"
+              size={26}
+              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
+            />
+
+            <Text
+              fontFamily={"SourceSansPro"}
+              fontSize={"12"}
+              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
+            >
+              Opiniones
             </Text>
           </TouchableOpacity>
 
