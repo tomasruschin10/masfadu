@@ -10,7 +10,9 @@ import {
   ViewStyle,
 } from "react-native";
 import Collapsible from "react-native-collapsible";
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { useEventNavigation } from "../context";
 const SimpleAccordion = ({
   title = "",
   viewInside,
@@ -34,6 +36,8 @@ const SimpleAccordion = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(startCollapsed);
 
+  const { navigationEvent } = useEventNavigation();
+
   return (
     <View>
       {/* items  */}
@@ -45,10 +49,13 @@ const SimpleAccordion = ({
             alignItems: "center",
           }}
         >
-          <Image
-            source={require("../../assets/icons/star.png")}
-            style={{ width: 30, height: 30, marginRight: 10, marginLeft: -5 }}
-          />
+          {navigationEvent === "materias" && (
+            <Image
+              source={require("../../assets/icons/star.png")}
+              style={{ width: 30, height: 30, marginRight: 10, marginLeft: -5 }}
+            />
+          )}
+
           <View>
             <Text
               allowFontScaling={false}
@@ -66,42 +73,55 @@ const SimpleAccordion = ({
           </View>
         </View>
         {/* Button ver mas */}
+
         <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
-          <Box
-            backgroundColor={"#ffffff"}
-            style={{
-              borderColor: "#c7cbce",
-              borderWidth: 1,
-              borderRadius: 2,
-              padding: 2,
-              marginRight: 8,
-            }}
-            px={1}
-            py={0.2}
-            flexDirection={"row"}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <Text
-              color={"#6e7981"}
-              style={{ padding: 3, marginHorizontal: 8, fontWeight: "bold" }}
-              fontSize={10}
+          {navigationEvent === "materias" ? (
+            <Box
+              backgroundColor={"#ffffff"}
+              style={{
+                borderColor: "#c7cbce",
+                borderWidth: 1,
+                borderRadius: 2,
+                padding: 2,
+                marginRight: 8,
+              }}
+              px={1}
+              py={0.2}
+              flexDirection={"row"}
+              justifyContent={"center"}
+              alignItems={"center"}
             >
-              {isCollapsed ? "Ver más" : "Ver menos"}
-            </Text>
-            {/* <Feather
-              name={isCollapsed ? "arrow-right" : "arrow-left"}
+              <Text
+                color={"#6e7981"}
+                style={{ padding: 3, marginHorizontal: 8, fontWeight: "bold" }}
+                fontSize={10}
+              >
+                {isCollapsed ? "Ver más" : "Ver menos"}
+              </Text>
+            </Box>
+          ) : (
+            <MaterialIcons
+              name={
+                isCollapsed ? "keyboard-arrow-right" : "keyboard-arrow-left"
+              }
               size={20}
-              color="#1ABC9C"
-            /> */}
-          </Box>
+              color="#191d21"
+            />
+          )}
         </TouchableOpacity>
         {/* {
                     showArrows &&
                     <Image source={isCollapsed ? downArrow : upArrow} style={[styles.arrows, {tintColor: arrowColor}]}/>
                 } */}
       </Box>
-      <Collapsible collapsed={isCollapsed} style={[styles.collapsible]}>
+      <Collapsible
+        collapsed={isCollapsed}
+        style={
+          navigationEvent === "materias"
+            ? { paddingBottom: 12, marginTop: -10 }
+            : { paddingBottom: 0 }
+        }
+      >
         <View
           style={[
             styles.defaultViewContainer,
@@ -162,7 +182,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   collapsible: {
-    paddingBottom: 8,
+    paddingBottom: 0,
   },
 });
 

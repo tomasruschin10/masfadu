@@ -10,7 +10,7 @@ import {
   Text,
 } from "native-base";
 import React, { useEffect } from "react";
-import { TouchableHighlight, TouchableOpacity } from "react-native";
+import { TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { SimpleAccordion } from "../../components/SimpleAccordion";
 import Container from "../../components/Container";
 import { getServices } from "../../utils/hooks/services";
@@ -40,49 +40,70 @@ function Subjects({ route, navigation }) {
   const Communication = ({ item }) => {
     const { id, name } = item;
     return (
-      <TouchableOpacity
-        style={{ minHeight: 36, width: "100%" }}
-        onPress={() =>
-          navigation.navigate("SubjectContent", {
-            viewName: viewName,
-            name: name,
-            subjectId: id,
-          })
-        }
+      <View
+        style={{
+          minHeight: 36,
+          width: "100%",
+          marginHorizontal: 6,
+          marginTop: -10,
+          //   backgroundColor: "red",
+        }}
       >
         <Box
           minHeight={58}
           flexDirection={"row"}
           justifyContent={"space-between"}
-          rounded={"md"}
           my="1"
-          borderBottomWidth={1}
-          borderBottomColor={"#D4D4D4"}
+          style={{
+            backgroundColor: "#fff",
+            marginBottom: 15,
+            marginRight: 15,
+            borderRadius: 8,
+          }}
+          //   borderBottomWidth={1}
+          //   borderBottomColor={"#5c5353"}
         >
-          <Box justifyContent={"center"} pl={1} width={"88%"}>
-            <Text color={"#9A9A9A"} numberOfLines={4} fontSize={12}>
+          <Box justifyContent={"center"} pl={4} width={"72%"}>
+            <Text color={"#8b9399"} numberOfLines={4} fontSize={12}>
               {name}
             </Text>
           </Box>
-          <Box pr={2} justifyContent={"center"}>
-            <IconButton
-              as={Feather}
-              name="arrow-right"
-              icon={
-                <Icon
-                  as={Feather}
-                  size={3}
-                  color="#9A9A9A"
-                  name="arrow-right"
-                />
-              }
-              bgColor={"#EBEEF2"}
-              rounded={"full"}
-              size={5}
-            />
-          </Box>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("SubjectContent", {
+                viewName: viewName,
+                name: name,
+                subjectId: id,
+              })
+            }
+          >
+            <Box
+              backgroundColor={"#ffffff"}
+              style={{
+                marginTop: 14,
+                borderColor: "#c7cbce",
+                borderWidth: 1,
+                borderRadius: 2,
+                padding: 2,
+                marginRight: 80,
+                height: 25,
+                width: 70,
+                marginLeft: 8,
+              }}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Text
+                color={"#6e7981"}
+                style={{ padding: 1, marginHorizontal: 8, fontWeight: "bold" }}
+                fontSize={10}
+              >
+                Ver más
+              </Text>
+            </Box>
+          </TouchableOpacity>
         </Box>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -115,10 +136,10 @@ function Subjects({ route, navigation }) {
           )}
           <Box
             mt={4}
-            mb={24}
-            borderColor={"#D5D5D5"}
+            mb={20}
+            // borderColor={"#D5D5D5"}
             borderRadius={10}
-            borderWidth={1}
+            // borderWidth={1}
             mx={5}
             style={{}}
           >
@@ -131,7 +152,7 @@ function Subjects({ route, navigation }) {
                     <Box
                       key={it.id}
                       // mx="2"
-                      mt="3"
+                      mt="2"
                       flexDir={"row"}
                       flexWrap={"wrap"}
                       justifyContent={"space-between"}
