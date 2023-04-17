@@ -269,7 +269,7 @@ function HomeScreen({ route, navigation }) {
         barStyle="dark-content"
         navigation={navigation}
       />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Box>
           {textNews.length > 0 ? (
             <Carousel

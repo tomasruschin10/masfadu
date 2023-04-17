@@ -193,18 +193,15 @@ function AboutSubject_Logic({
             setCurrentSubj({ ...subject, dis: 0 });
           }}
         >
-          <Box
-            borderColor={"#D7D7D7"}
-            borderWidth={1}
+          {/* <Box
             alignItems={"center"}
             justifyContent={"center"}
-            w={"53"}
-            bg={"white"}
+            w={"50"}
             rounded={"xl"}
             h={"56px"}
-          >
-            <AntDesign name="warning" size={24} color="#C4C4C4" />
-          </Box>
+          > */}
+          <AntDesign name="warning" size={24} color="#C4C4C4" />
+          {/* </Box> */}
         </TouchableOpacity>
       ) : null}
     </HStack>

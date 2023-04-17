@@ -20,6 +20,8 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
     USERSUBJECT: 0,
   });
 
+  console.log("currentSubj ", JSON.stringify(currentSubj, null, 2));
+
   return (
     <>
       <ModalIcon showIcon={showIcon} setShowIcon={setShowIcon} />

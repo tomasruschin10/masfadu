@@ -103,7 +103,7 @@ export function HeaderPerfil({ ...props }) {
             {userdata.name} {userdata.lastname}
           </Text>
           <Text
-            color={name == "Menu" ? "white" : "mutedText"}
+            color={name == "Menu" ? "white" : "#50545a"}
             fontSize={13}
             lineHeight={"sm"}
           >

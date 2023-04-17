@@ -54,24 +54,24 @@ const carriers = [
     iconType: "FontAwesome",
     comingSoon: false,
   },
-  {
-    title: "Gastos",
-    icon: "wallet",
-    iconType: "Entypo",
-    comingSoon: true,
-  },
-  {
-    title: "Carpool",
-    icon: "car-hatchback",
-    iconType: "MaterialCommunityIcons",
-    comingSoon: true,
-  },
-  {
-    title: "Mapa de aulas",
-    icon: "map",
-    iconType: "FontAwesome",
-    comingSoon: true,
-  },
+  // {
+  //   title: "Gastos",
+  //   icon: "wallet",
+  //   iconType: "Entypo",
+  //   comingSoon: true,
+  // },
+  // {
+  //   title: "Carpool",
+  //   icon: "car-hatchback",
+  //   iconType: "MaterialCommunityIcons",
+  //   comingSoon: true,
+  // },
+  // {
+  //   title: "Mapa de aulas",
+  //   icon: "map",
+  //   iconType: "FontAwesome",
+  //   comingSoon: true,
+  // },
   {
     title: "",
     icon: "",
