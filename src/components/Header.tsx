@@ -86,7 +86,7 @@ export function HeaderPerfil({ ...props }) {
         backgroundColor={props.statusBarColor}
         barStyle={props.barStyle}
       />
-      <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} bg={"#e8eef4"} />
+      <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
       <Box justifyContent={"space-between"} px={4} flexDirection={"row"} pb={2}>
         <Avatar bg="#e8eef4" source={{ uri: userdata.image.url }} size="md">
           BR
