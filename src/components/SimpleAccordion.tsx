@@ -13,6 +13,7 @@ import Collapsible from "react-native-collapsible";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useEventNavigation } from "../context";
+
 const SimpleAccordion = ({
   title = "",
   viewInside,
@@ -37,45 +38,68 @@ const SimpleAccordion = ({
   const [isCollapsed, setIsCollapsed] = React.useState(startCollapsed);
 
   const { navigationEvent } = useEventNavigation();
+  let marginBotom = 0;
+  if (navigationEvent === "materias") {
+    marginBotom = -20;
+  }
+  console.log(
+    "🚀 ~ file: SimpleAccordion.tsx:42 ~ navigationEvent:",
+    navigationEvent
+  );
 
   return (
+    // ITEM PADRE
     <View>
       {/* items  */}
-      <Box style={[styles.defaultBannerStyle]}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          {navigationEvent === "materias" && (
+      <TouchableOpacity
+        activeOpacity={10}
+        onPress={() => setIsCollapsed(!isCollapsed)}
+      >
+        <Box style={[styles.defaultBannerStyle]}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            {/* {navigationEvent === "materias" && ( */}
             <Image
               source={require("../../assets/icons/star.png")}
-              style={{ width: 30, height: 30, marginRight: 10, marginLeft: -5 }}
-            />
-          )}
-
-          <View>
-            <Text
-              allowFontScaling={false}
               style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#000000",
+                width: 30,
+                height: 30,
+                marginRight: 10,
+                marginLeft: -5,
               }}
-            >
-              {title}
-            </Text>
-            <Text style={{ color: "#939aa0", fontSize: 13.5 }}>
-              CICLO BASICO COMUN
-            </Text>
-          </View>
-        </View>
-        {/* Button ver mas */}
+            />
+            {/* )} */}
 
-        <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
-          {navigationEvent === "materias" ? (
+            <View>
+              <Text
+                allowFontScaling={false}
+                bold={true}
+                style={{
+                  fontSize: 14.5,
+                  fontWeight: "bold",
+
+                  color: "#000000",
+                  marginBottom: -2,
+                }}
+              >
+                {title}
+              </Text>
+              {title === "CBC" && (
+                <Text style={{ color: "#939aa0", fontSize: 13, marginTop: 2 }}>
+                  CICLO BASICO COMUN
+                </Text>
+              )}
+            </View>
+          </View>
+          {/* Button ver mas */}
+
+          <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
+            {/* {navigationEvent === "materias" ? ( */}
             <Box
               backgroundColor={"#ffffff"}
               style={{
@@ -93,45 +117,44 @@ const SimpleAccordion = ({
             >
               <Text
                 color={"#6e7981"}
-                style={{ padding: 3, marginHorizontal: 8, fontWeight: "bold" }}
-                fontSize={10}
+                style={{
+                  padding: 3,
+                  marginHorizontal: 5,
+                  fontWeight: "bold",
+                }}
+                fontSize={9}
               >
                 {isCollapsed ? "Ver más" : "Ver menos"}
               </Text>
             </Box>
-          ) : (
-            <MaterialIcons
-              name={
-                isCollapsed ? "keyboard-arrow-right" : "keyboard-arrow-left"
-              }
-              size={20}
-              color="#191d21"
-            />
-          )}
-        </TouchableOpacity>
-        {/* {
+          </TouchableOpacity>
+          {/* {
                     showArrows &&
                     <Image source={isCollapsed ? downArrow : upArrow} style={[styles.arrows, {tintColor: arrowColor}]}/>
                 } */}
-      </Box>
-      <Collapsible
-        collapsed={isCollapsed}
-        style={
-          navigationEvent === "materias"
-            ? { paddingBottom: 12, marginTop: -10 }
-            : { paddingBottom: 0 }
-        }
-      >
-        <View
-          style={[
-            styles.defaultViewContainer,
-            showContentInsideOfCard ? styles.card : styles.nothing,
-            viewContainerStyle,
-          ]}
+        </Box>
+        <Collapsible
+          collapsed={isCollapsed}
+          style={
+            navigationEvent === "materias"
+              ? { paddingBottom: 12, marginTop: -10 }
+              : { paddingBottom: 0 }
+          }
         >
-          {viewInside}
-        </View>
-      </Collapsible>
+          <View
+            style={[
+              styles.defaultViewContainer,
+              showContentInsideOfCard ? styles.card : styles.nothing,
+              viewContainerStyle,
+              navigationEvent === "materias"
+                ? { marginBottom: marginBotom }
+                : {},
+            ]}
+          >
+            {viewInside}
+          </View>
+        </Collapsible>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -144,10 +167,13 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   defaultBannerStyle: {
-    height: 60,
+    height: 80,
     marginHorizontal: 5,
     borderRadius: 8,
-    marginBottom: 10,
+    // marginBottom: 10,
+    marginTop: 12,
+    // marginBottom: -10,
+    // backgroundColor: "#294871",
     flexDirection: "row",
     backgroundColor: "#fbfbfb",
     padding: 16,

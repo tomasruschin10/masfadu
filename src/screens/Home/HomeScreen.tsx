@@ -1,15 +1,8 @@
 import { memo, useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
+import { Box, HStack, Image, Input, ScrollView, Text } from "native-base";
 import {
-  Box,
   FlatList,
-  HStack,
-  Image,
-  Input,
-  ScrollView,
-  Text,
-} from "native-base";
-import {
   Dimensions,
   Linking,
   TouchableOpacity,
@@ -161,7 +154,18 @@ function HomeScreen({ route, navigation }) {
     </Box>
   );
   const renderNews = ({ item }) => (
-    <Box shadow={"6"} my={3} borderRadius={"2xl"}>
+    <Box
+      style={{
+        width: 190,
+        height: 190,
+        borderRadius: 20,
+        overflow: "hidden",
+        marginVertical: 20,
+        marginLeft: 10,
+        marginBottom: 22,
+      }}
+      borderRadius={"2xl"}
+    >
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("News", { url: item.url, image: item.image.url })
@@ -255,7 +259,7 @@ function HomeScreen({ route, navigation }) {
             fontFamily="Manrope"
             textAlign={"center"}
           >
-            Ir Aal sitio web
+            Ir al sitio web
           </Text>
         </TouchableOpacity>
       </Box>
@@ -300,17 +304,15 @@ function HomeScreen({ route, navigation }) {
 
         <Box>
           {advertisement.length > 0 ? (
-            <Carousel
-              autoplay={true}
-              containerCustomStyle={{ marginTop: 6, marginBottom: 10 }}
-              data={advertisement}
-              itemWidth={185}
-              lockScrollWhileSnapping={true}
-              loop={true}
-              renderItem={renderNews}
-              callbackOffsetMargin={5}
-              sliderWidth={SLIDER_WIDTH}
-            />
+            <View>
+              <FlatList
+                data={advertisement}
+                renderItem={renderNews}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
           ) : (
             <Box my={4} alignSelf={"center"} w={"94%"} flexDir="row" h={150}>
               <Box
@@ -355,6 +357,7 @@ function HomeScreen({ route, navigation }) {
             >
               <View>
                 <Text
+                  fontWeight={"700"}
                   style={{
                     flex: 1,
                     // backgroundColor: "#b1b1b3",
@@ -362,11 +365,11 @@ function HomeScreen({ route, navigation }) {
                     justifyContent: "center",
                     padding: 2,
                     marginTop: 4,
-                    fontWeight: "bold",
-                    fontSize: 15,
+                    // fontWeight: "bold",
+                    fontSize: 16,
                   }}
                 >
-                  ¿En qué aula cursó?
+                  ¿En qué aula curso?
                 </Text>
                 <Text
                   style={{
@@ -376,6 +379,7 @@ function HomeScreen({ route, navigation }) {
                     color: "#808990",
                     fontSize: 13,
                     padding: 2,
+                    marginTop: 2,
                   }}
                 >
                   ENCONTRA DONDE CURSAS
@@ -401,8 +405,8 @@ function HomeScreen({ route, navigation }) {
                   <View
                     style={{
                       backgroundColor: "#EB5E29",
-                      height: 22,
-                      width: 100,
+                      height: 24,
+                      width: 118,
                       borderRadius: 7,
                     }}
                   >
@@ -411,7 +415,7 @@ function HomeScreen({ route, navigation }) {
                         color: "#ffffff",
                         fontSize: 11,
                         textAlign: "center",
-                        marginTop: 1,
+                        marginTop: 1.5,
                       }}
                     >
                       Buscar

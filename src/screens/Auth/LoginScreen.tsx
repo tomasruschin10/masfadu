@@ -9,6 +9,8 @@ import { getUserDataWithToken } from "../../utils/storage";
 import { useDispatch } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
+import { AntDesign } from "@expo/vector-icons";
+
 import {
   ScrollView,
   TouchableWithoutFeedback,
@@ -170,6 +172,9 @@ function LoginScreen({ route, navigation }) {
                   borderRadius: 5,
                   padding: 10,
                   margin: 10,
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "center",
                 }}
                 onPress={async () => {
                   try {
@@ -277,6 +282,8 @@ function LoginScreen({ route, navigation }) {
                   }
                 }}
               >
+                <AntDesign name="apple1" size={18} color="white" />
+
                 <Text
                   style={{
                     color: "#ffffff",
@@ -286,7 +293,7 @@ function LoginScreen({ route, navigation }) {
                     fontSize: 15,
                   }}
                 >
-                  Continuar con Apple
+                  Iniciar Sesión con Apple
                 </Text>
               </TouchableOpacity>
             ) : null}

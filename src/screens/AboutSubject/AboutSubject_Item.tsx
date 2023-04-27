@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Text, HStack } from "native-base";
 import { SimpleAccordion } from "../../components/SimpleAccordion";
 import { ModalIcon, ModalNotes, ModalWarning } from "./Modals";
 import AboutSubject_Item_locked from "./AboutSubject_Item_locked";
+import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -19,7 +20,25 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
     extra_score: [],
     USERSUBJECT: 0,
   });
+  const [FontsLoaded, setFontsLoaded] = useState(false);
+  useEffect(() => {
+    if (!FontsLoaded) {
+      loadFonts();
+      setFontsLoaded(true);
+    }
+  }, []);
 
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      sora: require("../../../assets/fonts/Sora-Bold.ttf"),
+      soraRegular: require("../../../assets/fonts/Sora-Regular.ttf"),
+      soraSemiBold: require("../../../assets/fonts/Sora-SemiBold.ttf"),
+    });
+  };
+
+  if (!FontsLoaded) {
+    return null;
+  }
   console.log("currentSubj ", JSON.stringify(currentSubj, null, 2));
 
   return (
@@ -49,16 +68,17 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         borderWidth={1}
         rounded={"xl"}
         mt={1}
-        mb={4}
+        // mb={4}
         mx={5}
       >
         <HStack p={4} justifyContent="space-between">
           <Box flex={1}>
-            <Text color={"#9f9f9f"} fontWeight={"600"} fontSize={13}>
+            <Text color={"#9f9f9f"} fontWeight={"600"} fontSize={12}>
               Materias aprobadas
             </Text>
             <Text
-              color={"gray.400"}
+              fontFamily={"soraRegular"}
+              color={"#ababb4"}
               fontSize={31}
               mt={2}
             >{`${subjCategory.on}/${subjCategory.total}`}</Text>
@@ -80,13 +100,14 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             </Box>
           </Box>
           <Box ml={4}>
-            <Text color={"#b1b1b1"} fontWeight={"600"} fontSize={13}>
+            <Text color={"#b1b1b1"} fontWeight={"600"} fontSize={12}>
               Promedio
             </Text>
-            <Box bg={"#f7f7f7"} rounded={"xl"} mt={2}>
+            <Box bg={"#f8f8f8"} rounded={"xl"} mt={2}>
               <Text
+                fontFamily={"soraSemiBold"}
                 color={"#9a9a9a"}
-                fontWeight={"600"}
+                fontWeight={"500"}
                 textAlign={"center"}
                 fontSize={28}
                 py={1}
@@ -125,8 +146,10 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 borderBottomWidth: 0,
               },
             ]}
-            viewInside={item.subject.map((it) => (
+            viewInside={item.subject.map((it, index) => (
               <AboutSubject_Logic
+                index={index}
+                // lastItem={item.subject.length}
                 nav={nav}
                 key={it.id}
                 subject={it}

@@ -3,9 +3,14 @@ import { Image, TouchableOpacity } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import * as Font from "expo-font";
+import { useNavigation } from "@react-navigation/native";
+import { useEventNavigation } from "../../context";
 
 function AboutSubject_Logic({
+  index,
+  // lastItem,
   subject,
   nav,
   setShowWarning,
@@ -14,22 +19,51 @@ function AboutSubject_Logic({
   setInfoUserSubj,
   setShowNotes,
 }) {
-  const { available, id, name, subjects, userSubject } = subject;
+  const { navigationEvent } = useEventNavigation();
 
+  let margginTop = 3;
+  if (navigationEvent == "materias" && index == 0) {
+    margginTop = 5;
+  }
+
+  // if (navigationEvent == "menu" && index == 0) {
+  //   margginTop = ;
+  // }
+
+  console.log("margginTop ", margginTop);
+
+  const { available, id, name, subjects, userSubject } = subject;
+  const [FontsLoaded, setFontsLoaded] = useState(false);
   useEffect(() => {
-    console.log(subject);
+    if (!FontsLoaded) {
+      loadFonts();
+      setFontsLoaded(true);
+    }
   }, []);
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      sora: require("../../../assets/fonts/Sora-Bold.ttf"),
+      soraRegular: require("../../../assets/fonts/Sora-Regular.ttf"),
+      soraSemiBold: require("../../../assets/fonts/Sora-SemiBold.ttf"),
+    });
+    console.log("Fuente cargada");
+  };
+
+  if (!FontsLoaded) {
+    return null;
+  }
 
   return (
     // Materias y puntajes
     <HStack
-      mt="3"
+      mt={margginTop}
       justifyContent={"space-between"}
       style={{
         backgroundColor: "#eff6ff",
         padding: 10,
         marginHorizontal: 5,
         borderRadius: 10,
+        height: 80,
       }}
     >
       <Box
@@ -40,10 +74,11 @@ function AboutSubject_Logic({
         //     ? "white"
         //     : "primary.600"
         // }
+
         rounded={"xl"}
       >
         <HStack
-          pl={4}
+          pl={2}
           pr={3}
           justifyContent={"space-between"}
           alignItems={"center"}
@@ -52,7 +87,7 @@ function AboutSubject_Logic({
             pr={2}
             flex={1}
             bold={true}
-            fontSize={13}
+            fontSize={15}
             numberOfLines={2}
             // color={
             //   !available
@@ -61,7 +96,7 @@ function AboutSubject_Logic({
             //     ? "primary.100"
             //     : "light.100"
             // }
-            color="black"
+            color="#191D21"
           >
             {name}
           </Text>
@@ -81,10 +116,26 @@ function AboutSubject_Logic({
               </Text>
             </Box>
           ) : null} */}
-          <Image
-            source={require("../../../assets/icons/emoticons.png")}
-            style={{ width: 30, height: 30 }}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              nav.navigate("SeeSubjectThread", {
+                rating: 14,
+                title: name,
+                description: "",
+                time: "",
+                hours: "",
+                method: "",
+                subject_id: id,
+                id: id,
+                firstLetter: subject.prefix,
+              })
+            }
+          >
+            <Image
+              source={require("../../../assets/icons/emoticons.png")}
+              style={{ width: 33, height: 33, marginLeft: 20, marginRight: -5 }}
+            />
+          </TouchableOpacity>
         </HStack>
       </Box>
 
@@ -94,19 +145,18 @@ function AboutSubject_Logic({
           alignItems: "center",
           justifyContent: "center",
         }}
-        onPress={() =>
-          nav.navigate("SeeSubjectThread", {
-            rating: 14,
-            title: name,
-            description: "",
-            time: "",
-            hours: "",
-            method: "",
-            subject_id: id,
-            id: id,
-            firstLetter: subject.prefix,
-          })
-        }
+        onPress={() => {
+          setInfoUserSubj({
+            ...infoUserSubj,
+            score: userSubject?.score,
+            USERSUBJECT: userSubject?.id,
+            user_id: userSubject?.user_id,
+            subject_id: userSubject?.subject_id,
+            extra_score: userSubject?.extra_score,
+            finish: userSubject?.finish == true ? 1 : 0,
+          });
+          setShowNotes(true);
+        }}
       >
         {/* <MaterialCommunityIcons
             name="message-text-outline"
@@ -117,7 +167,7 @@ function AboutSubject_Logic({
           name="dots-three-vertical"
           size={22}
           style={{ marginRight: 6, padding: 2 }}
-          color="#656f77"
+          color="#c5c5c5"
         />
       </TouchableOpacity>
       {available && userSubject?.score ? (
@@ -127,25 +177,14 @@ function AboutSubject_Logic({
             alignItems: "center",
             justifyContent: "center",
           }}
-          onPress={() => {
-            setInfoUserSubj({
-              ...infoUserSubj,
-              score: userSubject?.score,
-              USERSUBJECT: userSubject?.id,
-              user_id: userSubject?.user_id,
-              subject_id: userSubject?.subject_id,
-              extra_score: userSubject?.extra_score,
-              finish: userSubject?.finish == true ? 1 : 0,
-            });
-            setShowNotes(true);
-          }}
         >
           {/* <Box style={{ backgroundColor: "cyan" }}> */}
           <Text
-            color={userSubject?.score < 4 ? "#FAA72A" : "#3a71e1"}
-            fontWeight={"600"}
+            color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
+            // fontWeight={"bold"}
             textAlign={"center"}
             fontSize={32}
+            fontFamily={"soraSemiBold"}
             style={{ marginRight: 10 }}
           >
             {userSubject?.score}
@@ -181,13 +220,25 @@ function AboutSubject_Logic({
             rounded={"xl"}
             h={"56px"}
           > */}
-          <Text color={"blue.700"} textAlign={"center"} fontSize={32}>
+          <Text
+            color={"#3a71e1"}
+            // fontWeight={"bold"}
+            textAlign={"center"}
+            fontSize={38}
+            // fontFamily={""}
+            style={{ marginRight: 10 }}
+          >
             +
           </Text>
           {/* </Box> */}
         </TouchableOpacity>
       ) : !available ? (
         <TouchableOpacity
+          style={{
+            // backgroundColor: "white",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
           onPress={() => {
             setShowWarning(true);
             setCurrentSubj({ ...subject, dis: 0 });
@@ -200,7 +251,12 @@ function AboutSubject_Logic({
             rounded={"xl"}
             h={"56px"}
           > */}
-          <AntDesign name="warning" size={24} color="#C4C4C4" />
+          <AntDesign
+            name="warning"
+            size={24}
+            style={{ marginRight: 10 }}
+            color="#C4C4C4"
+          />
           {/* </Box> */}
         </TouchableOpacity>
       ) : null}

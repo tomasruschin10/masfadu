@@ -16,10 +16,12 @@ import Container from "../../components/Container";
 import { getServices } from "../../utils/hooks/services";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { Feather, AntDesign } from "@expo/vector-icons";
+import { useEventNavigation } from "../../context";
 function Subjects({ route, navigation }) {
   const { viewName, id } = route.params;
   const [subjectCategory, setSubjectCategory] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const { navigationEvent } = useEventNavigation();
 
   useEffect(() => {
     setLoading(true);
@@ -37,20 +39,34 @@ function Subjects({ route, navigation }) {
       .finally(() => setLoading(false));
   }, [setSubjectCategory]);
 
-  const Communication = ({ item }) => {
+  const Communication = ({ item, index, length }) => {
+    console.log("🚀 ~ file: Subject.tsx:44 ~ Communication ~ index:", index);
     const { id, name } = item;
+
+    let margginTop = -10;
+    if (navigationEvent == "menu" && index == 0) {
+      margginTop = 0;
+    }
+    console.log("🚀 ~ file: Subject.tsx:52 ~ Communication ~ length:", length);
+
+    let marginBottom = 0;
+    if (length == index) {
+      console.log("sii");
+
+      marginBottom = -14;
+    }
     return (
       <View
         style={{
           minHeight: 36,
           width: "100%",
           marginHorizontal: 6,
-          marginTop: -10,
-          //   backgroundColor: "red",
+          marginTop: margginTop,
+          marginBottom: marginBottom,
+          // backgroundColor: "red",
         }}
       >
         <Box
-          minHeight={58}
           flexDirection={"row"}
           justifyContent={"space-between"}
           my="1"
@@ -59,12 +75,13 @@ function Subjects({ route, navigation }) {
             marginBottom: 15,
             marginRight: 15,
             borderRadius: 8,
+            height: 80,
           }}
           //   borderBottomWidth={1}
           //   borderBottomColor={"#5c5353"}
         >
           <Box justifyContent={"center"} pl={4} width={"72%"}>
-            <Text color={"#8b9399"} numberOfLines={4} fontSize={12}>
+            <Text color={"#8b9399"} numberOfLines={4} fontSize={14} mr={4}>
               {name}
             </Text>
           </Box>
@@ -80,14 +97,14 @@ function Subjects({ route, navigation }) {
             <Box
               backgroundColor={"#ffffff"}
               style={{
-                marginTop: 14,
+                marginTop: 30,
                 borderColor: "#c7cbce",
                 borderWidth: 1,
                 borderRadius: 2,
                 padding: 2,
-                marginRight: 80,
-                height: 25,
-                width: 70,
+                marginRight: 20,
+                height: 20,
+                width: 60,
                 marginLeft: 8,
               }}
               justifyContent={"center"}
@@ -95,8 +112,8 @@ function Subjects({ route, navigation }) {
             >
               <Text
                 color={"#6e7981"}
-                style={{ padding: 1, marginHorizontal: 8, fontWeight: "bold" }}
-                fontSize={10}
+                style={{ padding: 0, marginHorizontal: 6, fontWeight: "bold" }}
+                fontSize={9}
               >
                 Ver más
               </Text>
@@ -127,7 +144,7 @@ function Subjects({ route, navigation }) {
           {!loading ? (
             <Button display={"none"} />
           ) : (
-            <HStack mb={3} space={2} justifyContent="center">
+            <HStack mb={3} mt={10} space={2} justifyContent="center">
               <Spinner accessibilityLabel="Loading posts" />
               <Heading color="brand.primary" fontSize="md">
                 Cargando
@@ -157,8 +174,13 @@ function Subjects({ route, navigation }) {
                       flexWrap={"wrap"}
                       justifyContent={"space-between"}
                     >
-                      {it.subject.map((item) => (
-                        <Communication key={item.id} item={item} />
+                      {it.subject.map((item, index) => (
+                        <Communication
+                          key={item.id}
+                          item={item}
+                          index={index}
+                          length={it.subject.length - 1}
+                        />
                       ))}
                     </Box>
                   }

@@ -33,10 +33,11 @@ export default function BottomTab({ route, navigation }) {
       ]}
     >
       <Box
-        py={4}
+        py={2}
         px={8}
         shadow={0}
         style={{
+          paddingBottom: 20,
           backgroundColor: "#fff",
           bottom: 0,
           position: "absolute",
@@ -56,13 +57,15 @@ export default function BottomTab({ route, navigation }) {
           >
             <MaterialIcons
               name="home"
-              size={26}
+              size={36}
+              style={{ marginTop: 0 }}
               color={event == "inicio" ? "#eb5e29" : "#d1d5d9"}
             />
 
             <Box justifyContent={"center"}>
               <Text
                 fontFamily={"SourceSansPro"}
+                style={{ marginTop: -2 }}
                 fontSize={"12"}
                 color={event == "inicio" ? "#eb5e29" : "#d1d5d9"}
               >
@@ -83,6 +86,7 @@ export default function BottomTab({ route, navigation }) {
           >
             <FontAwesome5
               name="book-open"
+              style={{ marginTop: 6 }}
               size={26}
               color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
             />
@@ -90,6 +94,7 @@ export default function BottomTab({ route, navigation }) {
             <Text
               fontFamily={"SourceSansPro"}
               fontSize={"12"}
+              style={{ marginTop: 0 }}
               color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
             >
               Materias
@@ -114,7 +119,8 @@ export default function BottomTab({ route, navigation }) {
           >
             <MaterialCommunityIcons
               name="emoticon-happy"
-              size={26}
+              size={30}
+              style={{ marginTop: 3 }}
               color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
             />
 
@@ -139,13 +145,15 @@ export default function BottomTab({ route, navigation }) {
           >
             <MaterialIcons
               name="star"
-              size={26}
+              size={36}
+              style={{ marginTop: 0 }}
               color={event == "menu" ? "#eb5e29" : "#d1d5d9"}
             />
 
             <Text
               fontFamily={"SourceSansPro"}
               fontSize={"12"}
+              style={{ marginTop: -2 }}
               color={event == "menu" ? "#eb5e29" : "#d1d5d9"}
             >
               Menú
