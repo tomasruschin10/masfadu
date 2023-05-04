@@ -4,7 +4,6 @@ import {
   HStack,
   Icon,
   IconButton,
-  Image,
   Input,
   ScrollView,
   Text,
@@ -12,9 +11,16 @@ import {
   Spinner,
   Heading,
 } from "native-base";
+import { Image } from "react-native";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { getServices } from "../../utils/hooks/services";
-import { Linking, TouchableOpacity, Dimensions } from "react-native";
+import {
+  Linking,
+  TouchableOpacity,
+  Dimensions,
+  View,
+  Alert,
+} from "react-native";
 import { useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
@@ -96,6 +102,8 @@ const renderOfertas = ({ item }) => {
 
 function Offers({ route, navigation }) {
   const [offerCategory, setOfferCategory] = useState([]);
+  const [items, setItems] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -121,15 +129,45 @@ function Offers({ route, navigation }) {
             })
           }
         >
-          <Image
+          {/* <Image
             borderRadius={"2xl"}
             resizeMode={"cover"}
             h={"100%"}
             alt="news1"
             source={{ uri: item.image.url }}
-          />
+          /> */}
         </TouchableOpacity>
       </Box>
+    );
+  };
+
+  const HeaderFilters = ({ item }) => {
+    // console.log("item category: " + JSON.stringify(item, null, 2));
+
+    return (
+      <>
+        <View
+          style={{
+            // height: 60,
+            // backgroundColor: "red",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              backgroundColor: "#ffffff",
+              marginLeft: 14,
+              padding: 10,
+              color: "#051f45",
+              fontWeight: "bold",
+              borderRadius: 30,
+              // padding: 12,
+            }}
+          >
+            {item.name}
+          </Text>
+        </View>
+      </>
     );
   };
 
@@ -142,7 +180,21 @@ function Offers({ route, navigation }) {
     );
     getServices("offer-category/all")
       .then(({ data }: any) => {
-        setOfferCategory(data);
+        const filter = {
+          id: 0,
+          name: "Todos",
+        };
+
+        // const result = data.map((obj) => ({ ...obj }));
+        let result = data.map((obj) => {
+          const newObj = { id: obj.id, name: obj.name };
+          return newObj;
+        });
+        result.unshift(filter);
+        setOfferCategory(result);
+        setItems(data.map((obj) => obj.offers).flat());
+        console.log("items ", JSON.stringify(items, null, 2));
+        console.log("offerCategory ", JSON.stringify(result, null, 2));
       })
       .catch((error) => {
         if (__DEV__) {
@@ -153,7 +205,8 @@ function Offers({ route, navigation }) {
         }
       })
       .finally(() => setLoading(false));
-  }, [setOfferCategory, reload]);
+    // }, [setOfferCategory, reload]);
+  }, []);
 
   const byWords = () => {
     setLoading(true);
@@ -169,6 +222,66 @@ function Offers({ route, navigation }) {
       .finally(() => setLoading(false));
   };
 
+  const renderItem = ({ item }) => {
+    console.log(
+      "🚀 ~ file: Offers.tsx:219 ~ renderItem ~ item:",
+      JSON.stringify(item, null, 2)
+    );
+
+    return (
+      <View
+        style={{
+          backgroundColor: "#f6f7f9",
+          width: 180,
+          height: 250,
+          margin: 6,
+          borderRadius: 10,
+        }}
+      >
+        <Image
+          style={{
+            height: 140,
+            width: 180,
+            borderRadius: 10,
+          }}
+          source={{
+            uri: item.image.url,
+          }}
+        />
+        <View
+          style={{
+            margin: 8,
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 13,
+              // letterSpacing: 1,
+              lineHeight: 18,
+            }}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {item.title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              // letterSpacing: 1,
+              marginTop: 5,
+              lineHeight: 18,
+            }}
+            numberOfLines={3}
+            ellipsizeMode="tail"
+          >
+            {item.description}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <Layout route={route} navigation={navigation} title="Ofertas!">
       <Box alignContent={"center"} mt={3} mb={1}>
@@ -181,7 +294,54 @@ function Offers({ route, navigation }) {
           renderItem={renderNews}
         />
       </Box>
-      <Box
+      <View
+        style={{
+          // flex: 1,
+          // height: 60,
+          // width: "100%",
+          // marginBottom: 10,
+          // marginTop: -12,
+          // backgroundColor: "cyan",
+          flexDirection: "row",
+          alignItems: "center",
+          height: 50,
+          justifyContent: "center",
+          marginTop: -20,
+          marginBottom: 10,
+        }}
+      >
+        <Text
+          style={{
+            backgroundColor: "#ffffff",
+            marginLeft: 14,
+            padding: 10,
+            color: "#051f45",
+            fontWeight: "bold",
+            borderRadius: 30,
+            // padding: 12,
+          }}
+        >
+          Filters
+        </Text>
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <FlatList
+            horizontal={true}
+            // numColumns={4}
+            // ItemSeparatorComponent={() => <Box mb={3}></Box>}
+
+            keyExtractor={(item) => item.id}
+            // contentContainerStyle={{
+            //   justifyContent: "space-between",
+            // }}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            data={offerCategory}
+            renderItem={HeaderFilters}
+          />
+        </ScrollView>
+      </View>
+      {/* <Box
         mx="5"
         alignItems={"center"}
         justifyContent="center"
@@ -228,10 +388,23 @@ function Offers({ route, navigation }) {
             }
           />
         </HStack>
-      </Box>
+      </Box> */}
+      <FlatList
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2} // Especificar dos columnas
+        contentContainerStyle={{
+          // backgroundColor: "red",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingBottom: 80,
+        }}
+      />
 
-      <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <Box flex={1} mb={16}>
+      {/* <ScrollView keyboardShouldPersistTaps={"handled"}> */}
+
+      {/* <Box flex={1} mb={16}>
           {!loading ? (
             <Button display={"none"} />
           ) : (
@@ -287,8 +460,8 @@ function Offers({ route, navigation }) {
               </Box>
             )}
           </Box>
-        </Box>
-      </ScrollView>
+        </Box> */}
+      {/* </ScrollView> */}
     </Layout>
   );
 }

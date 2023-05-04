@@ -27,6 +27,8 @@ function HomeScreen({ route, navigation }) {
   const isFocused = useIsFocused();
   const { setNavigationEvent } = useEventNavigation();
   React.useEffect(() => {
+    console.log("usss");
+
     if (isFocused) {
       setNavigationEvent("inicio");
     }

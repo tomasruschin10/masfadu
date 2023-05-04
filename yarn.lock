@@ -5105,7 +5105,7 @@ expo-modules-autolinking@1.0.2:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@1.1.1:
+expo-modules-core@1.1.1, "expo-modules-core@~1.0.4 || ~1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.1.1.tgz#06502379274bdcb356fcbe225c3c6bc4926e462c"
   integrity sha512-+AcaYmaWphIfkBcccu65dyOhWnpOJ3+SQpoI4lI/Plg1nNjOLuBjmrdVvpiJOvkN+CqbNGsJ5Yll8LLk+C107Q==
