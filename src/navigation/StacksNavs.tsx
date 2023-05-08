@@ -29,6 +29,7 @@ import GoogleAuth from "../screens/GoogleAuth";
 import GoogleRegister from "../screens/GoogleRegister";
 import AboutSubject from "../screens/AboutSubject/AboutSubject";
 import { SearchCourse } from "../screens/searchCourse/SearchCourse";
+import { MarketDetail } from "../screens/MarketDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -89,6 +90,8 @@ export function NavStack() {
 
           <Stack.Screen name="SubjectContent" component={SubjectContent} />
           <Stack.Screen name="Anoffer" component={Anoffer} />
+
+          <Stack.Screen name="MarketDetail" component={MarketDetail} />
 
           <Stack.Screen
             name="Coursesandworkshops"

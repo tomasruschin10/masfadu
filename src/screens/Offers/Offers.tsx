@@ -23,6 +23,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const renderOfertas = ({ item }) => {
   const { title, description, url, image, partner } = item;
@@ -109,6 +110,8 @@ function Offers({ route, navigation }) {
   const [searchText, setSearchText] = useState("");
   const [advertisement, setAdvertisement] = useState([]);
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
+
+  const { canGoBack, goBack, navigate } = useNavigation();
 
   const renderNews = ({ item }) => {
     return (
@@ -229,56 +232,60 @@ function Offers({ route, navigation }) {
     );
 
     return (
-      <View
-        style={{
-          backgroundColor: "#f6f7f9",
-          width: 180,
-          height: 250,
-          margin: 6,
-          borderRadius: 10,
-        }}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("MarketDetail", { data: item })}
       >
-        <Image
-          style={{
-            height: 140,
-            width: 180,
-            borderRadius: 10,
-          }}
-          source={{
-            uri: item.image.url,
-          }}
-        />
         <View
           style={{
-            margin: 8,
+            backgroundColor: "#f6f7f9",
+            width: 180,
+            height: 250,
+            margin: 6,
+            borderRadius: 10,
           }}
         >
-          <Text
+          <Image
             style={{
-              fontWeight: "bold",
-              fontSize: 13,
-              // letterSpacing: 1,
-              lineHeight: 18,
+              height: 140,
+              width: 180,
+              borderRadius: 10,
             }}
-            numberOfLines={2}
-            ellipsizeMode="tail"
-          >
-            {item.title}
-          </Text>
-          <Text
+            source={{
+              uri: item.image.url,
+            }}
+          />
+          <View
             style={{
-              fontSize: 12,
-              // letterSpacing: 1,
-              marginTop: 5,
-              lineHeight: 18,
+              margin: 8,
             }}
-            numberOfLines={3}
-            ellipsizeMode="tail"
           >
-            {item.description}
-          </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 13,
+                // letterSpacing: 1,
+                lineHeight: 18,
+              }}
+              numberOfLines={2}
+              ellipsizeMode="tail"
+            >
+              {item.title}
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                // letterSpacing: 1,
+                marginTop: 5,
+                lineHeight: 18,
+              }}
+              numberOfLines={3}
+              ellipsizeMode="tail"
+            >
+              {item.description}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
