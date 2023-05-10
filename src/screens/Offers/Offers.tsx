@@ -25,85 +25,10 @@ import { useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const renderOfertas = ({ item }) => {
-  const { title, description, url, image, partner } = item;
-  return (
-    <Box
-      shadow={"5"}
-      bgColor={"white"}
-      m={2}
-      p={1}
-      borderRadius={"md"}
-      mr={3}
-      mb={5}
-      minH={159}
-      w={307}
-    >
-      <Box
-        flexDirection={"row"}
-        pt={1}
-        pl={2}
-        borderBottomColor={"light.200"}
-        borderBottomWidth={1}
-      >
-        <Image
-          alt={"logo"}
-          w={92}
-          h={92}
-          resizeMode={"cover"}
-          borderRadius={"md"}
-          source={{ uri: image.url }}
-        />
-        <Box px={3} minH={105} w={180}>
-          <Text fontSize={"md"} fontWeight={700} fontFamily="Manrope">
-            {title}
-          </Text>
-          <Text
-            fontWeight={700}
-            fontFamily="Manrope"
-            color={"mutedText"}
-            numberOfLines={2}
-            mt={1}
-            fontSize={"sm"}
-          >
-            {partner.name}
-          </Text>
-          <Box w={180} mb={3}>
-            <Text
-              fontFamily="Manrope"
-              numberOfLines={2}
-              fontSize={16}
-              lineHeight={21.86}
-            >
-              {description}
-            </Text>
-          </Box>
-        </Box>
-      </Box>
-      <TouchableOpacity
-        onPress={() =>
-          Linking.openURL(url.includes("https://") ? url : `https://${url}`)
-        }
-        style={{ justifyContent: "center" }}
-      >
-        <Text
-          pt={2}
-          fontWeight={700}
-          fontSize={"sm"}
-          color={"alternativeLink"}
-          fontFamily="Manrope"
-          textAlign={"center"}
-        >
-          Ver más
-        </Text>
-      </TouchableOpacity>
-    </Box>
-  );
-};
-
 function Offers({ route, navigation }) {
   const [offerCategory, setOfferCategory] = useState([]);
   const [items, setItems] = useState([]);
+  const [AllItems, setAllItems] = useState([]);
   const [currentFilter, setCurrentFilter] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
@@ -148,30 +73,48 @@ function Offers({ route, navigation }) {
     // console.log("item category: " + JSON.stringify(item, null, 2));
 
     return (
-      <>
-        <View
+      <TouchableOpacity onPress={() => handleFilter(item)}>
+        {/* <View
           style={{
             // height: 60,
-            // backgroundColor: "red",
+            margin: 10,
+            backgroundColor: "red",
             justifyContent: "center",
+            borderRadius: 30,
+          }}
+        > */}
+        <Text
+          style={{
+            backgroundColor: item.id == currentFilter ? "#6523e3" : "#ffffff",
+            marginLeft: 14,
+            padding: 10,
+            color: item.id == currentFilter ? "#fff" : "#051f45",
+            fontWeight: "bold",
+            shadowRadius: 10,
+            borderRadius: 20,
+            overflow: "hidden", // agrega esta línea
+
+            // padding: 12,
           }}
         >
-          <Text
-            style={{
-              backgroundColor: "#ffffff",
-              marginLeft: 14,
-              padding: 10,
-              color: "#051f45",
-              fontWeight: "bold",
-              borderRadius: 30,
-              // padding: 12,
-            }}
-          >
-            {item.name}
-          </Text>
-        </View>
-      </>
+          {item.name}
+        </Text>
+        {/* </View> */}
+      </TouchableOpacity>
     );
+  };
+
+  const handleFilter = (item) => {
+    console.log("handle ", item);
+    setCurrentFilter(item.id);
+    const data = AllItems.filter(
+      (itemFilter) => itemFilter.offer_category_id === item.id
+    );
+
+    setItems(data);
+    if (item.id == 0) {
+      setItems(AllItems);
+    }
   };
 
   useEffect(() => {
@@ -196,6 +139,7 @@ function Offers({ route, navigation }) {
         result.unshift(filter);
         setOfferCategory(result);
         setItems(data.map((obj) => obj.offers).flat());
+        setAllItems(data.map((obj) => obj.offers).flat());
         console.log("items ", JSON.stringify(items, null, 2));
         console.log("offerCategory ", JSON.stringify(result, null, 2));
       })
@@ -317,7 +261,7 @@ function Offers({ route, navigation }) {
           marginBottom: 10,
         }}
       >
-        <Text
+        {/* <Text
           style={{
             backgroundColor: "#ffffff",
             marginLeft: 14,
@@ -329,7 +273,7 @@ function Offers({ route, navigation }) {
           }}
         >
           Filters
-        </Text>
+        </Text> */}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <FlatList
@@ -339,7 +283,10 @@ function Offers({ route, navigation }) {
 
             keyExtractor={(item) => item.id}
             // contentContainerStyle={{
-            //   justifyContent: "space-between",
+            //   flex: 1,
+            //   backgroundColor: "green",
+            //   justifyContent: "center",
+            //   alignItems: "center",
             // }}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
@@ -348,54 +295,7 @@ function Offers({ route, navigation }) {
           />
         </ScrollView>
       </View>
-      {/* <Box
-        mx="5"
-        alignItems={"center"}
-        justifyContent="center"
-        flexDir={"row"}
-        mb="3"
-      >
-        <Input
-          rounded={"full"}
-          fontSize={12.27}
-          onChangeText={(text) => setSearchText(text)}
-          w={{ base: "75%", md: "25%" }}
-          pb="1"
-          type={"text"}
-          placeholder={"Buscar"}
-          mr="2"
-        />
 
-        <HStack alignItems={"flex-start"}>
-          <IconButton
-            mr={2}
-            onPress={byWords}
-            rounded={"xl"}
-            backgroundColor={"primary.900"}
-            icon={
-              <Icon
-                as={Ionicons}
-                name="search"
-                size="md"
-                color="primary.1000"
-              />
-            }
-          />
-          <IconButton
-            onPress={() => setReload(!reload)}
-            rounded={"xl"}
-            backgroundColor={"primary.900"}
-            icon={
-              <Icon
-                as={AntDesign}
-                name="reload1"
-                size="md"
-                color="primary.1000"
-              />
-            }
-          />
-        </HStack>
-      </Box> */}
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -403,72 +303,14 @@ function Offers({ route, navigation }) {
         numColumns={2} // Especificar dos columnas
         contentContainerStyle={{
           // backgroundColor: "red",
+          marginLeft: 3,
+          // marginRight: 5,
           justifyContent: "center",
-          alignItems: "center",
+          // width: 200,
+          // alignItems: "center",
           paddingBottom: 80,
         }}
       />
-
-      {/* <ScrollView keyboardShouldPersistTaps={"handled"}> */}
-
-      {/* <Box flex={1} mb={16}>
-          {!loading ? (
-            <Button display={"none"} />
-          ) : (
-            <HStack space={2} justifyContent="center">
-              <Spinner accessibilityLabel="Loading posts" />
-              <Heading color="brand.primary" fontSize="md">
-                Cargando
-              </Heading>
-            </HStack>
-          )}
-
-          <Box px={5} alignContent={"center"}>
-            {offerCategory.length > 0 &&
-              offerCategory.map((item) => {
-                return (
-                  <Box key={item.id}>
-                    <Text
-                      fontWeight={700}
-                      fontFamily="Manrope"
-                      fontSize={"xl"}
-                      mb={1}
-                    >
-                      {item.name}
-                    </Text>
-                    <ScrollView
-                      horizontal
-                      showsHorizontalScrollIndicator={false}
-                    >
-                      <FlatList
-                        numColumns={4}
-                        ItemSeparatorComponent={() => <Box mb={3}></Box>}
-                        keyExtractor={(item) => item.id}
-                        contentContainerStyle={{
-                          justifyContent: "space-between",
-                        }}
-                        showsHorizontalScrollIndicator={false}
-                        data={item.offers}
-                        renderItem={renderOfertas}
-                        mb={1}
-                      />
-                    </ScrollView>
-                  </Box>
-                );
-              })}
-            {!loading && offerCategory.length === 0 && (
-              <Box
-                alignItems={"center"}
-                justifyContent={"center"}
-                h={"100"}
-                _text={{ fontSize: 15 }}
-              >
-                No Hay Ofertas
-              </Box>
-            )}
-          </Box>
-        </Box> */}
-      {/* </ScrollView> */}
     </Layout>
   );
 }

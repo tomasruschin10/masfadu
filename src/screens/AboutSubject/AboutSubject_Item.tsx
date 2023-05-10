@@ -8,6 +8,31 @@ import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
+  console.log(
+    "🚀 ~ file: AboutSubject_Item.tsx:11 ~ AboutSubject_Item ~ subjCategory:",
+    JSON.stringify(subjCategory.data, null, 2)
+  );
+  // const [materias, setMaterias] = useState([]);
+  const materias = [];
+  subjCategory.data.forEach((item) => {
+    const dataAvailable = item.subject.filter(
+      (item) => item.available && item.userSubject && item.userSubject.score > 4
+    );
+    if (dataAvailable.length > 0) {
+      dataAvailable.forEach((materia) => {
+        materias.push(materia);
+        console.log(
+          "🚀 ~ file: AboutSubject_Item.tsx:22 ~ dataAvailable.forEach ~ materia:",
+          materia
+        );
+      });
+    }
+  });
+
+  console.log("materias ", materias.length);
+
+  // console.log("materias is " + JSON.stringify(setMaterias));
+
   const [showIcon, setShowIcon] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -39,7 +64,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   if (!FontsLoaded) {
     return null;
   }
-  console.log("currentSubj ", JSON.stringify(currentSubj, null, 2));
 
   return (
     <>
@@ -81,7 +105,10 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               color={"#ababb4"}
               fontSize={31}
               mt={2}
-            >{`${subjCategory.on}/${subjCategory.total}`}</Text>
+            >
+              {`${materias.length}/${subjCategory.total}`}
+              {/* {`${subjCategory.on}/${subjCategory.total}`} */}
+            </Text>
             <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
               <LinearGradient
                 start={{ x: -1, y: 0 }}

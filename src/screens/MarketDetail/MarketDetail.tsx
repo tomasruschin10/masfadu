@@ -3,6 +3,7 @@ import React from "react";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import ButtonMas from "../../components/ButtonMas";
 
 type RootStackParamList = {
   MarketDetail: { data: any };
@@ -38,6 +39,19 @@ const MarketDetail = ({ navigation }) => {
             </Text>
             <Text>{data.description}</Text>
           </View>
+        </View>
+        <View
+          style={{
+            // backgroundColor: "gray",
+            width: "100%",
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            bottom: 100,
+          }}
+        >
+          <ButtonMas title="Ver mas" />
         </View>
       </Layout>
     </Container>

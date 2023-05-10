@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Ionicons,
-  FontAwesome5,
-  AntDesign,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { Animated, TouchableHighlight, TouchableOpacity } from "react-native";
 import {
   Box,
@@ -18,6 +13,7 @@ import {
   Spinner,
   Text,
 } from "native-base";
+
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import SeeSubjectThread_Item from "./SeeSubjectThread_Item";
@@ -437,13 +433,13 @@ function SeeSubjectThread({ route, navigation }) {
       </ScrollView>
 
       <Box
-        bg="#EC5F5F"
+        bg="#eb5e29"
         shadow={"3"}
         borderRadius="full"
         position={"absolute"}
         right={5}
         p={1}
-        bottom={"32"}
+        bottom={"24"}
         zIndex={100}
       >
         <TouchableHighlight
@@ -467,10 +463,10 @@ function SeeSubjectThread({ route, navigation }) {
             w={"10"}
             flexDir={"row"}
             alignItems={"center"}
-            px="2"
+            // px="2"
             justifyContent={"center"}
           >
-            <FontAwesome5 name="feather-alt" size={18} color="white" />
+            <Entypo name="plus" size={28} color="white" />
           </Box>
         </TouchableHighlight>
       </Box>
