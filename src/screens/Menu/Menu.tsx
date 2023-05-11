@@ -8,49 +8,49 @@ import switchIcon from "../../utils/switchIcon";
 const carriers = [
   {
     title: "Materias",
-    icon: "library-books",
+    icon: require("../../../assets/menu/materias.png"),
     iconType: "MaterialIcons",
     comingSoon: false,
   },
   {
     title: "Opiniones de materias",
-    icon: "message",
+    icon: require("../../../assets/menu/opiniones.png"),
     iconType: "MaterialIcons",
     comingSoon: false,
   },
   {
     title: "Objetos perdidos",
-    icon: "book-search",
+    icon: require("../../../assets/menu/mercado.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
   {
     title: "Ofertas Laborales",
-    icon: "briefcase",
+    icon: require("../../../assets/menu/ofertas.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
   {
     title: "Cursos, charlas y workshops",
-    icon: "graduation-cap",
+    icon: require("../../../assets/menu/charlas.png"),
     iconType: "Entypo",
     comingSoon: false,
   },
   {
     title: "Recursos y herramientas",
-    icon: "text",
+    icon: require("../../../assets/menu/recursos.png"),
     iconType: "Entypo",
     comingSoon: false,
   },
   {
     title: "Cuenta",
-    icon: "account-group",
+    icon: require("../../../assets/menu/cuenta.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
   {
     title: "Notificaciones",
-    icon: "bell",
+    icon: require("../../../assets/menu/notificaciones.png"),
     iconType: "FontAwesome",
     comingSoon: false,
   },
@@ -82,14 +82,14 @@ const carriers = [
 
 function Menu({ route, navigation }) {
   return (
-    <Box flex={1} mt={0} pt={0} backgroundColor="#3A71E1">
-      <HeaderPerfil
+    <Box flex={1} mt={0} pt={0} backgroundColor="#1f1e25">
+      {/* <HeaderPerfil
         statusBarColor="#3A71E1"
         barStyle="light-content"
         navigation={navigation}
-      />
+      /> */}
 
-      <Box px={5} my={10} alignContent={"center"}>
+      <Box px={2} my={10} mt={"56"} alignContent={"center"}>
         <FlatList
           ItemSeparatorComponent={() => <Box mb={3}></Box>}
           showsVerticalScrollIndicator={false}
@@ -100,7 +100,7 @@ function Menu({ route, navigation }) {
           renderItem={({ item }) => (
             <Sections
               icon={item.icon}
-              iconType={switchIcon(item.iconType)}
+              // iconType={switchIcon(item.iconType)}
               title={item.title}
               comingSoon={item.comingSoon}
               navigation={navigation}
