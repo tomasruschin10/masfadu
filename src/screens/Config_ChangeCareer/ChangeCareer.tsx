@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 import Alert from "../../components/alert/Alert";
 import React, { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
