@@ -7,12 +7,22 @@ import { updateUserdata } from '../../redux/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { updateMessage } from '../../redux/actions/message';
+import Alert from "../../components/alert/Alert";
 
 function ChangeCareer({route, navigation}) {
   const userdata = useSelector((state: any) => state.user.userdata)
   const [selectCareer, setSelectCareer] = React.useState({career_id: null});
   const [career, setCareer] = React.useState([]);
   const dispatch = useDispatch()
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
 
   useEffect(() => {
 		getServices('career/all').then(({data}: any) => {
@@ -28,15 +38,20 @@ function ChangeCareer({route, navigation}) {
     if ( selectCareer.career_id ) {
         putServices(`auth/update/${userdata.id}`, selectCareer).then(({data}:any) => {
         store.dispatch(updateUserdata(data))
-        dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'}))
-      }).catch(err => dispatch(updateMessage({body: 'Sucedió un error al Guardar su Carrera', open: true, type: 'danger'})))
+       /*  dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'})) */
+       showAlert('success', 'Guardado con Exito!')
+      }).catch(err =>  showAlert('error', 'Sucedió un error al Guardar su Carrera'))
     } else {
-			dispatch(updateMessage({body: 'Por favor Seleccione una Carrera', open: true, type: 'danger'}))
+			/* dispatch(updateMessage({body: 'Por favor Seleccione una Carrera', open: true, type: 'danger'})) */
+      showAlert('warning', 'Por favor seleccioná una carrera')
     }
   }
 
   return (
     <ScrollView>
+        {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <Stack space={5} m={5}>
         <Box>
           <Text fontSize={18} mb='2' color={'#3A71E1'} fontWeight={'600'}  fontFamily={'Poppins'}>Carrera actual</Text>

@@ -6,6 +6,9 @@ import { HeaderBack } from '../../components/Header';
 import { putServices } from '../../utils/hooks/services';
 import { updateMessage } from '../../redux/actions/message';
 import { useDispatch } from 'react-redux';
+import Alert from "../../components/alert/Alert";
+
+
 
 function NewPassword({route, navigation}) {
     const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +16,17 @@ function NewPassword({route, navigation}) {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const {id} = route.params
+
+
+    const [alert, setAlert] = React.useState(null);
+
+    const showAlert = (type, message) => {
+      setAlert({ type, message });
+    };
+  
+    const closeAlert = () => {
+      setAlert(null);
+    };
     
     const updatePassword = () => {
         if (form.password === form.repeat_password) {
@@ -20,17 +34,22 @@ function NewPassword({route, navigation}) {
             putServices(`auth/update-password/${id}`, form, 'application/json').then(({status}: any) => {
                 status === 200 && navigation.navigate('UpdatedPassword')
             }).catch(err => {
-                dispatch(updateMessage({body: 'Hubo un error al cambiar la contraseña, intentalo nuevamente', open: true, type: 'danger'}))
+/*                 dispatch(updateMessage({body: 'Hubo un error al cambiar la contraseña, intentalo nuevamente', open: true, type: 'danger'})) */
+                    showAlert('error', 'Hubo un error al cambiar la contraseña, inténtalo nuevamente')
             }).finally(() =>{
                 setLoading(false)
             })
         } else {
-            dispatch(updateMessage({body: 'Asegurate que las contraseñas coincidan', open: true, type: 'danger'}))
+            /* dispatch(updateMessage({body: 'Asegurate que las contraseñas coincidan', open: true, type: 'danger'})) */
+            showAlert('warning', 'Asegurate que las contraseñas coincidan')
         }
     }
     
     return (
         <Container>
+          {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
             <HeaderBack />
             
             <Box h={'85%'} alignItems={'center'} justifyContent={'center'} mx={5}>

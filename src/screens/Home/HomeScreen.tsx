@@ -21,6 +21,7 @@ import * as React from "react";
 import * as Device from "expo-device";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/store";
+import Alert from "../../components/alert/Alert";
 
 function HomeScreen({ route, navigation }) {
   const [advertisement, setAdvertisement] = useState([]);
@@ -35,10 +36,22 @@ function HomeScreen({ route, navigation }) {
     React.useState<Notifications.Notification>();
   const notificationListener = React.useRef<any>();
   const responseListener = React.useRef<any>();
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
   React.useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
     );
+
+
+
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -240,13 +253,18 @@ function HomeScreen({ route, navigation }) {
 
   return (
     <Container>
+            {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <HeaderPerfil
         statusBarColor="#ffffff"
         barStyle="dark-content"
         navigation={navigation}
       />
       <ScrollView>
+        
         <Box>
+          
           {textNews.length > 0 ? (
             <Carousel
               autoplay={true}

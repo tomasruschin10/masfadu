@@ -9,11 +9,21 @@ import { updateUserdata } from '../../redux/actions/user';
 import * as DocumentPicker from 'expo-document-picker';
 import { updateMessage } from '../../redux/actions/message';
 import { MaterialIcons } from "@expo/vector-icons";
-
+import Alert from "../../components/alert/Alert";
 function EditProfile({route, navigation}) {
   const userdata = useSelector((state: any) => state.user.userdata)
   const [form, setForm] = useState({image: userdata.image.url, phone: userdata.phone})
   const dispatch = useDispatch()
+
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
 
   const sendForm = () => {
     const img:any = { uri: form.image, name:'userProfile.jpg', type:'image/jpg' }
@@ -23,8 +33,9 @@ function EditProfile({route, navigation}) {
 
     putServices(`auth/update/${userdata.id}`, formData).then(({data}:any) => {
       store.dispatch(updateUserdata(data))
-      dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'}))
-    }).catch(err => dispatch(updateMessage({body: 'Hubo un Error al Guardar', open: true, type: 'danger'})))
+     /*  dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'})) */
+     showAlert('success', 'Guardado con Exito!')
+    }).catch(err => showAlert('error', 'Hubo un Error al Guardar') /* dispatch(updateMessage({body: 'Hubo un Error al Guardar', open: true, type: 'danger'})) */)
   }
 
   const pickImg = async () => {
@@ -34,6 +45,9 @@ function EditProfile({route, navigation}) {
 
   return (
     <ScrollView>
+            {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <Box mt={'10'} alignItems='center'>
         <Avatar
           bg="brand.primary"

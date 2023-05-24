@@ -5,6 +5,7 @@ import { HeaderBack } from '../../components/Header'
 import { getServices } from '../../utils/hooks/services';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
+import Alert from "../../components/alert/Alert";
 
 function ChooseAnOption({route, navigation}) {
     const [token, setToken] = useState('')
@@ -12,12 +13,23 @@ function ChooseAnOption({route, navigation}) {
     const {email} = route.params
     const dispatch = useDispatch()
 
+    const [alert, setAlert] = React.useState(null);
+
+    const showAlert = (type, message) => {
+      setAlert({ type, message });
+    };
+  
+    const closeAlert = () => {
+      setAlert(null);
+    };
+
     const sendCode = () => {
         setLoading(true);
         getServices(`auth/delete-token?token=${token}`).then(({data}: any) => {
             navigation.navigate('NewPassword', {id: data.id})
         }).catch(err => {
-            dispatch(updateMessage({body: 'Asegurate de haber escrito correctamente el código!', open: true, type: 'danger'}))
+            /* dispatch(updateMessage({body: 'Asegurate de haber escrito correctamente el código!', open: true, type: 'danger'})) */
+            showAlert('error', 'Asegurate de haber escrito correctamente el código!')
         }).finally(() =>{
             setLoading(false)
         })
@@ -25,6 +37,9 @@ function ChooseAnOption({route, navigation}) {
 
     return (
         <Container>
+                  {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
             <HeaderBack />
 
             <Box mx={5} mt={5}>

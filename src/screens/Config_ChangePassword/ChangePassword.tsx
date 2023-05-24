@@ -7,6 +7,7 @@ import { putServices } from '../../utils/hooks/services';
 import { updateUserdata } from '../../redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
+import Alert from "../../components/alert/Alert";
 
 function ChangePassword({route, navigation}) {
   const userdata = useSelector((state: any) => state.user.userdata)
@@ -14,19 +15,34 @@ function ChangePassword({route, navigation}) {
   const [repeatPassword, setRepeatPassword] = useState('')
   const dispatch = useDispatch()
 
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
+
   const sendForm = () => {
     if (form.newpassword === repeatPassword) {
       putServices(`auth/update/${userdata.id}`, form).then(({data}:any) => {
         store.dispatch(updateUserdata(data))
-        dispatch(updateMessage({body: 'Contraseña Guardada con Exito!', open: true, type: 'success'}))
-      }).catch(err => dispatch(updateMessage({body: 'Asegurese de haber escrito correctamente su contraseña', open: true, type: 'danger'})))
+        /* dispatch(updateMessage({body: 'Contraseña Guardada con Exito!', open: true, type: 'success'})) */
+        showAlert('success', 'Contraseña Guardada con éxito!')
+      }).catch(err => showAlert('error', 'Asegurese de haber escrito correctamente su contraseña')     /* dispatch(updateMessage({body: 'Asegurese de haber escrito correctamente su contraseña', open: true, type: 'danger'})) */ )
     } else {
-      dispatch(updateMessage({body: 'Asegurese de que las contraseñas coincidan', open: true, type: 'danger'}))
+    /*   dispatch(updateMessage({body: 'Asegurese de que las contraseñas coincidan', open: true, type: 'danger'})) */
+    showAlert('warning', 'Asegurate que las contraseñas coincidan')
     }
   }
 
   return (
     <ScrollView>
+                  {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <Box alignItems={'center'}>
         <Box   mx={6} my={7}>
           <Box w={'100%'} mb={'7'} alignItems={'left'}>

@@ -9,14 +9,25 @@ import { getServices } from '../../utils/hooks/services';
 import Layout from '../../utils/LayoutHeader&BottomTab';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
-
+import Alert from "../../components/alert/Alert";
 function SubjectContent({route, navigation}) {
     const { viewName, name, subjectId } = route.params
     const [ResourceCategory, setResourceCategory] = React.useState([]);
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
     const [modal, setModal] = useState<any>(null)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+
+    const [alert, setAlert] = React.useState(null);
+
+    const showAlert = (type, message) => {
+      setAlert({ type, message });
+    };
+  
+    const closeAlert = () => {
+      setAlert(null);
+    };
     
     useEffect(() => {
         setLoading(true)
@@ -44,7 +55,8 @@ function SubjectContent({route, navigation}) {
         FileSystem.downloadAsync(uri, fileUri).then(({uri}) => {
             Sharing.shareAsync(uri);
         }).catch(_ => {
-            dispatch(updateMessage({body: 'Ha ocurrido un error', open: true, type: 'danger'}))
+            /* dispatch(updateMessage({body: 'Ha ocurrido un error', open: true, type: 'danger'})) */
+            showAlert('error', 'Ha ocurrido un error')
         }).finally(() => setLoading(false))
     }
 
@@ -72,6 +84,9 @@ function SubjectContent({route, navigation}) {
 
   return (
     <Container>
+     {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
         <Layout route={route} navigation={navigation} title={`${name} - ${viewName}`}>
             <ScrollView keyboardShouldPersistTaps={'handled'}>
 

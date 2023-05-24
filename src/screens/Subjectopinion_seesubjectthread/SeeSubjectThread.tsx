@@ -11,6 +11,8 @@ import { HeaderBack } from '../../components/Header';
 import { getServices } from '../../utils/hooks/services';
 import { updateMessage } from '../../redux/actions/message';
 import { useDispatch } from 'react-redux';
+import Alert from "../../components/alert/Alert";
+
 
 function SeeSubjectThread({route, navigation}) {
   const {title, description, time, hours, method, subject_id, id, value, rating, color, firstLetter} = route.params
@@ -30,6 +32,18 @@ function SeeSubjectThread({route, navigation}) {
   const fadeIn = () => Animated.timing(fadeAnim, {toValue: 1, duration: 300, useNativeDriver: false}).start()
   const fadeOut = () => Animated.timing(fadeAnim, {toValue: 0, duration: 300, useNativeDriver: false }).start()
   
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
+
+
+
   // USEEFFECT
   useEffect(() => {!toggle ? fadeOut() : setTimeout(() => fadeIn(), 200)}, [toggle])
 
@@ -67,7 +81,8 @@ function SeeSubjectThread({route, navigation}) {
 
   const byTags = () => {
     if ( form.tags.length === 0 ) {
-      dispatch(updateMessage({body: 'Asegurate de haber escogido una etiqueta por favor!', open: true, type: 'danger'}))
+     /*  dispatch(updateMessage({body: 'Asegurate de haber escogido una etiqueta por favor!', open: true, type: 'danger'})) */
+     showAlert('error', 'Asegurate de haber elegido una etiqueta por favor.')
       return false;
     }
     setLoading(true)
@@ -113,6 +128,10 @@ function SeeSubjectThread({route, navigation}) {
   //JSX
   return (
     <Container>
+
+{alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <HeaderBack title='Opiniones' />
 
       <ScrollView keyboardShouldPersistTaps={'handled'}>

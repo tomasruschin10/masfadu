@@ -6,18 +6,30 @@ import Container from '../../components/Container';
 import { postServices } from '../../utils/hooks/services';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
-
+import Alert from "../../components/alert/Alert";
 function RecoveryPassword({route, navigation}) {
     const [form, setForm] = useState({email: ''})
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
+
+    const [alert, setAlert] = React.useState(null);
+
+    const showAlert = (type, message) => {
+      setAlert({ type, message });
+    };
+  
+    const closeAlert = () => {
+      setAlert(null);
+    };
+  
 
     const sendRecoveryPassword = () => {
         setLoading(true);
         postServices('auth/remember-password', form).then(({status}:any) => {
             status === 201 && navigation.navigate('ChooseAnOption', {email: form.email})
         }).catch(err => {
-            dispatch(updateMessage({body: 'Verifica que el correo esté correctamente escrito', open: true, type: 'danger'}))
+            /* dispatch(updateMessage({body: 'Verifica que el correo esté correctamente escrito', open: true, type: 'danger'})) */
+            showAlert('warning', 'Revisá que el mail esté correctamente escrito ')
             if (__DEV__) {
                 console.log(err)
             }
@@ -28,6 +40,9 @@ function RecoveryPassword({route, navigation}) {
     
     return (
         <Container>
+                  {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
             <HeaderBack />
             
             <Box h={'85%'} alignItems={'center'} justifyContent={'center'} mx={5}>

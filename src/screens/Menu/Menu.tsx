@@ -1,4 +1,4 @@
-import {Box,FlatList} from "native-base";
+import {Box,FlatList, Image} from "native-base";
 import * as React from "react";
 import {HeaderPerfil} from "../../components/Header";
 import BottomTab from '../../components/BottomTab';
@@ -100,7 +100,9 @@ function Menu({ route, navigation }) {
 							title={item.title}
 							comingSoon={item.comingSoon}
 							navigation={navigation}
+							
 						/>
+
 					)}
 				/>
                 </Box>

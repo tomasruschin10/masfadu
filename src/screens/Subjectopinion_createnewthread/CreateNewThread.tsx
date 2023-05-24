@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
 import { useEffect } from 'react';
 import RecommendedTags from '../../utils/RecommendedTags';
-
+import Alert from "../../components/alert/Alert";
 function CreateNewThread({route, navigation}) {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
@@ -18,6 +18,16 @@ function CreateNewThread({route, navigation}) {
   const [allTags, setAllTags] = useState([{}])
   const [loading, setLoading] = useState(false)
 	const [searchText, setSearchText] = useState('');
+
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
   
   const {subject_id, title, description, time, hours, method, id, rating, value} = route.params
   
@@ -27,7 +37,8 @@ function CreateNewThread({route, navigation}) {
   const sendForm = () => {
     setLoading(true)
     postServices(`opinion/create`, form).then(({data}:any) => {
-      dispatch(updateMessage({body: "Publicado correctamente", open: true, type: "success"}))
+      /* dispatch(updateMessage({body: "Publicado correctamente", open: true, type: "success"})) */
+      showAlert('success', 'Publicado correctamente')
       setShowModal(false)
       navigation.navigate('SeeSubjectThread', {
         value: value ? false : true,
@@ -43,7 +54,8 @@ function CreateNewThread({route, navigation}) {
     }).catch(() => {
       setShowModal(false)
       setShowModalError(true)
-      dispatch(updateMessage({body: "Hubo un error al intentar hacer la publicación", open: true, type: "danger"}))
+      /* dispatch(updateMessage({body: "Hubo un error al intentar hacer la publicación", open: true, type: "danger"})) */
+      showAlert('error', 'Hubo un error al intentar hacer la publicación :(')
     }).finally(() => setLoading(false))
   }
 
@@ -55,7 +67,8 @@ function CreateNewThread({route, navigation}) {
   
   const addNewTag = () => {
     if (searchText.includes(' ') || searchText.length === 0) {
-      dispatch(updateMessage({body: "Asegurate de no tener espacios en blanco", open: true, type: "danger"}))
+      /* dispatch(updateMessage({body: "Asegurate de no tener espacios en blanco", open: true, type: "danger"})) */
+      showAlert('warning', 'Asegurate de no tener espacios en blanco')
       return false
     }
     let r = form.tags.filter(tags => tags.name === searchText)
@@ -77,6 +90,9 @@ function CreateNewThread({route, navigation}) {
 
   return (
     <Container>
+            {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <Layout route={route} navigation={navigation} title={`Crear Hilo ${title}`}>
         <ScrollView nestedScrollEnabled={true} keyboardShouldPersistTaps={'handled'}>
             <Box mx={5} mt={5} borderTopWidth={1} borderTopColor={'#EBEEF2'} pt={6}>
