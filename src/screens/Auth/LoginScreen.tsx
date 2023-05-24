@@ -6,10 +6,19 @@ import { NoHeader } from "../../components/Header";
 import Hr from "../../components/Hr";
 import { postServices } from "../../utils/hooks/services";
 import { getUserDataWithToken } from "../../utils/storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
-import { ScrollView, TouchableWithoutFeedback, Platform } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+
+import * as Google from "expo-auth-session/providers/google";
+
+import {
+  ScrollView,
+  TouchableWithoutFeedback,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import jwtDecode from "jwt-decode";
 import * as AppleAuthentication from "expo-apple-authentication";
 import Alert from "../../components/alert/Alert";
@@ -27,6 +36,11 @@ function LoginScreen({ route, navigation }) {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { uid } = useSelector((state: any) => state.user);
+
   React.useEffect(() => {
     if (__DEV__) {
       setEmail("alumno@erickcampas.com");
@@ -44,7 +58,7 @@ function LoginScreen({ route, navigation }) {
     setAlert(null);
   };
 
-  const dispatch = useDispatch();
+
   const getLogin = async () => {
     if (email === "" || password === "") {
 /*       dispatch(
@@ -301,6 +315,8 @@ function LoginScreen({ route, navigation }) {
                 }}
               />
             ) : null}
+
+
             <Box flexDirection={"row"} justifyContent={"center"}>
               <Box justifyContent={"center"}>
                 <Text>¿No tienes una cuenta?</Text>

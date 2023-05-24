@@ -12,32 +12,34 @@ import {
   useTheme,
   View,
 } from "native-base";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   Platform,
+  SafeAreaView,
   TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
 import { useSelector } from "react-redux";
-// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function HeaderBack({ ...props }) {
   const { canGoBack, goBack } = useNavigation();
-  // const insets = useSafeAreaInsets();
-
+  // const insets = useSafeAreaInsets()
   const { name } = useRoute();
+
   return (
     <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <Box safeAreaTop bg="#ffffff" />
+      <StatusBar backgroundColor="#e8eef4" barStyle="dark-content" />
+      <Box safeAreaTop bg="#e8eef4" />
 
       <HStack px="5" py="3" w="100%" maxW="350" alignItems={"flex-start"}>
         {canGoBack() && (
           <IconButton
             rounded={"xl"}
             backgroundColor={"primary.900"}
-            onPress={() => goBack()}
+            onPress={() => {
+              goBack();
+            }}
             icon={
               <Icon
                 as={Ionicons}
@@ -79,20 +81,16 @@ export function HeaderPerfil({ ...props }) {
   const userdata = useSelector((state: any) => state.user.userdata);
 
   return (
-    <>
+    <SafeAreaView>
       <StatusBar
         backgroundColor={props.statusBarColor}
         barStyle={props.barStyle}
       />
-      <Box safeAreaTop={4} bg={props.statusBarColor} />
-      <Box justifyContent={"space-between"} px={6} flexDirection={"row"} pb={2}>
-        <Avatar
-          bg="brand.primary"
-          source={{ uri: userdata.image.url }}
-          size="md"
-        >
+      <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
+      <Box justifyContent={"space-between"} px={4} flexDirection={"row"} pb={2}>
+        <Avatar bg="#e8eef4" source={{ uri: userdata.image.url }} size="md">
           BR
-          <Avatar.Badge bg="green.500" />
+          <Avatar.Badge bg="#4fd441" />
         </Avatar>
 
         <Box px={3} flex={1} justifyContent={"center"}>
@@ -105,8 +103,8 @@ export function HeaderPerfil({ ...props }) {
             {userdata.name} {userdata.lastname}
           </Text>
           <Text
-            color={name == "Menu" ? "white" : "mutedText"}
-            fontSize={14}
+            color={name == "Menu" ? "white" : "#50545a"}
+            fontSize={13}
             lineHeight={"sm"}
           >
             {userdata.career == null
@@ -120,7 +118,7 @@ export function HeaderPerfil({ ...props }) {
             <TouchableOpacity
               onPress={() => navigate("Config")}
               style={{
-                backgroundColor: "#EAF1FF",
+                backgroundColor: "#ffffff",
                 paddingHorizontal: 14,
                 paddingVertical: 10,
                 borderRadius: 12,
@@ -141,6 +139,6 @@ export function HeaderPerfil({ ...props }) {
           )}
         </Box>
       </Box>
-    </>
+    </SafeAreaView>
   );
 }

@@ -54,7 +54,7 @@ function RegisterScreen({ route, navigation }) {
     if (!/^(?=.*\d)(?=.*[A-Z]).{8,}$/.test(form.password)) {
       dispatch(
         updateMessage({
-          body: "La contrasenia debe tener al menos 8 caracteres, una mayuscula y un numero!",
+          body: "La contraseña debe tener al menos 8 caracteres, una mayuscula y un numero!",
           open: true,
           type: "danger",
         })

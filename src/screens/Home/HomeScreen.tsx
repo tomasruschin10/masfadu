@@ -1,15 +1,14 @@
 import { memo, useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
+import { Box, HStack, Image, Input, ScrollView, Text } from "native-base";
 import {
-  Box,
   FlatList,
-  HStack,
-  Image,
-  Input,
-  ScrollView,
-  Text,
-} from "native-base";
-import { Dimensions, Linking, TouchableOpacity, Platform } from "react-native";
+  Dimensions,
+  Linking,
+  TouchableOpacity,
+  Platform,
+  View,
+} from "react-native";
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import TitleSliders from "../../components/TitleSliders";
@@ -22,8 +21,20 @@ import * as Device from "expo-device";
 import { useSelector } from "react-redux";
 import { store } from "../../redux/store";
 import Alert from "../../components/alert/Alert";
+import { useIsFocused } from "@react-navigation/native";
+import { useEventNavigation } from "../../context";
 
 function HomeScreen({ route, navigation }) {
+  const isFocused = useIsFocused();
+  const { setNavigationEvent } = useEventNavigation();
+  React.useEffect(() => {
+    console.log("usss");
+
+    if (isFocused) {
+      setNavigationEvent("inicio");
+    }
+  }, [isFocused]);
+
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
   const [offer, setOffer] = useState([]);
@@ -141,18 +152,35 @@ function HomeScreen({ route, navigation }) {
   }, [setAdvertisement, setTextNews, setOffer, setCourses]);
 
   const renderTextNews = ({ item }) => (
-    <Box w="100%" rounded={"md"} backgroundColor={"primary.200"}>
+    <Box
+      w="100%"
+      rounded={"md"}
+      backgroundColor={"primary.200"}
+      style={{ borderRadius: 8 }}
+    >
       <Image
         source={{ uri: item.image.url }}
         alt={"TextNew"}
         w={"100%"}
-        h={"100"}
+        h={"90"}
+        style={{ borderRadius: 8 }}
       />
       {/* <Text bold textAlign={"center"} color={"white"}>{ item.name }</Text> */}
     </Box>
   );
   const renderNews = ({ item }) => (
-    <Box shadow={"6"} my={3} borderRadius={"2xl"}>
+    <Box
+      style={{
+        width: 190,
+        height: 190,
+        borderRadius: 20,
+        overflow: "hidden",
+        marginVertical: 20,
+        marginLeft: 10,
+        marginBottom: 22,
+      }}
+      borderRadius={"2xl"}
+    >
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("News", { url: item.url, image: item.image.url })
@@ -173,15 +201,16 @@ function HomeScreen({ route, navigation }) {
     const { title, description, url, image, partner } = item;
     return (
       <Box
-        shadow={"5"}
+        shadow={"0"}
         bgColor={"white"}
         m={2}
         p={1}
         borderRadius={"md"}
-        mr={3}
+        mr={2}
+        ml={3}
         mb={5}
-        minH={159}
-        w={307}
+        minH={150}
+        w={308}
       >
         <Box
           flexDirection={"row"}
@@ -195,13 +224,14 @@ function HomeScreen({ route, navigation }) {
             alt={"logo"}
             w={92}
             h={92}
+            style={{ marginTop: 16 }}
             resizeMode={"cover"}
             borderRadius={"md"}
             source={{ uri: image.url }}
           />
           <Box px={3} minH={105} w={180}>
             <Text
-              fontSize={"md"}
+              style={{ fontSize: 16, marginTop: 8 }}
               fontWeight={700}
               fontFamily="Manrope"
               numberOfLines={2}
@@ -211,7 +241,7 @@ function HomeScreen({ route, navigation }) {
             <Text
               fontWeight={700}
               fontFamily="Manrope"
-              color={"mutedText"}
+              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
               numberOfLines={2}
               mt={1}
               fontSize={"sm"}
@@ -239,12 +269,12 @@ function HomeScreen({ route, navigation }) {
           <Text
             py={2}
             fontWeight={700}
-            fontSize={"sm"}
+            style={{ fontSize: 16 }}
             color={"alternativeLink"}
             fontFamily="Manrope"
             textAlign={"center"}
           >
-            Ver más
+            Ir al sitio web
           </Text>
         </TouchableOpacity>
       </Box>
@@ -257,18 +287,17 @@ function HomeScreen({ route, navigation }) {
         <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
       )}
       <HeaderPerfil
-        statusBarColor="#ffffff"
+        statusBarColor="#e8eef4"
         barStyle="dark-content"
         navigation={navigation}
       />
-      <ScrollView>
-        
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Box>
           
           {textNews.length > 0 ? (
             <Carousel
               autoplay={true}
-              containerCustomStyle={{ marginTop: 18 }}
+              containerCustomStyle={{ marginTop: 2 }}
               data={textNews}
               itemWidth={ITEM_WIDTH}
               lockScrollWhileSnapping={true}
@@ -294,17 +323,15 @@ function HomeScreen({ route, navigation }) {
 
         <Box>
           {advertisement.length > 0 ? (
-            <Carousel
-              autoplay={true}
-              containerCustomStyle={{ marginTop: 6, marginBottom: 10 }}
-              data={advertisement}
-              itemWidth={185}
-              lockScrollWhileSnapping={true}
-              loop={true}
-              renderItem={renderNews}
-              callbackOffsetMargin={5}
-              sliderWidth={SLIDER_WIDTH}
-            />
+            <View>
+              <FlatList
+                data={advertisement}
+                renderItem={renderNews}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              />
+            </View>
           ) : (
             <Box my={4} alignSelf={"center"} w={"94%"} flexDir="row" h={150}>
               <Box
@@ -328,45 +355,98 @@ function HomeScreen({ route, navigation }) {
           )}
         </Box>
 
-        <Box w={"100%"} flex={1} px={5} mb={32}>
-          <HStack justifyContent={"space-between"} mb={7} mt={3}>
-            <TitleSliders
+        <Box w={"100%"} flex={1} px={3} mb={32}>
+          <HStack justifyContent={"space-between"} mb={5} mt={1}>
+            {/* <TitleSliders
               navigateTo={"a"}
-              title={"¿En qué aula curso?"}
+              title={"¿En qué aula cursó?"}
               to={null}
               more={false}
               navigation={navigation}
-            />
-            <TouchableOpacity
-              style={{ width: "30%" }}
-              onPress={() =>
-                navigation.navigate("SearchCourse", {
-                  title: "Buscar curso",
-                  url: "https://aulas.fadu.uba.ar/aulas.php",
-                })
-              }
+            /> */}
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                backgroundColor: "#ffffff",
+                padding: 10,
+                borderRadius: 10,
+              }}
             >
-              <Box
-                h={38}
-                textAlign={"center"}
-                flexDir={"row"}
-                bg="#3A71E1"
-                alignItems={"center"}
-                borderRadius="8"
-                px="1"
-              >
+              <View>
                 <Text
-                  textAlign={"center"}
-                  w={"100%"}
-                  color="white"
-                  fontSize={14}
+                  fontWeight={"700"}
+                  style={{
+                    flex: 1,
+                    // backgroundColor: "#b1b1b3",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 2,
+                    marginTop: 4,
+                    // fontWeight: "bold",
+                    fontSize: 16,
+                  }}
                 >
-                  Buscar
+                  ¿En qué aula curso?
                 </Text>
-              </Box>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    flex: 1,
+                    // backgroundColor: "#3A71E1",
+                    alignItems: "center",
+                    color: "#808990",
+                    fontSize: 13,
+                    padding: 2,
+                    marginTop: 2,
+                  }}
+                >
+                  ENCONTRA DONDE CURSAS
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  marginRight: 12,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("SearchCourse", {
+                      title: "Buscar curso",
+                      url: "https://aulas.fadu.uba.ar/aulas.php",
+                    })
+                  }
+                >
+                  <View
+                    style={{
+                      backgroundColor: "#EB5E29",
+                      height: 24,
+                      width: 118,
+                      borderRadius: 7,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#ffffff",
+                        fontSize: 11,
+                        textAlign: "center",
+                        marginTop: 1.5,
+                      }}
+                    >
+                      Buscar
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
           </HStack>
+        </Box>
 
+        <View style={{ marginTop: -125, marginBottom: 80 }}>
           <TitleSliders
             navigateTo={"Offers"}
             title={offertTitle}
@@ -418,7 +498,7 @@ function HomeScreen({ route, navigation }) {
               No Hay Cursos o Workshops
             </Box>
           )}
-        </Box>
+        </View>
       </ScrollView>
       <BottomTab navigation={navigation} route={route} />
     </Container>
