@@ -95,7 +95,7 @@ export function HeaderPerfil({ ...props }) {
 
         <Box px={3} flex={1} justifyContent={"center"}>
           <Text
-            color={name == "Menu" ? "white" : "black"}
+            color={"black"}
             bold
             fontSize={16}
             lineHeight={"sm"}
@@ -103,7 +103,7 @@ export function HeaderPerfil({ ...props }) {
             {userdata.name} {userdata.lastname}
           </Text>
           <Text
-            color={name == "Menu" ? "white" : "#50545a"}
+            color={"#50545a"}
             fontSize={13}
             lineHeight={"sm"}
           >
@@ -131,11 +131,12 @@ export function HeaderPerfil({ ...props }) {
               />
             </TouchableOpacity>
           ) : (
-            canGoBack() && (
+/*             canGoBack() && (
               <TouchableHighlight underlayColor="" onPress={() => goBack()}>
                 <EvilIcons name="close" size={30} color={"white"} />
               </TouchableHighlight>
-            )
+            ) */
+            null
           )}
         </Box>
       </Box>
