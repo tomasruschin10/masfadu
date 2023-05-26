@@ -23,9 +23,12 @@ import { store } from "../../redux/store";
 import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
 
+import { StyleSheet } from "react-native";
+
 function HomeScreen({ route, navigation }) {
   const isFocused = useIsFocused();
   const { setNavigationEvent } = useEventNavigation();
+
   React.useEffect(() => {
     console.log("usss");
 
@@ -269,7 +272,7 @@ function HomeScreen({ route, navigation }) {
   };
 
   return (
-    <Container>
+    <Container  >
       <HeaderPerfil
         statusBarColor="#e8eef4"
         barStyle="dark-content"

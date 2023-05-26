@@ -184,7 +184,7 @@ export default function BottomTab({ route, navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-           /*    setEvent("menu"); */
+              setEvent("menu");
               navigation.navigate('Menu');
             }}
             style={{

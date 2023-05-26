@@ -37,8 +37,8 @@ function CreateNewThread({route, navigation}) {
   const sendForm = () => {
     setLoading(true)
     postServices(`opinion/create`, form).then(({data}:any) => {
-      /* dispatch(updateMessage({body: "Publicado correctamente", open: true, type: "success"})) */
-      showAlert('success', 'Publicado correctamente')
+      dispatch(updateMessage({body: "Publicado correctamente", open: true, type: "success"}))
+      /* showAlert('success', 'Publicado correctamente') */
       setShowModal(false)
       navigation.navigate('SeeSubjectThread', {
         value: value ? false : true,
@@ -54,8 +54,8 @@ function CreateNewThread({route, navigation}) {
     }).catch(() => {
       setShowModal(false)
       setShowModalError(true)
-      /* dispatch(updateMessage({body: "Hubo un error al intentar hacer la publicación", open: true, type: "danger"})) */
-      showAlert('error', 'Hubo un error al intentar hacer la publicación :(')
+      dispatch(updateMessage({body: "Hubo un error al intentar hacer la publicación :(", open: true, type: "danger"}))
+    /*   showAlert('error', 'Hubo un error al intentar hacer la publicación :(') */
     }).finally(() => setLoading(false))
   }
 
@@ -78,8 +78,8 @@ function CreateNewThread({route, navigation}) {
 
   const addNewTag = () => {
     if (searchText.includes(' ') || searchText.length === 0) {
-      /* dispatch(updateMessage({body: "Asegurate de no tener espacios en blanco", open: true, type: "danger"})) */
-      showAlert('warning', 'Asegurate de no tener espacios en blanco')
+      dispatch(updateMessage({body: "Asegurate de no tener espacios en blanco", open: true, type: "warning"}))
+     /*  showAlert('warning', 'Asegurate de no tener espacios en blanco') */
       return false
     }
   };

@@ -123,8 +123,8 @@ function SeeSubjectThread({route, navigation}) {
 
   const byTags = () => {
     if ( form.tags.length === 0 ) {
-     /*  dispatch(updateMessage({body: 'Asegurate de haber escogido una etiqueta por favor!', open: true, type: 'danger'})) */
-     showAlert('error', 'Asegurate de haber elegido una etiqueta por favor.')
+      dispatch(updateMessage({body: 'Asegurate de haber elegido una etiqueta por favor.', open: true, type: 'danger'}))
+     /* showAlert('error', 'Asegurate de haber elegido una etiqueta por favor.') */
       return false;
     }
     setLoading(true);

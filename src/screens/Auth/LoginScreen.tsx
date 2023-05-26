@@ -61,14 +61,14 @@ function LoginScreen({ route, navigation }) {
 
   const getLogin = async () => {
     if (email === "" || password === "") {
-/*       dispatch(
+      dispatch(
         updateMessage({
-          body: "Por favor llena todos los campos para logearte.",
+          body: "Por favor, llená todos los campos para iniciar sesión.",
           open: true,
           type: "danger",
         })
-      ); */
-      showAlert("error", "Por favor, llená todos los campos para iniciar sesión.")
+      );
+     /*  showAlert("error", "Por favor, llená todos los campos para iniciar sesión.") */
       return false;
     }
     setLoading(true);
@@ -92,14 +92,14 @@ function LoginScreen({ route, navigation }) {
         if (__DEV__) {
           console.log("🚀 ~ file: LoginScreen.tsx ~ line 41 ~ getLogin ~ e", e);
         }
-/*         dispatch(
+        dispatch(
           updateMessage({
             body: "Las credenciales no coinciden.",
             open: true,
             type: "danger",
           })
-        ) */
-        showAlert("error", "Las credenciales no coinciden.")
+        )
+      
       })
       .finally(() => {
         setLoading(false);
@@ -239,15 +239,15 @@ function LoginScreen({ route, navigation }) {
                               );
 
                               dispatch(updatetoken(us.data.token));
-/*                               dispatch(
+                              dispatch(
                                 updateMessage({
                                   body: "Inicio correcto. ",
                                   open: true,
                                   type: "success",
                                 })
-                              ); */
+                              );
 
-                              showAlert('sucess', 'Inicio correcto!')
+                            /*   showAlert('sucess', 'Inicio correcto!') */
                               setLoading(false);
                               const dataa = jwtDecode(us.data.token);
                               dispatch(updateUserdata(dataa));
@@ -259,15 +259,15 @@ function LoginScreen({ route, navigation }) {
                             .catch((err) => {
                               if (err.response.status === 401) {
                                 setLoading(false);
-/*                                 dispatch(
+                                dispatch(
                                   updateMessage({
-                                    body: "Su usuario no existe en nuestro banco de datos. ",
+                                    body: "El usuario no existe :(",
                                     open: true,
-                                    type: "danger",
+                                    type: "warning",
                                   })
-                                ); */
+                                );
 
-                                showAlert('warning', 'El usuario no existe :(')
+                               /*  showAlert('warning', 'El usuario no existe :(') */
                               } else {
                                 setLoading(false);
                                 dispatch(
@@ -289,15 +289,15 @@ function LoginScreen({ route, navigation }) {
                             err
                           );
                           setLoading(false);
-/*                           dispatch(
+                          dispatch(
                             updateMessage({
-                              body: "Ups Algo salio mal, porfavor vuelva a intentar. ",
+                              body: "Ups Algo salió mal, por favor volvé a intentar.' ",
                               open: true,
                               type: "danger",
                             })
-                          ); */
+                          );
 
-                          showAlert('error', 'Ups Algo salió mal, por favor volvé a intentar.')
+                         /*  showAlert('error', 'Ups Algo salió mal, por favor volvé a intentar.') */
                         });
                       // signed in
                     }

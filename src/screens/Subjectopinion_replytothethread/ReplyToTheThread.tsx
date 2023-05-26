@@ -27,8 +27,8 @@ function ReplyToTheThread({route, navigation}) {
 
   const postAnswer = () => {
     if (form.description.startsWith(' ')) {
-/*       dispatch(updateMessage({body: 'La descripción no debe estar vacía, elimina los espacios del inicio!', open: true, type: "danger"})) */
-showAlert('warning', 'La descripción no debe estar vacía, elimina los espacios del inicio!')
+      dispatch(updateMessage({body: 'La descripción no debe estar vacía, elimina los espacios del inicio!', open: true, type: "warning"}))
+/* showAlert('warning', 'La descripción no debe estar vacía, elimina los espacios del inicio!') */
       return false
     }
 
@@ -47,12 +47,12 @@ showAlert('warning', 'La descripción no debe estar vacía, elimina los espacios
       })
     }).catch((err)=> {
       if( err.message == 'Request failed with status code 404' ) {
-        /* dispatch(updateMessage({body: 'Publicado Correctamente', open: true, type: "success"})) */
-        showAlert('success', 'Publicado Correctamente')
+        dispatch(updateMessage({body: 'Publicado Correctamente', open: true, type: "success"}))
+       /*  showAlert('success', 'Publicado Correctamente') */
         {canGoBack() && (goBack())}
       } else {
-        /* dispatch(updateMessage({body: 'Error al publicar', open: true, type: "danger"})) */
-        showAlert('error', 'Error al publicar')
+        dispatch(updateMessage({body: 'Error al publicar', open: true, type: "danger"}))
+        /* showAlert('error', 'Error al publicar') */
       }
     }).finally(() => setLoading(false))
   }

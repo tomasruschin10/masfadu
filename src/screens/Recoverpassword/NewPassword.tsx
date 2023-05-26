@@ -34,14 +34,14 @@ function NewPassword({route, navigation}) {
             putServices(`auth/update-password/${id}`, form, 'application/json').then(({status}: any) => {
                 status === 200 && navigation.navigate('UpdatedPassword')
             }).catch(err => {
-/*                 dispatch(updateMessage({body: 'Hubo un error al cambiar la contraseña, intentalo nuevamente', open: true, type: 'danger'})) */
-                    showAlert('error', 'Hubo un error al cambiar la contraseña, inténtalo nuevamente')
+                dispatch(updateMessage({body: 'Hubo un error al cambiar la contraseña, inténtalo nuevamente', open: true, type: 'danger'}))
+                    /* showAlert('error', 'Hubo un error al cambiar la contraseña, inténtalo nuevamente') */
             }).finally(() =>{
                 setLoading(false)
             })
         } else {
-            /* dispatch(updateMessage({body: 'Asegurate que las contraseñas coincidan', open: true, type: 'danger'})) */
-            showAlert('warning', 'Asegurate que las contraseñas coincidan')
+            dispatch(updateMessage({body: 'Asegurate que las contraseñas coincidan', open: true, type: 'danger'}))
+           /*  showAlert('warning', 'Asegurate que las contraseñas coincidan') */
         }
     }
     

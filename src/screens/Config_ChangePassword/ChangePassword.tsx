@@ -29,12 +29,12 @@ function ChangePassword({route, navigation}) {
     if (form.newpassword === repeatPassword) {
       putServices(`auth/update/${userdata.id}`, form).then(({data}:any) => {
         store.dispatch(updateUserdata(data))
-        /* dispatch(updateMessage({body: 'Contraseña Guardada con Exito!', open: true, type: 'success'})) */
-        showAlert('success', 'Contraseña Guardada con éxito!')
-      }).catch(err => showAlert('error', 'Asegurese de haber escrito correctamente su contraseña')     /* dispatch(updateMessage({body: 'Asegurese de haber escrito correctamente su contraseña', open: true, type: 'danger'})) */ )
+        dispatch(updateMessage({body: 'Contraseña Guardada con Exito!', open: true, type: 'success'}))
+     /*    showAlert('success', 'Contraseña Guardada con éxito!') */
+      }).catch(err =>  dispatch(updateMessage({body: 'Asegurese de haber escrito correctamente su contraseña', open: true, type: 'danger'})) )
     } else {
-    /*   dispatch(updateMessage({body: 'Asegurese de que las contraseñas coincidan', open: true, type: 'danger'})) */
-    showAlert('warning', 'Asegurate que las contraseñas coincidan')
+      dispatch(updateMessage({body: 'Asegurate que las contraseñas coincidan' , open: true, type: 'danger'}))
+  /*   showAlert('warning', 'Asegurate que las contraseñas coincidan') */
     }
   }
 

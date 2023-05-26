@@ -9,6 +9,7 @@ import {
 	Input,
 	Slide,
 	Text,
+	View,
 	VStack,
 } from "native-base";
 import React, { memo } from "react";
@@ -17,7 +18,7 @@ import {useEffect} from 'react';
 import { updateMessage } from "../redux/actions/message";
 import { TouchableOpacity } from "react-native";
 import { NoHeader } from "./Header";
-
+import { MaterialIcons } from "@expo/vector-icons";
 function Message() {
 	const message = useSelector((state:any) => state.message);
     const dispatch = useDispatch();
@@ -30,26 +31,37 @@ function Message() {
         switch (type) {
             case 'success':
                 if(resource === 'color'){
-                    return 'green.400'
+                    return '#BAEDE1'
                 }
                 if(resource === 'icon'){
-                    return <CheckIcon
-                    size="6"
-                    color="green.900"
-                    mt="1"
-                />
+                    return  <MaterialIcons name={"check"} size={20} color="black" />
                 }
                 break;
+
+                case 'info':
+                    if(resource === 'color'){
+                        return '#CDEDF6'
+                    }
+                    if(resource === 'icon'){
+                        return  <MaterialIcons name={"info"} size={20} color="black" />
+                    }
+                    break;   
+                    
+                    
+                case 'warning':
+                        if(resource === 'color'){
+                            return '#FFEACA'
+                        }
+                        if(resource === 'icon'){
+                            return  <MaterialIcons name={"warning"} size={20} color="black" />
+                        }
+                        break;         
             case 'danger':
                 if(resource === 'color'){
-                    return 'red.400'
+                    return '#FFCACA'
                 }
                 if(resource === 'icon'){
-                    return <CloseIcon
-                    size="6"
-                    color="red.900"
-                    mt="1"
-                />
+                    return  <MaterialIcons name={"warning"} size={20} color="black" />
                 }
                 break;
                 
@@ -61,35 +73,42 @@ function Message() {
 				
 				<Slide in={message.open} placement="top">
 					
-                    <Box
-                        zIndex={30000}
-                        safeAreaTop
-						w="100%"
-						position="absolute"
-						p="2"
-						borderRadius="xs"
-						bg={getColors(message.type, 'color') as string}
-						alignItems="center"
-						justifyContent="center"
-					>
+                <View
+                    style={{    
+                        borderWidth: 1,
+                        borderColor: "#d6e9c6",
+                        padding: 10,
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                        position: "absolute",
+                        left: 0,
+                        right: 0,
+                    }}
+                    bg={getColors(message.type, 'color') as string}
+                    >
                         <TouchableOpacity onPress={()=>dispatch(updateMessage({body: '', open: false, type: ''}))}>
-						<HStack px={5} space={2}>
-							<Box justifyContent={'center'}>
+						<HStack px={5} space={5}>
+							<Box justifyContent={'left'}>
                                 {getColors(message.type, 'icon')}
                             
                             </Box>
 							<Text
-                            bold
-                                fontSize="lg"
-								color="white"
+
+								color="black"
 								textAlign="center"
 								fontWeight="medium"
 							>
 								{message.body}
 							</Text>
+
+                            <Box justifyContent={'left'}>
+                            <MaterialIcons name={"close"} size={20} color="black" />
+                            
+                            </Box>
 						</HStack>
                     </TouchableOpacity>
-					</Box>
+					</View>
 				</Slide>
 			</Box>
 		</Center>

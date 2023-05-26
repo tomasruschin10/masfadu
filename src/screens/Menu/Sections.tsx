@@ -1,5 +1,5 @@
 import { Box, Icon, IconButton, Text, Image } from "native-base";
-
+import SvgUri from 'react-native-svg-uri';
 import { SvgXml } from "react-native-svg";
 
 export default function Sections({ title, icon, comingSoon, navigation }) {
@@ -113,6 +113,7 @@ export default function Sections({ title, icon, comingSoon, navigation }) {
             resizeMode="contain" // Ajustar imagen al contenedor
             style={{ width: "100%", height: "100%" }} // Reducir el tamaño de la imagen
           />
+
         </Box>
       }
     />

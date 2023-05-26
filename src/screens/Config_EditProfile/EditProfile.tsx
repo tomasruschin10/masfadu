@@ -33,9 +33,9 @@ function EditProfile({route, navigation}) {
 
     putServices(`auth/update/${userdata.id}`, formData).then(({data}:any) => {
       store.dispatch(updateUserdata(data))
-     /*  dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'})) */
-     showAlert('success', 'Guardado con Exito!')
-    }).catch(err => showAlert('error', 'Hubo un Error al Guardar') /* dispatch(updateMessage({body: 'Hubo un Error al Guardar', open: true, type: 'danger'})) */)
+      dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'}))
+     /* showAlert('success', 'Guardado con Exito!') */
+    }).catch(err => /* showAlert('error', 'Hubo un Error al Guardar')  */dispatch(updateMessage({body: 'Hubo un Error al Guardar', open: true, type: 'danger'})))
   }
 
   const pickImg = async () => {

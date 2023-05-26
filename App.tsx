@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import {
 	Poppins_100Thin,
 	Poppins_100Thin_Italic,
@@ -34,7 +35,7 @@ import {
 } from "@expo-google-fonts/source-sans-pro";
 import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
-import { Box, StorageManager } from "native-base";
+import { Box, StorageManager,  } from "native-base";
 import { ColorMode, extendTheme, NativeBaseProvider } from "native-base";
 import * as React from "react";
 import { Provider } from "react-redux";
@@ -52,7 +53,7 @@ import {
 	Manrope_800ExtraBold,
 } from "@expo-google-fonts/manrope";
 import { Theme } from "./src/utils/Theme";
-import { LogBox, View } from "react-native";
+import { LogBox, View, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -62,7 +63,10 @@ import { navigationRef } from "./src/navigation/RootNavigation";
 import { initializeApp } from "firebase/app";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Rect } from "react-native-svg";
+
 SplashScreen.preventAutoHideAsync();
+
+
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBDEIpAX7mXUJDm1Xx2zW0ll58A0CgUDZE",
@@ -156,8 +160,11 @@ export default ({ children }: any) => {
 				<PersistGate persistor={persistor} loading={null}>
 					<NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
 						<NavigationContainer ref={navigationRef}>
-							<Navigator />
+							<Navigator  />
 							<Message />
+
+						
+						
 						</NavigationContainer>
 					</NativeBaseProvider>
 				</PersistGate>

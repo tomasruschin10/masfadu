@@ -28,8 +28,8 @@ function RecoveryPassword({route, navigation}) {
         postServices('auth/remember-password', form).then(({status}:any) => {
             status === 201 && navigation.navigate('ChooseAnOption', {email: form.email})
         }).catch(err => {
-            /* dispatch(updateMessage({body: 'Verifica que el correo esté correctamente escrito', open: true, type: 'danger'})) */
-            showAlert('warning', 'Revisá que el mail esté correctamente escrito ')
+            dispatch(updateMessage({body: 'Revisá que el mail esté correctamente escrito', open: true, type: 'danger'}))
+            /* showAlert('warning', 'Revisá que el mail esté correctamente escrito ') */
             if (__DEV__) {
                 console.log(err)
             }

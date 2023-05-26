@@ -1,5 +1,6 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from "../screens/Auth/LoginScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
 import On1Screen from "../screens/Onboarding/On1Screen";
@@ -30,23 +31,24 @@ import GoogleRegister from "../screens/GoogleRegister";
 import AboutSubject from "../screens/AboutSubject/AboutSubject";
 import { SearchCourse } from "../screens/searchCourse/SearchCourse";
 import { MarketDetail } from "../screens/MarketDetail";
-import { createDrawerNavigator } from '@react-navigation/drawer';
-const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
+
+const Stack = createStackNavigator();
+
+
+
+
+
+
 //We create stacks for each screen, Stacks can have various screens inside them.
 export function NavStack() {
   const token = useSelector((state: any) => state.token);
   return (
-    <Stack.Navigator
-      screenOptions={{
-        animation: "fade",
-      }}
-      
-    >
+    <Stack.Navigator>
       <Stack.Screen
         options={{ headerShown: false }}
         name="SplashScreen"
         component={SplashScreen}
+        
       />
 
       {!token ? (
@@ -79,12 +81,12 @@ export function NavStack() {
           <Stack.Screen name="SearchCourse" component={SearchCourse} />
 
           <Stack.Screen name="Offers" component={Offers} />
-{/*           <Stack.Screen
-            name="Menu"
-            options={{ contentStyle: { backgroundColor: "blue" } }}
-            component={Menu}
-          /> */}
-    
+          <Stack.Screen name="Menu" component={Menu}  
+
+          
+          
+          />
+
 
           <Stack.Screen name="Subsections" component={SubSections} />
           <Stack.Screen name="Subjects" component={Subjects} />

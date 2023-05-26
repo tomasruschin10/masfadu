@@ -1,10 +1,17 @@
-import { Box, FlatList, IconButton, Text, Image, ScrollView } from "native-base";
+import {
+  Box,
+  FlatList,
+  IconButton,
+  Text,
+  Image,
+  ScrollView,
+} from "native-base";
 import * as React from "react";
 import { HeaderPerfil } from "../../components/Header";
 import BottomTab from "../../components/BottomTab";
 import Sections from "./Sections";
 import switchIcon from "../../utils/switchIcon";
-
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 const carriers = [
   {
     title: "Materias",
@@ -74,6 +81,22 @@ const carriers = [
   // },
 ];
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    width: 200,
+    padding: 20,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+  menuItem: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+});
+
 function Menu({ route, navigation }) {
   return (
     <Box flex={1} mt={0} pt={0} backgroundColor="#E8EEF3">
@@ -101,11 +124,43 @@ function Menu({ route, navigation }) {
             )}
           />
         </Box>
-        <Text >Texto</Text>
-        </ScrollView>
-        
-        <BottomTab navigation={navigation} route={route} />
-     
+
+              
+        <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Home", {
+
+                    })
+                  }
+                >
+        <View
+          style={{
+            backgroundColor: "#EB5E29",
+            height: 50,
+            width: 218,
+            marginLeft :'20%'
+          }}
+
+        >
+          <Text
+            style={{
+              
+              color: "#ffffff",
+              fontSize: 11,
+              textAlign: "center",
+              marginTop: 15,
+            }}
+          >
+            Cerrar
+          </Text>
+        </View>
+                </TouchableOpacity>
+
+
+
+      </ScrollView>
+
+  {/*     <BottomTab  navigation={navigation} route={route} /> */}
     </Box>
   );
 }

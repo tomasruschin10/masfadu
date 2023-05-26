@@ -28,8 +28,8 @@ function ChooseAnOption({route, navigation}) {
         getServices(`auth/delete-token?token=${token}`).then(({data}: any) => {
             navigation.navigate('NewPassword', {id: data.id})
         }).catch(err => {
-            /* dispatch(updateMessage({body: 'Asegurate de haber escrito correctamente el código!', open: true, type: 'danger'})) */
-            showAlert('error', 'Asegurate de haber escrito correctamente el código!')
+            dispatch(updateMessage({body: 'Asegurate de haber escrito correctamente el código!', open: true, type: 'danger'}))
+            /* showAlert('error', 'Asegurate de haber escrito correctamente el código!') */
         }).finally(() =>{
             setLoading(false)
         })
