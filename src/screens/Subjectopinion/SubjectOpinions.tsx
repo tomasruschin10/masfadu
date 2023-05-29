@@ -7,7 +7,7 @@ import { NoHeader } from '../../components/Header';
 
 function SubjectOpinions({route, navigation, mainTitle}) {
   const {search, setSearch, filteredSubjects, allSubjects, loading} = useSearchSubject()
-  const colores = ['#FAA72A','#3A71E1','#1ABC9C','#89DC93','#DB6863']
+  const colores = ['#EB5E29']
 
   return (
     <ScrollView keyboardShouldPersistTaps={'handled'}>
@@ -17,7 +17,7 @@ function SubjectOpinions({route, navigation, mainTitle}) {
           onChangeText={text => setSearch(text)}
           value={search}
           isDisabled={allSubjects.length > 0 ? false : true}
-          rounded={'full'}
+          
           w={{ base: "75%", md: "25%", }}
           pb="1"
           type={"text"}

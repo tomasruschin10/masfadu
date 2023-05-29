@@ -126,7 +126,7 @@ function JobOffers({ route, navigation, mainTitle }) {
           flexDir={"row"}
         >
           <Input
-            rounded={"full"}
+            
             fontSize={12.27}
             onChangeText={(text) => setSearchText(text)}
             w={{ base: "87%", md: "25%" }}

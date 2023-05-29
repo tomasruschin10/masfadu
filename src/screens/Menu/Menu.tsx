@@ -15,49 +15,49 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 const carriers = [
   {
     title: "Materias",
-    icon: require("../../../assets/icons/materias.svg"),
+    icon: require("../../../assets/menu/materias.png"),
     iconType: "MaterialIcons",
     comingSoon: false,
   },
   {
     title: "Opiniones de materias",
-    icon: require("../../../assets/icons/opiniones.svg"),
+    icon: require("../../../assets/menu/opiniones.png"),
     iconType: "MaterialIcons",
     comingSoon: false,
   },
   {
     title: "Objetos perdidos",
-    icon: require("../../../assets/icons/perdidos.svg"),
+    icon: require("../../../assets/menu/mercado.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
   {
     title: "Ofertas Laborales",
-    icon: require("../../../assets/icons/ofertas.svg"),
+    icon: require("../../../assets/menu/ofertas.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
   {
     title: "Cursos, charlas y workshops",
-    icon: require("../../../assets/icons/cursos-charlas.svg"),
+    icon: require("../../../assets/menu/charlas.png"),
     iconType: "Entypo",
     comingSoon: false,
   },
   {
     title: "Recursos y herramientas",
-    icon: require("../../../assets/icons/recursos.svg"),
+    icon: require("../../../assets/menu/recursos.png"),
     iconType: "Entypo",
     comingSoon: false,
   },
   {
     title: "Cuenta",
-    icon: require("../../../assets/icons/cuenta.svg"),
+    icon: require("../../../assets/menu/cuenta.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
   {
     title: "Notificaciones",
-    icon: require("../../../assets/icons/notificaciones.svg"),
+    icon: require("../../../assets/menu/notificaciones.png"),
     iconType: "FontAwesome",
     comingSoon: false,
   },
@@ -105,7 +105,7 @@ function Menu({ route, navigation }) {
         barStyle="dark-content"
         navigation={navigation}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      
         <Box px={3} my={10} alignContent={"center"}>
           <FlatList
             ItemSeparatorComponent={() => <Box mb={10}></Box>}
@@ -127,38 +127,39 @@ function Menu({ route, navigation }) {
 
               
         <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Home", {
+  style={{
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    justifyContent: 'center',
+  }}
+  onPress={() =>
+    navigation.navigate("Home", {
 
-                    })
-                  }
-                >
-        <View
-          style={{
-            backgroundColor: "#EB5E29",
-            height: 50,
-            width: 218,
-            marginLeft :'20%'
-          }}
-
-        >
-          <Text
-            style={{
-              
-              color: "#ffffff",
-              fontSize: 11,
-              textAlign: "center",
-              marginTop: 15,
-            }}
-          >
-            Cerrar
-          </Text>
-        </View>
-                </TouchableOpacity>
+    })
+  }
+>
+  <View
+    style={{
+      backgroundColor: "#EB5E29",
+      height: 50,
+      width: 218,
+    }}
+  >
+    <Text
+      style={{
+        color: "#ffffff",
+        fontSize: 11,
+        textAlign: "center",
+        marginTop: 15,
+      }}
+    >
+      Cerrar
+    </Text>
+  </View>
+</TouchableOpacity>
 
 
-
-      </ScrollView>
+     
 
   {/*     <BottomTab  navigation={navigation} route={route} /> */}
     </Box>

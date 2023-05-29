@@ -240,7 +240,7 @@ function SeeSubjectThread({route, navigation}) {
               >
                 <Input
                   value={searchText}
-                  rounded={"full"}
+                
                   onChangeText={(text) => setSearchText(text)}
                   fontSize={12.27}
                   w={{ base: "55%", md: "25%" }}

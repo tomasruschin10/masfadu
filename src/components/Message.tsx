@@ -89,7 +89,7 @@ function Message() {
                     >
                         <TouchableOpacity onPress={()=>dispatch(updateMessage({body: '', open: false, type: ''}))}>
 						<HStack px={5} space={5}>
-							<Box justifyContent={'left'}>
+							<Box>
                                 {getColors(message.type, 'icon')}
                             
                             </Box>
@@ -102,7 +102,7 @@ function Message() {
 								{message.body}
 							</Text>
 
-                            <Box justifyContent={'left'}>
+                            <Box>
                             <MaterialIcons name={"close"} size={20} color="black" />
                             
                             </Box>
