@@ -9,7 +9,7 @@ import { getServices } from '../../utils/hooks/services';
 import Layout from '../../utils/LayoutHeader&BottomTab';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
-import Alert from "../../components/alert/Alert";
+
 function SubjectContent({route, navigation}) {
     const { viewName, name, subjectId } = route.params
     const [ResourceCategory, setResourceCategory] = React.useState([]);
@@ -101,9 +101,7 @@ function SubjectContent({route, navigation}) {
 
   return (
     <Container>
-     {alert && (
-        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
-      )}
+
         <Layout route={route} navigation={navigation} title={`${name} - ${viewName}`}>
             <ScrollView keyboardShouldPersistTaps={'handled'}>
 

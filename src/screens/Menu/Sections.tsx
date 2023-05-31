@@ -3,8 +3,7 @@ import SvgUri from "react-native-svg-uri";
 import { SvgXml } from "react-native-svg";
 
 export default function Sections({ title, icon, comingSoon, navigation }) {
-  //   console.log("🚀 ~ file: Sections.tsx:6 ~ Sections ~ icon:", icon);
-  console.log("ddd ", icon);
+
   
   const svgText = '<svg>...</svg>'; 
   return (

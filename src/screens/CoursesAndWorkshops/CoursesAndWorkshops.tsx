@@ -20,7 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { getServices } from "../../utils/hooks/services";
 import { HeaderBack } from "../../components/Header";
 import { RenderOffer } from "../../utils/hooks/useMultiple";
-
+import { MaterialIcons } from "@expo/vector-icons";
 function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   const [courses, setCourses] = useState([]);
   const [advertisement, setAdvertisement] = useState([]);
@@ -132,8 +132,14 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
             justifyContent="center"
             flexDir={"row"}
           >
+                           <MaterialIcons
+    name={"search"}
+    size={17}
+    color="gray"
+    style={{ position: 'absolute', left: "2%", zIndex: 1}}
+  />
             <Input
-             
+             style={{marginLeft: "8%"}}
               fontSize={12.27}
               onChangeText={(text) => setSearchText(text)}
               w={{ base: "87%", md: "25%" }}

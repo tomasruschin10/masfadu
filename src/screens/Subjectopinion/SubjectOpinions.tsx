@@ -4,7 +4,7 @@ import { Box, Button, Icon, IconButton, Input, ScrollView, Text, HStack, Spinner
 import { RenderOpinion } from '../../utils/hooks/useMultiple'
 import useSearchSubject from '../../utils/hooks/useSearchSubject';
 import { NoHeader } from '../../components/Header';
-
+import { MaterialIcons } from "@expo/vector-icons";
 function SubjectOpinions({route, navigation, mainTitle}) {
   const {search, setSearch, filteredSubjects, allSubjects, loading} = useSearchSubject()
   const colores = ['#EB5E29']
@@ -13,7 +13,14 @@ function SubjectOpinions({route, navigation, mainTitle}) {
     <ScrollView keyboardShouldPersistTaps={'handled'}>
       
       <HStack mt={0} mb={4} alignItems={'center'} justifyContent="center">
+      <MaterialIcons
+    name={"search"}
+    size={17}
+    color="gray"
+    style={{ position: 'absolute', left: "8%", zIndex: 1}}
+  />
         <Input 
+          style={{marginLeft: "8%"}}
           onChangeText={text => setSearch(text)}
           value={search}
           isDisabled={allSubjects.length > 0 ? false : true}
@@ -21,7 +28,7 @@ function SubjectOpinions({route, navigation, mainTitle}) {
           w={{ base: "75%", md: "25%", }}
           pb="1"
           type={"text"}
-          placeholder="Buscar Materia"
+          placeholder="Buscar "
         />
           <IconButton 
             onPress={() => {setSearch('')}} 

@@ -21,7 +21,7 @@ import {
 } from "react-native";
 import jwtDecode from "jwt-decode";
 import * as AppleAuthentication from "expo-apple-authentication";
-import Alert from "../../components/alert/Alert";
+
 import {
   getAuth,
   OAuthProvider,
@@ -109,9 +109,7 @@ function LoginScreen({ route, navigation }) {
   return (
     <Container>
       <NoHeader />
-      {alert && (
-        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
-      )}
+
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <VStack px={5}>
           <Box mt={20} alignItems="center">

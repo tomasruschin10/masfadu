@@ -53,7 +53,7 @@ import {
 	Manrope_800ExtraBold,
 } from "@expo-google-fonts/manrope";
 import { Theme } from "./src/utils/Theme";
-import { LogBox, View, StyleSheet } from "react-native";
+import { LogBox, View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -154,6 +154,19 @@ export default ({ children }: any) => {
 	if (!fontsLoaded) {
 		return null;
 	}
+
+
+	const SideMenu = ({ navigation }) => {
+		return (
+		  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<Text>Side Menu</Text>
+			<TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+			  <Text>Cerrar menú</Text>
+			</TouchableOpacity>
+		  </View>
+		);
+	  };
+	  
 
 	return (
 			<Provider store={store}>

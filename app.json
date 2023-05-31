@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Mas Fadu",
-    "slug": "fadu-app",
+    "slug": "masfadu",
     "version": "1.0.19",
     "orientation": "portrait",
     "privacy": "unlisted",
     "scheme": "faduapp",
     "icon": "./assets/icon.png",
-    "owner": "orgfadu",
+    "owner": "merakioffice",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,7 +16,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "bundleIdentifier": "dev.millionsolutions.faduapp",
       "supportsTablet": true,
@@ -42,7 +44,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "2bfc0692-6252-4838-9f07-89d85e41d98a"
+        "projectId": "cbdc858a-c587-4e18-bc3a-3fa2063aafe0"
       }
     },
     "plugins": [

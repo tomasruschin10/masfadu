@@ -23,8 +23,7 @@ function AboutSubject({ route, navigation, value }) {
       setLoading(true);
       getServices(`subject-category/all/${user.career.id}`)
         .then(({ data }: any) => {
-          // console.log("data loaded", data);
-          // console.log("subjCategory loaded", JSON.stringify(subjCategory));
+
 
           setSubjCategory({
             ...subjCategory,

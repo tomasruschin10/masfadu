@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { getServices } from "../../utils/hooks/services";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { MaterialIcons } from "@expo/vector-icons";
 function JobOffers({ route, navigation, mainTitle }) {
   const [allOffers, setAllOffers] = React.useState([]);
   const [advertisement, setAdvertisement] = React.useState([]);
@@ -125,8 +125,14 @@ function JobOffers({ route, navigation, mainTitle }) {
           justifyContent="center"
           flexDir={"row"}
         >
+                <MaterialIcons
+    name={"search"}
+    size={17}
+    color="gray"
+    style={{ position: 'absolute', left: "2%", zIndex: 1}}
+  />
           <Input
-            
+            style={{marginLeft: "8%"}}
             fontSize={12.27}
             onChangeText={(text) => setSearchText(text)}
             w={{ base: "87%", md: "25%" }}

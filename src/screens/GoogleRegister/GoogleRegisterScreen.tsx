@@ -12,8 +12,9 @@ import { updatetoken } from '../../redux/actions/token';
 import { updateUserdata } from "../../redux/actions/user";
 import jwtDecode from "jwt-decode";
 import { baseApi } from '../../utils/api';
-
+import { WebView } from "react-native-webview";
 function GoogleRegisterScreen({navigation}) {
+  const [authUrl, setAuthUrl] = React.useState("");
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = React.useState(false)
   const { uid } = useSelector((state: any) => state.user)
@@ -172,10 +173,15 @@ function GoogleRegisterScreen({navigation}) {
     })
   }
 
+  React.useEffect(() => {
+    if (request) {
+      setAuthUrl(request.url);
+    }
+  }, [request]);
 
 
   return (
-    <Box justifyContent={'center'} alignContent={'center'}>
+/*     <Box justifyContent={'center'} alignContent={'center'}>
       <HeaderBack title='Google Registro' />
       {isLoading && (
         <LoaderFull/>
@@ -185,7 +191,8 @@ function GoogleRegisterScreen({navigation}) {
           Registrarse con Google
         </Button>
       </Box>
-    </Box>
+    </Box> */
+    <WebView source={{ uri: authUrl }} />
   );
 }
 

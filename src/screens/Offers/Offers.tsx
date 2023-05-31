@@ -11,9 +11,11 @@ import {
   Spinner,
   Heading,
 } from "native-base";
-import { Image } from "react-native";
+import { Input as Inpu2, Icon as Icon2 } from "react-native-elements";
+import { Image, TextInput } from "react-native";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { getServices } from "../../utils/hooks/services";
+import { EvilIcons } from "@expo/vector-icons";
 import {
   Linking,
   TouchableOpacity,
@@ -21,9 +23,11 @@ import {
   View,
   Alert,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 
 function Offers({ route, navigation }) {
   const [offerCategory, setOfferCategory] = useState([]);
@@ -35,7 +39,8 @@ function Offers({ route, navigation }) {
   const [searchText, setSearchText] = useState("");
   const [advertisement, setAdvertisement] = useState([]);
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
-
+  const { search, setSearch, filteredSubjects,  } =
+    useSearchOfferts();
   const { canGoBack, goBack, navigate } = useNavigation();
 
   const renderNews = ({ item }) => {
@@ -85,12 +90,11 @@ function Offers({ route, navigation }) {
         > */}
         <Text
           style={{
-            backgroundColor: item.id == currentFilter ? "#6523e3" : "#ffffff",
+            backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
             marginLeft: 14,
             padding: 10,
-            color: item.id == currentFilter ? "#fff" : "#051f45",
-            fontWeight: "bold",
-            shadowRadius: 10,
+            color: item.id == currentFilter ? "#fff" : "#EB5E29",
+          
             borderRadius: 20,
             overflow: "hidden", // agrega esta línea
 
@@ -152,8 +156,14 @@ function Offers({ route, navigation }) {
         }
       })
       .finally(() => setLoading(false));
-    // }, [setOfferCategory, reload]);
   }, []);
+
+  useEffect(() => {
+    
+    if (filteredSubjects.length > 0) {
+      setItems(filteredSubjects.map((obj) => obj.offers).flat());
+    }
+  }, [search, filteredSubjects]);
 
   const byWords = () => {
     setLoading(true);
@@ -178,11 +188,16 @@ function Offers({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketDetail", { data: item })}
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <View
           style={{
             backgroundColor: "#f6f7f9",
-            width: 180,
+            width: 140,
             height: 250,
             margin: 6,
             borderRadius: 10,
@@ -191,7 +206,7 @@ function Offers({ route, navigation }) {
           <Image
             style={{
               height: 140,
-              width: 180,
+              width: 140,
               borderRadius: 10,
             }}
             source={{
@@ -233,8 +248,58 @@ function Offers({ route, navigation }) {
     );
   };
 
+  const styles = {
+    inputContainer: {
+      justifyContent: 'center',
+    },
+    input: {
+      height: 50,
+    },
+    icon: {
+      position: 'absolute',
+      right: 10,
+    }
+  }
+
   return (
-    <Layout route={route} navigation={navigation} title="Ofertas!">
+    <Layout route={route} navigation={navigation} title="El Mercado de Fadu">
+      <HStack mt={0} mb={4} alignItems={"center"} justifyContent="center">
+      <MaterialIcons
+    name={"search"}
+    size={17}
+    color="gray"
+    style={{ position: 'absolute', left: "8%", zIndex: 1}}
+  />
+        <Input
+        style={{marginLeft: "8%"}}
+          onChangeText={(text) => setSearch(text)}
+          value={search}
+          
+          w={{ base: "75%", md: "25%" }}
+          pb="1"
+          type={"text"}
+          placeholder="Buscar"
+        />
+        <IconButton
+          onPress={() => {
+            setSearch("");
+          }}
+          ml="3"
+          rounded={"xl"}
+          backgroundColor={"primary.900"}
+          icon={
+            <Icon
+              as={EvilIcons}
+              name="close-o"
+              size="md"
+              color={search.length > 0 ? "red.500" : "muted.400"}
+            />
+          }
+        />
+      </HStack>
+
+
+
       <Box alignContent={"center"} mt={3} mb={1}>
         <FlatList
           alignSelf={"center"}
@@ -247,12 +312,6 @@ function Offers({ route, navigation }) {
       </Box>
       <View
         style={{
-          // flex: 1,
-          // height: 60,
-          // width: "100%",
-          // marginBottom: 10,
-          // marginTop: -12,
-          // backgroundColor: "cyan",
           flexDirection: "row",
           alignItems: "center",
           height: 50,
@@ -261,33 +320,10 @@ function Offers({ route, navigation }) {
           marginBottom: 10,
         }}
       >
-        {/* <Text
-          style={{
-            backgroundColor: "#ffffff",
-            marginLeft: 14,
-            padding: 10,
-            color: "#051f45",
-            fontWeight: "bold",
-            borderRadius: 30,
-            // padding: 12,
-          }}
-        >
-          Filters
-        </Text> */}
-
         <ScrollView showsVerticalScrollIndicator={false}>
           <FlatList
             horizontal={true}
-            // numColumns={4}
-            // ItemSeparatorComponent={() => <Box mb={3}></Box>}
-
             keyExtractor={(item) => item.id}
-            // contentContainerStyle={{
-            //   flex: 1,
-            //   backgroundColor: "green",
-            //   justifyContent: "center",
-            //   alignItems: "center",
-            // }}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             data={offerCategory}
@@ -297,17 +333,14 @@ function Offers({ route, navigation }) {
       </View>
 
       <FlatList
+        style={{ width: "100%" }}
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        numColumns={2} // Especificar dos columnas
+        numColumns={2}
         contentContainerStyle={{
-          // backgroundColor: "red",
-          marginLeft: 3,
-          // marginRight: 5,
+          marginRight: 3,
           justifyContent: "center",
-          // width: 200,
-          // alignItems: "center",
           paddingBottom: 80,
         }}
       />
