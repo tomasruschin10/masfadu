@@ -12,6 +12,10 @@ import BottomTab from "../../components/BottomTab";
 import Sections from "./Sections";
 import switchIcon from "../../utils/switchIcon";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { removemenu } from "../../redux/actions/menu";
+import { store } from "../../redux/store";
+
 const carriers = [
   {
     title: "Materias",
@@ -32,6 +36,12 @@ const carriers = [
     comingSoon: false,
   },
   {
+    title: "Recursos y herramientas",
+    icon: require("../../../assets/menu/recursos.png"),
+    iconType: "Entypo",
+    comingSoon: false,
+  },
+  {
     title: "Ofertas Laborales",
     icon: require("../../../assets/menu/ofertas.png"),
     iconType: "MaterialCommunityIcons",
@@ -43,10 +53,11 @@ const carriers = [
     iconType: "Entypo",
     comingSoon: false,
   },
+
   {
-    title: "Recursos y herramientas",
-    icon: require("../../../assets/menu/recursos.png"),
-    iconType: "Entypo",
+    title: "Notificaciones",
+    icon: require("../../../assets/menu/notificaciones.png"),
+    iconType: "FontAwesome",
     comingSoon: false,
   },
   {
@@ -55,67 +66,39 @@ const carriers = [
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
-  {
-    title: "Notificaciones",
-    icon: require("../../../assets/menu/notificaciones.png"),
-    iconType: "FontAwesome",
-    comingSoon: false,
-  },
-  // {
-  //   title: "Gastos",
-  //   icon: "wallet",
-  //   iconType: "Entypo",
-  //   comingSoon: true,
-  // },
-  // {
-  //   title: "Carpool",
-  //   icon: "car-hatchback",
-  //   iconType: "MaterialCommunityIcons",
-  //   comingSoon: true,
-  // },
-  // {
-  //   title: "Mapa de aulas",
-  //   icon: "map",
-  //   iconType: "FontAwesome",
-  //   comingSoon: true,
-  // },
+
 ];
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    width: 200,
-    padding: 20,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
-  menuItem: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-});
 
-function Menu({ route, navigation }) {
-  return (
-    <Box flex={1} mt={0} pt={0} backgroundColor="#E8EEF3">
+
+function Menu({ route, navigation, setMenu }) {
+  
+
+ 
+  return ( 
+   
+    <Box style={{width:"80%", height: "100%", marginLeft:"20%", zIndex: 101, position: "absolute"}} flex={1} mt={0} pt={0} backgroundColor="#E8EEF3">
+      <Box marginLeft={"10%"}>
       <HeaderPerfil
-        statusBarColor="#e8eef4"
+      showICon={false}
+        statusBarColor="#e8eef3"
         barStyle="dark-content"
         navigation={navigation}
+        
       />
       
+      </Box>
         <Box px={3} my={10} alignContent={"center"}>
           <FlatList
-            ItemSeparatorComponent={() => <Box mb={10}></Box>}
+            ItemSeparatorComponent={() => <Box mb={5}></Box>}
             showsVerticalScrollIndicator={false}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
+            columnWrapperStyle={{ justifyContent: "space-evenly" }}
             numColumns={2}
             keyExtractor={(_, index) => index.toString()}
             data={carriers}
             renderItem={({ item }) => (
               <Sections
+              setMenu={setMenu}
                 icon={item.icon}
                 title={item.title}
                 comingSoon={item.comingSoon}
@@ -127,30 +110,36 @@ function Menu({ route, navigation }) {
 
               
         <TouchableOpacity
-  style={{
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    justifyContent: 'center',
-  }}
-  onPress={() =>
-    navigation.navigate("Home", {
-
-    })
-  }
->
+    style={{
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      justifyContent: 'center',
+      position: 'absolute',
+      bottom: "5%",
+      left: "15.5%",
+      right: 0
+    }}
+    onPress={() => setMenu(false)}
+  >
+   
   <View
     style={{
       backgroundColor: "#EB5E29",
       height: 50,
       width: 218,
+      borderRadius: 10,
+
+      
     }}
   >
     <Text
       style={{
         color: "#ffffff",
-        fontSize: 11,
+        fontSize: 13,
         textAlign: "center",
-        marginTop: 15,
+        marginTop: 13,
+        fontWeight: "bold",
+        letterSpacing: 0.5
       }}
     >
       Cerrar
@@ -161,7 +150,7 @@ function Menu({ route, navigation }) {
 
      
 
-  {/*     <BottomTab  navigation={navigation} route={route} /> */}
+
     </Box>
   );
 }

@@ -21,13 +21,15 @@ import { getServices } from "../../utils/hooks/services";
 import { HeaderBack } from "../../components/Header";
 import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { MaterialIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+import Menu from "../Menu/Menu";
 function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   const [courses, setCourses] = useState([]);
   const [advertisement, setAdvertisement] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
-
+  const [menuShow, setMenu] = useState(false)
   useEffect(() => {
     setLoading(true);
 
@@ -105,6 +107,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
 
   return (
     <Container>
+      
       {mainTitle == undefined ? (
         <HeaderBack title="Cursos & Workshops" />
       ) : (
@@ -136,7 +139,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
     name={"search"}
     size={17}
     color="gray"
-    style={{ position: 'absolute', left: "2%", zIndex: 1}}
+    style={{ position: 'absolute', left: "3%", zIndex: 1}}
   />
             <Input
              style={{marginLeft: "8%"}}
@@ -146,6 +149,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
               pb="1"
               type={"text"}
               placeholder={"Buscar"}
+              placeholderTextColor="#666666" 
               mr="2"
             />
 
@@ -155,11 +159,10 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                 backgroundColor={"primary.900"}
                 icon={
                   <Icon
-                    onPress={byWords}
-                    as={Ionicons}
-                    name="search"
+                    as={EvilIcons}
+                    name="close-o"
                     size="md"
-                    color="primary.1000"
+                    color={"muted.400"}
                   />
                 }
               />
@@ -217,7 +220,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
       </ScrollView>
 
       {!mainTitle ? (
-        <BottomTab route={route} navigation={navigation} />
+        <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
       ) : (
         <Box />
       )}

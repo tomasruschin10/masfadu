@@ -1,71 +1,17 @@
 import { Box, Icon, IconButton, Text, Image } from "native-base";
 import SvgUri from "react-native-svg-uri";
 import { SvgXml } from "react-native-svg";
+import { TouchableOpacity } from "react-native";
 
-export default function Sections({ title, icon, comingSoon, navigation }) {
+export default function Sections({ title, icon, comingSoon, navigation, setMenu }) {
 
   
-  const svgText = '<svg>...</svg>'; 
-  return (
-    /*     <Box flex={1} alignItems={"center"}>
-      <Box>
-        {comingSoon ? (
-          <IconButton
-            backgroundColor={"#9A9A9A"}
-            w={20}
-            h={20}
-            borderRadius={40}
-            icon={<Image source={icon} />}
-          />
-        ) : title == "" ? (
-          <IconButton
-            w={20}
-            h={20}
-            borderRadius={40}
-            icon={<Image source={icon} />}
-          />
-        ) : (
-          <IconButton
-            onPress={() => navigation.navigate("Subsections", { title: title })}
-            backgroundColor={"#1f1e25"}
-            w={20}
-            h={20}
-            borderRadius={40}
-            icon={<Image source={icon} />}
-          />
-        )}
-        <Box
-          position="absolute"
-          backgroundColor="#64E889"
-          rounded={"full"}
-          bottom="30"
-          left="0"
-          right="0"
-        >
-          {comingSoon ? (
-            <Text textAlign={"center"} fontSize={10}>
-              Proximamente
-            </Text>
-          ) : (
-            <Text display={"none"}></Text>
-          )}
-        </Box>
-      </Box>
 
-      <Box mt={0.5} mb={1} mx={3}>
-        <Text
-          fontSize={12}
-          numberOfLines={2}
-          textAlign={"center"}
-        
-        >
-          {title}
-        </Text>
-      </Box>
-    </Box> */
-    <Box
+  return (
+<TouchableOpacity onPress={() => {navigation.navigate("Subsections", { title: title }), setMenu(false)}}>
+<Box
       flex={1}
-      borderRadius={10}
+      borderRadius={25}
       mr={5}
       ml={5}
       style={{ width: 100, height: 100, backgroundColor: "#F1F6FA" }}
@@ -125,7 +71,7 @@ export default function Sections({ title, icon, comingSoon, navigation }) {
           />
         ) : (
           <IconButton
-            onPress={() => navigation.navigate("Subsections", { title: title })}
+            onPress={() => {navigation.navigate("Subsections", { title: title }), setMenu(false)}}
             size={55}
             icon={
               <Box
@@ -177,5 +123,6 @@ export default function Sections({ title, icon, comingSoon, navigation }) {
         </Box>
       </Box>
     </Box>
+</TouchableOpacity>
   );
 }

@@ -6,6 +6,7 @@ import { HeaderBack } from "../../components/Header";
 import AboutSubject_Item from "./AboutSubject_Item";
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
+import Menu from "../Menu/Menu";
 
 function AboutSubject({ route, navigation, value }) {
   const user = useSelector((state: any) => state.user.userdata);
@@ -17,7 +18,7 @@ function AboutSubject({ route, navigation, value }) {
     data: [],
   });
   const [updater, setUpdater] = useState(false);
-
+  const [menuShow, setMenu] = useState(false)
   useEffect(() => {
     if (user.userRole[0]?.role?.name === "Student" && user.career) {
       setLoading(true);
@@ -44,10 +45,11 @@ function AboutSubject({ route, navigation, value }) {
   }, [updater]);
 
   return (
-    <Container>
-      {!value && <HeaderBack title={"Materias"} />}
+    <Container >
+      { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
+      {!value && <HeaderBack  title={"Materias"} />}
 
-      <ScrollView>
+      <ScrollView backgroundColor={"#e8eef3"} >
         {!loading ? null : (
           <HStack space={2} justifyContent="center">
             <Spinner accessibilityLabel="Loading posts" />
@@ -71,7 +73,7 @@ function AboutSubject({ route, navigation, value }) {
         ) : null}
         <Box mb={32} />
       </ScrollView>
-      {!value && <BottomTab route={route} navigation={navigation} />}
+      {!value && <BottomTab setMenu={setMenu} route={route} navigation={navigation} />}
     </Container>
   );
 }

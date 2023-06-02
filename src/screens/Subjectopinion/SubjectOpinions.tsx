@@ -17,7 +17,7 @@ function SubjectOpinions({route, navigation, mainTitle}) {
     name={"search"}
     size={17}
     color="gray"
-    style={{ position: 'absolute', left: "8%", zIndex: 1}}
+    style={{ position: 'absolute', left: "8.8%", zIndex: 1}}
   />
         <Input 
           style={{marginLeft: "8%"}}
@@ -29,6 +29,7 @@ function SubjectOpinions({route, navigation, mainTitle}) {
           pb="1"
           type={"text"}
           placeholder="Buscar "
+          placeholderTextColor="#666666" 
         />
           <IconButton 
             onPress={() => {setSearch('')}} 

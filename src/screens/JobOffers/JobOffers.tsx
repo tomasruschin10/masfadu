@@ -19,6 +19,7 @@ import { getServices } from "../../utils/hooks/services";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 function JobOffers({ route, navigation, mainTitle }) {
   const [allOffers, setAllOffers] = React.useState([]);
   const [advertisement, setAdvertisement] = React.useState([]);
@@ -129,7 +130,7 @@ function JobOffers({ route, navigation, mainTitle }) {
     name={"search"}
     size={17}
     color="gray"
-    style={{ position: 'absolute', left: "2%", zIndex: 1}}
+    style={{ position: 'absolute', left: "3%", zIndex: 1}}
   />
           <Input
             style={{marginLeft: "8%"}}
@@ -139,6 +140,7 @@ function JobOffers({ route, navigation, mainTitle }) {
             pb="1"
             type={"text"}
             placeholder={"Buscar"}
+            placeholderTextColor="#666666" 
             mr="2"
           />
 
@@ -148,11 +150,10 @@ function JobOffers({ route, navigation, mainTitle }) {
               backgroundColor={"primary.900"}
               icon={
                 <Icon
-                  onPress={byWords}
-                  as={Ionicons}
-                  name="search"
+                  as={EvilIcons}
+                  name="close-o"
                   size="md"
-                  color="primary.1000"
+                  color={"muted.400"}
                 />
               }
             />

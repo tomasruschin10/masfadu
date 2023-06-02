@@ -64,6 +64,7 @@
     "react-native-simple-accordion": "^1.17.0",
     "react-native-snap-carousel": "Million-Solutions/react-native-snap-carousel#1.0.0",
     "react-native-svg": "13.4.0",
+    "react-native-svg-transformer": "^1.0.0",
     "react-native-svg-uri": "^1.2.3",
     "react-native-web": "~0.18.7",
     "react-native-webview": "11.23.1",

@@ -14,7 +14,7 @@ function CreateNewThread({route, navigation}) {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [showModalIcon, setShowModalIcon] = useState(false);
-
+  const [menuShow, setMenu] = useState(false)
   const [allTags, setAllTags] = useState([{}])
   const [loading, setLoading] = useState(false)
 	const [searchText, setSearchText] = useState('');
@@ -96,9 +96,7 @@ function CreateNewThread({route, navigation}) {
 
   return (
     <Container>
-            {alert && (
-        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
-      )}
+
       <Layout route={route} navigation={navigation} title={`Crear Hilo ${title}`}>
         <ScrollView nestedScrollEnabled={true} keyboardShouldPersistTaps={'handled'}>
             <Box mx={5} mt={5} borderTopWidth={1} borderTopColor={'#EBEEF2'} pt={6}>

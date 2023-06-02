@@ -99,7 +99,7 @@ function Message() {
         <Slide in={message.open} placement="top">
           <View
             style={{
-              marginTop: "5%",
+              marginTop: "10%",
               borderWidth: 1,
               borderColor: "#d6e9c6",
               padding: 5,
@@ -134,7 +134,7 @@ function Message() {
                 >
                   {message.body}
                  
-                  {/* Tu sesion se ha expirado, por favor vuelve a iniciar */}
+                 {/*  Tu sesion se ha expirado, por favor vuelve a iniciar */}
                 </Text>
                 <Box >
                   <MaterialIcons          

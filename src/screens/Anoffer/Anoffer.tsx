@@ -8,12 +8,13 @@ import {
   ScrollView,
   Text,
 } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { Linking } from "react-native";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function Anoffer({ route, navigation }) {
+  const [menuShow, setMenu] = useState(false)
   const { mainTitle, title, buttonValue, url, description, id, partner } =
     route.params;
 

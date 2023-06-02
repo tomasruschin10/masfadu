@@ -18,24 +18,33 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
 import * as Device from "expo-device";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { store } from "../../redux/store";
 import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
 
 import { StyleSheet } from "react-native";
+import Menu from "../Menu/Menu";
+
 
 function HomeScreen({ route, navigation }) {
+
   const isFocused = useIsFocused();
+
+
   const { setNavigationEvent } = useEventNavigation();
 
   React.useEffect(() => {
-    console.log("usss");
+ 
 
     if (isFocused) {
       setNavigationEvent("inicio");
     }
   }, [isFocused]);
+
+
+
+  const [menuShow, setMenu] = useState(false)
 
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
@@ -52,6 +61,7 @@ function HomeScreen({ route, navigation }) {
   React.useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
+      
     );
 
     notificationListener.current =
@@ -273,12 +283,15 @@ function HomeScreen({ route, navigation }) {
 
   return (
     <Container  >
+      { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
+      
       <HeaderPerfil
+      showICon={true}
         statusBarColor="#e8eef4"
         barStyle="dark-content"
         navigation={navigation}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView backgroundColor={"#e8eef3"} showsVerticalScrollIndicator={false}>
         <Box>
           {textNews.length > 0 ? (
             <Carousel
@@ -486,7 +499,7 @@ function HomeScreen({ route, navigation }) {
           )}
         </View>
       </ScrollView>
-      <BottomTab navigation={navigation} route={route} />
+      <BottomTab setMenu={setMenu} navigation={navigation} route={route} />
     </Container>
   );
 }

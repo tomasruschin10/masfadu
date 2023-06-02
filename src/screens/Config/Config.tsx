@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { Box, ScrollView, Text } from 'native-base'
 import { Alert, Linking, TouchableHighlight } from 'react-native';
@@ -13,6 +13,8 @@ import BottomTab from '../../components/BottomTab';
 import { HeaderBack } from '../../components/Header';
 import Constants from "expo-constants"
 import * as StoreReview from 'expo-store-review';
+import { removemenu } from '../../redux/actions/menu';
+import Menu from '../Menu/Menu';
 
 const config = [
     {title: 'Escribinos tu sugerencia'},
@@ -29,11 +31,13 @@ const config = [
 
 
 function Config({route, navigation, value}) {
+    const [menuShow, setMenu] = useState(false)
     const version = Constants.manifest.version
     const logout = () => {
                     store.dispatch(updateMessage({body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger",open: true}));
                     store.dispatch(updatetoken(''));
                     store.dispatch(updateUserdata({}));
+                    store.dispatch(removemenu())
                     RootNavigation.reset('SplashScreen')
     }
 
@@ -45,6 +49,7 @@ function Config({route, navigation, value}) {
 
     const RenderConfig = ({title, navigation}) => (
         <Box>
+            
             { title == 'Tu cuenta' ?
                 <Box mt={5} mb={4}>
                     <Text fontFamily={'Manrope'} fontSize={20} fontWeight='700'>{title}</Text> 
@@ -67,6 +72,7 @@ function Config({route, navigation, value}) {
     )
     return (
         <Container>
+             { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
             <HeaderBack title={'Configuración'} />
                 <ScrollView>
                     <Box mx={5} mb={'32'}>
@@ -78,7 +84,7 @@ function Config({route, navigation, value}) {
                     
                 </ScrollView>
                 
-            <BottomTab route={route} navigation={navigation} />
+                <BottomTab setMenu={setMenu} navigation={navigation} route={route} />
         </Container>
     )
 }

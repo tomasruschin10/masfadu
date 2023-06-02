@@ -30,6 +30,7 @@ import { useNavigation } from "@react-navigation/native";
 import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 
 function Offers({ route, navigation }) {
+  const [menuShow, setMenu] = useState(false)
   const [offerCategory, setOfferCategory] = useState([]);
   const [items, setItems] = useState([]);
   const [AllItems, setAllItems] = useState([]);
@@ -192,22 +193,25 @@ function Offers({ route, navigation }) {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
+          marginLeft: "5%"
         }}
       >
         <View
           style={{
             backgroundColor: "#f6f7f9",
-            width: 140,
-            height: 250,
-            margin: 6,
+            width: "100%",
+          height: "35%",
+            margin: 3,
             borderRadius: 10,
+
+            
           }}
         >
           <Image
             style={{
               height: 140,
-              width: 140,
-              borderRadius: 10,
+              width: "100%",
+              borderRadius: 15,
             }}
             source={{
               uri: item.image.url,
@@ -215,7 +219,7 @@ function Offers({ route, navigation }) {
           />
           <View
             style={{
-              margin: 8,
+              height: 80
             }}
           >
             <Text
@@ -234,7 +238,8 @@ function Offers({ route, navigation }) {
               style={{
                 fontSize: 12,
                 // letterSpacing: 1,
-                marginTop: 5,
+                marginTop: "1%",
+                marginBottom: "1%",
                 lineHeight: 18,
               }}
               numberOfLines={3}
@@ -268,7 +273,7 @@ function Offers({ route, navigation }) {
     name={"search"}
     size={17}
     color="gray"
-    style={{ position: 'absolute', left: "8%", zIndex: 1}}
+    style={{ position: 'absolute', left: "8.8%", zIndex: 1}}
   />
         <Input
         style={{marginLeft: "8%"}}
@@ -279,6 +284,9 @@ function Offers({ route, navigation }) {
           pb="1"
           type={"text"}
           placeholder="Buscar"
+          placeholderTextColor="#666666" 
+          
+          
         />
         <IconButton
           onPress={() => {
@@ -300,7 +308,7 @@ function Offers({ route, navigation }) {
 
 
 
-      <Box alignContent={"center"} mt={3} mb={1}>
+      <Box alignContent={"center"} mt={3}  mb={1}>
         <FlatList
           alignSelf={"center"}
           showsHorizontalScrollIndicator={false}
@@ -318,6 +326,9 @@ function Offers({ route, navigation }) {
           justifyContent: "center",
           marginTop: -20,
           marginBottom: 10,
+          marginLeft:"3%",
+          marginRight: "6.5%"
+        
         }}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -338,10 +349,12 @@ function Offers({ route, navigation }) {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
+        marginBottom={"10%"}
         contentContainerStyle={{
-          marginRight: 3,
+          marginRight: "7%",
+          marginLeft: "1.8%",
           justifyContent: "center",
-          paddingBottom: 80,
+          paddingBottom: 50,
         }}
       />
     </Layout>

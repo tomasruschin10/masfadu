@@ -1,4 +1,4 @@
-import { Box, Text, useTheme } from "native-base";
+import { Box, Text, View, useTheme } from "native-base";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { TouchableOpacity, Platform, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,6 +6,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useEventNavigation } from "../context";
+import Svg, { Use, Image } from "react-native-svg";
+import  {InicioMenu, InicioMateria, InicioOpiniones, MenuInicio} from "././iconsMenu/inicio-menu";
+import { useDispatch } from "react-redux";
+
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +18,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function BottomTab({ route, navigation }) {
+export default function BottomTab({ route, navigation, setMenu }) {
+  const dispatch = useDispatch();
+
   const { colors }: any = useTheme();
   const { name } = route;
   console.log("🚀 ~ file: BottomTab.tsx:20 ~ BottomTab ~ name:", name);
@@ -26,16 +32,14 @@ export default function BottomTab({ route, navigation }) {
     <Box
       safeAreaBottom
       width={"100%"}
+     
       style={[
         styles.container,
-        // Platform.OS == "android"
-        //   ? { paddingBottom: 24 }
-        //   : { paddingBottom: 24 },
+
+      
       ]}
     >
       <Box
-        py={2}
-        px={8}
         style={{
           paddingBottom: 20,
           backgroundColor: "#f4faff",
@@ -51,51 +55,63 @@ export default function BottomTab({ route, navigation }) {
               setEvent("inicio");
             }}
             style={{
+              flex: 1,
               alignItems: "center",
+              justifyContent: "center",
               flexDirection: "column",
+              marginTop: "5%",
+              marginBottom: "4%"
             }}
           >
-            <MaterialIcons
-              name="home"
-              size={36}
-              style={{ marginTop: 0 }}
-              color={event == "inicio" ? "#eb5e29" : "#d1d5d9"}
-            />
+            {/*         <MaterialIcons
+          name="home"
+          size={36}
+          style={{ marginTop: 0 }}
+          color={event == "inicio" ? "#E85E29" : "#A8ACAD"}
+        /> */}
 
-            <Box justifyContent={"center"}>
-              <Text
-                fontFamily={"SourceSansPro"}
-                style={{ marginTop: -2 }}
-                fontSize={"12"}
-                color={event == "inicio" ? "#eb5e29" : "#d1d5d9"}
-              >
-                Inicio
-              </Text>
-            </Box>
+              <InicioMenu color={event == "inicio" ? "#E85E29" : "#A8ACAD"}/>
+
+            <Text
+              /* fontFamily={"Sans"} */
+              style={{  fontWeight: "400" }}
+              fontSize={12}
+              color={event == "inicio" ? "#E85E29" : "#A8ACAD"}
+            >
+              Inicio
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
+
             onPress={() => {
               setEvent("materias");
               navigation.navigate("AboutSubject");
             }}
             style={{
+              flex: 1,
               alignItems: "center",
+              justifyContent: "center",
               flexDirection: "column",
+              marginTop: "5%",
+              marginBottom: "4%"
             }}
           >
-            <FontAwesome5
+{/*             <FontAwesome5
               name="book-open"
               style={{ marginTop: 6 }}
               size={26}
-              color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
-            />
+              color={event == "materias" ? "#E85E29" : "#A8ACAD"}
+            /> */}
+
+
+            <InicioMateria color={event == "materias" ? "#E85E29" : "#A8ACAD"}/>
 
             <Text
-              fontFamily={"SourceSansPro"}
-              fontSize={"12"}
-              style={{ marginTop: 0 }}
-              color={event == "materias" ? "#eb5e29" : "#d1d5d9"}
+              /* fontFamily={"Sans"} */
+              style={{ marginTop: -2, fontWeight: "400" }}
+              fontSize={12}
+              color={event == "materias" ? "#E85E29" : "#A8ACAD"}
             >
               Materias
             </Text>
@@ -110,17 +126,18 @@ export default function BottomTab({ route, navigation }) {
               });
             }}
             style={{
+              flex: 1,
               alignItems: "center",
+              justifyContent: "center",
               flexDirection: "column",
-              // backgroundColor: "red",
-
               width: 60,
+              marginBottom: "4%"
             }}
           >
             <Box
               position={"absolute"}
               style={{
-                bottom: 12,
+                bottom: 10,
                 borderColor: "#f4faff",
                 borderWidth: 10,
                 backgroundColor: "#f4faff",
@@ -130,21 +147,21 @@ export default function BottomTab({ route, navigation }) {
             >
               <Box
                 style={{
-                  backgroundColor: "#eb5e29",
+                  backgroundColor: "#E85E29",
                   borderColor: "#f6f6f6",
-                  // borderWidth: 5,
                   borderRadius: 50,
                   padding: 6,
+               
                 }}
               >
-                <Entypo name="plus" size={28} color="#f4faff" />
+                <Entypo  name="plus" size={28} color="#f4faff" />
               </Box>
             </Box>
             <Text
-              fontFamily={"SourceSansPro"}
-              fontSize={"12"}
-              style={{ bottom: 0, position: "absolute" }}
-              color={event == "publica" ? "#eb5e29" : "#d1d5d9"}
+              /* fontFamily={"Sans"} */
+              fontSize={12}
+              style={{ bottom: "-14%", position: "absolute", fontWeight: "400",  }}
+              color={event == "publica" ? "#E85E29" : "#A8ACAD"}
             >
               Publicá
             </Text>
@@ -152,8 +169,12 @@ export default function BottomTab({ route, navigation }) {
 
           <TouchableOpacity
             style={{
+              flex: 1,
               alignItems: "center",
+              justifyContent: "center",
               flexDirection: "column",
+              marginTop: "5%",
+              marginBottom: "4%"
             }}
             onPress={() => {
               setEvent("opiniones");
@@ -166,17 +187,13 @@ export default function BottomTab({ route, navigation }) {
                   });
             }}
           >
-            <MaterialCommunityIcons
-              name="emoticon-happy"
-              size={30}
-              style={{ marginTop: 3 }}
-              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
-            />
-
+            <InicioOpiniones color={event == "opiniones" ? "#E85E29" : "#A8ACAD"}/>
             <Text
-              fontFamily={"SourceSansPro"}
-              fontSize={"12"}
-              color={event == "opiniones" ? "#eb5e29" : "#d1d5d9"}
+              /* fontFamily={"Sans"} */
+              style={{ marginTop: -2, fontWeight: "400" }}
+              fontSize={12}
+              color={event == "opiniones" ? "#E85E29" : "#A8ACAD"}
+             
             >
               Opiniones
             </Text>
@@ -185,27 +202,37 @@ export default function BottomTab({ route, navigation }) {
           <TouchableOpacity
             onPress={() => {
               setEvent("menu");
-              navigation.navigate('Menu');
+             /*  navigation.navigate("Menu"); */
+
+             setMenu(true)
+
+
             }}
             style={{
+              flex: 1,
               alignItems: "center",
+              justifyContent: "center",
               flexDirection: "column",
+              marginTop: "5%",
+              marginBottom: "4%"
+            
             }}
           >
-            <MaterialIcons
+{/*             <MaterialIcons
               name="star"
               size={36}
-              style={{ marginTop: 0 }}
-              color={event == "menu" ? "#eb5e29" : "#d1d5d9"}
-            />
+              
+              color={event == "menu" ? "#E85E29" : "#A8ACAD"}
+            /> */}
 
+            <MenuInicio color={event == "menu" ? "#E85E29" : "#A8ACAD"}/>
             <Text
-              fontFamily={"SourceSansPro"}
-              fontSize={"12"}
-              style={{ marginTop: -2 }}
-              color={event == "menu" ? "#eb5e29" : "#d1d5d9"}
+              /* fontFamily={"Sans"} */
+              style={{ marginTop: -2, fontWeight: "400" }}
+              fontSize={12}
+              color={event == "menu" ? "#E85E29" : "#A8ACAD"}
             >
-              Menú
+               Menú
             </Text>
           </TouchableOpacity>
         </Box>

@@ -21,6 +21,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useSelector } from "react-redux";
+import { useEventNavigation } from "../context";
 
 export function HeaderBack({ ...props }) {
   const { canGoBack, goBack } = useNavigation();
@@ -72,10 +73,11 @@ export function NoHeader({ ...props }) {
     </>
   );
 }
-export function HeaderPerfil({ ...props }) {
+export function HeaderPerfil({ showICon ,...props }) {
   const { canGoBack, goBack, navigate }: any = useNavigation();
   // const insets = useSafeAreaInsets();
-
+  const { navigationEvent: event, setNavigationEvent: setEvent } =
+    useEventNavigation();
   const { name } = useRoute();
   const { colors }: any = useTheme();
   const userdata = useSelector((state: any) => state.user.userdata);
@@ -114,7 +116,7 @@ export function HeaderPerfil({ ...props }) {
         </Box>
 
         <Box justifyContent={"center"}>
-          {name == "Home" ? (
+          { showICon ? (
             <TouchableOpacity
               onPress={() => navigate("Config")}
               style={{

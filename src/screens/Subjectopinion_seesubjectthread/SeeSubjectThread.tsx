@@ -1,37 +1,73 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Ionicons, FontAwesome5, AntDesign, MaterialIcons } from '@expo/vector-icons';
-import { Animated, TouchableHighlight, TouchableOpacity } from 'react-native';
-import { Box, Button, Heading, HStack, Icon, IconButton, Input, ScrollView, Spinner, Text } from 'native-base'
-import BottomTab from '../../components/BottomTab';
-import Container from '../../components/Container';
-import SeeSubjectThread_Item from './SeeSubjectThread_Item';
-import SeeSubjectThread_Top from './SeeSubjectThread_Top';
-import RecommendedTags from '../../utils/RecommendedTags';
-import { HeaderBack } from '../../components/Header';
-import { getServices } from '../../utils/hooks/services';
-import { updateMessage } from '../../redux/actions/message';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useRef, useState } from "react";
+import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
+
+import { Animated, TouchableHighlight, TouchableOpacity } from "react-native";
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
+  ScrollView,
+  Spinner,
+  Text,
+} from "native-base";
+import { EvilIcons } from "@expo/vector-icons";
+import BottomTab from "../../components/BottomTab";
+import Container from "../../components/Container";
+import SeeSubjectThread_Item from "./SeeSubjectThread_Item";
+import SeeSubjectThread_Top from "./SeeSubjectThread_Top";
+import RecommendedTags from "../../utils/RecommendedTags";
+import { HeaderBack } from "../../components/Header";
+import { getServices } from "../../utils/hooks/services";
+import { updateMessage } from "../../redux/actions/message";
+import { useDispatch } from "react-redux";
 import Alert from "../../components/alert/Alert";
+import Menu from "../Menu/Menu";
 
+function SeeSubjectThread({ route, navigation }) {
+  const {
+    title,
+    description,
+    time,
+    hours,
+    method,
+    subject_id,
+    id,
+    value,
+    rating,
+    color,
+    firstLetter,
+  } = route.params;
+  const [menuShow, setMenu] = useState(false)
+  const [allOpinions, setAllOpinions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [length, setLength] = useState(rating);
+  const [allTags, setAllTags] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [limit, setLimit] = useState(0);
+  const [changeFilt, setChangeFilt] = useState(true);
+  const [form, setForm] = useState<any>({ tags: [] });
+  const dispatch = useDispatch();
 
-function SeeSubjectThread({route, navigation}) {
-  const {title, description, time, hours, method, subject_id, id, value, rating, color, firstLetter} = route.params
-  const [allOpinions, setAllOpinions] = useState([])
-	const [loading, setLoading] = useState(false);
-	const [reload, setReload] = useState(false);
-  const [toggle, setToggle] = useState(false)
-	const [length, setLength] = useState(rating);
-	const [allTags, setAllTags] = useState([]);
-	const [searchText, setSearchText] = useState('');
-	const [limit, setLimit] = useState(0);
-  const [changeFilt, setChangeFilt] = useState(true)
-  const [form, setForm] = useState<any>({ tags: [] })
-  const dispatch = useDispatch()
-  
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const fadeIn = () => Animated.timing(fadeAnim, {toValue: 1, duration: 300, useNativeDriver: false}).start()
-  const fadeOut = () => Animated.timing(fadeAnim, {toValue: 0, duration: 300, useNativeDriver: false }).start()
-  
+  const fadeIn = () =>
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  const fadeOut = () =>
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
   const [alert, setAlert] = React.useState(null);
 
   const showAlert = (type, message) => {
@@ -41,8 +77,6 @@ function SeeSubjectThread({route, navigation}) {
   const closeAlert = () => {
     setAlert(null);
   };
-
-
 
   // USEEFFECT
   useEffect(() => {
@@ -122,9 +156,15 @@ function SeeSubjectThread({route, navigation}) {
       : [];
 
   const byTags = () => {
-    if ( form.tags.length === 0 ) {
-      dispatch(updateMessage({body: 'Asegurate de haber elegido una etiqueta por favor.', open: true, type: 'danger'}))
-     /* showAlert('error', 'Asegurate de haber elegido una etiqueta por favor.') */
+    if (form.tags.length === 0) {
+      dispatch(
+        updateMessage({
+          body: "Asegurate de haber elegido una etiqueta por favor.",
+          open: true,
+          type: "danger",
+        })
+      );
+      /* showAlert('error', 'Asegurate de haber elegido una etiqueta por favor.') */
       return false;
     }
     setLoading(true);
@@ -197,11 +237,9 @@ function SeeSubjectThread({route, navigation}) {
   //JSX
   return (
     <Container>
+{ menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
 
-{alert && (
-        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
-      )}
-      <HeaderBack title='Opiniones' />
+      <HeaderBack title="Opiniones" />
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -238,9 +276,15 @@ function SeeSubjectThread({route, navigation}) {
                 justifyContent="center"
                 flexDir={"row"}
               >
+                <MaterialIcons
+                  name={"search"}
+                  size={17}
+                  color="gray"
+                  style={{ position: "absolute", left: "5%", zIndex: 1 }}
+                />
                 <Input
                   value={searchText}
-                
+                  style={{ marginLeft: "8%" }}
                   onChangeText={(text) => setSearchText(text)}
                   fontSize={12.27}
                   w={{ base: "55%", md: "25%" }}
@@ -261,10 +305,10 @@ function SeeSubjectThread({route, navigation}) {
                     backgroundColor={"primary.900"}
                     icon={
                       <Icon
-                        as={MaterialIcons}
-                        name={"search"}
+                        as={EvilIcons}
+                        name="close-o"
                         size="md"
-                        color={"primary.100"}
+                        color={"muted.400"}
                       />
                     }
                   />
@@ -444,7 +488,7 @@ function SeeSubjectThread({route, navigation}) {
         </TouchableHighlight>
       </Box>
 
-      <BottomTab route={route} navigation={navigation} />
+      <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
     </Container>
   );
 }

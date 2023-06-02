@@ -84,7 +84,7 @@ function OpinionThread({ route, navigation }) {
   const [answerOpiniones, setAnswerOpiniones] = useState([]);
   const [reload, setReload] = useState(false);
   const [more, seeMore] = useState(null);
-
+  const [menuShow, setMenu] = useState(false)
   useEffect(() => {
     getServices(`opinion-answer/all?opinion_id=${idOpinion}`)
       .then(({ data }: any) => {
@@ -97,8 +97,8 @@ function OpinionThread({ route, navigation }) {
 
   return (
     <Container>
+      
       <HeaderBack title="Opiniones" />
-
       <ScrollView>
         <Box mx="5" mt={6}>
           <Box flexDir={"row"} bg={"#306EED"} py="5" rounded={"2xl"} pr={4}>
@@ -216,7 +216,7 @@ function OpinionThread({ route, navigation }) {
       </Box>
 
       <Box height={130}></Box>
-      <BottomTab route={route} navigation={navigation} />
+      <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
     </Container>
   );
 }
