@@ -132,7 +132,7 @@ function AboutSubject_Logic({
             }
           >
             <Image
-              
+              source={require("../../../assets/icons/emoticons.png")}
               style={{ width: 33, height: 33, marginLeft: 20, marginRight: -5 }}
             />
           </TouchableOpacity>
