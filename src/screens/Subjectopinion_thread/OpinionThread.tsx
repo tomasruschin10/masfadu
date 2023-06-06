@@ -177,7 +177,7 @@ function OpinionThread({ route, navigation }) {
       </ScrollView>
 
       <Box
-        bg="#EC5F5F"
+        bg="#E85E29"
         shadow={"3"}
         borderRadius="lg"
         position={"absolute"}

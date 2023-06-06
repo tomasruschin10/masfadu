@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
-import { Alert, TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { Entypo } from "@expo/vector-icons";
+
 import {
   Feather,
   AntDesign,
@@ -439,33 +441,62 @@ export function ModalWarning({
     >
       <Modal.Content rounded={"2xl"}>
         <Modal.Body alignItems={"center"}>
-          <FormControl alignItems={"center"} mt={5}>
-            <Feather name="alert-triangle" size={24} color="#CCCED1" />
-          </FormControl>
-          <FormControl mt={4}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: 70,
+              height: 70,
+              borderRadius: 35,
+              backgroundColor: "#E85E29",
+            }}
+          >
+            <AntDesign name="exclamation" size={40} color="white" />
+          </View>
+
+          <Text
+            fontWeight={"bold"}
+            textAlign={"center"}
+            w={"80%"}
+            fontSize={25}
+          >
+            No podés anotarte a esta materia :(
+          </Text>
+          <FormControl mr={"9.5%"} mt={4}>
             {currentSubj?.available === false ? (
               <>
-                <Text fontSize={15} textAlign={"center"}>
-                  Para anotarte en
-                  <Text
-                    fontFamily={"Poppins_400Regular_Italic"}
-                    textDecorationLine={"underline"}
-                  >
-                    {" "}
-                    {currentSubj?.name}{" "}
-                  </Text>
-                  primero tenés que terminar:
+                <Text marginLeft={"5.5%"} fontSize={15} textAlign={"left"}>
+                  Primero tenés que aprobar:
                 </Text>
                 <HStack
                   justifyContent={"center"}
-                  space={2}
                   p={2}
                   flexWrap={"wrap"}
+                  flexDirection={"column"} // Cambia la dirección del flujo a vertical
                 >
                   {arrSinDuplicaciones &&
                     arrSinDuplicaciones?.map((item, i) => (
-                      <Box key={item.name} rounded={40} px={2} bg={"gray.200"}>
-                        <Text textAlign={"center"} numberOfLines={1}>
+                      <Box
+                        p={1}
+                        style={{ display: "flex", flexDirection: "row" }}
+                        key={item.name}
+                        px={2}
+                      >
+                        <View
+                          style={{
+                            marginRight: 3,
+                            backgroundColor: "#486b8a",
+                            borderRadius: 6,
+                            padding: 4,
+                            height:20
+                          }}
+                        >
+                          <Entypo name="arrow-right" size={13} color="white" />
+                        </View>
+                        <Text>-</Text>
+                        <Text textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
                           {item.name}
                         </Text>
                       </Box>
@@ -487,11 +518,13 @@ export function ModalWarning({
             {!currentSubj?.available ? (
               <Button
                 px={5}
+                w={"40%"}
+                mb={5}
                 _text={{ fontSize: 10.65 }}
-                bg={"#2972FE"}
                 onPress={() => setShowWarning(false)}
+                style={{ backgroundColor: "#E85E29" }}
               >
-                OK, genial!
+                Dale!
               </Button>
             ) : (
               <>
@@ -527,6 +560,217 @@ export function ModalWarning({
                 </Button>
               </>
             )}
+          </Button.Group>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function ModalWarning2({
+  showWarning,
+  setShowWarning,
+
+}) {
+  return (
+    <Modal
+      isOpen={showWarning}
+      animationPreset={"slide"}
+      size={"xl"}
+      onClose={() => setShowWarning(false)}
+      mt={5}
+    >
+      <Modal.Content rounded={"2xl"}>
+        <Modal.Body alignItems={"center"}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: 70,
+              height: 70,
+              borderRadius: 35,
+              backgroundColor: "#E85E29",
+            }}
+          >
+            <AntDesign name="exclamation" size={40} color="white" />
+          </View>
+
+          <FormControl mr={"2.5%"} mt={4}>
+            <Text fontSize={20} ml={"2.5%"} fontWeight={"bold"} textAlign={"center"}>
+              Advertencias
+            </Text>
+            <HStack
+        
+              justifyContent={"center"}
+          
+              flexWrap={"wrap"}
+              flexDirection={"column"}
+                          >
+                      <Box
+                        p={1}
+                        style={{ display: "flex", flexDirection: "row" }}
+                        
+                        px={2}
+                      >
+                        <View
+                          style={{
+                            marginRight: 3,
+                            backgroundColor: "#486b8a",
+                            borderRadius: 6,
+                            padding: 4,
+                            height:"50%"
+                          }}
+                        >
+                          <Entypo name="arrow-right" size={13} color="white" />
+                        </View>
+                        <Text>-</Text>
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          No se permiten las faltas de respeto de ningún tipo, insultos o agresiones.
+                        </Text>
+                      </Box>
+                      <Box
+                        p={1}
+                        style={{ display: "flex", flexDirection: "row" }}
+                     
+                        px={2}
+                      >
+                        <View
+                          style={{
+                            marginRight: 3,
+                            backgroundColor: "#486b8a",
+                            borderRadius: 6,
+                            padding: 4,
+                            height:"100%"
+                          }}
+                        >
+                          <Entypo name="arrow-right" size={13} color="white" />
+                        </View>
+                        <Text>-</Text>
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          Criticar sin motivo a nadie. ni nada.
+                        </Text>
+                      </Box>
+                      <Box
+                        p={1}
+                        style={{ display: "flex", flexDirection: "row" }}
+                     
+                        px={2}
+                      >
+                        <View
+                          style={{
+                            marginRight: 3,
+                            backgroundColor: "#486b8a",
+                            borderRadius: 6,
+                            padding: 4,
+                            height:"100%"
+                          }}
+                        >
+                          <Entypo name="arrow-right" size={13} color="white" />
+                        </View>
+                        <Text>-</Text>
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          Spam.
+                        </Text>
+                      </Box>
+                      <Box
+                        p={1}
+                        style={{ display: "flex", flexDirection: "row" }}
+                     
+                        px={2}
+                      >
+                        <View
+                          style={{
+                            marginRight: 3,
+                            backgroundColor: "#486b8a",
+                            borderRadius: 6,
+                            padding: 4,
+                            height:"100%"
+                          }}
+                        >
+                          <Entypo name="arrow-right" size={13} color="white" />
+                        </View>
+                        <Text>-</Text>
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          ser un troll, no molestes.
+                        </Text>
+                      </Box>
+                      <Box
+                    
+                        p={1}
+                        mt={3}
+                        style={{ display: "flex", flexDirection: "row" }}
+                        marginLeft={"4.5%"}
+                        px={2}
+                      >
+                       
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          Saltarse algunas de estas normas implicará:
+                        </Text>
+                      </Box>
+                      <Box
+                        p={1}
+                        marginLeft={"3.5%"}
+                        style={{ display: "flex", flexDirection: "row" }}
+                         mt={1} 
+                        px={2}
+                      >
+                        <Text>1</Text>
+                        <Text>-</Text>
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          Baneo temporal sin poder comentar duante un tiempo indefinido.
+                        </Text>
+                      </Box>
+                      <Box
+                        p={1}
+                        marginLeft={"3.5%"}
+                        style={{ display: "flex", flexDirection: "row" }}
+                         mt={1} 
+                        px={2}
+                      >
+                        <Text>2</Text>
+                        <Text>-</Text>
+                        <Text  textAlign={"left"} >
+                          {" "}
+                          {/* Alinea el texto a la izquierda */}
+                          Baneo completo y expulsion de la app.
+                        </Text>
+                      </Box>
+            </HStack>
+          </FormControl>
+          <Button.Group space={2} mt={2}>
+          <Button
+              px={2}
+              w={"40%"}
+              mb={5}
+              _text={{ fontSize: 8, fontWeight:"bold", }}
+             
+              onPress={() => setShowWarning(false)}
+              style={{ backgroundColor: "#007BFF" }}
+            >
+              Entiendo, voy a respetar
+            </Button>
+            <Button
+              px={5}
+              w={"40%"}
+              mb={5}
+              _text={{ fontSize: 8, fontWeight:"bold" }}
+              onPress={() => setShowWarning(false)}
+              style={{ backgroundColor: "#E85E29" }}
+            >
+              No, no acepto
+            </Button>
           </Button.Group>
         </Modal.Body>
       </Modal.Content>

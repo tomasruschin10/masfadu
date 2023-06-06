@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 import { Box, Button, Icon, IconButton, Input, ScrollView, Text, HStack, Spinner, Heading } from 'native-base';
 import { RenderOpinion } from '../../utils/hooks/useMultiple'
 import useSearchSubject from '../../utils/hooks/useSearchSubject';
 import { NoHeader } from '../../components/Header';
+import { ModalWarning2} from "../../screens/AboutSubject/Modals";
 import { MaterialIcons } from "@expo/vector-icons";
 function SubjectOpinions({route, navigation, mainTitle}) {
   const {search, setSearch, filteredSubjects, allSubjects, loading} = useSearchSubject()
-  const colores = ['#EB5E29']
+  const [showWarning, setShowWarning] = useState(true);
+  
+  const colores = ['#E85E29']
 
   return (
     <ScrollView keyboardShouldPersistTaps={'handled'}>
-      
+      <ModalWarning2  showWarning={showWarning}  setShowWarning={setShowWarning}/> 
       <HStack mt={0} mb={4} alignItems={'center'} justifyContent="center">
       <MaterialIcons
     name={"search"}

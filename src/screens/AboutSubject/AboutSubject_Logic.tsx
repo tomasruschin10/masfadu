@@ -36,7 +36,7 @@ function AboutSubject_Logic({
   const [FontsLoaded, setFontsLoaded] = useState(false);
   useEffect(() => {
     if (!FontsLoaded) {
-      loadFonts();
+      loadFonts()
       setFontsLoaded(true);
     }
   }, []);

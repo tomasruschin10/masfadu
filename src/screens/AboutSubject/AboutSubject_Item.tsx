@@ -45,12 +45,22 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
     extra_score: [],
     USERSUBJECT: 0,
   });
+  
   const [FontsLoaded, setFontsLoaded] = useState(false);
   useEffect(() => {
-    if (!FontsLoaded) {
+/*     if (!FontsLoaded) {
       loadFonts();
       setFontsLoaded(true);
+    } */
+    if(!FontsLoaded){
+      const loadAsync = async () => {
+        await loadFonts();
+        setFontsLoaded(true);
+      };
+  
+      loadAsync()
     }
+
   }, []);
 
   const loadFonts = async () => {
@@ -131,7 +141,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               Promedio
             </Text>
             <Box bg={"#f8f8f8"} rounded={"xl"} mt={2}>
-              <Text
+              {FontsLoaded ?               <Text
                 fontFamily={"soraSemiBold"}
                 color={"#9a9a9a"}
                 fontWeight={"500"}
@@ -140,7 +150,8 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 py={1}
               >
                 {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
-              </Text>
+              </Text> : null}
+
             </Box>
           </Box>
         </HStack>

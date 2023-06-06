@@ -449,16 +449,17 @@ function SeeSubjectThread({ route, navigation }) {
         </Box>
       </ScrollView>
 
+
       <Box
-        bg="#eb5e29"
+        bg="#E85E29"
         shadow={"3"}
-        borderRadius="full"
+        borderRadius="lg"
         position={"absolute"}
         right={5}
-        p={1}
-        bottom={"24"}
+        bottom={"32"}
         zIndex={100}
       >
+        
         <TouchableHighlight
           underlayColor={""}
           onPress={() => {
@@ -477,13 +478,16 @@ function SeeSubjectThread({ route, navigation }) {
         >
           <Box
             h={"10"}
-            w={"10"}
+            w={"120"}
             flexDir={"row"}
             alignItems={"center"}
             // px="2"
             justifyContent={"center"}
           >
             <Entypo name="plus" size={28} color="white" />
+            <Text color="white" fontSize={13} mr={1.5} ml={1}>
+              Crear hilo
+            </Text>
           </Box>
         </TouchableHighlight>
       </Box>

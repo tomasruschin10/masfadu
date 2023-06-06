@@ -26,25 +26,18 @@ import { useEventNavigation } from "../../context";
 import { StyleSheet } from "react-native";
 import Menu from "../Menu/Menu";
 
-
 function HomeScreen({ route, navigation }) {
-
   const isFocused = useIsFocused();
-
 
   const { setNavigationEvent } = useEventNavigation();
 
   React.useEffect(() => {
- 
-
     if (isFocused) {
       setNavigationEvent("inicio");
     }
   }, [isFocused]);
 
-
-
-  const [menuShow, setMenu] = useState(false)
+  const [menuShow, setMenu] = useState(false);
 
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
@@ -61,7 +54,6 @@ function HomeScreen({ route, navigation }) {
   React.useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
-      
     );
 
     notificationListener.current =
@@ -281,17 +273,82 @@ function HomeScreen({ route, navigation }) {
     );
   };
 
-  return (
-    <Container  >
-      { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
+  const renderShop = ({ item }) => {
+    const { title, description, url, image, partner } = item;
+    return (
+      <Box
       
+        shadow={"0"}
+        bgColor={"white"}
+        m={2}
+        
+        borderRadius={"lg"}
+        mr={2}
+        ml={3}
+        mb={5}
+        w={150}
+      >
+        <Box >
+          <Image
+   
+            alt={"logo"}
+            w={160}
+            h={125}
+            borderRadius={15}
+
+            source={{ uri: image.url }}
+          />
+          <Box pt={1} pl={2}>
+            <Text
+              style={{ fontSize: 16, marginTop: 8 }}
+              fontWeight={700}
+              fontFamily="Manrope"
+              numberOfLines={2}
+            >
+              {title}
+            </Text>
+            <Text
+              fontWeight={700}
+              fontFamily="Manrope"
+              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+              numberOfLines={2}
+              mt={1}
+              fontSize={"sm"}
+            >
+              {partner.name}
+            </Text>
+{/*             <Box>
+              <Text
+                fontFamily="Manrope"
+                numberOfLines={2}
+                fontSize={16}
+                lineHeight={21.86}
+              >
+                {description}
+              </Text>
+            </Box> */}
+          </Box>
+        </Box>
+      </Box>
+    );
+  };
+
+  return (
+    <Container>
+      {menuShow ? (
+        <Menu navigation={navigation} route={route} setMenu={setMenu} />
+      ) : null}
+
       <HeaderPerfil
-      showICon={true}
+        showICon={true}
         statusBarColor="#e8eef4"
         barStyle="dark-content"
         navigation={navigation}
       />
-      <ScrollView backgroundColor={"#e8eef3"} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        backgroundColor={"#e8eef3"}
+        showsVerticalScrollIndicator={false}
+      >
         <Box>
           {textNews.length > 0 ? (
             <Carousel
@@ -459,7 +516,7 @@ function HomeScreen({ route, navigation }) {
               showsHorizontalScrollIndicator={false}
               horizontal
               data={offer.slice(0, 3)}
-              renderItem={renderOfertas}
+              renderItem={renderShop}
             />
           ) : (
             <Box
@@ -485,7 +542,7 @@ function HomeScreen({ route, navigation }) {
               showsHorizontalScrollIndicator={false}
               horizontal
               data={courses.slice(0, 3)}
-              renderItem={renderOfertas}
+              renderItem={renderShop}
             />
           ) : (
             <Box
