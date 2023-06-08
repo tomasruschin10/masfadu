@@ -192,7 +192,7 @@ function Offers({ route, navigation }) {
         style={{
           flex: 1,
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "center", 
           marginLeft: "5%"
         }}
       >

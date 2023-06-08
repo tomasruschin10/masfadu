@@ -18,7 +18,7 @@ export const RenderItem = ({title, id, setIdCopy, idCopy}) => (
 export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours, method, rating, navigation, mainTitle, buttonValue, border, image, url, subject_id, id}) => {
   return (
     <TouchableHighlight underlayColor='white' onPress={() => navigation.navigate(
-        redirect_to, {mainTitle: mainTitle, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time}
+        redirect_to, {mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time}
       )}
     >
       <Box shadow={2} mx='5' bg='white' py="4" flexDir={'row'} justifyContent="space-around" mb="5" rounded="2xl" borderColor={ border ? '#EC5F5F' : 'white'} borderWidth="2">

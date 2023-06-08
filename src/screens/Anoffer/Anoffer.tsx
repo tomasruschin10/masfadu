@@ -7,6 +7,7 @@ import {
   IconButton,
   ScrollView,
   Text,
+  Image
 } from "native-base";
 import React, { useState } from "react";
 import { Linking } from "react-native";
@@ -15,7 +16,7 @@ import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function Anoffer({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
-  const { mainTitle, title, buttonValue, url, description, id, partner } =
+  const { mainTitle, title, buttonValue, url, description, id, partner, image } =
     route.params;
 
   return (
@@ -23,6 +24,18 @@ function Anoffer({ route, navigation }) {
       <Layout route={route} navigation={navigation} title={mainTitle}>
         <ScrollView>
           <Box mx="5" mt="3" mb={"48"}>
+          <Image
+            style={{
+              height: 140,
+              width: "50%",
+              marginLeft: "25%",
+              borderRadius: 15,
+              marginBottom: "10%"
+            }}
+            source={{
+              uri: image,
+            }}
+          />
             <Box
               flexDir="row"
               justifyContent="space-around"
@@ -82,7 +95,7 @@ function Anoffer({ route, navigation }) {
             h="10"
             backgroundColor="#eb5e29"
           >
-            {buttonValue}
+            Publicar
           </Button>
         </Box>
       </Layout>

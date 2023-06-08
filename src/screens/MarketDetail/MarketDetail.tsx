@@ -4,7 +4,7 @@ import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import ButtonMas from "../../components/ButtonMas";
-
+import { Image } from "native-base";
 type RootStackParamList = {
   MarketDetail: { data: any };
 };
@@ -28,6 +28,18 @@ const MarketDetail = ({ navigation }) => {
       <Layout route={route} navigation={navigation} title={"Detalle"}>
         <View style={{ margin: 20 }}>
           <View>
+          <Image
+            style={{
+              height: 140,
+              width: "50%",
+              marginLeft:"25%",
+              borderRadius: 5,
+              marginBottom: "10%"
+            }}
+            source={{
+              uri: data.image.url,
+            }}
+          />
             <Text
               style={{
                 fontSize: 18,
@@ -51,7 +63,7 @@ const MarketDetail = ({ navigation }) => {
             bottom: 100,
           }}
         >
-          <ButtonMas title="Ver mas" />
+          <ButtonMas title="Publicar" />
         </View>
       </Layout>
     </Container>

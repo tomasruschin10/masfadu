@@ -276,6 +276,10 @@ function HomeScreen({ route, navigation }) {
   const renderShop = ({ item }) => {
     const { title, description, url, image, partner } = item;
     return (
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("MarketDetail", { data: item })}
+      
+      >   
       <Box
       
         shadow={"0"}
@@ -330,6 +334,72 @@ function HomeScreen({ route, navigation }) {
           </Box>
         </Box>
       </Box>
+       </TouchableOpacity>
+    );
+  };
+
+  const renderWorkShop = ({ item }) => {
+    const { title, description, url, image, partner } = item;
+    return (
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("Anoffer", {mainTitle: "Cursos & Workshops", title: item.title, url: item.url, description: item.description, id: item.id, partner: item.partner, image: item.image.url})}
+      
+      >  
+      <Box
+      
+        shadow={"0"}
+        bgColor={"white"}
+        m={2}
+        
+        borderRadius={"lg"}
+        mr={2}
+        ml={3}
+        mb={5}
+        w={150}
+      >
+        <Box >
+          <Image
+   
+            alt={"logo"}
+            w={160}
+            h={125}
+            borderRadius={15}
+
+            source={{ uri: image.url }}
+          />
+          <Box pt={1} pl={2}>
+            <Text
+              style={{ fontSize: 16, marginTop: 8 }}
+              fontWeight={700}
+              fontFamily="Manrope"
+              numberOfLines={2}
+            >
+              {title}
+            </Text>
+            <Text
+              fontWeight={700}
+              fontFamily="Manrope"
+              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+              numberOfLines={2}
+              mt={1}
+              fontSize={"sm"}
+            >
+              {partner.name}
+            </Text>
+{/*             <Box>
+              <Text
+                fontFamily="Manrope"
+                numberOfLines={2}
+                fontSize={16}
+                lineHeight={21.86}
+              >
+                {description}
+              </Text>
+            </Box> */}
+          </Box>
+        </Box>
+      </Box>
+      </TouchableOpacity>
     );
   };
 
@@ -542,7 +612,7 @@ function HomeScreen({ route, navigation }) {
               showsHorizontalScrollIndicator={false}
               horizontal
               data={courses.slice(0, 3)}
-              renderItem={renderShop}
+              renderItem={renderWorkShop}
             />
           ) : (
             <Box

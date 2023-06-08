@@ -435,7 +435,7 @@ export function ModalWarning({
     <Modal
       isOpen={showWarning}
       animationPreset={"slide"}
-      size={"xl"}
+      size={"md"}
       onClose={() => setShowWarning(false)}
       mt={5}
     >
@@ -458,14 +458,14 @@ export function ModalWarning({
             fontWeight={"bold"}
             textAlign={"center"}
             w={"80%"}
-            fontSize={25}
+            fontSize={21}
           >
             No podés anotarte a esta materia :(
           </Text>
           <FormControl mr={"9.5%"} mt={4}>
             {currentSubj?.available === false ? (
               <>
-                <Text marginLeft={"5.5%"} fontSize={15} textAlign={"left"}>
+                <Text marginLeft={"6.5%"} fontSize={12} textAlign={"left"}>
                   Primero tenés que aprobar:
                 </Text>
                 <HStack
@@ -487,14 +487,14 @@ export function ModalWarning({
                             marginRight: 3,
                             backgroundColor: "#486b8a",
                             borderRadius: 6,
-                            padding: 4,
-                            height:20
+                            padding: 2,
+                            height:15
                           }}
                         >
-                          <Entypo name="arrow-right" size={13} color="white" />
+                          <Entypo name="arrow-right" size={10} color="white" />
                         </View>
                         <Text>-</Text>
-                        <Text textAlign={"left"} >
+                        <Text fontSize={10} textAlign={"left"} >
                           {" "}
                           {/* Alinea el texto a la izquierda */}
                           {item.name}
@@ -517,8 +517,8 @@ export function ModalWarning({
           <Button.Group space={2} mt={2}>
             {!currentSubj?.available ? (
               <Button
-                px={5}
-                w={"40%"}
+                px={4}
+                w={"60%"}
                 mb={5}
                 _text={{ fontSize: 10.65 }}
                 onPress={() => setShowWarning(false)}

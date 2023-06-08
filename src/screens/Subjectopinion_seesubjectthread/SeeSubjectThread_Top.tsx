@@ -28,7 +28,7 @@ function SeeSubjectThread_Top({
             h={"100%"}
             rounded={5}
             _text={{
-              fontSize: 30 / firstLetter.length + firstLetter.length * 1.5,
+              fontSize: 30 / firstLetter?.length + firstLetter?.length * 1.5,
             }}
             fontFamily="SourceSansPro_400Regular"
             fontSize={40}

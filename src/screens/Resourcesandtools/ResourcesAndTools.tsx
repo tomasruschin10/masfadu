@@ -58,10 +58,17 @@ function ResourcesAndTools({route, navigation}) {
           )}
         </Box>
       </ScrollView>
-
-      <Box mt="7" mb={32} position={'absolute'} bottom={0} alignSelf={'center'} w={'100%'}>
-        <Button alignSelf={'center'} w={'80%'} rounded={'xl'} fontWeight="bold" onPress={()=> Linking.openURL('mailto:hola@masfadu.com?subject=Elemento para Donar&body=Buen día: ')} mx="5" py={3}>No lo usas más? Donalo</Button>
-      </Box>
+      <Box alignSelf={"center"} position={"absolute"} bottom={32}>
+          <Button
+            _text={{ fontSize: 15 }}
+            onPress={()=> Linking.openURL('mailto:hola@masfadu.com?subject=Elemento para Donar&body=Buen día: ')}
+            w="205"
+            h="10"
+            backgroundColor="#eb5e29"
+          >
+            Publicar
+          </Button>
+        </Box>
     </>
   )
 }
