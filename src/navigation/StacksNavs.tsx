@@ -31,6 +31,8 @@ import GoogleRegister from "../screens/GoogleRegister";
 import AboutSubject from "../screens/AboutSubject/AboutSubject";
 import { SearchCourse } from "../screens/searchCourse/SearchCourse";
 import { MarketDetail } from "../screens/MarketDetail";
+import OfferForm from "../screens/Offers/OfferForm";
+import JobOfferForm from "../screens/JobOffers/JobOfferForm";
 
 const Stack = createStackNavigator();
 
@@ -81,6 +83,8 @@ export function NavStack() {
           <Stack.Screen name="SearchCourse" component={SearchCourse} />
 
           <Stack.Screen name="Offers" component={Offers} />
+          <Stack.Screen name="OfferForm" component={OfferForm} />
+          <Stack.Screen name="JobOfferForm" component={JobOfferForm} />
           <Stack.Screen name="Menu" component={Menu}  
 
           

@@ -200,8 +200,8 @@ export function ModalNotes({
                   </TouchableOpacity>
                 </HStack>
               </HStack>
-              {form.extra_score.length > 0 &&
-                form.extra_score.map((item) => (
+              {form?.extra_score?.length > 0 &&
+                form?.extra_score?.map((item) => (
                   <TouchableOpacity
                     key={item.id}
                     onPress={() =>
@@ -431,6 +431,8 @@ export function ModalWarning({
     console.log("arrSinDuplicaciones ", arrSinDuplicaciones);
   }
 
+
+
   return (
     <Modal
       isOpen={showWarning}
@@ -454,17 +456,18 @@ export function ModalWarning({
             <AntDesign name="exclamation" size={40} color="white" />
           </View>
 
-          <Text
-            fontWeight={"bold"}
-            textAlign={"center"}
-            w={"80%"}
-            fontSize={21}
-          >
-            No podés anotarte a esta materia :(
-          </Text>
           <FormControl mr={"9.5%"} mt={4}>
             {currentSubj?.available === false ? (
               <>
+                <Text
+                ml={"13.5%"}
+                  fontWeight={"bold"}
+                  textAlign={"center"}
+                  w={"80%"}
+                  fontSize={21}
+                >
+                  No podés anotarte a esta materia :(
+                </Text>
                 <Text marginLeft={"6.5%"} fontSize={12} textAlign={"left"}>
                   Primero tenés que aprobar:
                 </Text>
@@ -488,13 +491,13 @@ export function ModalWarning({
                             backgroundColor: "#486b8a",
                             borderRadius: 6,
                             padding: 2,
-                            height:15
+                            height: 15,
                           }}
                         >
                           <Entypo name="arrow-right" size={10} color="white" />
                         </View>
                         <Text>-</Text>
-                        <Text fontSize={10} textAlign={"left"} >
+                        <Text fontSize={10} textAlign={"left"}>
                           {" "}
                           {/* Alinea el texto a la izquierda */}
                           {item.name}
@@ -567,11 +570,7 @@ export function ModalWarning({
   );
 }
 
-export function ModalWarning2({
-  showWarning,
-  setShowWarning,
-
-}) {
+export function ModalWarning2({ showWarning, setShowWarning }) {
   return (
     <Modal
       isOpen={showWarning}
@@ -596,166 +595,163 @@ export function ModalWarning2({
           </View>
 
           <FormControl mr={"2.5%"} mt={4}>
-            <Text fontSize={20} ml={"2.5%"} fontWeight={"bold"} textAlign={"center"}>
+            <Text
+              fontSize={20}
+              ml={"2.5%"}
+              fontWeight={"bold"}
+              textAlign={"center"}
+            >
               Advertencias
             </Text>
             <HStack
-        
               justifyContent={"center"}
-          
               flexWrap={"wrap"}
               flexDirection={"column"}
-                          >
-                      <Box
-                        p={1}
-                        style={{ display: "flex", flexDirection: "row" }}
-                        
-                        px={2}
-                      >
-                        <View
-                          style={{
-                            marginRight: 3,
-                            backgroundColor: "#486b8a",
-                            borderRadius: 6,
-                            padding: 4,
-                            height:"50%"
-                          }}
-                        >
-                          <Entypo name="arrow-right" size={13} color="white" />
-                        </View>
-                        <Text>-</Text>
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          No se permiten las faltas de respeto de ningún tipo, insultos o agresiones.
-                        </Text>
-                      </Box>
-                      <Box
-                        p={1}
-                        style={{ display: "flex", flexDirection: "row" }}
-                     
-                        px={2}
-                      >
-                        <View
-                          style={{
-                            marginRight: 3,
-                            backgroundColor: "#486b8a",
-                            borderRadius: 6,
-                            padding: 4,
-                            height:"100%"
-                          }}
-                        >
-                          <Entypo name="arrow-right" size={13} color="white" />
-                        </View>
-                        <Text>-</Text>
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          Criticar sin motivo a nadie. ni nada.
-                        </Text>
-                      </Box>
-                      <Box
-                        p={1}
-                        style={{ display: "flex", flexDirection: "row" }}
-                     
-                        px={2}
-                      >
-                        <View
-                          style={{
-                            marginRight: 3,
-                            backgroundColor: "#486b8a",
-                            borderRadius: 6,
-                            padding: 4,
-                            height:"100%"
-                          }}
-                        >
-                          <Entypo name="arrow-right" size={13} color="white" />
-                        </View>
-                        <Text>-</Text>
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          Spam.
-                        </Text>
-                      </Box>
-                      <Box
-                        p={1}
-                        style={{ display: "flex", flexDirection: "row" }}
-                     
-                        px={2}
-                      >
-                        <View
-                          style={{
-                            marginRight: 3,
-                            backgroundColor: "#486b8a",
-                            borderRadius: 6,
-                            padding: 4,
-                            height:"100%"
-                          }}
-                        >
-                          <Entypo name="arrow-right" size={13} color="white" />
-                        </View>
-                        <Text>-</Text>
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          ser un troll, no molestes.
-                        </Text>
-                      </Box>
-                      <Box
-                    
-                        p={1}
-                        mt={3}
-                        style={{ display: "flex", flexDirection: "row" }}
-                        marginLeft={"4.5%"}
-                        px={2}
-                      >
-                       
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          Saltarse algunas de estas normas implicará:
-                        </Text>
-                      </Box>
-                      <Box
-                        p={1}
-                        marginLeft={"3.5%"}
-                        style={{ display: "flex", flexDirection: "row" }}
-                         mt={1} 
-                        px={2}
-                      >
-                        <Text>1</Text>
-                        <Text>-</Text>
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          Baneo temporal sin poder comentar duante un tiempo indefinido.
-                        </Text>
-                      </Box>
-                      <Box
-                        p={1}
-                        marginLeft={"3.5%"}
-                        style={{ display: "flex", flexDirection: "row" }}
-                         mt={1} 
-                        px={2}
-                      >
-                        <Text>2</Text>
-                        <Text>-</Text>
-                        <Text  textAlign={"left"} >
-                          {" "}
-                          {/* Alinea el texto a la izquierda */}
-                          Baneo completo y expulsion de la app.
-                        </Text>
-                      </Box>
+            >
+              <Box
+                p={1}
+                style={{ display: "flex", flexDirection: "row" }}
+                px={2}
+              >
+                <View
+                  style={{
+                    marginRight: 3,
+                    backgroundColor: "#486b8a",
+                    borderRadius: 6,
+                    padding: 4,
+                    height: "50%",
+                  }}
+                >
+                  <Entypo name="arrow-right" size={13} color="white" />
+                </View>
+                <Text>-</Text>
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  No se permiten las faltas de respeto de ningún tipo, insultos
+                  o agresiones.
+                </Text>
+              </Box>
+              <Box
+                p={1}
+                style={{ display: "flex", flexDirection: "row" }}
+                px={2}
+              >
+                <View
+                  style={{
+                    marginRight: 3,
+                    backgroundColor: "#486b8a",
+                    borderRadius: 6,
+                    padding: 4,
+                    height: "100%",
+                  }}
+                >
+                  <Entypo name="arrow-right" size={13} color="white" />
+                </View>
+                <Text>-</Text>
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  Criticar sin motivo a nadie. ni nada.
+                </Text>
+              </Box>
+              <Box
+                p={1}
+                style={{ display: "flex", flexDirection: "row" }}
+                px={2}
+              >
+                <View
+                  style={{
+                    marginRight: 3,
+                    backgroundColor: "#486b8a",
+                    borderRadius: 6,
+                    padding: 4,
+                    height: "100%",
+                  }}
+                >
+                  <Entypo name="arrow-right" size={13} color="white" />
+                </View>
+                <Text>-</Text>
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  Spam.
+                </Text>
+              </Box>
+              <Box
+                p={1}
+                style={{ display: "flex", flexDirection: "row" }}
+                px={2}
+              >
+                <View
+                  style={{
+                    marginRight: 3,
+                    backgroundColor: "#486b8a",
+                    borderRadius: 6,
+                    padding: 4,
+                    height: "100%",
+                  }}
+                >
+                  <Entypo name="arrow-right" size={13} color="white" />
+                </View>
+                <Text>-</Text>
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  ser un troll, no molestes.
+                </Text>
+              </Box>
+              <Box
+                p={1}
+                mt={3}
+                style={{ display: "flex", flexDirection: "row" }}
+                marginLeft={"4.5%"}
+                px={2}
+              >
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  Saltarse algunas de estas normas implicará:
+                </Text>
+              </Box>
+              <Box
+                p={1}
+                marginLeft={"3.5%"}
+                style={{ display: "flex", flexDirection: "row" }}
+                mt={1}
+                px={2}
+              >
+                <Text>1</Text>
+                <Text>-</Text>
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  Baneo temporal sin poder comentar duante un tiempo indefinido.
+                </Text>
+              </Box>
+              <Box
+                p={1}
+                marginLeft={"3.5%"}
+                style={{ display: "flex", flexDirection: "row" }}
+                mt={1}
+                px={2}
+              >
+                <Text>2</Text>
+                <Text>-</Text>
+                <Text textAlign={"left"}>
+                  {" "}
+                  {/* Alinea el texto a la izquierda */}
+                  Baneo completo y expulsion de la app.
+                </Text>
+              </Box>
             </HStack>
           </FormControl>
           <Button.Group space={2} mt={2}>
-          <Button
+            <Button
               px={2}
               w={"40%"}
               mb={5}
-              _text={{ fontSize: 8, fontWeight:"bold", }}
-             
+              _text={{ fontSize: 8, fontWeight: "bold" }}
               onPress={() => setShowWarning(false)}
               style={{ backgroundColor: "#007BFF" }}
             >
@@ -765,7 +761,7 @@ export function ModalWarning2({
               px={5}
               w={"40%"}
               mb={5}
-              _text={{ fontSize: 8, fontWeight:"bold" }}
+              _text={{ fontSize: 8, fontWeight: "bold" }}
               onPress={() => setShowWarning(false)}
               style={{ backgroundColor: "#E85E29" }}
             >

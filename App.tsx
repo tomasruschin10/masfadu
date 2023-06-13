@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationProvider } from "./src/context";
+
 import {
   Poppins_100Thin,
   Poppins_100Thin_Italic,

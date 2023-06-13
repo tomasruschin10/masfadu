@@ -13,12 +13,13 @@ import {
   Text,
 } from "native-base";
 import React, { useState } from "react";
+
 import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { useEffect } from "react";
 import { getServices } from "../../utils/hooks/services";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 function JobOffers({ route, navigation, mainTitle }) {
   const [allOffers, setAllOffers] = React.useState([]);
@@ -104,6 +105,36 @@ function JobOffers({ route, navigation, mainTitle }) {
 
   return (
     <Box>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("JobOfferForm");
+        }}
+      >
+        <Box
+          position={"absolute"}
+          style={{
+            zIndex: 99,
+            right: 10, // Ajusta la posición derecha según tus necesidades
+
+            borderRadius: 50,
+            margin: 0,
+            marginTop: -50,
+            marginRight: 15,
+          }}
+        >
+          <Box
+            style={{
+              backgroundColor: "#E85E29",
+
+              borderRadius: 50,
+              padding: 6,
+            }}
+          >
+            <Entypo name="plus" size={28} color="#f4faff" />
+          </Box>
+        </Box>
+      </TouchableOpacity>
+
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
           <Box>
@@ -126,21 +157,21 @@ function JobOffers({ route, navigation, mainTitle }) {
           justifyContent="center"
           flexDir={"row"}
         >
-                <MaterialIcons
-    name={"search"}
-    size={17}
-    color="gray"
-    style={{ position: 'absolute', left: "3%", zIndex: 1}}
-  />
+          <MaterialIcons
+            name={"search"}
+            size={17}
+            color="gray"
+            style={{ position: "absolute", left: "3%", zIndex: 1 }}
+          />
           <Input
-            style={{marginLeft: "8%"}}
+            style={{ marginLeft: "8%" }}
             fontSize={12.27}
             onChangeText={(text) => setSearchText(text)}
             w={{ base: "87%", md: "25%" }}
             pb="1"
             type={"text"}
             placeholder={"Buscar"}
-            placeholderTextColor="#666666" 
+            placeholderTextColor="#666666"
             mr="2"
           />
 

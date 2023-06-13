@@ -30,7 +30,7 @@ instances.forEach(async (instance) => {
 			const errorResponse = error?.response;
 			if (errorResponse) {
 				console.log("🚀 ~ file: api.tsx ~ line 33 ~ instances.forEach ~ errorResponse.url", errorResponse.url)
-                if(errorResponse.status === 401 && errorResponse.config.url !== '/auth/login') {
+                if(errorResponse.status === 401 && errorResponse?.config?.url !== '/auth/login') {
                     store.dispatch(updateMessage({body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger",open: true}));
                     store.dispatch(updatetoken(''));
                     store.dispatch(updateUserdata({}));

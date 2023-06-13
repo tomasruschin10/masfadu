@@ -163,6 +163,16 @@ export default function BottomTab({ route, navigation, setMenu }) {
             flexDirection: "row-reverse",
             alignItems: "center",
           }}
+          onPress={() => {
+          
+            
+  
+             navigation.navigate("OfferForm")
+
+
+          
+          }}
+
         >
           <IconButton
             marginRight={35}

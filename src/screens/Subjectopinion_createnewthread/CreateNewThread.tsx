@@ -3,13 +3,15 @@ import { Box, Button, Checkbox, FormControl, HStack, Icon, Input, Modal, ScrollV
 import Container from '../../components/Container'
 import Layout from '../../utils/LayoutHeader&BottomTab'
 import { FontAwesome5, Ionicons, AntDesign} from '@expo/vector-icons';
-import { getServices, postServices } from '../../utils/hooks/services';
+import { getServices, postServices, postTags } from '../../utils/hooks/services';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
 import { useEffect } from 'react';
 import RecommendedTags from '../../utils/RecommendedTags';
 import Alert from "../../components/alert/Alert";
+import { baseApi } from "../../utils/api";
+import { store } from "../../redux/store";
 function CreateNewThread({route, navigation}) {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
@@ -76,18 +78,37 @@ function CreateNewThread({route, navigation}) {
         )
       : [];
 
-  const addNewTag = () => {
+
+      const Concat = (it) => {
+        const l = form.tags.concat([{ id: it.id, name: it.name }]);
+        setForm({ ...form, tags: l });
+      };
+       
+  const addNewTag = async () => {
     if (searchText.includes(' ') || searchText.length === 0) {
       dispatch(updateMessage({body: "Asegurate de no tener espacios en blanco", open: true, type: "warning"}))
      /*  showAlert('warning', 'Asegurate de no tener espacios en blanco') */
       return false
     }
+    const state: any = store.getState();
+    const authToken = state.token;
+    baseApi
+      .post(`tag/create`, {name: searchText}, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((res) => {
+        Concat(res.data)
+        setSearchText("")
+      })
+      .catch((err) => {
+       console.log(err)
+      });
+    
   };
 
-  const Concat = (it) => {
-    const l = form.tags.concat([{ id: it.id, name: it.name }]);
-    setForm({ ...form, tags: l });
-  };
 
   const deleteTag = (_, i) => {
     form.tags.splice(i, 1);

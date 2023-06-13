@@ -36,6 +36,30 @@ export const postServices = (url, body, ContentType?) => {
   });
 };
 
+
+export const postTags = (url, body) => {
+  const state: any = store.getState();
+  const authToken = state.token;
+  let tags
+   new Promise((resolve, reject) => {
+    baseApi
+      .post(`/${url}`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((res) => {
+        tags = res
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+  return tags
+};
+
 export const putServices = (url, body, ContentType?) => {
   const state: any = store.getState();
   const authToken = state.token;
