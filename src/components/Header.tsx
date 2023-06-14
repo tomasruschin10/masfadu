@@ -22,6 +22,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useEventNavigation } from "../context";
+import { Entypo } from "@expo/vector-icons";
 
 export function HeaderBack({ ...props }) {
   const { canGoBack, goBack } = useNavigation();
@@ -59,6 +60,37 @@ export function HeaderBack({ ...props }) {
           </Text>
         </Box>
       </HStack>
+
+      {props?.addButtonUrl ? (
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate(props.addButtonUrl);
+          }}
+        >
+          <Box
+            position={"absolute"}
+            style={{
+              zIndex: 99,
+              right: 10, // Ajusta la posición derecha según tus necesidades
+              borderRadius: 50,
+              margin: 0,
+              marginTop: -50,
+              marginRight: 15,
+            }}
+          >
+            <Box
+              style={{
+                backgroundColor: "#E85E29",
+                borderRadius: 50,
+                padding: 6,
+              }}
+            >
+              <Entypo name="plus" size={28} color="#f4faff" />
+            </Box>
+          </Box>
+        </TouchableOpacity>
+      ) : null}
+
     </>
   );
 }

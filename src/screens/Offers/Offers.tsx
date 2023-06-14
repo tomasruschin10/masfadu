@@ -23,7 +23,7 @@ import {
   View,
   Alert,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons} from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -89,6 +89,7 @@ function Offers({ route, navigation }) {
             borderRadius: 30,
           }}
         > */}
+        
         <Text
           style={{
             backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
@@ -267,7 +268,7 @@ function Offers({ route, navigation }) {
   }
 
   return (
-    <Layout route={route} navigation={navigation} title="El Mercado de Fadu">
+    <Layout route={route} navigation={navigation} title="El Mercado de Fadu" addButtonUrl={'OfferForm'}>
       <HStack mt={0} mb={4} alignItems={"center"} justifyContent="center">
       <MaterialIcons
     name={"search"}
@@ -275,6 +276,8 @@ function Offers({ route, navigation }) {
     color="gray"
     style={{ position: 'absolute', left: "8.8%", zIndex: 1}}
   />
+
+
         <Input
         style={{marginLeft: "8%"}}
           onChangeText={(text) => setSearch(text)}

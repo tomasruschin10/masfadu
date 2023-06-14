@@ -80,13 +80,9 @@ const categorysEmpty = [{
 
   const selectImage = async () => {
     try {
-      const image = await ImagePicker.launchImageLibraryAsync();
-
-
-     
+      const image = await ImagePicker.launchImageLibraryAsync();       
       
       if (!image.canceled && image.assets.length > 0) {
-        console.log('IMAGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE', image)
         setImagen(image.assets[0])
         setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
       }

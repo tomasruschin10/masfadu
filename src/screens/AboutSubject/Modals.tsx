@@ -29,6 +29,22 @@ import {
   updateNote,
 } from "./ModalFunctions";
 
+
+
+function RenderArrow() {
+  return (
+       <View
+         style={{
+           backgroundColor: "#486b8a",
+           borderRadius: 6,
+           padding:5,
+           height: 25,
+         }}>
+         <Entypo name="arrow-right" size={13} color="white" />
+       </View>
+  );
+}
+
 export function ModalNotes({
   showNotes,
   setShowNotes,
@@ -589,42 +605,31 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               height: 70,
               borderRadius: 35,
               backgroundColor: "#E85E29",
+              margin:'auto'
             }}
           >
             <AntDesign name="exclamation" size={40} color="white" />
           </View>
-
-          <FormControl mr={"2.5%"} mt={4}>
-            <Text
+          <Text
               fontSize={20}
-              ml={"2.5%"}
+              mt={3}
+              mb={"4%"}
               fontWeight={"bold"}
               textAlign={"center"}
             >
               Advertencias
             </Text>
+           
+          <FormControl maxWidth={"100%"}  pl={"5%"} pr={"18%"}>
             <HStack
               justifyContent={"center"}
               flexWrap={"wrap"}
               flexDirection={"column"}
             >
               <Box
-                p={1}
-                style={{ display: "flex", flexDirection: "row" }}
-                px={2}
-              >
-                <View
-                  style={{
-                    marginRight: 3,
-                    backgroundColor: "#486b8a",
-                    borderRadius: 6,
-                    padding: 4,
-                    height: "50%",
-                  }}
-                >
-                  <Entypo name="arrow-right" size={13} color="white" />
-                </View>
-                <Text>-</Text>
+                style={{ display: "flex", flexDirection: "row" }}>
+               <RenderArrow/>
+                <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -633,22 +638,9 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                p={1}
-                style={{ display: "flex", flexDirection: "row" }}
-                px={2}
-              >
-                <View
-                  style={{
-                    marginRight: 3,
-                    backgroundColor: "#486b8a",
-                    borderRadius: 6,
-                    padding: 4,
-                    height: "100%",
-                  }}
-                >
-                  <Entypo name="arrow-right" size={13} color="white" />
-                </View>
-                <Text>-</Text>
+                style={{paddingTop:"2%", display: "flex", flexDirection: "row" }}>
+               <RenderArrow/>
+                <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -656,22 +648,9 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                p={1}
-                style={{ display: "flex", flexDirection: "row" }}
-                px={2}
-              >
-                <View
-                  style={{
-                    marginRight: 3,
-                    backgroundColor: "#486b8a",
-                    borderRadius: 6,
-                    padding: 4,
-                    height: "100%",
-                  }}
-                >
-                  <Entypo name="arrow-right" size={13} color="white" />
-                </View>
-                <Text>-</Text>
+                style={{paddingTop:"2%", display: "flex", flexDirection: "row" }}>
+               <RenderArrow/>
+                <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -679,22 +658,9 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                p={1}
-                style={{ display: "flex", flexDirection: "row" }}
-                px={2}
-              >
-                <View
-                  style={{
-                    marginRight: 3,
-                    backgroundColor: "#486b8a",
-                    borderRadius: 6,
-                    padding: 4,
-                    height: "100%",
-                  }}
-                >
-                  <Entypo name="arrow-right" size={13} color="white" />
-                </View>
-                <Text>-</Text>
+                style={{paddingTop:"2%", display: "flex", flexDirection: "row" }}>
+               <RenderArrow/>
+                <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -702,24 +668,18 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                p={1}
-                mt={3}
-                style={{ display: "flex", flexDirection: "row" }}
-                marginLeft={"4.5%"}
                 px={2}
               >
-                <Text textAlign={"left"}>
+                <Text mt={"5%"} textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
                   Saltarse algunas de estas normas implicará:
+                  
                 </Text>
               </Box>
               <Box
-                p={1}
-                marginLeft={"3.5%"}
-                style={{ display: "flex", flexDirection: "row" }}
-                mt={1}
-                px={2}
+              style={{ display: "flex", flexDirection: "row" }}
+                 px={2}
               >
                 <Text>1</Text>
                 <Text>-</Text>
@@ -730,12 +690,9 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                p={1}
-                marginLeft={"3.5%"}
                 style={{ display: "flex", flexDirection: "row" }}
-                mt={1}
                 px={2}
-              >
+                  >
                 <Text>2</Text>
                 <Text>-</Text>
                 <Text textAlign={"left"}>
@@ -746,10 +703,10 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               </Box>
             </HStack>
           </FormControl>
-          <Button.Group space={2} mt={2}>
+          <Button.Group space={2} mt={"10%"}>
             <Button
               px={2}
-              w={"40%"}
+              w={"45%"}
               mb={5}
               _text={{ fontSize: 8, fontWeight: "bold" }}
               onPress={() => setShowWarning(false)}
@@ -759,7 +716,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             </Button>
             <Button
               px={5}
-              w={"40%"}
+              w={"45%"}
               mb={5}
               _text={{ fontSize: 8, fontWeight: "bold" }}
               onPress={() => setShowWarning(false)}

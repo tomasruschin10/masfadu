@@ -4,11 +4,11 @@ import Container from '../components/Container'
 import { HeaderBack } from '../components/Header';
 import Menu from '../screens/Menu/Menu';
 
-function Layout({children, route, navigation, title}) {
+function Layout({children, route, navigation, title, addButtonUrl}) {
   const [menuShow, setMenu] = useState(false)
   return (
     <Container>
-      <HeaderBack title={title} />
+      <HeaderBack navigation={navigation} title={title} addButtonUrl={addButtonUrl}/>
          { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
       {children}
       <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
