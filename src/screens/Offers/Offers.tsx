@@ -147,7 +147,7 @@ function Offers({ route, navigation }) {
         setItems(data.map((obj) => obj.offers).flat());
         setAllItems(data.map((obj) => obj.offers).flat());
         console.log("items ", JSON.stringify(items, null, 2));
-        console.log("offerCategory ", JSON.stringify(result, null, 2));
+        console.log("offerCategory ", JSON.stringify(result, null, 2), data);
       })
       .catch((error) => {
         if (__DEV__) {
@@ -271,12 +271,11 @@ function Offers({ route, navigation }) {
     <Layout route={route} navigation={navigation} title="El Mercado de Fadu" addButtonUrl={'OfferForm'}>
       <HStack mt={0} mb={4} alignItems={"center"} justifyContent="center">
       <MaterialIcons
-    name={"search"}
-    size={17}
-    color="gray"
-    style={{ position: 'absolute', left: "8.8%", zIndex: 1}}
-  />
-
+        name={"search"}
+        size={17}
+        color="gray"
+        style={{ position: 'absolute', left: "8.8%", zIndex: 1}}
+      />
 
         <Input
         style={{marginLeft: "8%"}}
@@ -308,7 +307,6 @@ function Offers({ route, navigation }) {
           }
         />
       </HStack>
-
 
 
       <Box alignContent={"center"} mt={3}  mb={1}>
@@ -345,7 +343,6 @@ function Offers({ route, navigation }) {
           />
         </ScrollView>
       </View>
-
       <FlatList
         style={{ width: "100%" }}
         data={items}

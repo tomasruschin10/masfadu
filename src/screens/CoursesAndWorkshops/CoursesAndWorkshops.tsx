@@ -35,6 +35,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
 
     getServices("offer/all/course")
       .then(({ data }: any) => {
+        console.log("data <>", data)
         setCourses(data);
       })
       .catch((error) => {
@@ -109,7 +110,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
     <Container>
       
       {mainTitle == undefined ? (
-        <HeaderBack title="Cursos & Workshops" />
+        <HeaderBack title="Cursos & Workshops" navigation={navigation} addButtonUrl={'CoursesForm'} />
       ) : (
         <Box display={"none"} />
       )}
@@ -206,7 +207,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                   method={""}
                   rating={item.point}
                   navigation={navigation}
-                  mainTitle={"Cursos & Workshops"}
+                  mainTitle={"Cursos & Workshodps"}
                   buttonValue={"Quiero hacerlo!"}
                   redirect_to={"Anoffer"}
                   border={false}

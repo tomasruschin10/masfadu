@@ -30,6 +30,8 @@ import { store } from "../../redux/store";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
+import { AxiosError } from "axios";
+import * as FileSystem from 'expo-file-system';
 
 function OfferForm({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +47,7 @@ function OfferForm({ route, navigation }) {
   const [imagen, setImagen] = useState(null)
   const [asunto, setAsunto] = useState("")
   const [mensaje, setMensaje] = useState("")
-  const [partnerId, setPartnerId] = useState("")
+  const [categoryId, setCategoryId] = useState("")
   const customPickerStyles = StyleSheet.create({
     inputIOS: {
       fontSize: 14,
@@ -72,18 +74,19 @@ function OfferForm({ route, navigation }) {
   });
 
 const categorysEmpty = [{
-  label:"No existen partners",
+  label:"No existe categorias",
   value: "1"
 }]
 
-  const [partners, setPartnes] = useState()
+  const [categorys, setCategorys] = useState()
 
   const selectImage = async () => {
     try {
-      const image = await ImagePicker.launchImageLibraryAsync();
+      const image = await ImagePicker.launchImageLibraryAsync();       
       
+      console.log("image ", image)
+
       if (!image.canceled && image.assets.length > 0) {
-        console.log('IMAGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE', image)
         setImagen(image.assets[0])
         setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
       }
@@ -91,6 +94,8 @@ const categorysEmpty = [{
       console.log(error);
     }
   };
+
+  
   const showAlert = (type, message) => {
     setAlert({ type, message });
   };
@@ -155,7 +160,7 @@ const categorysEmpty = [{
 
   useEffect(() => {
 
-    getServices("partner/all")
+    getServices("offer-category/all")
     .then(({ data }: any) => {
 
    const category =   data.map((data) => {
@@ -163,41 +168,70 @@ const categorysEmpty = [{
       })
 
       console.log(category)
-      setPartnes(category)
+      setCategorys(category)
       
     })
 
   }, [])
 
-  const uploadImage = async () => {
+/*   const uploadImage = async () => {
+    const state: any = store.getState();
+    const authToken = state.token;
+    console.log("AAAA")
     try {
-      const newOffer = {
-        title: "titulo",
-        descriptionn :"description",
-        offer_category_id: 1,
-        career_id: 65,
-        url : "www.masfadu.com",
-        partner_id: 106
-      }
       const formData = new FormData();
       formData.append('image',imagen);
       formData.append('title',asunto);
       formData.append('description',mensaje);
-      formData.append('offer_category_id',"1");
-      formData.append('partner_id', partnerId);
-      formData.append('career_id', "65");
-      formData.append('url', "www.masfadu.com");
-      console.log(formData)
-      baseApi.post('/offer/create', newOffer, {} ).then((res) => {
-          console.log("RESPONSE")
+      formData.append('offer_category_id',categoryId);
+      console.log(formData,  {
+        Authorization: `Bearer ${authToken}`,
       })
-      
+      const response =  await baseApi.post('offer/create', formData, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      console.log("RESPONSE ,", response)
     } catch (error) {
-      console.log('Error al enviar la imagen al backend:', error);
+      console.log('Error al enviar la imagen al backend:', {
+        status: (error as AxiosError).status,
+        data: (error as AxiosError).toJSON()
+      });
+    }
+  }; */
+
+  const uploadImage = async () => {
+    const state: any = store.getState();
+    const authToken = state.token;
+
+    const uploadUrl = baseApi.defaults.baseURL + '/offer/create';
+    const options: FileSystem.FileSystemUploadOptions = {
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: 'image',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+      parameters: {
+        title: asunto,
+        description: mensaje,
+        offer_category_id: categoryId,
+/*         partner_id: "59",
+        career_id: "65",
+ */      },
+    };
+    //categoryId
+    const response = await FileSystem.uploadAsync(uploadUrl, imagen.uri, options);
+
+    if (response.status === 200) {
+      console.log('RESPONSE', response.body);
+    } else {
+      console.log('Error al enviar la imagen al backend:', response);
     }
   };
 
-
+  
   const selectDocument = async () => {
     try {
       const document = await DocumentPicker.getDocumentAsync();
@@ -213,7 +247,7 @@ const categorysEmpty = [{
       <Layout
         route={route}
         navigation={navigation}
-        title={`Publicá una Oferta Laboral`}
+        title={`Publicá en Cursos & Workshops`}
       >
         <ScrollView
           nestedScrollEnabled={true}
@@ -253,9 +287,9 @@ const categorysEmpty = [{
 <RNPickerSelect
 
   style={customPickerStyles}
-  onValueChange={(value) => setPartnerId(value)}
-  items={partners ? partners : categorysEmpty}
-  placeholder={{ label: 'Partner', value: null }}
+  onValueChange={(value) => setCategoryId(value)}
+  items={categorys ? categorys : categorysEmpty}
+  placeholder={{ label: 'Categoría', value: null }}
 />
 
 
@@ -301,8 +335,24 @@ const categorysEmpty = [{
               </Box>
             </Box>
 
-            <Box mt={-20} alignItems="center">
+{/*             <Box mt={-20} alignItems="center">
               <Button
+                style={{ backgroundColor: "#EB5E29" }}
+                isLoading={loading}
+                onPress={() =>{
+                  console.log("SSSS")
+                  uploadImage()
+                }}
+                w="90%"
+                py={5}
+                backgroundColor="blue.500"
+                rounded={"2xl"}
+              >
+                Enviar
+              </Button>
+            </Box> */}
+
+<Button
                 style={{ backgroundColor: "#EB5E29" }}
                 isLoading={loading}
                 onPress={() => uploadImage()}
@@ -313,7 +363,6 @@ const categorysEmpty = [{
               >
                 Enviar
               </Button>
-            </Box>
           </Box>
         </ScrollView>
       </Layout>
