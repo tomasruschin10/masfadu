@@ -22,6 +22,7 @@ function ResourcesAndTools({route, navigation}) {
     setLoading(true)
 		getServices('career/all').then((res: any) => {
 			setCareer(res.data)
+      console.log(res.data)
 		}).catch(error => {
 			if(__DEV__){
 				console.log("🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error", error)
@@ -55,7 +56,8 @@ function ResourcesAndTools({route, navigation}) {
               navigation={navigation}
               item={item}
             />
-          )}
+          )
+          }
         </Box>
       </ScrollView>
       <Box alignSelf={"center"} position={"absolute"} bottom={32}>

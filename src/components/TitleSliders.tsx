@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 export default function TitleSliders({
   navigateTo,
+  isSubsection,
   title,
   to,
   navigation,
@@ -24,7 +25,7 @@ export default function TitleSliders({
       </Text>
 
       {more ? (
-        <TouchableOpacity onPress={() => navigation.navigate(navigateTo)}>
+        <TouchableOpacity onPress={() => isSubsection ? navigation.navigate('Subsections', {title: navigateTo}) : navigation.navigate(navigateTo)}>
           <Box
             flexDirection={"row"}
             alignItems={"center"}

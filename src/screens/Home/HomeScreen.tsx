@@ -44,6 +44,7 @@ function HomeScreen({ route, navigation }) {
   const [offer, setOffer] = useState([]);
   const [offertTitle, setOffertTitle] = useState("...");
   const [courses, setCourses] = useState([]);
+  const [career, setCareer] = useState([]);
   const SLIDER_WIDTH = Dimensions.get("window").width;
   const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
   const [expoPushToken, setExpoPushToken] = React.useState("");
@@ -132,6 +133,19 @@ function HomeScreen({ route, navigation }) {
     getServices("offer/all/course")
       .then(({ data }: any) => {
         setCourses(data);
+      })
+      .catch((error) => {
+        if (__DEV__) {
+          console.log(
+            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
+            error
+          );
+        }
+      });
+
+      getServices("career/all/")
+      .then(({ data }: any) => {
+        setCareer(data);
       })
       .catch((error) => {
         if (__DEV__) {
@@ -238,7 +252,7 @@ function HomeScreen({ route, navigation }) {
               mt={1}
               fontSize={"sm"}
             >
-              {partner.name}
+              {partner?.name}
             </Text>
             <Box w={180} mb={3}>
               <Text
@@ -272,6 +286,63 @@ function HomeScreen({ route, navigation }) {
       </Box>
     );
   };
+
+  const renderCareer = ({ item }) => {
+    const { title, description, url, image, partner, name } = item;
+    return (
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("Subjects", item)}
+      
+      >   
+      <Box
+      
+        shadow={"0"}
+        bgColor={"white"}
+        m={2}
+        
+        borderRadius={"lg"}
+        mr={2}
+        ml={3}
+        mb={5}
+        w={150}
+      >
+        <Box >
+          <Image
+   
+            alt={"logo"}
+            w={160}
+            h={125}
+            borderRadius={15}
+
+            source={{ uri: image.url }}
+          />
+          <Box pt={1} pl={2}>
+            <Text
+              style={{ fontSize: 16, marginTop: 8 }}
+              fontWeight={700}
+              fontFamily="Manrope"
+              numberOfLines={2}
+            >
+              {title}
+            </Text>
+            <Text
+              fontWeight={700}
+              fontFamily="Manrope"
+              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+              numberOfLines={2}
+              mt={1}
+              fontSize={"sm"}
+            >
+              {name}
+            </Text>
+
+          </Box>
+        </Box>
+      </Box>
+       </TouchableOpacity>
+    );
+  };
+
 
   const renderShop = ({ item }) => {
     const { title, description, url, image, partner } = item;
@@ -319,7 +390,7 @@ function HomeScreen({ route, navigation }) {
               mt={1}
               fontSize={"sm"}
             >
-              {partner.name}
+              {partner?.name}
             </Text>
 {/*             <Box>
               <Text
@@ -573,6 +644,32 @@ function HomeScreen({ route, navigation }) {
         </Box>
 
         <View style={{ marginTop: -125, marginBottom: 80 }}>
+        <TitleSliders
+            navigateTo={'Recursos y herramientas'}
+            isSubsection={true}
+            title={"Recursos y herramientas"}
+            to={null}
+            navigation={navigation}
+          />
+          {courses.length > 0 ? (
+            <FlatList
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{ justifyContent: "space-between" }}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={career.slice(0, 3)}
+              renderItem={renderCareer}
+            />
+          ) : (
+            <Box
+              alignItems={"center"}
+              justifyContent={"center"}
+              h={"100"}
+              _text={{ fontSize: 15 }}
+            >
+              No Hay Carreras disponibles
+            </Box>
+          )}
           <TitleSliders
             navigateTo={"Offers"}
             title={offertTitle}

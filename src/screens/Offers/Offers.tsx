@@ -136,7 +136,6 @@ function Offers({ route, navigation }) {
           id: 0,
           name: "Todos",
         };
-
         // const result = data.map((obj) => ({ ...obj }));
         let result = data.map((obj) => {
           const newObj = { id: obj.id, name: obj.name };
@@ -146,9 +145,7 @@ function Offers({ route, navigation }) {
         setOfferCategory(result);
         setItems(data.map((obj) => obj.offers).flat());
         setAllItems(data.map((obj) => obj.offers).flat());
-        console.log("items ", JSON.stringify(items, null, 2));
-        console.log("offerCategory ", JSON.stringify(result, null, 2), data);
-      })
+       })
       .catch((error) => {
         if (__DEV__) {
           console.log(
