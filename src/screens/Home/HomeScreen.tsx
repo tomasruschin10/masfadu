@@ -384,7 +384,7 @@ function HomeScreen({ route, navigation }) {
               mt={1}
               fontSize={"sm"}
             >
-              {partner.name}
+              {partner?.name}
             </Text>
 {/*             <Box>
               <Text

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  Icon,
   Input,
-  Modal,
   ScrollView,
   Text,
   TextArea,
@@ -13,18 +11,15 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
-import { FontAwesome5, Ionicons, AntDesign } from "@expo/vector-icons";
 import {
   getServices,
-  postServices,
-  postTags,
+  publishOffer
 } from "../../utils/hooks/services";
 import { TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { updateMessage } from "../../redux/actions/message";
 import { useEffect } from "react";
-import RecommendedTags from "../../utils/RecommendedTags";
-import Alert from "../../components/alert/Alert";
+
 import { baseApi } from "../../utils/api";
 import { store } from "../../redux/store";
 import * as DocumentPicker from "expo-document-picker";
@@ -32,16 +27,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
 
 function OfferForm({ route, navigation }) {
-  const [showModal, setShowModal] = useState(false);
-  const [showModalError, setShowModalError] = useState(false);
-  const [showModalIcon, setShowModalIcon] = useState(false);
-  const [menuShow, setMenu] = useState(false);
+
   const [allTags, setAllTags] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [selectedValue, setSelectedValue] = useState();
   const [previewImage, setPreviewImage] = useState(null);
-  const [alert, setAlert] = React.useState(null);
   const [imagen, setImagen] = useState(null)
   const [asunto, setAsunto] = useState("")
   const [mensaje, setMensaje] = useState("")
@@ -91,13 +82,7 @@ const categorysEmpty = [{
       console.log(error);
     }
   };
-  const showAlert = (type, message) => {
-    setAlert({ type, message });
-  };
 
-  const closeAlert = () => {
-    setAlert(null);
-  };
 
   const dispatch = useDispatch();
 
@@ -118,40 +103,6 @@ const categorysEmpty = [{
         )
       : [];
 
-  const addNewTag = async () => {
-    if (searchText.includes(" ") || searchText.length === 0) {
-      dispatch(
-        updateMessage({
-          body: "Asegurate de no tener espacios en blanco",
-          open: true,
-          type: "warning",
-        })
-      );
-      /*  showAlert('warning', 'Asegurate de no tener espacios en blanco') */
-      return false;
-    }
-    const state: any = store.getState();
-    const authToken = state.token;
-    baseApi
-      .post(
-        `tag/create`,
-        { name: searchText },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        setSearchText("");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  
-
 
   useEffect(() => {
 
@@ -169,44 +120,32 @@ const categorysEmpty = [{
 
   }, [])
 
+
   const uploadImage = async () => {
     try {
-      const newOffer = {
-        title: "titulo",
-        descriptionn :"description",
-        offer_category_id: 1,
-        career_id: 65,
-        url : "www.masfadu.com",
-        partner_id: 106
-      }
-      const formData = new FormData();
-      formData.append('image',imagen);
-      formData.append('title',asunto);
-      formData.append('description',mensaje);
-      formData.append('offer_category_id',"1");
-      formData.append('partner_id', partnerId);
-      formData.append('career_id', "65");
-      formData.append('url', "www.masfadu.com");
-      console.log(formData)
-      baseApi.post('/offer/create', newOffer, {} ).then((res) => {
-          console.log("RESPONSE")
+
+      const response = await publishOffer({
+        title: asunto,
+        description: mensaje,
+        offer_category_id: "1",
+        image: imagen,
+        partner_id: partnerId
       })
-      
+
+      if (response.status != 201) {
+        throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
+      }
+      console.log('RESPONSE', response.body);
+
+      alert('Publicación exitosa');
+      navigation.navigate('Home');
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
+      alert("Error al publicar");
     }
   };
 
 
-  const selectDocument = async () => {
-    try {
-      const document = await DocumentPicker.getDocumentAsync();
-      console.log(document);
-      // Aquí puedes hacer algo con el documento seleccionado, como enviarlo a un servidor o procesarlo de alguna manera.
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Container>

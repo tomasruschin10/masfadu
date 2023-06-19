@@ -1,5 +1,7 @@
 import { store } from "../../redux/store";
 import { baseApi } from "../api";
+import * as FileSystem from 'expo-file-system';
+import { Offer } from "../typos/offer.interface";
 
 export const getServices = (url) => {
   const state: any = store.getState();
@@ -41,7 +43,7 @@ export const postTags = (url, body) => {
   const state: any = store.getState();
   const authToken = state.token;
   let tags
-   new Promise((resolve, reject) => {
+  new Promise((resolve, reject) => {
     baseApi
       .post(`/${url}`, body, {
         headers: {
@@ -79,4 +81,42 @@ export const deleteServices = (url) => {
   return baseApi.delete(`/${url}`, {
     headers: { Authorization: `Bearer ${authToken}` },
   });
+};
+
+
+export const publishOffer = async ({ title, description, offer_category_id, image, partner_id }: Offer) => {
+
+  const state: any = store.getState();
+  const authToken = state.token;
+
+  const { userdata: { career_id } } = state.user;
+
+  const parameters: any = {
+    title,
+    description,
+    offer_category_id,
+    career_id,
+    image
+  }
+   
+  if(partner_id){
+    parameters.partner_id = partner_id;
+  }
+
+  const uploadUrl = baseApi.defaults.baseURL + '/offer/create';
+  const options: FileSystem.FileSystemUploadOptions = {
+    httpMethod: 'POST',
+    uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+    fieldName: 'image',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    parameters,
+  };
+
+
+
+
+  return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
+
 };
