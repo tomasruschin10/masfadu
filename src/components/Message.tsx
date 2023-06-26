@@ -24,6 +24,12 @@ function Message() {
       dispatch(updateMessage({ body: "", open: false, type: "" }));
     }, 7000);
   }
+  //uncomment for manually activation
+  /*  useEffect(() => {
+     dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
+  
+   }, []) */
+
   const getColors = (type, resource) => {
     switch (type) {
       case "success":
@@ -33,7 +39,7 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-           
+
               name={"check"}
               size={15}
               color="black"
@@ -49,7 +55,7 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-             
+
               name={"info"}
               size={15}
               color="black"
@@ -65,7 +71,7 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-             
+
               name={"warning"}
               size={15}
               color="black"
@@ -80,7 +86,7 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-              
+
               name={"warning"}
               size={15}
               color="black"
@@ -96,7 +102,7 @@ function Message() {
         <Slide in={message.open} placement="top">
           <View
             style={{
-              marginTop: "10%",
+              marginTop: "20%",
               borderWidth: 1,
               borderColor: "#d6e9c6",
               padding: 5,
@@ -116,26 +122,22 @@ function Message() {
                 dispatch(updateMessage({ body: "", open: false, type: "" }))
               }
             >
-              <HStack px={2} space={5}>
+              <HStack px={2} space={5} style={{ alignItems: "center" }}>
                 <Box>{getColors(message.type, "icon")}</Box>
                 <Text
                   color="black"
                   textAlign="left"
                   fontWeight="normal"
                   style={{
-    
                     maxWidth: "75%",
                     overflow: "hidden",
-                    fontSize: 13, // Tamaño de fuente más pequeño (puedes ajustarlo según tus necesidades)
+                    fontSize: 13,
                   }}
                 >
                   {message.body}
-                 
-                 {/*  Tu sesion se ha expirado, por favor vuelve a iniciar */}
                 </Text>
-                <Box >
-                  <MaterialIcons          
-                   
+                <Box>
+                  <MaterialIcons
                     name={"close"}
                     size={20}
                     color="black"
