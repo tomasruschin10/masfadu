@@ -77,7 +77,7 @@ function Menu({ route, navigation, setMenu }) {
  
   return ( 
    
-    <Box style={{width:"80%", height: "100%", marginLeft:"20%", zIndex: 101, position: "absolute"}} flex={1} mt={0} pt={0} backgroundColor="#E8EEF3">
+    <Box style={{width:"80%", height: "100%", marginLeft:"20%", zIndex: 101, position: "absolute"}} flex={1} mt={0} pt={0} backgroundColor="#F5FAFE">
       <Box marginLeft={"10%"}>
       <HeaderPerfil
       showICon={false}
