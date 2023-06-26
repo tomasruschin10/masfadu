@@ -143,7 +143,7 @@ function HomeScreen({ route, navigation }) {
         }
       });
 
-      getServices("career/all/")
+    getServices("career/all/")
       .then(({ data }: any) => {
         setCareer(data);
       })
@@ -290,56 +290,56 @@ function HomeScreen({ route, navigation }) {
   const renderCareer = ({ item }) => {
     const { title, description, url, image, partner, name } = item;
     return (
-      <TouchableOpacity 
-      onPress={() => navigation.navigate("Subjects", item)}
-      
-      >   
-      <Box
-      
-        shadow={"0"}
-        bgColor={"white"}
-        m={2}
-        
-        borderRadius={"lg"}
-        mr={2}
-        ml={3}
-        mb={5}
-        w={150}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Subjects", item)}
+
       >
-        <Box >
-          <Image
-   
-            alt={"logo"}
-            w={160}
-            h={125}
-            borderRadius={15}
+        <Box
 
-            source={{ uri: image.url }}
-          />
-          <Box pt={1} pl={2}>
-            <Text
-              style={{ fontSize: 16, marginTop: 8 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              {title}
-            </Text>
-            <Text
-              fontWeight={700}
-              fontFamily="Manrope"
-              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
-              numberOfLines={2}
-              mt={1}
-              fontSize={"sm"}
-            >
-              {name}
-            </Text>
+          shadow={"0"}
+          bgColor={"white"}
+          m={2}
 
+          borderRadius={"lg"}
+          mr={2}
+          ml={3}
+          mb={5}
+          w={150}
+        >
+          <Box >
+            <Image
+
+              alt={"logo"}
+              w={160}
+              h={125}
+              borderRadius={15}
+
+              source={{ uri: image.url }}
+            />
+            <Box pt={1} pl={2}>
+              <Text
+                style={{ fontSize: 16, marginTop: 8 }}
+                fontWeight={700}
+                fontFamily="Manrope"
+                numberOfLines={2}
+              >
+                {title}
+              </Text>
+              <Text
+                fontWeight={700}
+                fontFamily="Manrope"
+                style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+                numberOfLines={2}
+                mt={1}
+                fontSize={"sm"}
+              >
+                {name}
+              </Text>
+
+            </Box>
           </Box>
         </Box>
-      </Box>
-       </TouchableOpacity>
+      </TouchableOpacity>
     );
   };
 
@@ -347,52 +347,52 @@ function HomeScreen({ route, navigation }) {
   const renderShop = ({ item }) => {
     const { title, description, url, image, partner } = item;
     return (
-      <TouchableOpacity 
-      onPress={() => navigation.navigate("MarketDetail", { data: item })}
-      
-      >   
-      <Box
-      
-        shadow={"0"}
-        bgColor={"white"}
-        m={2}
-        
-        borderRadius={"lg"}
-        mr={2}
-        ml={3}
-        mb={5}
-        w={150}
-      >
-        <Box >
-          <Image
-   
-            alt={"logo"}
-            w={160}
-            h={125}
-            borderRadius={15}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("MarketDetail", { data: item })}
 
-            source={{ uri: image.url }}
-          />
-          <Box pt={1} pl={2}>
-            <Text
-              style={{ fontSize: 16, marginTop: 8 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              {title}
-            </Text>
-            <Text
-              fontWeight={700}
-              fontFamily="Manrope"
-              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
-              numberOfLines={2}
-              mt={1}
-              fontSize={"sm"}
-            >
-              {partner?.name}
-            </Text>
-{/*             <Box>
+      >
+        <Box
+
+          shadow={"0"}
+          bgColor={"white"}
+          m={2}
+
+          borderRadius={"lg"}
+          mr={2}
+          ml={3}
+          mb={5}
+          w={150}
+        >
+          <Box >
+            <Image
+
+              alt={"logo"}
+              w={160}
+              h={125}
+              borderRadius={15}
+
+              source={{ uri: image.url }}
+            />
+            <Box pt={1} pl={2}>
+              <Text
+                style={{ fontSize: 16, marginTop: 8 }}
+                fontWeight={700}
+                fontFamily="Manrope"
+                numberOfLines={2}
+              >
+                {title}
+              </Text>
+              <Text
+                fontWeight={700}
+                fontFamily="Manrope"
+                style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+                numberOfLines={2}
+                mt={1}
+                fontSize={"sm"}
+              >
+                {partner?.name}
+              </Text>
+              {/*             <Box>
               <Text
                 fontFamily="Manrope"
                 numberOfLines={2}
@@ -402,62 +402,62 @@ function HomeScreen({ route, navigation }) {
                 {description}
               </Text>
             </Box> */}
+            </Box>
           </Box>
         </Box>
-      </Box>
-       </TouchableOpacity>
+      </TouchableOpacity>
     );
   };
 
   const renderWorkShop = ({ item }) => {
     const { title, description, url, image, partner } = item;
     return (
-      <TouchableOpacity 
-      onPress={() => navigation.navigate("Anoffer", {mainTitle: "Cursos & Workshops", title: item.title, url: item.url, description: item.description, id: item.id, partner: item.partner, image: item.image.url})}
-      
-      >  
-      <Box
-      
-        shadow={"0"}
-        bgColor={"white"}
-        m={2}
-        
-        borderRadius={"lg"}
-        mr={2}
-        ml={3}
-        mb={5}
-        w={150}
-      >
-        <Box >
-          <Image
-   
-            alt={"logo"}
-            w={160}
-            h={125}
-            borderRadius={15}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Anoffer", { mainTitle: "Cursos & Workshops", title: item.title, url: item.url, description: item.description, id: item.id, partner: item.partner, image: item.image.url })}
 
-            source={{ uri: image.url }}
-          />
-          <Box pt={1} pl={2}>
-            <Text
-              style={{ fontSize: 16, marginTop: 8 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              {title}
-            </Text>
-            <Text
-              fontWeight={700}
-              fontFamily="Manrope"
-              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
-              numberOfLines={2}
-              mt={1}
-              fontSize={"sm"}
-            >
-              {partner?.name}
-            </Text>
-{/*             <Box>
+      >
+        <Box
+
+          shadow={"0"}
+          bgColor={"white"}
+          m={2}
+
+          borderRadius={"lg"}
+          mr={2}
+          ml={3}
+          mb={5}
+          w={150}
+        >
+          <Box >
+            <Image
+
+              alt={"logo"}
+              w={160}
+              h={125}
+              borderRadius={15}
+
+              source={{ uri: image.url }}
+            />
+            <Box pt={1} pl={2}>
+              <Text
+                style={{ fontSize: 16, marginTop: 8 }}
+                fontWeight={700}
+                fontFamily="Manrope"
+                numberOfLines={2}
+              >
+                {title}
+              </Text>
+              <Text
+                fontWeight={700}
+                fontFamily="Manrope"
+                style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+                numberOfLines={2}
+                mt={1}
+                fontSize={"sm"}
+              >
+                {partner?.name}
+              </Text>
+              {/*             <Box>
               <Text
                 fontFamily="Manrope"
                 numberOfLines={2}
@@ -467,9 +467,9 @@ function HomeScreen({ route, navigation }) {
                 {description}
               </Text>
             </Box> */}
+            </Box>
           </Box>
         </Box>
-      </Box>
       </TouchableOpacity>
     );
   };
@@ -644,32 +644,6 @@ function HomeScreen({ route, navigation }) {
         </Box>
 
         <View style={{ marginTop: -125, marginBottom: 80 }}>
-        <TitleSliders
-            navigateTo={'Recursos y herramientas'}
-            isSubsection={true}
-            title={"Recursos y herramientas"}
-            to={null}
-            navigation={navigation}
-          />
-          {courses.length > 0 ? (
-            <FlatList
-              keyExtractor={(item) => item.id}
-              contentContainerStyle={{ justifyContent: "space-between" }}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={career.slice(0, 3)}
-              renderItem={renderCareer}
-            />
-          ) : (
-            <Box
-              alignItems={"center"}
-              justifyContent={"center"}
-              h={"100"}
-              _text={{ fontSize: 15 }}
-            >
-              No Hay Carreras disponibles
-            </Box>
-          )}
           <TitleSliders
             navigateTo={"Offers"}
             title={offertTitle}
@@ -696,6 +670,8 @@ function HomeScreen({ route, navigation }) {
             </Box>
           )}
 
+
+
           <TitleSliders
             navigateTo={"Coursesandworkshops"}
             title={"Cursos & Workshops"}
@@ -719,6 +695,33 @@ function HomeScreen({ route, navigation }) {
               _text={{ fontSize: 15 }}
             >
               No Hay Cursos o Workshops
+            </Box>
+          )}
+
+          <TitleSliders
+            navigateTo={'Recursos y herramientas'}
+            isSubsection={true}
+            title={"Recursos y herramientas"}
+            to={null}
+            navigation={navigation}
+          />
+          {courses.length > 0 ? (
+            <FlatList
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{ justifyContent: "space-between" }}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={career.slice(0, 3)}
+              renderItem={renderCareer}
+            />
+          ) : (
+            <Box
+              alignItems={"center"}
+              justifyContent={"center"}
+              h={"100"}
+              _text={{ fontSize: 15 }}
+            >
+              No Hay Carreras disponibles
             </Box>
           )}
         </View>
