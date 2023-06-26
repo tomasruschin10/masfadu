@@ -43,7 +43,7 @@ function News({ route, navigation }) {
           />
         </Box>
         <Box
-          py={6}
+          py={10}
           safeAreaBottom
           alignItems="center"
           left={0}
@@ -52,16 +52,17 @@ function News({ route, navigation }) {
           position={"absolute"}
         >
           <Button
-            _text={{ fontSize: 17 }}
+            _text={{ fontSize: 14 }}
             onPress={() =>
               Linking.openURL(url.includes("http") ? url : `https://${url}`)
             }
-            py={5}
-            w="52%"
-            backgroundColor="green.500"
+            w="250"
+            h="70"
+            backgroundColor="#eb5e29"
           >
             Ver más
           </Button>
+          
         </Box>
       </Box>
     </Container>
