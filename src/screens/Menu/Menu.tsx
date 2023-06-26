@@ -30,7 +30,7 @@ const carriers = [
     comingSoon: false,
   },
   {
-    title: "Objetos perdidos",
+    title: "Mercado de Fadu",
     icon: require("../../../assets/menu/mercado.png"),
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
