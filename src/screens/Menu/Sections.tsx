@@ -10,12 +10,6 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
 
   const [isHovered, setIsHovered] = useState(false);
 
-
-  useEffect(() => {
-    console.log("HOVER CHANGED: ", isHovered)
-  }, [isHovered])
-
-
   return (
     <TouchableOpacity
       style={
@@ -25,6 +19,7 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
           borderRadius: 25
         }
       }
+
       onPressIn={() => setIsHovered(true)}
       onPressOut={() => setIsHovered(false)}
       onBlur={() => setIsHovered(true)}
@@ -87,32 +82,20 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
                 </Box>
               }
             />
-          ) : (
-            <IconButton
-              onPress={() => { navigation.navigate("Subsections", { title: title }), setMenu(false) }}
-              onPressIn={() => setIsHovered(true)}
-              onPressOut={() => setIsHovered(false)}
-              onBlur={() => setIsHovered(true)}
-              size={41}
-              icon={
-                <Box
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Image
-                    alt="image"
-                    source={icon}
-                    resizeMode="contain"
-                    style={{ width: "100%", height: "100%" }}
-                  />
 
-                </Box>
-              }
+            
+          ) : (
+            <Box
+
+          >
+            <Image
+              size={41}
+              alt="image"
+              source={icon}
+              resizeMode="contain"
             />
+
+          </Box>
           )}
           {comingSoon ? (
             <Box
@@ -129,7 +112,7 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
               </Text>
             </Box>
           ) : null}
-          <Box mt={0.5} mb={1} mx={2}>
+          <Box mt={1.5}  mb={1} mx={2}>
             <Text
               style={fontStyles.regularText}
               fontSize={"10"}
