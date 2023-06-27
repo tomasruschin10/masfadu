@@ -117,7 +117,7 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-              Describí de la forma más precisa y detallada que puedas lo que
+              Describí de la forma más precisa y detallada que puedas
             </Text>
           </Box>
 
@@ -156,7 +156,7 @@ function OfferForm({ route, navigation }) {
 
               <TextArea
                 onChangeText={(text) => setMensaje(text)}
-                placeholder="Mensaje"
+                placeholder="descripción"
                 autoCompleteType={"off"}
                 fontSize={15}
                 h={100}
