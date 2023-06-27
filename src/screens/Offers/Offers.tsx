@@ -23,7 +23,7 @@ import {
   View,
   Alert,
 } from "react-native";
-import { MaterialIcons} from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -40,7 +40,7 @@ function Offers({ route, navigation }) {
   const [searchText, setSearchText] = useState("");
   const [advertisement, setAdvertisement] = useState([]);
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
-  const { search, setSearch, filteredSubjects,  } =
+  const { search, setSearch, filteredSubjects, } =
     useSearchOfferts();
   const { canGoBack, goBack, navigate } = useNavigation();
 
@@ -89,14 +89,14 @@ function Offers({ route, navigation }) {
             borderRadius: 30,
           }}
         > */}
-        
+
         <Text
           style={{
             backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
             marginLeft: 14,
             padding: 10,
             color: item.id == currentFilter ? "#fff" : "#EB5E29",
-          
+
             borderRadius: 20,
             overflow: "hidden", // agrega esta línea
 
@@ -145,7 +145,7 @@ function Offers({ route, navigation }) {
         setOfferCategory(result);
         setItems(data.map((obj) => obj.offers).flat());
         setAllItems(data.map((obj) => obj.offers).flat());
-       })
+      })
       .catch((error) => {
         if (__DEV__) {
           console.log(
@@ -158,7 +158,7 @@ function Offers({ route, navigation }) {
   }, []);
 
   useEffect(() => {
-    
+
     if (filteredSubjects.length > 0) {
       setItems(filteredSubjects.map((obj) => obj.offers).flat());
     }
@@ -188,68 +188,60 @@ function Offers({ route, navigation }) {
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketDetail", { data: item })}
         style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center", 
-          marginLeft: "5%"
+          width: "37%", // Ajusta el ancho de cada tarjeta
+          marginBottom: "5%",
+          borderRadius: 10,
+          backgroundColor: "#f6f7f9",
+          marginLeft:"4%",
+          marginRight:"5%",
+          elevation: 3, // Agrega una sombra para resaltar las tarjetas
         }}
       >
-        <View
-          style={{
-            backgroundColor: "#f6f7f9",
-            width: "100%",
-          height: "35%",
-            margin: 3,
-            borderRadius: 10,
-
-            
-          }}
-        >
-          <Image
+        <Box>
+        <Image
             style={{
               height: 140,
               width: "100%",
               borderRadius: 15,
+              marginBottom: 10,
             }}
             source={{
               uri: item.image.url,
             }}
           />
-          <View
+          <Text
             style={{
-              height: 80
+              fontWeight: "bold",
+              fontSize: 13,
+              lineHeight: 18,
+              paddingLeft: "5%",
+              paddingRight: "2%"
             }}
+            numberOfLines={2}
+            ellipsizeMode="tail"
           >
-            <Text
-              style={{
-                fontWeight: "bold",
-                fontSize: 13,
-                // letterSpacing: 1,
-                lineHeight: 18,
-              }}
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
-              {item.title}
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                // letterSpacing: 1,
-                marginTop: "1%",
-                marginBottom: "1%",
-                lineHeight: 18,
-              }}
-              numberOfLines={3}
-              ellipsizeMode="tail"
-            >
-              {item.description}
-            </Text>
-          </View>
-        </View>
+            {item.title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              marginTop: 5,
+              marginBottom: 5,
+              lineHeight: 18,
+
+              paddingLeft: "5%",
+              paddingRight: "2%"
+            }}
+            numberOfLines={3}
+            ellipsizeMode="tail"
+          >
+            {item.description}
+          </Text>
+        </Box>
       </TouchableOpacity>
     );
   };
+
 
   const styles = {
     inputContainer: {
@@ -267,25 +259,25 @@ function Offers({ route, navigation }) {
   return (
     <Layout route={route} navigation={navigation} title="El Mercado de Fadu" addButtonUrl={'OfferForm'}>
       <HStack mt={0} mb={4} alignItems={"center"} justifyContent="center">
-      <MaterialIcons
-        name={"search"}
-        size={17}
-        color="gray"
-        style={{ position: 'absolute', left: "8.8%", zIndex: 1}}
-      />
+        <MaterialIcons
+          name={"search"}
+          size={17}
+          color="gray"
+          style={{ position: 'absolute', left: "8.8%", zIndex: 1 }}
+        />
 
         <Input
-        style={{marginLeft: "8%"}}
+          style={{ marginLeft: "8%" }}
           onChangeText={(text) => setSearch(text)}
           value={search}
-          
+
           w={{ base: "75%", md: "25%" }}
           pb="1"
           type={"text"}
           placeholder="Buscar"
-          placeholderTextColor="#666666" 
-          
-          
+          placeholderTextColor="#666666"
+
+
         />
         <IconButton
           onPress={() => {
@@ -306,7 +298,7 @@ function Offers({ route, navigation }) {
       </HStack>
 
 
-      <Box alignContent={"center"} mt={3}  mb={1}>
+      <Box alignContent={"center"} mt={3} mb={1}>
         <FlatList
           alignSelf={"center"}
           showsHorizontalScrollIndicator={false}
@@ -324,9 +316,9 @@ function Offers({ route, navigation }) {
           justifyContent: "center",
           marginTop: -20,
           marginBottom: 10,
-          marginLeft:"3%",
+          marginLeft: "3%",
           marginRight: "6.5%"
-        
+
         }}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -341,19 +333,21 @@ function Offers({ route, navigation }) {
         </ScrollView>
       </View>
       <FlatList
-        style={{ width: "100%" }}
+        style={{
+          width: "100%", marginLeft: "5%",
+        }}
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        marginBottom={"10%"}
         contentContainerStyle={{
-          marginRight: "7%",
-          marginLeft: "1.8%",
-          justifyContent: "center",
+          justifyContent: "space-around",
+          display: "flex",
+          alignContent: "space-between",
           paddingBottom: 50,
         }}
       />
+
     </Layout>
   );
 }

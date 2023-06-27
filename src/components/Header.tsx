@@ -1,6 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { FontAwesome5, EvilIcons } from "@expo/vector-icons";
 import {
   Avatar,
   Box,
@@ -10,43 +9,38 @@ import {
   StatusBar,
   Text,
   useTheme,
-  View,
 } from "native-base";
-import React, { useEffect } from "react";
-import {
-  Dimensions,
-  Platform,
-  SafeAreaView,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { Platform, SafeAreaView, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
-import { useEventNavigation } from "../context";
-import { Entypo } from "@expo/vector-icons";
+
 
 export function HeaderBack({ ...props }) {
-  const { canGoBack, goBack } = useNavigation();
-  // const insets = useSafeAreaInsets()
-  const { name } = useRoute();
+  const navigation: any = useNavigation();
+  const route = useRoute();
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
 
   return (
     <>
       <StatusBar backgroundColor="#e8eef4" barStyle="dark-content" />
       <Box safeAreaTop bg="#e8eef4" />
 
-      <HStack px="5" py="3" w="100%" maxW="350" alignItems={"flex-start"}>
-        {canGoBack() && (
+      <HStack px="5" py="3" w="100%"  alignItems="center">
+        {navigation.canGoBack() && (
           <IconButton
-            rounded={"xl"}
-            backgroundColor={"primary.900"}
-            onPress={() => {
-              goBack();
-            }}
+            rounded="xl"
+            backgroundColor="primary.900"
+            onPress={handleGoBack}
             icon={
               <Icon
                 as={Ionicons}
                 name={
-                  name == "ThreadSuggestions" ? "close-sharp" : "chevron-back"
+                  route.name === 'ThreadSuggestions'
+                    ? 'close-sharp'
+                    : 'chevron-back'
                 }
                 size="md"
                 color="primary.1000"
@@ -54,50 +48,35 @@ export function HeaderBack({ ...props }) {
             }
           />
         )}
-        <Box ml={3} h={"100%"} maxH="350" justifyContent="center">
-          <Text fontSize="20" fontWeight="600">
-            {props.title ?? ""}
+        <Box flex={12}>
+          <Text fontSize="18" fontWeight="600" textAlign="center">
+            {props.title ?? ''}
           </Text>
         </Box>
-      </HStack>
-
-      {props?.addButtonUrl ? (
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate(props.addButtonUrl);
-          }}
-        >
-          <Box
-            position={"absolute"}
-            style={{
-              zIndex: 99,
-              right: 10, // Ajusta la posición derecha según tus necesidades
-              borderRadius: 50,
-              margin: 0,
-              marginTop: -50,
-              marginRight: 15,
+        {props?.addButtonUrl && (
+          <Box >
+             <IconButton
+            rounded="full"
+            backgroundColor="#E85E29"
+            onPress={() => {
+              navigation.navigate(props.addButtonUrl as string);
             }}
-          >
-            <Box
-              style={{
-                backgroundColor: "#E85E29",
-                borderRadius: 50,
-                padding: 6,
-              }}
-            >
-              <Entypo name="plus" size={28} color="#f4faff" />
-            </Box>
+            icon={
+              <Icon
+                as={Ionicons}
+                name="add"
+                size="md"
+                color="#f4faff"
+              />
+            }
+          />
           </Box>
-        </TouchableOpacity>
-      ) : null}
-
+        )}
+      </HStack>
     </>
   );
 }
 export function NoHeader({ ...props }) {
-  // const insets = useSafeAreaInsets();
-
-  const { canGoBack, goBack } = useNavigation();
   return (
     <>
       <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
@@ -105,12 +84,9 @@ export function NoHeader({ ...props }) {
     </>
   );
 }
-export function HeaderPerfil({ showICon ,...props }) {
-  const { canGoBack, goBack, navigate }: any = useNavigation();
-  // const insets = useSafeAreaInsets();
-  const { navigationEvent: event, setNavigationEvent: setEvent } =
-    useEventNavigation();
-  const { name } = useRoute();
+
+export function HeaderPerfil({ showIcon, ...props }) {
+  const navigation: any = useNavigation();
   const { colors }: any = useTheme();
   const userdata = useSelector((state: any) => state.user.userdata);
 
@@ -121,36 +97,27 @@ export function HeaderPerfil({ showICon ,...props }) {
         barStyle={props.barStyle}
       />
       <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
-      <Box justifyContent={"space-between"} px={4} flexDirection={"row"} pb={2}>
+      <Box justifyContent="space-between" px={4} flexDirection="row" pb={2}>
         <Avatar bg="#e8eef4" source={{ uri: userdata.image.url }} size="md">
           BR
           <Avatar.Badge bg="#4fd441" />
         </Avatar>
 
-        <Box px={3} flex={1} justifyContent={"center"}>
-          <Text
-            color={"black"}
-            bold
-            fontSize={16}
-            lineHeight={"sm"}
-          >
+        <Box px={3} flex={1} justifyContent="center">
+          <Text color="black" bold fontSize={16} lineHeight="sm">
             {userdata.name} {userdata.lastname}
           </Text>
-          <Text
-            color={"#50545a"}
-            fontSize={13}
-            lineHeight={"sm"}
-          >
+          <Text color="#50545a" fontSize={13} lineHeight="sm">
             {userdata.career == null
               ? "Carrera Sin Seleccionar"
               : userdata.career.name}
           </Text>
         </Box>
 
-        <Box justifyContent={"center"}>
-          { showICon ? (
+        <Box justifyContent="center">
+          {showIcon ? (
             <TouchableOpacity
-              onPress={() => navigate("Config")}
+              onPress={() => navigation.navigate("Config")}
               style={{
                 backgroundColor: "#ffffff",
                 paddingHorizontal: 14,
@@ -164,14 +131,7 @@ export function HeaderPerfil({ showICon ,...props }) {
                 color={colors.brand.primary}
               />
             </TouchableOpacity>
-          ) : (
-/*             canGoBack() && (
-              <TouchableHighlight underlayColor="" onPress={() => goBack()}>
-                <EvilIcons name="close" size={30} color={"white"} />
-              </TouchableHighlight>
-            ) */
-            null
-          )}
+          ) : null}
         </Box>
       </Box>
     </SafeAreaView>
