@@ -523,9 +523,8 @@ export function ModalWarning({
                 </HStack>
               </>
             ) : currentSubj?.available === 0 ? (
-              <Text fontSize={15} textAlign={"center"}>
-                No puedes anotarte a esta materia hasta terminar el nivel
-                anterior
+              <Text fontSize={15} numberOfLines={2} textAlign={"center"}>
+                No podés anotarte a esta materia sin terminar el nivel anterior´ - centrar texto
               </Text>
             ) : (
               <Text fontSize={15} textAlign={"center"}>

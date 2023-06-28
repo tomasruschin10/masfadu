@@ -8,10 +8,7 @@ import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
-  console.log(
-    "🚀 ~ file: AboutSubject_Item.tsx:11 ~ AboutSubject_Item ~ subjCategory:",
-    JSON.stringify(subjCategory.data, null, 2)
-  );
+
   // const [materias, setMaterias] = useState([]);
   const materias = [];
   subjCategory.data.forEach((item) => {
@@ -21,17 +18,9 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
     if (dataAvailable.length > 0) {
       dataAvailable.forEach((materia) => {
         materias.push(materia);
-        console.log(
-          "🚀 ~ file: AboutSubject_Item.tsx:22 ~ dataAvailable.forEach ~ materia:",
-          materia
-        );
       });
     }
   });
-
-  console.log("materias ", materias.length);
-
-  // console.log("materias is " + JSON.stringify(setMaterias));
 
   const [showIcon, setShowIcon] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
@@ -162,6 +151,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
           <SimpleAccordion
             key={item.id}
             title={item.name}
+            description={item?.description}
             arrowColor="#3A71E1"
             showContentInsideOfCard={false}
             titleStyle={{

@@ -19,12 +19,13 @@ function AboutSubject({ route, navigation, value }) {
   });
   const [updater, setUpdater] = useState(false);
   const [menuShow, setMenu] = useState(false)
+
+
   useEffect(() => {
     if (user.userRole[0]?.role?.name === "Student" && user.career) {
       setLoading(true);
       getServices(`subject-category/all/${user.career.id}`)
         .then(({ data }: any) => {
-
 
           setSubjCategory({
             ...subjCategory,

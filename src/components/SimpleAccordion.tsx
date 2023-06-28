@@ -16,6 +16,7 @@ import { useEventNavigation } from "../context";
 
 const SimpleAccordion = ({
   title = "",
+  description,
   viewInside,
   startCollapsed = true,
   showContentInsideOfCard = true,
@@ -26,6 +27,7 @@ const SimpleAccordion = ({
   titleStyle = {},
 }: {
   title?: string;
+  description?: string;
   viewInside: JSX.Element;
   startCollapsed?: boolean;
   showContentInsideOfCard?: boolean;
@@ -36,7 +38,6 @@ const SimpleAccordion = ({
   titleStyle?: StyleProp<TextStyle>;
 }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(startCollapsed);
-
   const { navigationEvent } = useEventNavigation();
   let marginBotom = 0;
   if (navigationEvent === "materias") {
@@ -89,9 +90,9 @@ const SimpleAccordion = ({
               >
                 {title}
               </Text>
-              {title === "CBC" && (
+              {description && (
                 <Text style={{ color: "#939aa0", fontSize: 13, marginTop: 2 }}>
-                  CICLO BASICO COMUN
+                  {description}
                 </Text>
               )}
             </View>
