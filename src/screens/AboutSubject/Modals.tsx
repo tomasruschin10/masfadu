@@ -33,15 +33,15 @@ import {
 
 function RenderArrow() {
   return (
-       <View
-         style={{
-           backgroundColor: "#486b8a",
-           borderRadius: 6,
-           padding:5,
-           height: 25,
-         }}>
-         <Entypo name="arrow-right" size={13} color="white" />
-       </View>
+    <View
+      style={{
+        backgroundColor: "#486b8a",
+        borderRadius: 6,
+        padding: 5,
+        height: 25,
+      }}>
+      <Entypo name="arrow-right" size={13} color="white" />
+    </View>
   );
 }
 
@@ -112,39 +112,39 @@ export function ModalNotes({
                 onPress={() =>
                   form.extra_score.length === 0
                     ? Alert.alert(
-                        "Importante",
-                        "¿Deseas eliminar la nota final?",
-                        [
-                          {
-                            text: "Cancelar",
-                            onPress: () => console.log(""),
-                            style: "cancel",
-                          },
-                          {
-                            text: "Aceptar",
-                            onPress: () =>
-                              deleteNote(
-                                setLoading,
-                                setUpdater,
-                                updater,
-                                setShowNotes,
-                                infoUserSubj,
-                                dispatch
-                              ),
-                          },
-                        ]
-                      )
+                      "Importante",
+                      "¿Deseas eliminar la nota final?",
+                      [
+                        {
+                          text: "Cancelar",
+                          onPress: () => console.log(""),
+                          style: "cancel",
+                        },
+                        {
+                          text: "Aceptar",
+                          onPress: () =>
+                            deleteNote(
+                              setLoading,
+                              setUpdater,
+                              updater,
+                              setShowNotes,
+                              infoUserSubj,
+                              dispatch
+                            ),
+                        },
+                      ]
+                    )
                     : Alert.alert(
-                        "Importante",
-                        "Primero debes eliminar las notas parciales para eliminar la nota final!",
-                        [
-                          {
-                            text: "Ok, genial!",
-                            onPress: () => console.log(""),
-                            style: "cancel",
-                          },
-                        ]
-                      )
+                      "Importante",
+                      "Primero debes eliminar las notas parciales para eliminar la nota final!",
+                      [
+                        {
+                          text: "Ok, genial!",
+                          onPress: () => console.log(""),
+                          style: "cancel",
+                        },
+                      ]
+                    )
                 }
               />
               <TouchableOpacity
@@ -296,27 +296,27 @@ export function ModalNotes({
                   onPress={() =>
                     showModal2?.placeholder
                       ? updateOrCreateScorePartial(
-                          showModal2?.extra_id,
-                          setLoading,
-                          showModal2,
-                          infoUserSubj,
-                          setUpdater,
-                          updater,
-                          setShowModal2,
-                          setShowNotes,
-                          dispatch
-                        )
+                        showModal2?.extra_id,
+                        setLoading,
+                        showModal2,
+                        infoUserSubj,
+                        setUpdater,
+                        updater,
+                        setShowModal2,
+                        setShowNotes,
+                        dispatch
+                      )
                       : updateOrCreateScorePartial(
-                          showModal2?.extra_id,
-                          setLoading,
-                          showModal2,
-                          infoUserSubj,
-                          setUpdater,
-                          updater,
-                          setShowModal2,
-                          setShowNotes,
-                          dispatch
-                        )
+                        showModal2?.extra_id,
+                        setLoading,
+                        showModal2,
+                        infoUserSubj,
+                        setUpdater,
+                        updater,
+                        setShowModal2,
+                        setShowNotes,
+                        dispatch
+                      )
                   }
                 >
                   <Text color={"white"}>Guardar</Text>
@@ -476,7 +476,7 @@ export function ModalWarning({
             {currentSubj?.available === false ? (
               <>
                 <Text
-                ml={"13.5%"}
+                  ml={"13.5%"}
                   fontWeight={"bold"}
                   textAlign={"center"}
                   w={"80%"}
@@ -605,22 +605,22 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               height: 70,
               borderRadius: 35,
               backgroundColor: "#E85E29",
-              margin:'auto'
+              margin: 'auto'
             }}
           >
             <AntDesign name="exclamation" size={40} color="white" />
           </View>
           <Text
-              fontSize={20}
-              mt={3}
-              mb={"4%"}
-              fontWeight={"bold"}
-              textAlign={"center"}
-            >
-              Advertencias
-            </Text>
-           
-          <FormControl maxWidth={"100%"}  pl={"5%"} pr={"18%"}>
+            fontSize={20}
+            mt={3}
+            mb={"4%"}
+            fontWeight={"bold"}
+            textAlign={"center"}
+          >
+            Advertencias
+          </Text>
+
+          <FormControl maxWidth={"100%"} pl={"5%"} pr={"18%"}>
             <HStack
               justifyContent={"center"}
               flexWrap={"wrap"}
@@ -628,7 +628,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             >
               <Box
                 style={{ display: "flex", flexDirection: "row" }}>
-               <RenderArrow/>
+                <RenderArrow />
                 <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
@@ -638,8 +638,8 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{paddingTop:"2%", display: "flex", flexDirection: "row" }}>
-               <RenderArrow/>
+                style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
+                <RenderArrow />
                 <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
@@ -648,8 +648,8 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{paddingTop:"2%", display: "flex", flexDirection: "row" }}>
-               <RenderArrow/>
+                style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
+                <RenderArrow />
                 <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
@@ -658,8 +658,8 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{paddingTop:"2%", display: "flex", flexDirection: "row" }}>
-               <RenderArrow/>
+                style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
+                <RenderArrow />
                 <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
@@ -674,12 +674,12 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                   {" "}
                   {/* Alinea el texto a la izquierda */}
                   Saltarse algunas de estas normas implicará:
-                  
+
                 </Text>
               </Box>
               <Box
-              style={{ display: "flex", flexDirection: "row" }}
-                 px={2}
+                style={{ display: "flex", flexDirection: "row" }}
+                px={2}
               >
                 <Text>1</Text>
                 <Text>-</Text>
@@ -692,7 +692,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               <Box
                 style={{ display: "flex", flexDirection: "row" }}
                 px={2}
-                  >
+              >
                 <Text>2</Text>
                 <Text>-</Text>
                 <Text textAlign={"left"}>
@@ -744,6 +744,85 @@ export function ModalIcon({ showIcon, setShowIcon }) {
           <FormControl>
             <Text fontSize={10} textAlign={"center"}>
               Contenido bloqueado
+            </Text>
+          </FormControl>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+
+export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string } ) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xs"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content
+        backgroundColor={'white'}
+        paddingTop={5}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            alignSelf: "center",
+            width: 50,
+            height: 50,
+            borderRadius: 35,
+            backgroundColor: "#E85E29",
+            margin: 'auto'
+          }}
+        >
+          <AntDesign name="exclamation" size={32} color="white" />
+        </View>
+
+        <Modal.Body alignItems={"center"}>
+          <FormControl>
+            <Text fontSize={14} textAlign={"center"}>
+              {message ?? "Ha ocurrido un error."}
+            </Text>
+          </FormControl>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string } ) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xs"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content
+        backgroundColor={'white'}
+        paddingTop={5}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            alignSelf: "center",
+            width: 50,
+            height: 50,
+            borderRadius: 35,
+            backgroundColor: "#4BB543",
+            margin: 'auto'
+          }}
+        >
+          <AntDesign name="check" size={32} color="white" />
+        </View>
+
+        <Modal.Body alignItems={"center"}>
+          <FormControl>
+            <Text fontSize={14} textAlign={"center"}>
+              {message ?? "Operación exitosa."}
             </Text>
           </FormControl>
         </Modal.Body>

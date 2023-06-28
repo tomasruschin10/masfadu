@@ -15,15 +15,10 @@ import {
 
   publishOffer
 } from "../../utils/hooks/services";
-import { useDispatch } from "react-redux";
-import { updateMessage } from "../../redux/actions/message";
 import { useEffect } from "react";
-import RecommendedTags from "../../utils/RecommendedTags";
-
-import { baseApi } from "../../utils/api";
-import { store } from "../../redux/store";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from 'expo-image-picker';
+import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 
 
 function OfferForm({ route, navigation }) {
@@ -34,8 +29,8 @@ function OfferForm({ route, navigation }) {
   const [imagen, setImagen] = useState(null)
   const [asunto, setAsunto] = useState("")
   const [mensaje, setMensaje] = useState("")
-
-
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const selectImage = async () => {
     try {
@@ -62,6 +57,12 @@ function OfferForm({ route, navigation }) {
   }, []);
 
 
+  const cleanModals = () => {
+    setTimeout(() => {
+      setSuccessModalOpen(false);
+      setErrorModalOpen(false);
+    }, 3000);
+  }
 
   const uploadImage = async () => {
     try {
@@ -78,11 +79,13 @@ function OfferForm({ route, navigation }) {
       }
       console.log('RESPONSE', response.body);
 
-      alert('Publicación exitosa');
+      setSuccessModalOpen(true);
+      cleanModals(); 
       navigation.navigate('Home');
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
-      alert("Error al publicar");
+      setErrorModalOpen(true);
+      cleanModals(); 
     }
   };
 
@@ -187,6 +190,8 @@ function OfferForm({ route, navigation }) {
             </Box>
           </Box>
         </ScrollView>
+        <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
+        <SuccessModal message={"Publicación exitosa"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
       </Layout>
     </Container>
   );

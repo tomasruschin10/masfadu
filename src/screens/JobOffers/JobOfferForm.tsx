@@ -15,16 +15,13 @@ import {
   getServices,
   publishOffer
 } from "../../utils/hooks/services";
-import { TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
-import { updateMessage } from "../../redux/actions/message";
 import { useEffect } from "react";
 
-import { baseApi } from "../../utils/api";
-import { store } from "../../redux/store";
-import * as DocumentPicker from "expo-document-picker";
+
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
+import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 
 function OfferForm({ route, navigation }) {
 
@@ -37,6 +34,9 @@ function OfferForm({ route, navigation }) {
   const [asunto, setAsunto] = useState("")
   const [mensaje, setMensaje] = useState("")
   const [partnerId, setPartnerId] = useState("")
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+
   const customPickerStyles = StyleSheet.create({
     inputIOS: {
       fontSize: 14,
@@ -120,7 +120,12 @@ const categorysEmpty = [{
 
   }, [])
 
-
+  const cleanModals = () => {
+    setTimeout(() => {
+      setSuccessModalOpen(false);
+      setErrorModalOpen(false);
+    }, 3000);
+  }
   const uploadImage = async () => {
     try {
 
@@ -137,11 +142,15 @@ const categorysEmpty = [{
       }
       console.log('RESPONSE', response.body);
 
-      alert('Publicación exitosa');
+      setSuccessModalOpen(true);
+      cleanModals(); 
+
       navigation.navigate('Home');
+      
+      cleanModals();
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
-      alert("Error al publicar");
+      setErrorModalOpen(true);
     }
   };
 
@@ -255,6 +264,8 @@ const categorysEmpty = [{
             </Box>
           </Box>
         </ScrollView>
+        <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
+        <SuccessModal message={"Publicación exitosa"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
       </Layout>
     </Container>
   );
