@@ -447,8 +447,6 @@ export function ModalWarning({
     console.log("arrSinDuplicaciones ", arrSinDuplicaciones);
   }
 
-
-
   return (
     <Modal
       isOpen={showWarning}
@@ -522,9 +520,20 @@ export function ModalWarning({
                     ))}
                 </HStack>
               </>
-            ) : currentSubj?.available === 0 ? (
-              <Text fontSize={15} numberOfLines={2} textAlign={"center"}>
-                No podés anotarte a esta materia sin terminar el nivel anterior´ - centrar texto
+            ) : true ? (
+              <Text
+                textAlign={"center"}
+                style={
+                  {
+                    textAlign: "center"
+                  }
+                }
+                marginLeft={"5%"}
+                fontSize={12}
+                w={"100%"}
+                marginY={5}
+                numberOfLines={2}>
+                No podés anotarte a esta materia sin terminar el nivel anterior
               </Text>
             ) : (
               <Text fontSize={15} textAlign={"center"}>
@@ -752,7 +761,7 @@ export function ModalIcon({ showIcon, setShowIcon }) {
 }
 
 
-export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string } ) {
+export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string }) {
   return (
     <Modal
       isOpen={isOpen}
@@ -791,7 +800,7 @@ export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setO
   );
 }
 
-export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string } ) {
+export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string }) {
   return (
     <Modal
       isOpen={isOpen}
