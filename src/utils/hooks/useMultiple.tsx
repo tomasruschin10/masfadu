@@ -1,5 +1,6 @@
 import { Box, Text, Image, Avatar, Pressable } from 'native-base';
 import { TouchableHighlight } from 'react-native';
+import { fontStyles } from '../colors/fontColors';
 
 export const RenderItem = ({title, id, setIdCopy, idCopy}) => (
   <TouchableHighlight underlayColor='white' onPress={() => setIdCopy(id)}>
@@ -63,17 +64,17 @@ export const RenderOpinion = ({color, title, text, time, hours, method, subject_
             }
           </Box>
           <Box w="64%" justifyContent={'center'}>
-            <Text fontFamily={'SourceSansPro_400Regular'} fontSize={16} lineHeight={17} fontWeight={'bold'} numberOfLines={2}>{title}</Text>
+            <Text style={fontStyles.bodyText} fontSize={14} lineHeight={17} fontWeight={'bold'} numberOfLines={2}>{title}</Text>
             {
-              text ? <Text fontFamily={'SourceSansPro_400Regular'} fontSize={9.64} fontWeight={'bold'}>{text}</Text> : null
+              text ? <Text style={fontStyles.bodyText} fontSize={9.64} fontWeight={'bold'}>{text}</Text> : null
             }
             {
-              time ? <Text fontFamily={'SourceSansPro_400Regular'} numberOfLines={2} fontSize={10}>{time}</Text> : null
+              time ? <Text style={fontStyles.bodyText} numberOfLines={2} fontSize={10}>{time}</Text> : null
             }
           </Box>
         </Box>
         <Box mr='4' alignItems={'flex-end'} justifyContent='center'>
-          <Text fontSize={16} color='primary.100' fontWeight="600">{rating}</Text>
+          <Text fontSize={16} style={fontStyles.bodyText} color='primary.100' fontWeight="600">{rating}</Text>
         </Box>
       </Box>
     </Pressable>

@@ -11,7 +11,6 @@ export const fontStyles = StyleSheet.create({
     fontFamily: Fonts.fonts.heading,
   },
   bodyText: {
-    color: "#EB5E29",
     fontFamily: Fonts.fonts.body,
   },
   monoText: {
