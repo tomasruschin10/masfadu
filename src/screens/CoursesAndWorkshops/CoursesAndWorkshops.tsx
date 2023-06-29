@@ -207,7 +207,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                   method={""}
                   rating={item.point}
                   navigation={navigation}
-                  mainTitle={"Cursos & Workshodps"}
+                  mainTitle={"Cursos & Workshops"}
                   buttonValue={"Quiero hacerlo!"}
                   redirect_to={"Anoffer"}
                   border={false}

@@ -7,12 +7,14 @@ import {
   IconButton,
   ScrollView,
   Text,
-  Image
+  Image,
+  View
 } from "native-base";
 import React, { useState } from "react";
 import { Linking } from "react-native";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 function Anoffer({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
@@ -24,18 +26,18 @@ function Anoffer({ route, navigation }) {
       <Layout route={route} navigation={navigation} title={mainTitle}>
         <ScrollView>
           <Box mx="5" mt="3" mb={"48"}>
-          <Image
-            style={{
-              height: 140,
-              width: "50%",
-              marginLeft: "25%",
-              borderRadius: 15,
-              marginBottom: "10%"
-            }}
-            source={{
-              uri: image,
-            }}
-          />
+            <Image
+              style={{
+                height: 140,
+                width: "50%",
+                marginLeft: "25%",
+                borderRadius: 15,
+                marginBottom: "10%"
+              }}
+              source={{
+                uri: image,
+              }}
+            />
             <Box
               flexDir="row"
               justifyContent="space-around"
@@ -76,7 +78,7 @@ function Anoffer({ route, navigation }) {
             </Box>
             <Box>
               <Text fontSize={16} fontWeight="bold" mb="3">
-                Sobre el puesto
+                Descripción
               </Text>
               <Text fontWeight={14} mb="4">
                 {description}
@@ -86,17 +88,42 @@ function Anoffer({ route, navigation }) {
         </ScrollView>
 
         <Box alignSelf={"center"} position={"absolute"} bottom={32}>
-          <Button
-            _text={{ fontSize: 15 }}
+
+          <TouchableOpacity
+            style={{
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              justifyContent: 'center',
+            }}
             onPress={() =>
               Linking.openURL(url.includes("http") ? url : `https://${url}`)
             }
-            w="205"
-            h="10"
-            backgroundColor="#eb5e29"
           >
-            Publicar
-          </Button>
+
+            <View
+              style={{
+                backgroundColor: "#EB5E29",
+                height: 50,
+                width: 218,
+                borderRadius: 10,
+
+
+              }}
+            >
+              <Text
+                style={{
+                  color: "#ffffff",
+                  fontSize: 13,
+                  textAlign: "center",
+                  marginTop: 13,
+                  fontWeight: "bold",
+                  letterSpacing: 0.5
+                }}
+              >
+                Ver más
+              </Text>
+            </View>
+          </TouchableOpacity>
         </Box>
       </Layout>
     </Container>
