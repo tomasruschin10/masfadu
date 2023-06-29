@@ -8,14 +8,14 @@ export const fontStyles = StyleSheet.create({
   },
   headingText: {
     color: "#000000",
-    fontFamily: Fonts.fonts.heading,
+    fontFamily: Fonts.fontConfig.Poppins["700"].normal,
   },
   bodyText: {
-    fontFamily: Fonts.fonts.body,
+    fontFamily: Fonts.fontConfig.Poppins["200"].normal,
   },
   monoText: {
     color: "#EB5E29",
-    fontFamily: Fonts.fonts.mono,
+    fontFamily: Fonts.fontConfig.Poppins["200"].normal,
   },
   manrope200: {
     color: "#000000",

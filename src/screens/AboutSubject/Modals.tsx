@@ -28,6 +28,8 @@ import {
   updateOrCreateScorePartial,
   updateNote,
 } from "./ModalFunctions";
+import DefaultButton from "../../components/DefaultButton";
+import { REMEMBER_NOTICE, rememberNotice } from "../../redux/actions/notice";
 
 
 
@@ -595,12 +597,21 @@ export function ModalWarning({
 }
 
 export function ModalWarning2({ showWarning, setShowWarning }) {
+  const dispatch = useDispatch();
+
+  const blockNotice = () => {
+    dispatch(rememberNotice({ type: REMEMBER_NOTICE, value: true }))
+  }
+
   return (
     <Modal
       isOpen={showWarning}
       animationPreset={"slide"}
       size={"xl"}
-      onClose={() => setShowWarning(false)}
+      onClose={() => {
+        blockNotice();
+        setShowWarning(false)
+      }}
       mt={5}
     >
       <Modal.Content rounded={"2xl"}>
@@ -700,38 +711,23 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               <Box
                 style={{ display: "flex", flexDirection: "row" }}
                 px={2}
+                pb={10}
               >
                 <Text>2</Text>
                 <Text>-</Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
-                  Baneo completo y expulsion de la app.
+                  Baneo completo y expulsión de la app.
                 </Text>
               </Box>
             </HStack>
           </FormControl>
           <Button.Group space={2} mt={"10%"}>
-            <Button
-              px={2}
-              w={"45%"}
-              mb={5}
-              _text={{ fontSize: 8, fontWeight: "bold" }}
-              onPress={() => setShowWarning(false)}
-              style={{ backgroundColor: "#007BFF" }}
-            >
-              Entiendo, voy a respetar
-            </Button>
-            <Button
-              px={5}
-              w={"45%"}
-              mb={5}
-              _text={{ fontSize: 8, fontWeight: "bold" }}
-              onPress={() => setShowWarning(false)}
-              style={{ backgroundColor: "#E85E29" }}
-            >
-              No, no acepto
-            </Button>
+            <DefaultButton buttonStyle={{ backgroundColor: "#007BFF" }} title="Entiendo, voy a respetar" callBack={() => {
+              blockNotice();
+              setShowWarning(false)
+            }} />
           </Button.Group>
         </Modal.Body>
       </Modal.Content>

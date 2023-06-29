@@ -6,6 +6,7 @@ import { store } from "../redux/store";
 import { updateUserdata } from '../redux/actions/user';
 import * as RootNavigation from "../navigation/RootNavigation";
 import { updateMessage } from '../redux/actions/message';
+import { FORGET_NOTICE, forgetNotice } from "../redux/actions/notice";
 
 export const baseApi = Axios.create({
 	baseURL: API_URL,
@@ -32,6 +33,7 @@ instances.forEach(async (instance) => {
 				console.log("🚀 ~ file: api.tsx ~ line 33 ~ instances.forEach ~ errorResponse.url", errorResponse.url)
                 if(errorResponse.status === 401 && errorResponse?.config?.url !== '/auth/login') {
                     store.dispatch(updateMessage({body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger",open: true}));
+					store.dispatch(forgetNotice({ type: FORGET_NOTICE, value: false }))
                     store.dispatch(updatetoken(''));
                     store.dispatch(updateUserdata({}));
                     RootNavigation.reset('SplashScreen')
