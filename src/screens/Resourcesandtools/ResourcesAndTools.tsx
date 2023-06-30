@@ -2,19 +2,22 @@ import { Box, Button, Heading, HStack, Image, ScrollView, Spinner, Text } from '
 import React, { useEffect } from 'react'
 import { StyleSheet, TouchableHighlight, Linking } from 'react-native';
 import { getServices } from '../../utils/hooks/services'
+import { HeaderBack } from '../../components/Header';
 
 export const Item = ({id, navigation, name, image_id, created_at, updated_at, image, item}) => (
-  <Box mt={1} w={'50%'} mb="2">
+  <Box mt={1} w={'50%'} mb={2}>
     <TouchableHighlight underlayColor="" onPress={() => navigation.navigate('Subjects', item)}>
-      <Box style={styles.shadow} bgColor={'white'} shadow={'5'} rounded="md" mx="1.5">
-        <Image source={{uri: image.url}} alt="Career_Image" mb={2} h={100} borderTopRadius={'md'} />
+      <Box style={styles.shadow} bgColor={'white'} shadow={'5'} rounded="md" mx={1.5} height={160}>
+        <Box height={70} justifyContent="center" alignItems="center" padding={12}>
+          <Image source={{uri: image.url}} alt="Career_Image" borderRadius={'full'} width={70} height={70} />
+        </Box>
         <Text textAlign={'center'} pb={2}>{name}</Text>
       </Box>
     </TouchableHighlight>
   </Box>
 )
 
-function ResourcesAndTools({route, navigation}) {
+function ResourcesAndTools({route, navigation, mainTitle}) {
 	const [career, setCareer] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 	
@@ -33,6 +36,7 @@ function ResourcesAndTools({route, navigation}) {
   return (
     <>
       <ScrollView>
+      <HeaderBack title={mainTitle || "Recursos Y Herramientas"} navigation={navigation}/>
         {
           !loading? 
           <Button display={'none'} /> :
@@ -60,7 +64,7 @@ function ResourcesAndTools({route, navigation}) {
           }
         </Box>
       </ScrollView>
-      <Box alignSelf={"center"} position={"absolute"} bottom={32}>
+     {/*  <Box alignSelf={"center"} position={"absolute"} bottom={32}>
           <Button
             _text={{ fontSize: 15 }}
             onPress={()=> Linking.openURL('mailto:hola@masfadu.com?subject=Elemento para Donar&body=Buen día: ')}
@@ -70,7 +74,7 @@ function ResourcesAndTools({route, navigation}) {
           >
             Publicar
           </Button>
-        </Box>
+        </Box> */}
     </>
   )
 }

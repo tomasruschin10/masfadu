@@ -21,6 +21,7 @@ import { Dimensions, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import { HeaderBack } from "../../components/Header";
 function JobOffers({ route, navigation, mainTitle }) {
   const [allOffers, setAllOffers] = React.useState([]);
   const [advertisement, setAdvertisement] = React.useState([]);
@@ -105,6 +106,8 @@ function JobOffers({ route, navigation, mainTitle }) {
 
   return (
     <Box>
+            {mainTitle ? <HeaderBack title={"Ofertas Laborales"} navigation={navigation}/>: null}
+
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("JobOfferForm");
