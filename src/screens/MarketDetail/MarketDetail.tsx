@@ -63,7 +63,7 @@ const MarketDetail = ({ navigation }) => {
             bottom: 100,
           }}
         >
-          <ButtonMas title="Publicar" />
+          <ButtonMas title="Ver más" />
         </View>
       </Layout>
     </Container>
