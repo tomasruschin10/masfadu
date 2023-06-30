@@ -84,7 +84,7 @@ export const deleteServices = (url) => {
 };
 
 
-export const publishOffer = async ({ title, description, offer_category_id, image, partner_id }: Offer) => {
+export const publishOffer = async ({ name,phone, title, description, offer_category_id, image, partner_id, company }: Offer) => {
 
   const state: any = store.getState();
   const authToken = state.token;
@@ -96,6 +96,9 @@ export const publishOffer = async ({ title, description, offer_category_id, imag
     description,
     offer_category_id,
     career_id,
+    name,
+    company,
+    phone,
     image
   }
    
@@ -113,9 +116,6 @@ export const publishOffer = async ({ title, description, offer_category_id, imag
     },
     parameters,
   };
-
-
-
 
   return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
 
