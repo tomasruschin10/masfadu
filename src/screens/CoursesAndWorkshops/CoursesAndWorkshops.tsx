@@ -16,13 +16,12 @@ import {
 } from "native-base";
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
-import { Ionicons } from "@expo/vector-icons";
 import { getServices } from "../../utils/hooks/services";
 import { HeaderBack } from "../../components/Header";
 import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import Menu from "../Menu/Menu";
+
 function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   const [courses, setCourses] = useState([]);
   const [advertisement, setAdvertisement] = useState([]);
@@ -108,12 +107,8 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
 
   return (
     <Container>
-      
-      {mainTitle == undefined ? (
-        <HeaderBack title="Cursos & Workshops" navigation={navigation} addButtonUrl={'CoursesForm'} />
-      ) : (
-        <Box display={"none"} />
-      )}
+
+      <HeaderBack title={mainTitle} navigation={navigation} addButtonUrl={'CoursesForm'}/>
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -136,21 +131,21 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
             justifyContent="center"
             flexDir={"row"}
           >
-                           <MaterialIcons
-    name={"search"}
-    size={17}
-    color="gray"
-    style={{ position: 'absolute', left: "3%", zIndex: 1}}
-  />
+            <MaterialIcons
+              name={"search"}
+              size={17}
+              color="gray"
+              style={{ position: 'absolute', left: "3%", zIndex: 1 }}
+            />
             <Input
-             style={{marginLeft: "8%"}}
+              style={{ marginLeft: "8%" }}
               fontSize={12.27}
               onChangeText={(text) => setSearchText(text)}
               w={{ base: "87%", md: "25%" }}
               pb="1"
               type={"text"}
               placeholder={"Buscar"}
-              placeholderTextColor="#666666" 
+              placeholderTextColor="#666666"
               mr="2"
             />
 
@@ -207,7 +202,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                   method={""}
                   rating={item.point}
                   navigation={navigation}
-                  mainTitle={"Cursos & Workshops"}
+                  mainTitle={mainTitle}
                   buttonValue={"Quiero hacerlo!"}
                   redirect_to={"Anoffer"}
                   border={false}

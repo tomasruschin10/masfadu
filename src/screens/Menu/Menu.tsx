@@ -48,7 +48,7 @@ const carriers = [
     comingSoon: false,
   },
   {
-    title: "Cursos, charlas y workshops",
+    title: "Cursos & Workshops",
     icon: require("../../../assets/menu/charlas.png"),
     iconType: "Entypo",
     comingSoon: false,

@@ -53,7 +53,7 @@ export default function SwitchComponents({ component, route, navigation }) {
           mainTitle={component}
         />
       );
-    case "Cursos, charlas y workshops":
+    case "Cursos & Workshops":
       return (
         <CoursesAndWorkshops
           route={route}
