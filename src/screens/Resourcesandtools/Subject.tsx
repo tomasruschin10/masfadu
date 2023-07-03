@@ -164,6 +164,7 @@ function Subjects({ route, navigation }) {
               subjectCategory.map((it, index) => (
                 <SimpleAccordion
                   title={it.name}
+                  description={it.description}
                   key={it.id}
                   viewInside={
                     <Box
@@ -174,8 +175,10 @@ function Subjects({ route, navigation }) {
                       flexWrap={"wrap"}
                       justifyContent={"space-between"}
                     >
+                      <Box mt={1.5}></Box>
                       {it.subject.map((item, index) => (
                         <Communication
+                        
                           key={item.id}
                           item={item}
                           index={index}
