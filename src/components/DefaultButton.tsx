@@ -2,6 +2,14 @@ import { Text, View } from "native-base";
 import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+
+export const defaultTextStyle =             {
+    width: 150,
+    color: "#ffffff",
+    fontSize: 13,
+    fontWeight: "bold",
+    letterSpacing: 0.5
+  };
 interface DefaultButtonProps extends TouchableOpacityProps {
     callBack: () => void;
     title: string;
@@ -20,6 +28,13 @@ const DefaultButton = ({
     const containerStyleCombined = { ...styles.container, ...containerStyle };
     const buttonStyleCombined = { ...styles.button, ...buttonStyle };
     const textStyleCombined = { ...styles.text, ...textStyle };
+
+    console.log(
+        containerStyleCombined,
+        buttonStyleCombined,
+        textStyleCombined 
+    );
+
     return (
         <TouchableOpacity style={containerStyleCombined} onPress={callBack}>
             <View style={buttonStyleCombined}>

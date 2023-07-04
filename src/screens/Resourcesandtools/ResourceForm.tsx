@@ -11,31 +11,80 @@ import {
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import {
-  getServices,
-
-  publishOffer,
+  publishDoc,
+  getServices
 } from "../../utils/hooks/services";
-import { useDispatch } from "react-redux";
+import RNPickerSelect from "react-native-picker-select";
 import { useEffect } from "react";
 
 import * as ImagePicker from 'expo-image-picker';
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
+import { StyleSheet } from "react-native";
+
+const customPickerStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: 'green',
+    marginBottom: 20,
+    color: '#d3d3d3',
+    paddingRight: 20, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 14,
+    backgroundColor: "#F7FAFC",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: 'blue',
+    marginBottom: 20,
+    color: '#d3d3d3',
+    paddingRight: 20,
+
+  },
+});
 
 
-function OfferForm({ route, navigation }) {
-  const [allTags, setAllTags] = useState([{}]);
+function ResourceForm({ route, navigation }) {
+  const { subject_id } = route.params;
   const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const [resourceCategories, setResourceCategory] = React.useState([]);
 
   const [previewImage, setPreviewImage] = useState(null);
-
   const [imagen, setImagen] = useState(null)
-  const [asunto, setAsunto] = useState("")
-  const [mensaje, setMensaje] = useState("")
-  const [categoryId, setCategoryId] = useState("")
+  const [name, setName] = useState(null)
+
+  const [categoriaId, setCategoria] = useState("")
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
+  useEffect(() => {
+    setLoading(true)
+    getServices('resource-category/all').then(({ data }: any) => {
+      setResourceCategory(data)
+    }).catch(error => {
+      if (__DEV__) {
+        console.log("🚀 ~ file: ResourceForm.tsx ~ getServices ~ error", error)
+      }
+    }).finally(() => setLoading(false))
+
+  }, [])
+
+
+  useEffect(() => {
+    getServices("resource-category/all")
+      .then(({ data }: any) => {
+
+        const category = data.map((data) => {
+          return { label: data.name, value: data.id }
+        })
+
+        setResourceCategory(category)
+      })
+
+  }, [])
 
   const selectImage = async () => {
     try {
@@ -50,41 +99,27 @@ function OfferForm({ route, navigation }) {
     }
   };
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getServices("tag/all")
-      .then(({ data }: any) => {
-        setAllTags(data);
-      })
-      .catch(() => { });
-  }, []);
-
-  let FilterTags = () =>
-    allTags.length > 0
-      ? allTags.filter((it: any) =>
-        it.name
-          .toLowerCase()
-          .includes(searchText.toLowerCase().replace("#", ""))
-      )
-      : [];
+  const cleanModals = () => {
+    setTimeout(() => {
+      setSuccessModalOpen(false);
+      setErrorModalOpen(false);
+    }, 3000);
+  }
 
 
-      const cleanModals = () => {
-        setTimeout(() => {
-          setSuccessModalOpen(false);
-          setErrorModalOpen(false);
-        }, 3000);
-      }
+  const categorysEmpty = [{
+    label: "No existen partners",
+    value: "1"
+  }]
 
   const uploadImage = async () => {
     try {
 
-      const response = await publishOffer({
-        title: asunto,
-        description: mensaje,
-        offer_category_id: "3",
-        image: imagen
+      const response = await publishDoc({
+        subject_id,
+        resource_category_id: categoriaId,
+        image: imagen,
+        name
       })
 
       if (response.status != 201) {
@@ -93,12 +128,12 @@ function OfferForm({ route, navigation }) {
       console.log('RESPONSE', response.body);
 
       setSuccessModalOpen(true);
-      cleanModals(); 
+      cleanModals();
       navigation.navigate('Home');
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
       setErrorModalOpen(true);
-      cleanModals(); 
+      cleanModals();
     }
   };
 
@@ -107,25 +142,12 @@ function OfferForm({ route, navigation }) {
       <Layout
         route={route}
         navigation={navigation}
-        title={`Publicá en el Mercado de Fadu`}
+        title={`Publicá un documento`}
       >
         <ScrollView
           nestedScrollEnabled={true}
           keyboardShouldPersistTaps={"handled"}
         >
-          <Box
-            mx={5}
-            mb={2}
-            mt={-4}
-            borderTopWidth={1}
-            borderTopColor={"#EBEEF2"}
-            pt={6}
-          >
-            <Text fontSize={15}>
-              Describí de la forma más precisa y detallada que podas
-            </Text>
-          </Box>
-
           <Box>
             <Box
               mx="5"
@@ -135,41 +157,31 @@ function OfferForm({ route, navigation }) {
               pb={"24"}
             >
 
+              <Box
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setName(text)}
+                  type={"text"}
+                  p={3.5}
 
-              {allTags.length > 0 && (
-                <>
-                  <Box
-                    mb={searchText !== "" ? 2 : 2}
-                    alignItems={"center"}
-                    justifyContent="center"
-                    flexDir={"row"}
-                  >
-                    <Input
-                      onChangeText={(text) => setAsunto(text)}
-                      type={"text"}
-                      p={3.5}
+                  mb={4}
+                  placeholder={"Nombre de archivo"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
 
-                      mb={4}
-                      placeholder={"Titulo"}
-                      placeholderTextColor={"#d3d3d3"}
-                      backgroundColor={"#F7FAFC"}
+                />
+              </Box>
 
-                    />
-                  </Box>
-                </>
-              )}
-
-              <TextArea
-                onChangeText={(text) => setMensaje(text)}
-                placeholder="Descripción"
-                autoCompleteType={"off"}
-                fontSize={15}
-                h={100}
-                backgroundColor={"#F7FAFC"}
-                borderWidth={0}
-                placeholderTextColor={"#d3d3d3"}
-                mb={6}
-              />
+              <Box>
+                <RNPickerSelect
+                  style={customPickerStyles}
+                  onValueChange={(value) => setCategoria(value)}
+                  items={resourceCategories.length ? resourceCategories : categorysEmpty}
+                  placeholder={{ label: 'Categoría', value: null }} />
+              </Box>
 
               <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
                 {previewImage && <Image source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
@@ -199,4 +211,4 @@ function OfferForm({ route, navigation }) {
   );
 }
 
-export default OfferForm;
+export default ResourceForm;

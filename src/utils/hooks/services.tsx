@@ -84,7 +84,7 @@ export const deleteServices = (url) => {
 };
 
 
-export const publishOffer = async ({ name,phone, title, description, offer_category_id, image, partner_id, company }: Offer) => {
+export const publishOffer = async ({ name, phone, title, description, offer_category_id, image, partner_id, company }: Offer) => {
 
   const state: any = store.getState();
   const authToken = state.token;
@@ -101,12 +101,37 @@ export const publishOffer = async ({ name,phone, title, description, offer_categ
     phone,
     image
   }
-   
-  if(partner_id){
+
+  if (partner_id) {
     parameters.partner_id = partner_id;
   }
 
   const uploadUrl = baseApi.defaults.baseURL + '/offer/create';
+  const options: FileSystem.FileSystemUploadOptions = {
+    httpMethod: 'POST',
+    uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+    fieldName: 'image',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    parameters,
+  };
+
+  return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
+
+};
+
+export const publishDoc = async ({ resource_category_id, image, name, subject_id }:
+  { resource_category_id: string, image: any, name: string, subject_id: string }) => {
+
+  const state: any = store.getState();
+  const authToken = state.token;
+  const { userdata: { id: user_id } } = state.user
+
+
+  const parameters: any = { resource_category_id, image, name, subject_id, user_id };
+
+  const uploadUrl = baseApi.defaults.baseURL + '/resource/create';
   const options: FileSystem.FileSystemUploadOptions = {
     httpMethod: 'POST',
     uploadType: FileSystem.FileSystemUploadType.MULTIPART,

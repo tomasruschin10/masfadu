@@ -28,7 +28,7 @@ export function HeaderBack({ ...props }) {
       <StatusBar backgroundColor="#e8eef4" barStyle="dark-content" />
       <Box safeAreaTop bg="#e8eef4" />
 
-      <HStack px="5" py="3" w="100%"  alignItems="center">
+      <HStack px="5" py="3" w="100%" alignItems="center">
         {navigation.canGoBack() && (
           <IconButton
             rounded="xl"
@@ -55,21 +55,27 @@ export function HeaderBack({ ...props }) {
         </Box>
         {props?.addButtonUrl && (
           <Box >
-             <IconButton
-            rounded="full"
-            backgroundColor="#E85E29"
-            onPress={() => {
-              navigation.navigate(props.addButtonUrl as string);
-            }}
-            icon={
-              <Icon
-                as={Ionicons}
-                name="add"
-                size="md"
-                color="#f4faff"
-              />
-            }
-          />
+            <IconButton
+              rounded="full"
+              backgroundColor="#E85E29"
+              onPress={() => {
+                if (typeof props.addButtonUrl === "string") {
+                  navigation.navigate(props.addButtonUrl);
+                } else if (props.addButtonUrl && typeof props.addButtonUrl === "object") {
+                  const { name, props: additionalProps } = props.addButtonUrl;
+                  navigation.navigate(name, additionalProps);
+                }
+              }
+              }
+              icon={
+                <Icon
+                  as={Ionicons}
+                  name="add"
+                  size="md"
+                  color="#f4faff"
+                />
+              }
+            />
           </Box>
         )}
       </HStack>

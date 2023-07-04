@@ -4,6 +4,7 @@ import { Box, Button, Image, useTheme } from "native-base";
 import * as React from "react";
 import { Linking, TouchableHighlight } from "react-native";
 import Container from "../../components/Container";
+import DefaultButton from "../../components/DefaultButton";
 
 function News({ route, navigation }) {
   const { colors }: any = useTheme();
@@ -51,18 +52,21 @@ function News({ route, navigation }) {
           right={0}
           position={"absolute"}
         >
-          <Button
-            _text={{ fontSize: 14 }}
-            onPress={() =>
+         <DefaultButton
+          textStyle={
+            {
+              width: 150,
+              color: "#ffffff",
+              fontSize: 13,
+              fontWeight: "bold",
+              letterSpacing: 0.5
+            }
+          }
+         callBack={() =>
               Linking.openURL(url.includes("http") ? url : `https://${url}`)
             }
-            w="250"
-            h="70"
-            backgroundColor="#eb5e29"
-          >
-            Ver más
-          </Button>
-          
+            title="Ver más"
+            />
         </Box>
       </Box>
     </Container>

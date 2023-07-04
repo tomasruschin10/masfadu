@@ -34,6 +34,7 @@ import { MarketDetail } from "../screens/MarketDetail";
 import OfferForm from "../screens/Offers/OfferForm";
 import CoursesForm from "../screens/CoursesAndWorkshops/CoursesForm";
 import JobOfferForm from "../screens/JobOffers/JobOfferForm";
+import ResourceForm from "../screens/Resourcesandtools/ResourceForm";
 
 const Stack = createStackNavigator();
 
@@ -95,6 +96,7 @@ export function NavStack() {
           <Stack.Screen name="AboutSubject" component={AboutSubject} />
 
           <Stack.Screen name="SubjectContent" component={SubjectContent} />
+          <Stack.Screen name="ResourceForm" component={ResourceForm} />
           <Stack.Screen name="Anoffer" component={Anoffer} />
 
           <Stack.Screen name="MarketDetail" component={MarketDetail} />
