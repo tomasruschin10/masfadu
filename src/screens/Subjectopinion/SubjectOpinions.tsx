@@ -7,6 +7,8 @@ import { NoHeader } from '../../components/Header';
 import { ModalWarning2} from "../../screens/AboutSubject/Modals";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from 'react-redux';
+import Container from '../../components/Container';
+import Layout from '../../utils/LayoutHeader&BottomTab';
 function SubjectOpinions({route, navigation, mainTitle}) {
   const {search, setSearch, filteredSubjects, allSubjects, loading} = useSearchSubject()
   const [showWarning, setShowWarning] = useState(true);
@@ -21,6 +23,12 @@ function SubjectOpinions({route, navigation, mainTitle}) {
   const colores = ['#E85E29']
 
   return (
+    <Container>
+    <Layout
+      route={route}
+      navigation={navigation}
+      title={`Notificaciones`}
+    >
     <ScrollView keyboardShouldPersistTaps={'handled'}>
       <ModalWarning2  showWarning={showWarning && notice?.value !== true}  setShowWarning={setShowWarning}/> 
       <HStack mt={0} mb={4} alignItems={'center'} justifyContent="center">
@@ -87,6 +95,8 @@ function SubjectOpinions({route, navigation, mainTitle}) {
       )).reverse()}
       <Box mb={'24'}/>
     </ScrollView>
+    </Layout>
+    </Container>
   )
 }
 
