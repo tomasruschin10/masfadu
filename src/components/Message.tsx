@@ -19,11 +19,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 function Message() {
   const message = useSelector((state: any) => state.message);
   const dispatch = useDispatch();
-/*   if (message.open) {
+  if (message.open) {
     setTimeout(() => {
       dispatch(updateMessage({ body: "", open: false, type: "" }));
     }, 7000);
-  } */
+  } 
   //uncomment for manually activation
   /*  useEffect(() => {
      dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
