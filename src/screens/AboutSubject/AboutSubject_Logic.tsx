@@ -54,11 +54,12 @@ function AboutSubject_Logic({
 
   return (
     // Materias y puntajes
+    
     <HStack
       mt={margginTop}
       justifyContent={"space-between"}
       style={{
-        backgroundColor: "#eff6ff",
+        backgroundColor: "#F1F6FA",
         padding: 10,
         marginHorizontal: 5,
         borderRadius: 10,

@@ -61,12 +61,15 @@ function AboutSubject({ route, navigation, value }) {
         )}
 
         {subjCategory.data.length ? (
+          <>
+          <HeaderBack  title={"Materias"} />
           <AboutSubject_Item
             subjCategory={subjCategory}
             nav={navigation}
             updater={updater}
             setUpdater={setUpdater}
           />
+          </>
         ) : !subjCategory.data.length && loading === false ? (
           <Text mx={8} fontWeight={"bold"} color={"primary.100"} fontSize={20}>
             No Hay materias para mostrar

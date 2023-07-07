@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Box, Text, HStack } from "native-base";
 import { SimpleAccordion } from "../../components/SimpleAccordion";
 import { ModalIcon, ModalNotes, ModalWarning } from "./Modals";
-import AboutSubject_Item_locked from "./AboutSubject_Item_locked";
 import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
@@ -161,7 +160,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             }}
             bannerStyle={[
               {
-                backgroundColor: "white",
+                backgroundColor: "#F1F6FA",
                 borderBottomColor: "#D4D4D4",
                 borderBottomWidth: 1,
                 height: 60,
