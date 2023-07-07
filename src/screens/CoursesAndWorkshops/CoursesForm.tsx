@@ -11,32 +11,31 @@ import {
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import {
-  getServices,
-
-  publishOffer
+  publishOffer,
 } from "../../utils/hooks/services";
-import { useEffect } from "react";
-import * as DocumentPicker from "expo-document-picker";
+
 import * as ImagePicker from 'expo-image-picker';
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 
 
 function OfferForm({ route, navigation }) {
-  const [allTags, setAllTags] = useState([{}]);
   const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
+
   const [previewImage, setPreviewImage] = useState(null);
+
   const [imagen, setImagen] = useState(null)
-  const [asunto, setAsunto] = useState("")
-  const [mensaje, setMensaje] = useState("")
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+
+  const [nombreApellido, setNombreApellido] = useState("");
+  const [numeroTelefono, setNumeroTelefono] = useState("");
+  const [empresa, setEmpresa] = useState("");
+  const [tituloEmpleo, setTituloEmpleo] = useState("");
+  const [descripcion, setDescripcion] = useState("");
 
   const selectImage = async () => {
     try {
       const image = await ImagePicker.launchImageLibraryAsync();
-
-      console.log("image ", image)
 
       if (!image.canceled && image.assets.length > 0) {
         setImagen(image.assets[0])
@@ -46,16 +45,6 @@ function OfferForm({ route, navigation }) {
       console.log(error);
     }
   };
-
-
-  useEffect(() => {
-    getServices("tag/all")
-      .then(({ data }: any) => {
-        setAllTags(data);
-      })
-      .catch(() => { });
-  }, []);
-
 
   const cleanModals = () => {
     setTimeout(() => {
@@ -68,35 +57,28 @@ function OfferForm({ route, navigation }) {
     try {
 
       const response = await publishOffer({
-        title: asunto,
-        description: mensaje,
         offer_category_id: "2",
+        name: nombreApellido,
+        phone: numeroTelefono,
+        company: empresa,
+        title: tituloEmpleo,
+        description: descripcion,
         image: imagen
       })
 
       if (response.status != 201) {
+        console.log(response)
         throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
       }
       console.log('RESPONSE', response.body);
 
       setSuccessModalOpen(true);
-      cleanModals(); 
+      cleanModals();
       navigation.navigate('Home');
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
       setErrorModalOpen(true);
-      cleanModals(); 
-    }
-  };
-
-
-  const selectDocument = async () => {
-    try {
-      const document = await DocumentPicker.getDocumentAsync();
-      console.log(document);
-      // Aquí puedes hacer algo con el documento seleccionado, como enviarlo a un servidor o procesarlo de alguna manera.
-    } catch (error) {
-      console.log(error);
+      cleanModals();
     }
   };
 
@@ -133,33 +115,77 @@ function OfferForm({ route, navigation }) {
               pb={"24"}
             >
 
+              <Box
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setNombreApellido(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Nombre Y Apellido"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
+              </Box>
 
-              {allTags.length > 0 && (
-                <>
-                  <Box
-                    mb={searchText !== "" ? 2 : 2}
-                    alignItems={"center"}
-                    justifyContent="center"
-                    flexDir={"row"}
-                  >
-                    <Input
-                      onChangeText={(text) => setAsunto(text)}
-                      type={"text"}
-                      p={3.5}
+              <Box
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setNumeroTelefono(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Nro de teléfono"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
 
-                      mb={4}
-                      placeholder={"Asunto"}
-                      placeholderTextColor={"#d3d3d3"}
-                      backgroundColor={"#F7FAFC"}
+              </Box>
 
-                    />
-                  </Box>
-                </>
-              )}
+              <Box
+
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setEmpresa(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Empresa"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
+
+              </Box>
+
+              <Box
+
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setTituloEmpleo(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Titulo del empleo"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
+              </Box>
 
               <TextArea
-                onChangeText={(text) => setMensaje(text)}
-                placeholder="descripción"
+                onChangeText={(text) => setDescripcion(text)}
+                placeholder="Sobre el puesto"
                 autoCompleteType={"off"}
                 fontSize={15}
                 h={100}
