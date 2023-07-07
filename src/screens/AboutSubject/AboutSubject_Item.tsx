@@ -34,19 +34,19 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
     extra_score: [],
     USERSUBJECT: 0,
   });
-  
+
   const [FontsLoaded, setFontsLoaded] = useState(false);
   useEffect(() => {
-/*     if (!FontsLoaded) {
-      loadFonts();
-      setFontsLoaded(true);
-    } */
-    if(!FontsLoaded){
+    /*     if (!FontsLoaded) {
+          loadFonts();
+          setFontsLoaded(true);
+        } */
+    if (!FontsLoaded) {
       const loadAsync = async () => {
         await loadFonts();
         setFontsLoaded(true);
       };
-  
+
       loadAsync()
     }
 
@@ -112,14 +112,13 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               <LinearGradient
                 start={{ x: -1, y: 0 }}
                 end={{ x: 1, y: 0 }}
-                colors={["#CCCED1", "#3A71E1", "#1ABC9C"]}
+                colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
                 style={{
                   height: "100%",
-                  width: `${
-                    subjCategory.total !== 0
+                  width: `${subjCategory.total !== 0
                       ? (100 / subjCategory.total) * subjCategory.on
                       : (100 / 1) * subjCategory.on
-                  }%`,
+                    }%`,
                   borderRadius: 10,
                 }}
               />
@@ -130,7 +129,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               Promedio
             </Text>
             <Box bg={"#f8f8f8"} rounded={"xl"} mt={2}>
-              {FontsLoaded ?               <Text
+              {FontsLoaded ? <Text
                 fontFamily={"soraSemiBold"}
                 color={"#9a9a9a"}
                 fontWeight={"500"}

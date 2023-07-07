@@ -1,20 +1,14 @@
 import {
   Box,
   FlatList,
-  IconButton,
   Text,
-  Image,
-  ScrollView,
+
 } from "native-base";
 import * as React from "react";
 import { HeaderPerfil } from "../../components/Header";
-import BottomTab from "../../components/BottomTab";
 import Sections from "./Sections";
-import switchIcon from "../../utils/switchIcon";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { removemenu } from "../../redux/actions/menu";
-import { store } from "../../redux/store";
+import { TouchableOpacity, View } from "react-native";
+
 
 const carriers = [
   {
@@ -80,7 +74,7 @@ function Menu({ route, navigation, setMenu }) {
     <Box style={{width:"80%", height: "100%", marginLeft:"20%", zIndex: 101, position: "absolute"}} flex={1} mt={0} pt={0} backgroundColor="#F5FAFE">
       <Box marginLeft={"10%"}>
       <HeaderPerfil
-      showICon={false}
+        showICon={false}
         statusBarColor="#e8eef3"
         barStyle="dark-content"
         navigation={navigation}
