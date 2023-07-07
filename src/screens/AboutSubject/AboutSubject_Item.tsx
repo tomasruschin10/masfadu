@@ -113,7 +113,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 start={{ x: -1, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                style={{
+                  style={{
                   height: "100%",
                   width: `${subjCategory.total !== 0
                       ? (100 / subjCategory.total) * subjCategory.on
