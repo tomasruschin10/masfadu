@@ -19,11 +19,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 function Message() {
   const message = useSelector((state: any) => state.message);
   const dispatch = useDispatch();
-  if (message.open) {
+/*   if (message.open) {
     setTimeout(() => {
       dispatch(updateMessage({ body: "", open: false, type: "" }));
     }, 7000);
-  }
+  } */
   //uncomment for manually activation
   /*  useEffect(() => {
      dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
@@ -105,31 +105,34 @@ function Message() {
               marginTop: "20%",
               borderWidth: 1,
               borderColor: "#d6e9c6",
-              padding: 5,
               display: "flex",
               alignItems: "center",
               flexDirection: "column",
               width: "90%",
               position: "absolute",
               left: "5%",
+              paddingBottom: 0,
               right: 0,
               borderRadius: 50,
             }}
             bg={getColors(message.type, "color") as string}
           >
             <TouchableOpacity
+              style={
+                {marginTop: "3%"}
+              }
               onPress={() =>
                 dispatch(updateMessage({ body: "", open: false, type: "" }))
               }
             >
-              <HStack px={2} space={5} style={{ alignItems: "center" }}>
+              <HStack  space={5} style={{ alignItems: "center", justifyContent: "center" }}>
                 <Box>{getColors(message.type, "icon")}</Box>
                 <Text
                   color="black"
                   textAlign="left"
                   fontWeight="normal"
                   style={{
-                    maxWidth: "75%",
+                    maxWidth: "80%",
                     overflow: "hidden",
                     fontSize: 13,
                   }}
