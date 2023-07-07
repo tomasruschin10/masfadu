@@ -35,9 +35,9 @@ export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours,
             }
           </Box>
           <Box w="74%">
-            <Text fontFamily={'SourceSansPro_400Regular'} fontSize={15} numberOfLines={2} fontWeight={'bold'}>{title}</Text>
-            <Text fontFamily={'SourceSansPro_400Regular'} fontSize={12} numberOfLines={2}>{text}</Text>
-            <Text fontFamily={'SourceSansPro_400Regular'} numberOfLines={2} fontWeight={'bold'} fontSize={10} mt={1}>{time?.name}  {hours}  {method}</Text>
+            <Text style={fontStyles.headingText} fontSize={15} numberOfLines={2}>{title}</Text>
+            <Text style={fontStyles.bodyText} fontSize={12} numberOfLines={2}>{text}</Text>
+            <Text style={fontStyles.bodyText} numberOfLines={2} fontWeight={'bold'} fontSize={10} mt={1}>{time?.name}  {hours}  {method}</Text>
           </Box>
         </Box>
         <Box mr='4' alignItems={'flex-end'} justifyContent='center'>

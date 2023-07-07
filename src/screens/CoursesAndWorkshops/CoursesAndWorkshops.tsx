@@ -74,6 +74,11 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
       .finally(() => setLoading(false));
   };
 
+  useEffect(() => {
+    byWords();
+  }, [searchText])
+
+
   const renderNews = ({ item }) => {
     return (
       <Box
@@ -108,7 +113,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   return (
     <Container>
 
-      <HeaderBack title={mainTitle || "Cursos & Workshops"} navigation={navigation} addButtonUrl={'CoursesForm'}/>
+      <HeaderBack title={mainTitle || "Cursos & Workshops"} navigation={navigation} addButtonUrl={'CoursesForm'} />
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -194,7 +199,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                 <RenderOffer
                   key={item.id}
                   image={item.image.url}
-                  title={item.title}
+                  title={item.title +"a"}
                   text={item.description}
                   url={item.url}
                   time={item.partner}
