@@ -199,7 +199,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                 <RenderOffer
                   key={item.id}
                   image={item.image.url}
-                  title={item.title +"a"}
+                  title={item.title}
                   text={item.description}
                   url={item.url}
                   time={item.partner}

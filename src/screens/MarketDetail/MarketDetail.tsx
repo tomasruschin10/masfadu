@@ -55,12 +55,10 @@ const MarketDetail = ({ navigation }) => {
         <View
           style={{
             // backgroundColor: "gray",
-            width: "100%",
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            position: "absolute",
-            bottom: 100,
+
           }}
         >
           <ButtonMas title="Ver más" />

@@ -27,7 +27,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
       <Layout
         route={route}
         navigation={navigation}
-        title={`Opiniones`}
+        title={`Opiniones de materias`}
       >
         <ScrollView keyboardShouldPersistTaps={'handled'}>
           <ModalWarning2 showWarning={showWarning && notice?.value !== true} setShowWarning={setShowWarning} />

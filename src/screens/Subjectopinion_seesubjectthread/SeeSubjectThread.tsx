@@ -239,7 +239,7 @@ function SeeSubjectThread({ route, navigation }) {
     <Container>
 { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
 
-      <HeaderBack title="Opiniones" />
+      <HeaderBack title="Opiniones de materias" />
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
