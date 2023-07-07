@@ -14,16 +14,12 @@ import Container from "../../components/Container";
 import TitleSliders from "../../components/TitleSliders";
 import { getServices, putServices } from "../../utils/hooks/services";
 import { HeaderPerfil } from "../../components/Header";
-import { Ionicons } from "@expo/vector-icons";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
 import * as Device from "expo-device";
-import { useSelector, useDispatch } from "react-redux";
 import { store } from "../../redux/store";
 import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
-
-import { StyleSheet } from "react-native";
 import Menu from "../Menu/Menu";
 
 function HomeScreen({ route, navigation }) {
@@ -289,53 +285,43 @@ function HomeScreen({ route, navigation }) {
 
   const renderCareer = ({ item }) => {
     const { title, description, url, image, partner, name } = item;
+
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("Subjects", item)}
 
       >
         <Box
-
           shadow={"0"}
           bgColor={"white"}
           m={2}
-
-          borderRadius={"lg"}
+          borderRadius={15}
           mr={2}
           ml={3}
           mb={5}
           w={150}
+          maxWidth={150}
         >
-          <Box >
+          <Box borderRadius={15} overflow="hidden" maxWidth={150}
+          >
             <Image
-
               alt={"logo"}
-              w={160}
+              w={150}
+              maxWidth={150}
+              resizeMethod="scale"
               h={125}
-              borderRadius={15}
-
+              resizeMode="cover"
               source={{ uri: image.url }}
             />
-            <Box pt={1} pl={2}>
+            <Box pt={1} pb={10} pl={2}>
               <Text
-                style={{ fontSize: 16, marginTop: 8 }}
+                style={{ fontSize: 14, marginTop: 8 }}
                 fontWeight={700}
                 fontFamily="Manrope"
-                numberOfLines={2}
-              >
-                {title}
-              </Text>
-              <Text
-                fontWeight={700}
-                fontFamily="Manrope"
-                style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
-                numberOfLines={2}
-                mt={1}
-                fontSize={"sm"}
+                numberOfLines={1}
               >
                 {name}
               </Text>
-
             </Box>
           </Box>
         </Box>
@@ -352,25 +338,21 @@ function HomeScreen({ route, navigation }) {
 
       >
         <Box
-
           shadow={"0"}
           bgColor={"white"}
           m={2}
-
-          borderRadius={"lg"}
+          borderRadius={15}
           mr={2}
           ml={3}
           mb={5}
           w={150}
         >
-          <Box >
+          <Box borderRadius={15} overflow="hidden">
             <Image
-
               alt={"logo"}
               w={160}
               h={125}
-              borderRadius={15}
-
+              resizeMode="cover"
               source={{ uri: image.url }}
             />
             <Box pt={1} pl={2}>
@@ -392,16 +374,7 @@ function HomeScreen({ route, navigation }) {
               >
                 {partner?.name}
               </Text>
-              {/*             <Box>
-              <Text
-                fontFamily="Manrope"
-                numberOfLines={2}
-                fontSize={16}
-                lineHeight={21.86}
-              >
-                {description}
-              </Text>
-            </Box> */}
+
             </Box>
           </Box>
         </Box>
@@ -417,25 +390,22 @@ function HomeScreen({ route, navigation }) {
 
       >
         <Box
-
           shadow={"0"}
           bgColor={"white"}
           m={2}
-
-          borderRadius={"lg"}
+          borderRadius={15}
           mr={2}
           ml={3}
           mb={5}
           w={150}
         >
-          <Box >
+          <Box borderRadius={15} overflow="hidden">
             <Image
-
               alt={"logo"}
-              w={160}
+              w={150}
               h={125}
-              borderRadius={15}
-
+              resizeMode="cover"
+              resizeMethod="scale"
               source={{ uri: image.url }}
             />
             <Box pt={1} pl={2}>
@@ -457,19 +427,11 @@ function HomeScreen({ route, navigation }) {
               >
                 {partner?.name}
               </Text>
-              {/*             <Box>
-              <Text
-                fontFamily="Manrope"
-                numberOfLines={2}
-                fontSize={16}
-                lineHeight={21.86}
-              >
-                {description}
-              </Text>
-            </Box> */}
+
             </Box>
           </Box>
         </Box>
+
       </TouchableOpacity>
     );
   };
@@ -485,6 +447,7 @@ function HomeScreen({ route, navigation }) {
         statusBarColor="#e8eef4"
         barStyle="dark-content"
         navigation={navigation}
+        style={{ marginTop: 10 }}
       />
       <ScrollView
         backgroundColor={"#e8eef3"}
@@ -494,7 +457,7 @@ function HomeScreen({ route, navigation }) {
           {textNews.length > 0 ? (
             <Carousel
               autoplay={true}
-              containerCustomStyle={{ marginTop: 2 }}
+              containerCustomStyle={{ marginTop: 10 }}
               data={textNews}
               itemWidth={ITEM_WIDTH}
               lockScrollWhileSnapping={true}
