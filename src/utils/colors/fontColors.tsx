@@ -7,7 +7,7 @@ export const fontStyles = StyleSheet.create({
     fontFamily: Fonts.fontConfig.Poppins["500"].normal,
   },
   headingText: {
-    color: "#000000",
+    fontWeight: "700",
     fontFamily: Fonts.fontConfig.Poppins["700"].normal,
   },
   bodyText: {

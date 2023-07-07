@@ -1,12 +1,11 @@
 import { Box, Text, HStack } from "native-base";
 import { Image, TouchableOpacity } from "react-native";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import * as Font from "expo-font";
-import { useNavigation } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
+import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Logic({
   index,
@@ -87,8 +86,8 @@ function AboutSubject_Logic({
             pr={2}
             flex={1}
             bold={true}
-            fontSize={15}
             numberOfLines={2}
+            style={[fontStyles.bodyText, {fontSize: 14}]}
             // color={
             //   !available
             //     ? "#C4C4C4"
@@ -96,7 +95,6 @@ function AboutSubject_Logic({
             //     ? "primary.100"
             //     : "light.100"
             // }
-            color="#191D21"
           >
             {name}
           </Text>
@@ -183,11 +181,9 @@ function AboutSubject_Logic({
             color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
             // fontWeight={"bold"}
             textAlign={"center"}
-            fontSize={32}
-            fontFamily={"soraSemiBold"}
-            style={{ marginRight: 10 }}
+            style={[fontStyles.headingText, {fontSize: 20,  marginRight: 10}]}
           >
-            {userSubject?.score}
+            {userSubject?.score} 
           </Text>
           {/* <Text
               position={"absolute"}

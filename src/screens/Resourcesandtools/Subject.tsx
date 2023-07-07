@@ -17,6 +17,7 @@ import { getServices } from "../../utils/hooks/services";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { useEventNavigation } from "../../context";
+import { fontStyles } from "../../utils/colors/fontColors";
 function Subjects({ route, navigation }) {
   const { viewName, id } = route.params;
   const [subjectCategory, setSubjectCategory] = React.useState([]);
@@ -81,7 +82,7 @@ function Subjects({ route, navigation }) {
           //   borderBottomColor={"#5c5353"}
         >
           <Box justifyContent={"center"} pl={4} width={"72%"}>
-            <Text color={"#8b9399"} numberOfLines={4} fontSize={14} mr={4}>
+            <Text style={[fontStyles.bodyText, {fontSize: 14}]} numberOfLines={4} mr={4}>
               {name}
             </Text>
           </Box>
