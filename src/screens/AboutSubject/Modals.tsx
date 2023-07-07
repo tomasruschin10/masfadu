@@ -678,7 +678,6 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               </Box>
               <Box
                 style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
-                <RenderArrow />
                 <Text> -</Text>
                 <Text textAlign={"left"}>
                   {" "}
