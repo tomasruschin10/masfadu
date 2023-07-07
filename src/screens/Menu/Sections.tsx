@@ -89,7 +89,7 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
 
           >
             <Image
-              size={41}
+              size={55}
               alt="image"
               source={icon}
               resizeMode="contain"
