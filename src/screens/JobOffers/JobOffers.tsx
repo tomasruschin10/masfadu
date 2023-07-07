@@ -22,6 +22,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { HeaderBack } from "../../components/Header";
+import Container from "../../components/Container";
+import Layout from "../../utils/LayoutHeader&BottomTab";
 function JobOffers({ route, navigation, mainTitle }) {
   const [allOffers, setAllOffers] = React.useState([]);
   const [advertisement, setAdvertisement] = React.useState([]);
@@ -105,9 +107,12 @@ function JobOffers({ route, navigation, mainTitle }) {
   };
 
   return (
-    <Box>
-            {mainTitle ? <HeaderBack title={"Ofertas Laborales"} navigation={navigation}/>: null}
-
+    <Container>
+      <Layout
+        route={route}
+        navigation={navigation}
+        title={`Ofertas Laborales`}
+      >
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("JobOfferForm");
@@ -242,7 +247,8 @@ function JobOffers({ route, navigation, mainTitle }) {
             ))}
         </Box>
       </ScrollView>
-    </Box>
+      </Layout>
+    </Container>
   );
 }
 

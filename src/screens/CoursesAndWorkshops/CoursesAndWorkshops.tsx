@@ -108,7 +108,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   return (
     <Container>
 
-      <HeaderBack title={mainTitle} navigation={navigation} addButtonUrl={'CoursesForm'}/>
+      <HeaderBack title={mainTitle || "Cursos & Workshops"} navigation={navigation} addButtonUrl={'CoursesForm'}/>
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -214,12 +214,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
           </Box>
         </Box>
       </ScrollView>
-
-      {!mainTitle ? (
-        <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
-      ) : (
-        <Box />
-      )}
+      <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
     </Container>
   );
 }

@@ -7,6 +7,7 @@ import AboutSubject_Item from "./AboutSubject_Item";
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import Menu from "../Menu/Menu";
+import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function AboutSubject({ route, navigation, value }) {
   const user = useSelector((state: any) => state.user.userdata);
@@ -47,37 +48,40 @@ function AboutSubject({ route, navigation, value }) {
 
   return (
     <Container >
-      { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
-      {!value && <HeaderBack  title={"Materias"} />}
+      <Layout
+        route={route}
+        navigation={navigation}
+        title={`Materias`}>
+        {menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu} /> : null}
+ 
+        <ScrollView backgroundColor={"#e8eef3"} >
+          {!loading ? null : (
+            <HStack space={2} justifyContent="center">
+              <Spinner accessibilityLabel="Loading posts" />
+              <Heading color="brand.primary" fontSize="md">
+                Cargando
+              </Heading>
+            </HStack>
+          )}
 
-      <ScrollView backgroundColor={"#e8eef3"} >
-        {!loading ? null : (
-          <HStack space={2} justifyContent="center">
-            <Spinner accessibilityLabel="Loading posts" />
-            <Heading color="brand.primary" fontSize="md">
-              Cargando
-            </Heading>
-          </HStack>
-        )}
-
-        {subjCategory.data.length ? (
-          <>
-          <HeaderBack  title={"Materias"} />
-          <AboutSubject_Item
-            subjCategory={subjCategory}
-            nav={navigation}
-            updater={updater}
-            setUpdater={setUpdater}
-          />
-          </>
-        ) : !subjCategory.data.length && loading === false ? (
-          <Text mx={8} fontWeight={"bold"} color={"primary.100"} fontSize={20}>
-            No Hay materias para mostrar
-          </Text>
-        ) : null}
-        <Box mb={32} />
-      </ScrollView>
-      {!value && <BottomTab setMenu={setMenu} route={route} navigation={navigation} />}
+          {subjCategory.data.length ? (
+            <>
+              <AboutSubject_Item
+                subjCategory={subjCategory}
+                nav={navigation}
+                updater={updater}
+                setUpdater={setUpdater}
+              />
+            </>
+          ) : !subjCategory.data.length && loading === false ? (
+            <Text mx={8} fontWeight={"bold"} color={"primary.100"} fontSize={20}>
+              No Hay materias para mostrar
+            </Text>
+          ) : null}
+          <Box mb={32} />
+        </ScrollView>
+        {!value && <BottomTab setMenu={setMenu} route={route} navigation={navigation} />}
+      </Layout>
     </Container>
   );
 }
