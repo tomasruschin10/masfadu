@@ -7,25 +7,19 @@ import {
   Input,
   ScrollView,
   Text,
-  Button,
-  Spinner,
-  Heading,
+
 } from "native-base";
-import { Input as Inpu2, Icon as Icon2 } from "react-native-elements";
 import { Image, TextInput } from "react-native";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { getServices } from "../../utils/hooks/services";
 import { EvilIcons } from "@expo/vector-icons";
 import {
-  Linking,
   TouchableOpacity,
   Dimensions,
   View,
-  Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 
@@ -36,13 +30,15 @@ function Offers({ route, navigation }) {
   const [AllItems, setAllItems] = useState([]);
   const [currentFilter, setCurrentFilter] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [reload, setReload] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [advertisement, setAdvertisement] = useState([]);
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
   const { search, setSearch, filteredSubjects, } =
     useSearchOfferts();
-  const { canGoBack, goBack, navigate } = useNavigation();
+
+  const { width } = Dimensions.get("window");
+  const cardWidth = width * 0.42; // Ancho de cada tarjeta, ajustado al 40% del ancho total
+
 
   const renderNews = ({ item }) => {
     return (
@@ -188,21 +184,21 @@ function Offers({ route, navigation }) {
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketDetail", { data: item })}
         style={{
-          width: "37%", // Ajusta el ancho de cada tarjeta
+          width: cardWidth,
           marginBottom: "5%",
-          borderRadius: 10,
+          marginHorizontal: 10,
           backgroundColor: "#f6f7f9",
-          marginLeft:"4%",
-          marginRight:"5%",
-          elevation: 3, // Agrega una sombra para resaltar las tarjetas
+          elevation: 3,
+          borderRadius: 15,
         }}
       >
-        <Box>
-        <Image
+        <View>
+          <Image
             style={{
               height: 140,
               width: "100%",
-              borderRadius: 15,
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
               marginBottom: 10,
             }}
             source={{
@@ -215,7 +211,7 @@ function Offers({ route, navigation }) {
               fontSize: 13,
               lineHeight: 18,
               paddingLeft: "5%",
-              paddingRight: "2%"
+              paddingRight: "2%",
             }}
             numberOfLines={2}
             ellipsizeMode="tail"
@@ -228,20 +224,18 @@ function Offers({ route, navigation }) {
               marginTop: 5,
               marginBottom: 5,
               lineHeight: 18,
-
               paddingLeft: "5%",
-              paddingRight: "2%"
+              paddingRight: "2%",
             }}
             numberOfLines={3}
             ellipsizeMode="tail"
           >
             {item.description}
           </Text>
-        </Box>
+        </View>
       </TouchableOpacity>
     );
   };
-
 
   const styles = {
     inputContainer: {
@@ -334,16 +328,15 @@ function Offers({ route, navigation }) {
       </View>
       <FlatList
         style={{
-          width: "100%", marginLeft: "5%",
+          width: "100%",
+          marginTop:10
         }}
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={{
-          justifyContent: "space-around",
-          display: "flex",
-          alignContent: "space-between",
+           alignItems: "center",
           paddingBottom: 50,
         }}
       />
