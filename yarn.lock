@@ -6621,10 +6621,10 @@ expo-device@~5.4.0:
   dependencies:
     ua-parser-js "^0.7.33"
 
-expo-document-picker@~11.5.2:
-  version "11.5.2"
-  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-11.5.2.tgz#b84b2cd4fdbc3a5255c9fbe5f4b933cbe241cd80"
-  integrity sha512-GYur6bVL9uSxC0jwrsP1hoQsEG2yuW4SkGKONao/vFB0wdk550Sl4uISs21PWi4pzXwViEZevqiIeqzNj9/Cfw==
+expo-document-picker@~11.5.3:
+  version "11.5.3"
+  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-11.5.3.tgz#90f23412332ea6ec7ee42fcaaff7ede175114b8e"
+  integrity sha512-nneIdDIKGtU6DQfcF5YJPQdIF2CYug5LapOkktE/0Lc7nXs1O+ejQ8zHLzgbdm2VFymL8d6I6x86sNt8VheBXw==
 
 expo-eas-client@~0.6.0:
   version "0.6.0"

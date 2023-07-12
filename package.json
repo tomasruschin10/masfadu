@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",
+    "dev":"npx expo start --port 19000",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
@@ -34,7 +35,7 @@
     "expo-build-properties": "~0.8.3",
     "expo-constants": "~14.4.2",
     "expo-device": "~5.4.0",
-    "expo-document-picker": "~11.5.2",
+    "expo-document-picker": "~11.5.3",
     "expo-file-system": "~15.4.2",
     "expo-firebase-core": "~6.0.0",
     "expo-font": "~11.4.0",
