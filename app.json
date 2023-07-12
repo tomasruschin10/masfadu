@@ -14,7 +14,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/cbdc858a-c587-4e18-bc3a-3fa2063aafe0"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,12 +25,11 @@
       "supportsTablet": true,
       "buildNumber": "11",
       "googleServicesFile": "./GoogleService-Info.plist",
-      "config": {},
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
-        "ASAuthorizationAppleIDButton": "Continuar con apple"
-      }
-    },
+        "ASAuthorizationAppleIDButton": "Continuar con apple",
+        "jsEngine": "hermes"
+      }    },
     "android": {
       "package": "dev.millionsolutions.faduapp",
       "adaptiveIcon": {
@@ -37,7 +37,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "versionCode": 10,
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "jsEngine": "hermes"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -56,6 +57,7 @@
           }
         }
       ]
-    ]
+    ],
+    "runtimeVersion": "1.0.0"
   }
 }
