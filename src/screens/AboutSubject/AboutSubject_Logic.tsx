@@ -88,7 +88,7 @@ function AboutSubject_Logic({
             flex={1}
             bold={true}
             numberOfLines={2}
-            style={[fontStyles.bodyText, {fontSize: 14}]}
+            style={[fontStyles.poppins400, {fontSize: 14}]}
             // color={
             //   !available
             //     ? "#C4C4C4"
@@ -182,7 +182,7 @@ function AboutSubject_Logic({
             color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
             // fontWeight={"bold"}
             textAlign={"center"}
-            style={[fontStyles.headingText, {fontSize: 20,  marginRight: 10}]}
+            style={[fontStyles.headingText, {fontSize: 32, paddingVertical: 15 , marginTop:10, marginRight: 10}]}
           >
             {userSubject?.score} 
           </Text>

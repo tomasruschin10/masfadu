@@ -87,7 +87,7 @@ function Anoffer({ route, navigation }) {
           </Box>
         </ScrollView>
 
-        <Box alignSelf={"center"} position={"absolute"} bottom={32}>
+        <Box  alignSelf={"center"} marginTop={"20"}>
 
           <TouchableOpacity
             style={{

@@ -43,6 +43,11 @@ function HomeScreen({ route, navigation }) {
   const [career, setCareer] = useState([]);
   const SLIDER_WIDTH = Dimensions.get("window").width;
   const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
+
+  const { width } = Dimensions.get("window");
+  const cardWidth = width * 0.35; // Ancho de cada tarjeta, ajustado al 40% del ancho total
+
+
   const [expoPushToken, setExpoPushToken] = React.useState("");
   const [notification, setNotification] =
     React.useState<Notifications.Notification>();
@@ -289,36 +294,39 @@ function HomeScreen({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("Subjects", item)}
-
+        style={{
+          width:cardWidth,
+          marginRight: 2,
+          marginLeft: 10,
+          marginTop: 10
+        }}
+        
       >
         <Box
           shadow={"0"}
           bgColor={"white"}
-          m={2}
           borderRadius={15}
-          mr={2}
-          ml={3}
+
           mb={5}
-          w={150}
-          maxWidth={150}
         >
-          <Box borderRadius={15} overflow="hidden" maxWidth={150}
+          <Box borderRadius={15} overflow="hidden"
           >
             <Image
               alt={"logo"}
-              w={150}
-              maxWidth={150}
+              style={{
+                width:cardWidth
+              }}
               resizeMethod="scale"
               h={125}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
-            <Box pt={1} pb={10} pl={2}>
+            <Box pt={1} pb={name.length > 10 ? 3 : 10} pl={2}>
               <Text
                 style={{ fontSize: 14, marginTop: 8 }}
                 fontWeight={700}
                 fontFamily="Manrope"
-                numberOfLines={1}
+                numberOfLines={2}
               >
                 {name}
               </Text>
@@ -334,28 +342,35 @@ function HomeScreen({ route, navigation }) {
     const { title, description, url, image, partner } = item;
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("MarketDetail", { data: item })}
-
+        onPress={() => navigation.navigate("MarketDetail", item)}
+        style={{
+          width:cardWidth,
+          marginRight: 2,
+          marginLeft: 10,
+          marginTop: 10
+        }}
+        
       >
         <Box
           shadow={"0"}
           bgColor={"white"}
-          m={2}
           borderRadius={15}
-          mr={2}
-          ml={3}
+
           mb={5}
-          w={150}
         >
-          <Box borderRadius={15} overflow="hidden">
+          <Box borderRadius={15} overflow="hidden"
+          >
             <Image
               alt={"logo"}
-              w={160}
+              style={{
+                width:cardWidth
+              }}
+              resizeMethod="scale"
               h={125}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
-            <Box pt={1} pl={2}>
+            <Box pt={1} pl={2} pb={title.length > 10 ? 3 : 10} >
               <Text
                 style={{ fontSize: 16, marginTop: 8 }}
                 fontWeight={700}
@@ -387,28 +402,34 @@ function HomeScreen({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("Anoffer", { mainTitle: "Cursos & Workshops", title: item.title, url: item.url, description: item.description, id: item.id, partner: item.partner, image: item.image.url })}
-
+        style={{
+          width:cardWidth,
+          marginRight: 2,
+          marginLeft: 10,
+          marginTop: 10
+        }}
+        
       >
         <Box
           shadow={"0"}
           bgColor={"white"}
-          m={2}
           borderRadius={15}
-          mr={2}
-          ml={3}
+
           mb={5}
-          w={150}
         >
-          <Box borderRadius={15} overflow="hidden">
+          <Box borderRadius={15} overflow="hidden"
+          >
             <Image
               alt={"logo"}
-              w={150}
+              style={{
+                width:cardWidth
+              }}
+              resizeMethod="scale"
               h={125}
               resizeMode="cover"
-              resizeMethod="scale"
               source={{ uri: image.url }}
             />
-            <Box pt={1} pl={2}>
+            <Box pt={1} pl={2} pb={title.length > 10 ? 3 : 10}>
               <Text
                 style={{ fontSize: 16, marginTop: 8 }}
                 fontWeight={700}
@@ -421,7 +442,7 @@ function HomeScreen({ route, navigation }) {
                 fontWeight={700}
                 fontFamily="Manrope"
                 style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
-                numberOfLines={2}
+                numberOfLines={1}
                 mt={1}
                 fontSize={"sm"}
               >
