@@ -11,7 +11,7 @@ import {
   View
 } from "native-base";
 import React, { useState } from "react";
-import { Linking } from "react-native";
+import { Dimensions, Linking } from "react-native";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -87,7 +87,7 @@ function Anoffer({ route, navigation }) {
           </Box>
         </ScrollView>
 
-        <Box  alignSelf={"center"} marginTop={"20"}>
+        <Box alignSelf={"center"} position={"absolute"}  top={Dimensions.get("screen").height - 280}>
 
           <TouchableOpacity
             style={{

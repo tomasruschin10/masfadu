@@ -1,4 +1,4 @@
-import { View, Text, Linking } from "react-native";
+import { View, Text, Linking, Dimensions } from "react-native";
 import React from "react";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
@@ -40,7 +40,7 @@ const MarketDetail = ({ navigation }) => {
               marginBottom: "10%"
             }}
             source={{
-              uri: data.image.url,
+              uri: data?.image?.url,
             }}
           />
             <Text
@@ -50,12 +50,13 @@ const MarketDetail = ({ navigation }) => {
                 marginBottom: 10,
               }}
             >
-              {data.title}
+              {data?.title}
             </Text>
-            <Text>{data.description}</Text>
+            <Text>{data?.description}</Text>
           </View>
         </View>
-        <Box alignSelf={"center"} marginTop={"20"}>
+        <Box alignSelf={"center"} position={"absolute"}  top={Dimensions.get("screen").height - 270}>
+
 
           <TouchableOpacity
             style={{
@@ -64,7 +65,7 @@ const MarketDetail = ({ navigation }) => {
               justifyContent: 'center',
             }}
             onPress={() =>
-              Linking.openURL(data?.url.includes("http") ? data?.url : `https://${data.url}`)
+              Linking.openURL(data?.url.includes("http") ? data?.url : `https://${data?.url}`)
             }
           >
 
