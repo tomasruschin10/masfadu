@@ -185,7 +185,7 @@ function ResourceForm({ route, navigation }) {
 
               <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
                 {previewImage && <Image source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar Imagen</Button>
+                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Subir Archivo</Button>
               </Box>
             </Box>
 
