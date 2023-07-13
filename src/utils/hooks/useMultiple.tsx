@@ -64,7 +64,7 @@ export const RenderOpinion = ({color, title, text, time, hours, method, subject_
             }
           </Box>
           <Box w="64%" justifyContent={'center'}>
-            <Text style={fontStyles.headingText} fontSize={14} lineHeight={17} fontWeight={'bold'} numberOfLines={2}>{title}</Text>
+            <Text style={[fontStyles.poppins400, {fontSize: 14}]} fontSize={14} lineHeight={17} fontWeight={'bold'} numberOfLines={2}>{title}</Text>
             {
               text ? <Text style={fontStyles.bodyText} fontSize={9.64} fontWeight={'bold'}>{text}</Text> : null
             }
