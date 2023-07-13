@@ -117,7 +117,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
-          <Box>
+{/*           <Box>
             <Box alignContent={"center"} mt={3} mb={1}>
               <FlatList
                 alignSelf={"center"}
@@ -128,7 +128,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                 renderItem={renderNews}
               />
             </Box>
-          </Box>
+          </Box> */}
 
           <Box
             mx="5"
