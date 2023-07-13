@@ -22,6 +22,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import useSearchOfferts from "../../utils/hooks/userSearchOffers";
+import { fontStyles } from "../../utils/colors/fontColors";
 
 function Offers({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
@@ -76,32 +77,21 @@ function Offers({ route, navigation }) {
 
     return (
       <TouchableOpacity onPress={() => handleFilter(item)}>
-        {/* <View
-          style={{
-            // height: 60,
-            margin: 10,
-            backgroundColor: "red",
-            justifyContent: "center",
-            borderRadius: 30,
-          }}
-        > */}
-
         <Text
           style={{
             backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
             marginLeft: 14,
-            padding: 10,
+            paddingVertical: 7,
             color: item.id == currentFilter ? "#fff" : "#EB5E29",
 
             borderRadius: 20,
             overflow: "hidden", // agrega esta línea
-
+            paddingHorizontal:15
             // padding: 12,
           }}
         >
           {item.name}
         </Text>
-        {/* </View> */}
       </TouchableOpacity>
     );
   };
@@ -190,6 +180,7 @@ function Offers({ route, navigation }) {
           backgroundColor: "#f6f7f9",
           elevation: 3,
           borderRadius: 15,
+          paddingBottom:3
         }}
       >
         <View>
@@ -206,13 +197,15 @@ function Offers({ route, navigation }) {
             }}
           />
           <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 13,
-              lineHeight: 18,
-              paddingLeft: "5%",
-              paddingRight: "2%",
-            }}
+            style={[
+              fontStyles.headingText,
+              {
+                fontWeight: "bold",
+                fontSize: 13,
+                lineHeight: 18,
+                paddingLeft: "5%",
+                paddingRight: "2%",
+              }]}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
@@ -329,14 +322,14 @@ function Offers({ route, navigation }) {
       <FlatList
         style={{
           width: "100%",
-          marginTop:10
+          marginTop: 10
         }}
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={{
-           alignItems: "center",
+          alignItems: "center",
           paddingBottom: 50,
         }}
       />
