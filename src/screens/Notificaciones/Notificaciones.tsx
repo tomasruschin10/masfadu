@@ -46,11 +46,12 @@ function Notificaciones({ route, navigation }) {
                     <Avatar size="60px" source={require('../../../assets/icons/new_notificaciones.png')} />
                     <VStack width={'85%'} pr={2}>
                       <Text color="black">
-                        {item.body}{" "}<Text fontSize="xs" color="#A8A8A8" alignSelf="flex-start">
-                          {item.date}
-                        </Text>
+                        {item.body}{" "}
                       </Text>
 
+                      <Text fontSize="xs" color="#A8A8A8" alignSelf="flex-start">
+                        {item.date}
+                      </Text>
                     </VStack>
 
                   </HStack>
@@ -58,7 +59,7 @@ function Notificaciones({ route, navigation }) {
             </Box>
           </Box>
         </ScrollView>
-        </Layout>
+      </Layout>
     </Container>
   )
 }
