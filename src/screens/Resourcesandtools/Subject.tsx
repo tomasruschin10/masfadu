@@ -82,7 +82,7 @@ function Subjects({ route, navigation }) {
           //   borderBottomColor={"#5c5353"}
         >
           <Box justifyContent={"center"} pl={4} width={"72%"}>
-            <Text style={[fontStyles.bodyText, {fontSize: 14}]} numberOfLines={4} mr={4}>
+            <Text style={[fontStyles.poppins400, {fontSize: 14}]} numberOfLines={4} mr={4}>
               {name}
             </Text>
           </Box>
