@@ -19,11 +19,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 function Message() {
   const message = useSelector((state: any) => state.message);
   const dispatch = useDispatch();
-  if (message.open) {
-    setTimeout(() => {
-      dispatch(updateMessage({ body: "", open: false, type: "" }));
-    }, 7000);
-  } 
+  /*   if (message.open) {
+      setTimeout(() => {
+        dispatch(updateMessage({ body: "", open: false, type: "" }));
+      }, 7000);
+    }  */
   //uncomment for manually activation
   /*  useEffect(() => {
      dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
@@ -102,51 +102,58 @@ function Message() {
         <Slide in={message.open} placement="top">
           <View
             style={{
-              marginTop: "20%",
               borderWidth: 1,
               borderColor: "#d6e9c6",
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              width: "90%",
+              width: "95%",
+              top: "2%",
               position: "absolute",
-              left: "5%",
-              paddingBottom: 0,
-              right: 0,
-              borderRadius: 50,
+              alignSelf: "center",
+              paddingTop: "1%",
+              paddingRight: "2.607%",
+              paddingBottom: "2%",
+              paddingLeft: "2.669%",
+              borderRadius: 20,
             }}
             bg={getColors(message.type, "color") as string}
           >
             <TouchableOpacity
               style={
-                {marginTop: "3%"}
+                { marginTop: "3%" }
               }
               onPress={() =>
                 dispatch(updateMessage({ body: "", open: false, type: "" }))
               }
             >
-              <HStack  space={5} style={{ alignItems: "center", justifyContent: "center" }}>
-                <Box>{getColors(message.type, "icon")}</Box>
-                <Text
-                  color="black"
-                  textAlign="left"
-                  fontWeight="normal"
-                  style={{
-                    maxWidth: "80%",
-                    overflow: "hidden",
-                    fontSize: 13,
-                  }}
-                >
-                  {message.body}
-                </Text>
-                <Box>
-                  <MaterialIcons
-                    name={"close"}
-                    size={20}
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text
                     color="black"
-                  />
-                </Box>
-              </HStack>
+                    textAlign="left"
+                    fontWeight="normal"
+                  >
+                    {getColors(message.type, "icon")} {" "}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    color="black"
+                    textAlign="left"
+                    fontWeight="normal"
+                    style={{
+                      overflow: "hidden",
+                      fontSize: 10,
+                    }}
+                  >
+                    {message.body}
+                  </Text>
+                </View>
+                <MaterialIcons
+                  name={"close"}
+                  size={20}
+                  color="black"
+                />
+              </View>
+
+
             </TouchableOpacity>
           </View>
         </Slide>
