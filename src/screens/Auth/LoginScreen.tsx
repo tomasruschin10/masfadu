@@ -317,7 +317,7 @@ function LoginScreen({ route, navigation }) {
 
             <Box flexDirection={"row"} justifyContent={"center"}>
               <Box justifyContent={"center"}>
-                <Text>¿No tienes una cuenta?</Text>
+                <Text>¿No tenés una cuenta?</Text>
               </Box>
               <Button
                 isLoading={loading}
@@ -325,7 +325,7 @@ function LoginScreen({ route, navigation }) {
                 variant="link"
                 _text={{ fontWeight: "bold" }}
               >
-                Regístrate
+                Registrate
               </Button>
             </Box>
           </Box>
