@@ -18,7 +18,7 @@ export const RenderItem = ({title, id, setIdCopy, idCopy}) => (
 
 export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours, method, rating, navigation, mainTitle, buttonValue, border, image, url, subject_id, id}) => {
   return (
-    <TouchableHighlight underlayColor='white' onPress={() => navigation.navigate(
+    <TouchableHighlight underlayColor='none' onPress={() => navigation.navigate(
         redirect_to, {mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time}
       )}
     >
