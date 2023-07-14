@@ -20,9 +20,11 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 import { fontStyles } from "../../utils/colors/fontColors";
+const { width: screenWidth, height } = Dimensions.get("window");
+const filterWidth = screenWidth * 0.29; // Ancho de cada tarjeta, ajustado al 35% del ancho total
+
 
 function Offers({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
@@ -78,16 +80,18 @@ function Offers({ route, navigation }) {
     return (
       <TouchableOpacity onPress={() => handleFilter(item)}>
         <Text
+          numberOfLines={2}
           style={{
             backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
-            marginLeft: 14,
-            paddingVertical: 7,
             color: item.id == currentFilter ? "#fff" : "#EB5E29",
-
+            width: filterWidth,
+            maxWidth: filterWidth,
             borderRadius: 20,
             overflow: "hidden", // agrega esta línea
-            paddingHorizontal:15
-            // padding: 12,
+            textAlign: "center",
+            paddingVertical: 5,
+            paddingHorizontal:10,
+            // padding: 12, 
           }}
         >
           {item.name}
@@ -308,8 +312,18 @@ function Offers({ route, navigation }) {
 
         }}
       >
-        <ScrollView showsVerticalScrollIndicator={false}>
+
+        <ScrollView  paddingTop={"10%"} paddingBottom={"20%"} showsVerticalScrollIndicator={false}>
           <FlatList
+          
+            contentContainerStyle={
+              {
+                justifyContent: "space-between",
+                width: filterWidth * offerCategory.length + 25,
+                paddingLeft: 10,
+                paddingVertical: "auto"
+              }
+            }
             horizontal={true}
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
@@ -322,7 +336,7 @@ function Offers({ route, navigation }) {
       <FlatList
         style={{
           width: "100%",
-          marginTop: 10
+          marginTop: 30
         }}
         data={items}
         renderItem={renderItem}
