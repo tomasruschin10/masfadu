@@ -21,6 +21,7 @@ import { HeaderBack } from "../../components/Header";
 import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   const [courses, setCourses] = useState([]);
@@ -112,8 +113,8 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
 
   return (
     <Container>
+    <Layout route={route} navigation={navigation} title="Cursos & Workshops" addButtonUrl={'CoursesForm'}>
 
-      <HeaderBack title={mainTitle || "Cursos & Workshops"} navigation={navigation} addButtonUrl={'CoursesForm'} />
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -219,7 +220,8 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
           </Box>
         </Box>
       </ScrollView>
-      <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
+
+      </Layout>
     </Container>
   );
 }
