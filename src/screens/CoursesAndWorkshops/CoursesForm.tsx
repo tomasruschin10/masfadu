@@ -28,7 +28,7 @@ function OfferForm({ route, navigation }) {
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const [nombreApellido, setNombreApellido] = useState("");
-  const [numeroTelefono, setNumeroTelefono] = useState("");
+  const [numeroTelefono, setTitulo] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [tituloEmpleo, setTituloEmpleo] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -55,12 +55,11 @@ function OfferForm({ route, navigation }) {
 
   const uploadImage = async () => {
     try {
+      setLoading(true);
 
       const response = await publishOffer({
         offer_category_id: "2",
         name: nombreApellido,
-        phone: numeroTelefono,
-        company: empresa,
         title: tituloEmpleo,
         description: descripcion,
         image: imagen
@@ -73,11 +72,15 @@ function OfferForm({ route, navigation }) {
       console.log('RESPONSE', response.body);
 
       setSuccessModalOpen(true);
+      setLoading(false);
+
       cleanModals();
       navigation.navigate('Home');
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
       setErrorModalOpen(true);
+      setLoading(false);
+
       cleanModals();
     }
   };
@@ -125,45 +128,10 @@ function OfferForm({ route, navigation }) {
                   type={"text"}
                   p={3.5}
                   mb={4}
-                  placeholder={"Nombre Y Apellido"}
+                  placeholder={"Quién lo dicta?"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
                 />
-              </Box>
-
-              <Box
-                alignItems={"center"}
-                justifyContent="center"
-                flexDir={"row"}
-              >
-                <Input
-                  onChangeText={(text) => setNumeroTelefono(text)}
-                  type={"text"}
-                  p={3.5}
-                  mb={4}
-                  placeholder={"Nro de teléfono"}
-                  placeholderTextColor={"#d3d3d3"}
-                  backgroundColor={"#F7FAFC"}
-                />
-
-              </Box>
-
-              <Box
-
-                alignItems={"center"}
-                justifyContent="center"
-                flexDir={"row"}
-              >
-                <Input
-                  onChangeText={(text) => setEmpresa(text)}
-                  type={"text"}
-                  p={3.5}
-                  mb={4}
-                  placeholder={"Empresa"}
-                  placeholderTextColor={"#d3d3d3"}
-                  backgroundColor={"#F7FAFC"}
-                />
-
               </Box>
 
               <Box
@@ -177,7 +145,7 @@ function OfferForm({ route, navigation }) {
                   type={"text"}
                   p={3.5}
                   mb={4}
-                  placeholder={"Titulo del empleo"}
+                  placeholder={"Título"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
                 />
@@ -185,7 +153,7 @@ function OfferForm({ route, navigation }) {
 
               <TextArea
                 onChangeText={(text) => setDescripcion(text)}
-                placeholder="Sobre el puesto"
+                placeholder="Descripción"
                 autoCompleteType={"off"}
                 fontSize={15}
                 h={100}
@@ -197,7 +165,7 @@ function OfferForm({ route, navigation }) {
 
               <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
                 {previewImage && <Image source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar Imagen</Button>
+                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar LOGO o imagen</Button>
               </Box>
             </Box>
 
