@@ -603,6 +603,10 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
     dispatch(rememberNotice({ type: REMEMBER_NOTICE, value: true }))
   }
 
+  const closeModal = () => {
+    blockNotice();
+    setShowWarning(false)
+  };
   return (
     <Modal
       isOpen={showWarning}
@@ -720,10 +724,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             </HStack>
           </FormControl>
           <Button.Group space={2} mt={"10%"}>
-            <DefaultButton buttonStyle={{ backgroundColor: "#007BFF" }} title="Entiendo, voy a respetar" callBack={() => {
-              blockNotice();
-              setShowWarning(false)
-            }} />
+            <DefaultButton buttonStyle={{ backgroundColor: "#007BFF" }} title="Entiendo, voy a respetar" callBack={() =>closeModal()} />
           </Button.Group>
         </Modal.Body>
       </Modal.Content>

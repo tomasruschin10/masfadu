@@ -29,14 +29,10 @@ const DefaultButton = ({
     const buttonStyleCombined = { ...styles.button, ...buttonStyle };
     const textStyleCombined = { ...styles.text, ...textStyle };
 
-    console.log(
-        containerStyleCombined,
-        buttonStyleCombined,
-        textStyleCombined 
-    );
-
     return (
-        <TouchableOpacity style={containerStyleCombined} onPress={callBack}>
+        <TouchableOpacity style={containerStyleCombined} onPress={() => {
+            callBack()
+        }}>
             <View style={buttonStyleCombined}>
                 <Text style={textStyleCombined}>{title}</Text>
             </View>

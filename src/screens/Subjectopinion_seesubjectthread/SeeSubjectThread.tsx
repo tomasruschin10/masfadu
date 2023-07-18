@@ -54,6 +54,14 @@ function SeeSubjectThread({ route, navigation }) {
   const [form, setForm] = useState<any>({ tags: [] });
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log( "filtro actual", changeFilt)
+  }, [changeFilt])
+  useEffect(() => {
+    changeFilt === false && byWords();
+  }, [searchText])
+
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeIn = () =>
     Animated.timing(fadeAnim, {
@@ -156,6 +164,7 @@ function SeeSubjectThread({ route, navigation }) {
       : [];
 
   const byTags = () => {
+    console.log("byTags executing")
     if (form.tags.length === 0) {
       dispatch(
         updateMessage({
@@ -188,6 +197,7 @@ function SeeSubjectThread({ route, navigation }) {
   };
 
   const byWords = () => {
+    console.log("enter here")
     setLoading(true);
     getServices(
       `opinion/all?subject_id=${subject_id}&search=${searchText
@@ -195,9 +205,10 @@ function SeeSubjectThread({ route, navigation }) {
         .trim()}`
     )
       .then(({ data }: any) => {
+        console.log("data <>", data)
         setAllOpinions(data);
         setLength(-100000);
-        setSearchText("");
+
       })
       .catch((error) => {
         __DEV__ &&
@@ -233,6 +244,12 @@ function SeeSubjectThread({ route, navigation }) {
       setLength(rating);
     }
   };
+
+
+  const search = () => {
+    console.log(changeFilt)
+    changeFilt ? byTags():  byWords();
+  }
 
   //JSX
   return (
@@ -300,7 +317,7 @@ function SeeSubjectThread({ route, navigation }) {
 
                 <HStack alignItems={"flex-start"} mr={3}>
                   <IconButton
-                    onPress={changeFilt ? byTags : byWords}
+                    onPress={() =>{ search()}}
                     rounded={"xl"}
                     backgroundColor={"primary.900"}
                     icon={
