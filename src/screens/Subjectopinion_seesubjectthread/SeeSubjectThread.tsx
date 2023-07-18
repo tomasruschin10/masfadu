@@ -164,7 +164,6 @@ function SeeSubjectThread({ route, navigation }) {
       : [];
 
   const byTags = () => {
-    console.log("byTags executing")
     if (form.tags.length === 0) {
       dispatch(
         updateMessage({
@@ -197,7 +196,6 @@ function SeeSubjectThread({ route, navigation }) {
   };
 
   const byWords = () => {
-    console.log("enter here")
     setLoading(true);
     getServices(
       `opinion/all?subject_id=${subject_id}&search=${searchText
@@ -205,7 +203,6 @@ function SeeSubjectThread({ route, navigation }) {
         .trim()}`
     )
       .then(({ data }: any) => {
-        console.log("data <>", data)
         setAllOpinions(data);
         setLength(-100000);
 
@@ -247,7 +244,6 @@ function SeeSubjectThread({ route, navigation }) {
 
 
   const search = () => {
-    console.log(changeFilt)
     changeFilt ? byTags():  byWords();
   }
 
