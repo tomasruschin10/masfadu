@@ -114,6 +114,7 @@ function ResourceForm({ route, navigation }) {
 
   const uploadImage = async () => {
     try {
+      setLoading(true);
 
       const response = await publishDoc({
         subject_id,
@@ -128,11 +129,15 @@ function ResourceForm({ route, navigation }) {
       console.log('RESPONSE', response.body);
 
       setSuccessModalOpen(true);
+      setLoading(false);
+
       cleanModals();
       navigation.navigate('Home');
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
       setErrorModalOpen(true);
+      setLoading(false);
+
       cleanModals();
     }
   };

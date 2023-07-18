@@ -46,7 +46,7 @@ function HomeScreen({ route, navigation }) {
 
   const { width, height } = Dimensions.get("window");
   const cardWidth = width * 0.35; // Ancho de cada tarjeta, ajustado al 35% del ancho total
-  const cardHeight = height * 0.25; // alto de cada tarjeta, ajustado al 40% del alto total
+  const cardHeight = height * 0.25; // alto de cada tarjeta, ajustado al 25% del alto total
 
 
   const [expoPushToken, setExpoPushToken] = React.useState("");

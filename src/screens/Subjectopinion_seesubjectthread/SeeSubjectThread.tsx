@@ -478,14 +478,14 @@ function SeeSubjectThread({ route, navigation }) {
         >
           <Box
             h={"10"}
-            w={"120"}
+            w={"140"}
             flexDir={"row"}
             alignItems={"center"}
             // px="2"
             justifyContent={"center"}
           >
             <Entypo name="plus" size={28} color="white" />
-            <Text color="white" fontSize={13} mr={1.5} ml={1}>
+            <Text color="white" fontSize={13} mx={"3%"}>
               Crear hilo
             </Text>
           </Box>
