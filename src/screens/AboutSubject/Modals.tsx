@@ -501,17 +501,6 @@ export function ModalWarning({
                         key={item.name}
                         px={2}
                       >
-                        <View
-                          style={{
-                            marginRight: 3,
-                            backgroundColor: "#486b8a",
-                            borderRadius: 6,
-                            padding: 2,
-                            height: 15,
-                          }}
-                        >
-                          <Entypo name="arrow-right" size={10} color="white" />
-                        </View>
                         <Text>-</Text>
                         <Text fontSize={10} textAlign={"left"}>
                           {" "}
