@@ -17,12 +17,11 @@ const MarketDetail = ({ navigation }) => {
   const { canGoBack, goBack, navigate } = useNavigation();
   //   const route = useRoute();
   const route = useRoute<MarketDetailRouteProp>();
-  const { data } = route.params;
+  const data = route.params?.data ? route.params.data : route.params;
 
-  const { url } =
-  route.params;
+  const { url } = route.params;
   console.log(
-    "🚀 ~ file: MarketDetail.tsx:11 ~ MarketDetail ~ route:",
+    "🚀 ~ file: MarketDetail.tsx:11 ~ MarketDetail ~ route: ",url,
     JSON.stringify(data, null, 2)
   );
 
