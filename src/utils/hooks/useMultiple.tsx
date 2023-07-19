@@ -16,10 +16,10 @@ export const RenderItem = ({title, id, setIdCopy, idCopy}) => (
   </TouchableHighlight>
 )
 
-export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours, method, rating, navigation, mainTitle, buttonValue, border, image, url, subject_id, id}) => {
+export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours, method, rating, navigation, mainTitle, buttonValue, border, image, url, subject_id, id,  name, phone, company}) => {
   return (
     <TouchableHighlight underlayColor='none' onPress={() => navigation.navigate(
-        redirect_to, {mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time}
+        redirect_to, {mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time, name, phone, company}
       )}
     >
       <Box shadow={2} mx='5' bg='white' py="4" flexDir={'row'} justifyContent="space-around" mb="5" rounded="2xl" borderColor={ border ? '#EC5F5F' : 'white'} borderWidth="2">
@@ -74,7 +74,7 @@ export const RenderOpinion = ({color, title, text, time, hours, method, subject_
           </Box>
         </Box>
         <Box mr='4' alignItems={'flex-end'} justifyContent='center'>
-          <Text fontSize={16} style={fontStyles.bodyText} color='primary.100' fontWeight="600">{rating}</Text>
+          <Text fontSize={16} style={fontStyles.headingText} color='primary.100' >{rating}</Text>
         </Box>
       </Box>
     </Pressable>

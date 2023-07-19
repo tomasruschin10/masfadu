@@ -80,18 +80,17 @@ function Offers({ route, navigation }) {
     return (
       <TouchableOpacity onPress={() => handleFilter(item)}>
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
           style={{
             backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
             color: item.id == currentFilter ? "#fff" : "#EB5E29",
             width: filterWidth,
             maxWidth: filterWidth,
-            borderRadius: 20,
-            overflow: "hidden", // agrega esta línea
+            borderRadius: 12,
+            overflow: "hidden",
             textAlign: "center",
             paddingVertical: 5,
-            paddingHorizontal:10,
-            // padding: 12, 
+            paddingHorizontal:10
           }}
         >
           {item.name}
@@ -320,7 +319,7 @@ function Offers({ route, navigation }) {
               {
                 justifyContent: "space-between",
                 width: filterWidth * offerCategory.length + 25,
-                paddingLeft: 10,
+                paddingLeft: 5,
                 paddingVertical: "auto"
               }
             }

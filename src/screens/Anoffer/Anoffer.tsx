@@ -11,15 +11,24 @@ import {
   View
 } from "native-base";
 import React, { useState } from "react";
-import { Dimensions, Linking } from "react-native";
+import { Dimensions, Linking, Platform } from "react-native";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
+import { fontStyles } from "../../utils/colors/fontColors";
 
 function Anoffer({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
-  const { mainTitle, title, buttonValue, url, description, id, partner, image } =
+  const { mainTitle, title, buttonValue, url, description, id,name,phone,company, image } =
     route.params;
+console.log( route.params)
+/*
+    {data?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Nombre y apellido:</Text> {data?.name}</Text>}
+            {data?.company && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Empresa:</Text> {data?.company}</Text>}
+            {data?.phone && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Teléfono:</Text> {data?.phone}</Text>}
+            {data?.career?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Carrera:</Text> {data?.career?.name}</Text>}
+            
+*/
 
   return (
     <Container>
@@ -34,6 +43,7 @@ function Anoffer({ route, navigation }) {
                 borderRadius: 15,
                 marginBottom: "10%"
               }}
+              alt="LOGO"
               source={{
                 uri: image,
               }}
@@ -47,8 +57,8 @@ function Anoffer({ route, navigation }) {
                 w="88%"
                 fontWeight={700}
                 fontFamily="Manrope"
-                fontSize={"xl"}
-                mb={1}
+                fontSize={24}
+                mb={3}
               >
                 {title}
               </Text>
@@ -73,9 +83,17 @@ function Anoffer({ route, navigation }) {
               </HStack>
             </Box>
 
-            <Box mt="2" mb={12}>
-              <Text fontSize={14}>Ofrecido por: {partner?.name}</Text>
+            <Box mt="2" mb={3}>
+              <Text fontSize={14}> <Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por:</Text> {name}</Text>
             </Box>
+            <Box mt="2" mb={3}>
+            {phone && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Teléfono:</Text> {phone}</Text>}
+            </Box>
+            <Box mt="2" mb={3}>
+            {company && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Empresa:</Text> {company}</Text>}
+            </Box>
+
+        
             <Box>
               <Text fontSize={16} fontWeight="bold" mb="3">
                 Descripción
@@ -87,7 +105,8 @@ function Anoffer({ route, navigation }) {
           </Box>
         </ScrollView>
 
-        <Box alignSelf={"center"} position={"absolute"}  top={Dimensions.get("screen").height - 280}>
+
+        <Box alignSelf={"center"} position={"absolute"}  top={Dimensions.get("screen").height - (Platform.OS === "ios" ? 160 : 280)}>
 
           <TouchableOpacity
             style={{

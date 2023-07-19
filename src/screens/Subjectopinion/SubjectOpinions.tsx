@@ -30,7 +30,6 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
         title={`Opiniones de materias`}
       >
         <ScrollView keyboardShouldPersistTaps={'handled'}>
-          <ModalWarning2 showWarning={showWarning && notice?.value !== true} setShowWarning={setShowWarning} />
           <HStack mt={0} mb={4} alignItems={'center'} justifyContent="center">
             <MaterialIcons
               name={"search"}
@@ -94,6 +93,8 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
           )).reverse()}
           <Box mb={'24'} />
         </ScrollView>
+        <ModalWarning2 showWarning={showWarning && notice?.value !== true} setShowWarning={setShowWarning} />
+
       </Layout>
     </Container>
   )

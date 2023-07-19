@@ -242,6 +242,9 @@ function JobOffers({ route, navigation, mainTitle }) {
                 border={false}
                 subject_id={0}
                 id={item.id}
+                name={item.name}
+                phone={item.phone}
+                company={item.company}
                 firstLetter={item.title.toString().substring(0, 1)}
               />
             ))}

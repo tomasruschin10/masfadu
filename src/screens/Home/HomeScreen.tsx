@@ -300,7 +300,10 @@ function HomeScreen({ route, navigation }) {
           maxWidth: cardWidth,
           marginRight: 2,
           marginLeft: 10,
-          marginTop: 10
+          marginTop: 10,          
+          height:cardHeight - 30,
+          minHeight: cardHeight - 30,
+          maxHeight: cardHeight - 30,
         }}
         
       >
@@ -308,7 +311,8 @@ function HomeScreen({ route, navigation }) {
           shadow={"0"}
           bgColor={"white"}
           borderRadius={15}
-
+          maxWidth={cardWidth}
+          height={cardHeight - 30}
           mb={5}
         >
           <Box borderRadius={15} overflow="hidden"
@@ -332,18 +336,6 @@ function HomeScreen({ route, navigation }) {
               >
                 {name}
               </Text>
-
-
-             { name.length < 10 &&
-              <Text
-              style={{ opacity: 0, fontSize: 14 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              oculto
-              </Text>
-             }
             </Box>
           </Box>
         </Box>
@@ -362,12 +354,17 @@ function HomeScreen({ route, navigation }) {
           marginRight: 2,
           marginLeft: 10,
           marginTop: 10,
+          height:cardHeight,
+          minHeight: cardHeight,
+          maxHeight: cardHeight,
         }}
       >
         <Box
           shadow={"0"}
           bgColor={"white"}
           borderRadius={15}
+          maxWidth={cardWidth}
+          height={cardHeight}
           mb={5}
         >
           <Box borderRadius={15} overflow="hidden"
@@ -391,17 +388,6 @@ function HomeScreen({ route, navigation }) {
               >
                 {title}
               </Text>
-
-             { title.length < 10 &&
-              <Text
-              style={{ opacity: 0, fontSize: 14 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              oculto
-              </Text>
-             }
           
               <Text
                 fontWeight={700}
@@ -428,6 +414,9 @@ function HomeScreen({ route, navigation }) {
         style={{
           width:cardWidth,
           maxWidth: cardWidth,
+          height:cardHeight,
+          minHeight: cardHeight,
+          maxHeight: cardHeight,
           marginRight: 2,
           marginLeft: 10,
           marginTop: 10
@@ -439,6 +428,7 @@ function HomeScreen({ route, navigation }) {
           bgColor={"white"}
           borderRadius={15}
           maxWidth={cardWidth}
+          height={cardHeight}
           mb={5}
         >
           <Box borderRadius={15} overflow="hidden"
@@ -455,9 +445,9 @@ function HomeScreen({ route, navigation }) {
               resizeMode="cover"
               source={{ uri: image.url }}
             />
-            <Box pt={1} px={2} pb={3} maxWidth={cardWidth}>
+            <Box pt={1} px={2} pb={3}  maxWidth={cardWidth}>
               <Text
-                style={{ fontSize: 16, marginTop: 8 }}
+                style={{ fontSize: 16, marginTop: 8}}
                 fontWeight={700}
                 fontFamily="Manrope"
                 numberOfLines={2}
@@ -465,16 +455,6 @@ function HomeScreen({ route, navigation }) {
                 {title}
               </Text>
 
-             { title.length < 10 &&
-              <Text
-              style={{ opacity: 0, fontSize: 14 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              oculto
-              </Text>
-             }
               <Text
                 fontWeight={700}
                 fontFamily="Manrope"
@@ -483,7 +463,7 @@ function HomeScreen({ route, navigation }) {
                 mt={1}
                 fontSize={"sm"}
               >
-                {partner?.name}
+                {partner?.name || " "}
               </Text>
 
             </Box>
@@ -674,7 +654,7 @@ function HomeScreen({ route, navigation }) {
           {offer.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
-              contentContainerStyle={{ justifyContent: "space-between" }}
+              contentContainerStyle={{ justifyContent: "space-between",  paddingBottom: 20  }}
               showsHorizontalScrollIndicator={false}
               horizontal
               data={offer.slice(0, 3)}
@@ -691,8 +671,6 @@ function HomeScreen({ route, navigation }) {
             </Box>
           )}
 
-
-
           <TitleSliders
             navigateTo={"Coursesandworkshops"}
             title={"Cursos & Workshops"}
@@ -702,7 +680,7 @@ function HomeScreen({ route, navigation }) {
           {courses.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
-              contentContainerStyle={{ justifyContent: "space-between" }}
+              contentContainerStyle={{ justifyContent: "space-between", paddingBottom: 20 }}
               showsHorizontalScrollIndicator={false}
               horizontal
               data={courses.slice(0, 3)}

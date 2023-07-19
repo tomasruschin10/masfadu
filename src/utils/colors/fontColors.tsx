@@ -110,7 +110,6 @@ export const fontStyles = StyleSheet.create({
     fontFamily: Fonts.fontConfig.Poppins["800"].italic,
   },
   poppins900: {
-    color: "#000000",
     fontFamily: Fonts.fontConfig.Poppins["900"].normal,
   },
   poppins900Italic: {

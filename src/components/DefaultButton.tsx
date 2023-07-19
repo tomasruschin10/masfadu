@@ -1,8 +1,6 @@
 import { Text, View } from "native-base";
-import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-
-
+import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps, TouchableOpacity } from "react-native";
+ 
 export const defaultTextStyle =             {
     width: 150,
     color: "#ffffff",

@@ -1,5 +1,5 @@
 import { Box, Text, HStack } from "native-base";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, Platform, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -175,6 +175,8 @@ function AboutSubject_Logic({
             // backgroundColor: "white",
             alignItems: "center",
             justifyContent: "center",
+            overflow:"visible",
+            height: 70
           }}
         >
           {/* <Box style={{ backgroundColor: "cyan" }}> */}
@@ -182,7 +184,7 @@ function AboutSubject_Logic({
             color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
             // fontWeight={"bold"}
             textAlign={"center"}
-            style={[fontStyles.headingText, {fontSize: 32, paddingVertical: 15 , marginTop:10, marginRight: 10}]}
+            style={[fontStyles.headingText, {fontSize: (Platform.OS === "ios" ? 32: 28 ), paddingVertical: (Platform.OS === "ios" ? "5%": "3%" ) , marginTop:10, marginRight: 10}]}
           >
             {userSubject?.score} 
           </Text>

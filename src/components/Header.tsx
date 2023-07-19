@@ -49,7 +49,7 @@ export function HeaderBack({ ...props }) {
           />
         )}
         <Box flex={12}>
-          <Text marginLeft={props?.addButtonUrl ? 0 : 3} fontSize="18" fontWeight="600" textAlign={props?.addButtonUrl ? "center" : "left"}>
+          <Text marginLeft={3} fontSize="18" fontWeight="600" textAlign={"left"}>
             {props.title ?? ''}
           </Text>
         </Box>

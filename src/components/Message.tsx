@@ -25,10 +25,10 @@ function Message() {
       }, 7000);
     }
   //uncomment for manually activation
-  /*  useEffect(() => {
+/*    useEffect(() => {
      dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
   
-   }, []) */
+   }, [])  */
 
   const getColors = (type, resource) => {
     switch (type) {
@@ -105,10 +105,10 @@ function Message() {
               borderWidth: 1,
               borderColor: "#d6e9c6",
               width: "95%",
-              top: "2%",
+              top: "7.5%",
               position: "absolute",
               alignSelf: "center",
-              paddingTop: "1%",
+              paddingTop: "0%",
               paddingRight: "2.607%",
               paddingBottom: "2%",
               paddingLeft: "2.669%",
