@@ -136,7 +136,7 @@ function CreateNewThread({route, navigation}) {
                 backgroundColor={"#F7FAFC"}
                 onChangeText={(text) => setForm({ ...form, title: text })}
                 mb={4}
-                placeholder="Ingresá un titulo"
+                placeholder="Ingresá un título"
                 placeholderTextColor={"#C4C4C4"}
               />
 

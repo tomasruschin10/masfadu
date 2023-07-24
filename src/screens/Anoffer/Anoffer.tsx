@@ -19,16 +19,16 @@ import { fontStyles } from "../../utils/colors/fontColors";
 
 function Anoffer({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
-  const { mainTitle, title, buttonValue, url, description, id,name,phone,company, image } =
+  const { mainTitle, title, buttonValue, url, partner, description, id, name, phone, company, image } =
     route.params;
-console.log( route.params)
-/*
-    {data?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Nombre y apellido:</Text> {data?.name}</Text>}
-            {data?.company && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Empresa:</Text> {data?.company}</Text>}
-            {data?.phone && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Teléfono:</Text> {data?.phone}</Text>}
-            {data?.career?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Carrera:</Text> {data?.career?.name}</Text>}
-            
-*/
+  console.log("route.params", route.params)
+  /*
+      {data?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Nombre y apellido:</Text> {data?.name}</Text>}
+              {data?.company && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Empresa:</Text> {data?.company}</Text>}
+              {data?.phone && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Teléfono:</Text> {data?.phone}</Text>}
+              {data?.career?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Carrera:</Text> {data?.career?.name}</Text>}
+              
+  */
 
   return (
     <Container>
@@ -84,16 +84,9 @@ console.log( route.params)
             </Box>
 
             <Box mt="2" mb={3}>
-              <Text fontSize={14}> <Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por:</Text> {name}</Text>
-            </Box>
-            <Box mt="2" mb={3}>
-            {phone && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Teléfono:</Text> {phone}</Text>}
-            </Box>
-            <Box mt="2" mb={3}>
-            {company && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Empresa:</Text> {company}</Text>}
+              <Text fontSize={14}> <Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{partner?.name ? partner?.name : name}</Text>
             </Box>
 
-        
             <Box>
               <Text fontSize={16} fontWeight="bold" mb="3">
                 Descripción
@@ -105,8 +98,7 @@ console.log( route.params)
           </Box>
         </ScrollView>
 
-
-        <Box alignSelf={"center"} position={"absolute"}  top={Dimensions.get("screen").height - (Platform.OS === "ios" ? 160 : 280)}>
+        <Box alignSelf={"center"} position={"absolute"} top={Dimensions.get("screen").height - (Platform.OS === "ios" ? 160 : 280)}>
 
           <TouchableOpacity
             style={{
@@ -125,8 +117,6 @@ console.log( route.params)
                 height: 50,
                 width: 218,
                 borderRadius: 10,
-
-
               }}
             >
               <Text

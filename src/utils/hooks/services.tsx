@@ -84,7 +84,7 @@ export const deleteServices = (url) => {
 };
 
 
-export const publishOffer = async ({ name, phone, title, description, offer_category_id, image, partner_id, company }: Offer) => {
+export const publishOffer = async ({ name, phone, title, description, offer_category_id, image, partner_id, company, url }: Offer) => {
 
   const state: any = store.getState();
   const authToken = state.token;
@@ -101,6 +101,12 @@ export const publishOffer = async ({ name, phone, title, description, offer_cate
     phone,
     image
   }
+
+  if(url) {
+    parameters.url = url;
+  }
+
+console.log("PARAMETER URL", url)
 
   if (partner_id) {
     parameters.partner_id = partner_id;

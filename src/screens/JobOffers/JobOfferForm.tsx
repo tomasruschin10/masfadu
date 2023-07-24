@@ -31,12 +31,12 @@ function OfferForm({ route, navigation }) {
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [tituloEmpleo, setTituloEmpleo] = useState("");
+  const [url, setUrlEmpleo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-
   const selectImage = async () => {
     try {
       const image = await ImagePicker.launchImageLibraryAsync();
-      
+
       if (!image.canceled && image.assets.length > 0) {
         setImagen(image.assets[0])
         setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
@@ -56,15 +56,7 @@ function OfferForm({ route, navigation }) {
   const uploadImage = async () => {
     try {
       setLoading(true);
-      console.log("que pasa", {
-        offer_category_id: "1",
-        name: nombreApellido,
-        phone: numeroTelefono,
-        company: empresa,
-        title: tituloEmpleo,
-        description: descripcion,
-        image: imagen
-      })
+
       const response = await publishOffer({
         offer_category_id: "1",
         name: nombreApellido,
@@ -72,9 +64,10 @@ function OfferForm({ route, navigation }) {
         company: empresa,
         title: tituloEmpleo,
         description: descripcion,
+        url,
         image: imagen
       })
-      
+
       console.log(response)
       if (response.status != 201) {
         console.log(response)
@@ -116,7 +109,7 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-              Describí de la forma más precisa y detallada que puedas
+              Describí de la forma más detallada que puedas, así se entiende claro que estás publicando! Gracias :)
             </Text>
           </Box>
 
@@ -191,27 +184,48 @@ function OfferForm({ route, navigation }) {
                   type={"text"}
                   p={3.5}
                   mb={4}
-                  placeholder={"Titulo del empleo"}
+                  placeholder={"Título del empleo"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
+              </Box>
+              <Box
+
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setUrlEmpleo(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Url de oferta"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
+              </Box>
+              <Box
+
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setDescripcion(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder="Sobre el puesto"
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
 
-              <TextArea
-                onChangeText={(text) => setDescripcion(text)}
-                placeholder="Sobre el puesto"
-                autoCompleteType={"off"}
-                fontSize={15}
-                h={100}
-                backgroundColor={"#F7FAFC"}
-                borderWidth={0}
-                placeholderTextColor={"#d3d3d3"}
-                mb={6}
-              />
 
-              <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
+              <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 70, }}>
                 {previewImage && <Image alt="IMAGEN" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar Imagen</Button>
+                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "4.5%", position: "absolute", height: "50%" }} onPress={selectImage}>Agregar Imagen</Button>
               </Box>
             </Box>
 

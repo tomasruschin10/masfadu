@@ -31,6 +31,7 @@ function OfferForm({ route, navigation }) {
 
   const [imagen, setImagen] = useState(null)
   const [asunto, setAsunto] = useState("")
+  const [email, setEmail] = useState("")
   const [mensaje, setMensaje] = useState("")
   const [categoryId, setCategoryId] = useState("")
   const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -70,12 +71,12 @@ function OfferForm({ route, navigation }) {
       : [];
 
 
-      const cleanModals = () => {
-        setTimeout(() => {
-          setSuccessModalOpen(false);
-          setErrorModalOpen(false);
-        }, 3000);
-      }
+  const cleanModals = () => {
+    setTimeout(() => {
+      setSuccessModalOpen(false);
+      setErrorModalOpen(false);
+    }, 3000);
+  }
 
   const uploadImage = async () => {
     try {
@@ -84,6 +85,7 @@ function OfferForm({ route, navigation }) {
         title: asunto,
         description: mensaje,
         offer_category_id: "3",
+        url: email,
         image: imagen
       })
 
@@ -95,7 +97,7 @@ function OfferForm({ route, navigation }) {
       setSuccessModalOpen(true);
       setLoading(false);
 
-      cleanModals(); 
+      cleanModals();
       navigation.navigate('Home');
     } catch (error) {
 
@@ -103,7 +105,7 @@ function OfferForm({ route, navigation }) {
       setErrorModalOpen(true);
       setLoading(false);
 
-      cleanModals(); 
+      cleanModals();
     }
   };
 
@@ -127,7 +129,7 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-              Describí de la forma más precisa y detallada que podas
+              Describí de la forma más detallada que puedas la oferta laboral, así se entiende claro que estás buscando! :)
             </Text>
           </Box>
 
@@ -155,7 +157,7 @@ function OfferForm({ route, navigation }) {
                       p={3.5}
 
                       mb={4}
-                      placeholder={"Titulo"}
+                      placeholder={"Título"}
                       placeholderTextColor={"#d3d3d3"}
                       backgroundColor={"#F7FAFC"}
 
@@ -163,6 +165,25 @@ function OfferForm({ route, navigation }) {
                   </Box>
                 </>
               )}
+
+              <Box
+                mb={searchText !== "" ? 2 : 2}
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setEmail(text)}
+                  type={"text"}
+                  p={3.5}
+
+                  mb={4}
+                  placeholder={"Email"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+
+                />
+              </Box>
 
               <TextArea
                 onChangeText={(text) => setMensaje(text)}

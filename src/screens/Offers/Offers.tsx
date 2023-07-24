@@ -335,7 +335,6 @@ function Offers({ route, navigation }) {
       <FlatList
         style={{
           width: "100%",
-          marginTop: 30
         }}
         data={items}
         renderItem={renderItem}
