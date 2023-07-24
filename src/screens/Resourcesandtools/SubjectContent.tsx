@@ -10,6 +10,8 @@ import { fontStyles } from '../../utils/colors/fontColors';
 
 function SubjectContent({ route, navigation }) {
   const { viewName, name, subjectId } = route.params
+  console.log("DATA<>", route.params)
+
   const [ResourceCategory, setResourceCategory] = React.useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -91,7 +93,7 @@ function SubjectContent({ route, navigation }) {
     <Container>
 
       <Layout addButtonUrl={{
-        name: "ResourceForm", props: { subject_id: subjectId,}
+        name: "ResourceForm", props: { subject_id: subjectId,name}
       }} route={route} navigation={navigation} title={`${name} ${viewName ? "-" : ""} ${viewName || ""}`}>
       <ScrollView keyboardShouldPersistTaps={'handled'}>
 

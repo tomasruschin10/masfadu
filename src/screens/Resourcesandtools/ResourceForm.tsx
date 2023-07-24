@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 import { StyleSheet } from "react-native";
+import { fontStyles } from "../../utils/colors/fontColors";
 
 const customPickerStyles = StyleSheet.create({
   inputIOS: {
@@ -27,7 +28,6 @@ const customPickerStyles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: 'green',
     marginBottom: 20,
     color: '#d3d3d3',
     paddingRight: 20, // to ensure the text is never behind the icon
@@ -48,7 +48,9 @@ const customPickerStyles = StyleSheet.create({
 
 
 function ResourceForm({ route, navigation }) {
-  const { subject_id } = route.params;
+  const { subject_id, name: subjectName } = route.params;
+
+  console.log("DATA<>", route.params)
   const [loading, setLoading] = useState(false);
   const [resourceCategories, setResourceCategory] = React.useState([]);
 
@@ -153,6 +155,19 @@ function ResourceForm({ route, navigation }) {
           nestedScrollEnabled={true}
           keyboardShouldPersistTaps={"handled"}
         >
+          <Box
+            mx={5}
+            mb={2}
+            mt={-4}
+            borderTopWidth={1}
+            borderTopColor={"#EBEEF2"}
+            pt={6}
+          >
+            <Text fontSize={15}>
+             Publicá un documento en
+            </Text>
+            <Text style={[fontStyles.headingText]}>{subjectName}</Text>
+          </Box>
           <Box>
             <Box
               mx="5"
