@@ -13,10 +13,25 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   const { search, setSearch, filteredSubjects, allSubjects, loading } = useSearchSubject()
   const [showWarning, setShowWarning] = useState(true);
   const { notice } = useSelector((state: any) => state.notice);
+/* 
+  addButtonUrl={{
+        
+    name: "CreateNewThread", props:  {
+      subject_id: subject_id,
+      title: title,
+      description: description,
+      time: time,
+      hours: hours,
+      method: method,
+      id: id,
+      rating: rating,
+      value: value,
+    }
+  }} */
 
 
   useEffect(() => {
-    console.log("NOTICE STATE ", notice?.value)
+    console.log("NOTICE STsATE ", notice.value)
   }, [notice?.value])
 
 
@@ -28,6 +43,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
         route={route}
         navigation={navigation}
         title={`Opiniones de materias`}
+        addButtonUrl={"CreateNewThread"}
       >
         <ScrollView keyboardShouldPersistTaps={'handled'}>
           <HStack mt={0} mb={4} alignItems={'center'} justifyContent="center">

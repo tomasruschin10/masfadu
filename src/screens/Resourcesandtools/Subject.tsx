@@ -87,12 +87,12 @@ function Subjects({ route, navigation }) {
             </Text>
           </Box>
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("SubjectContent", {
+            onPress={() => 
+            navigation.navigate("SubjectContent", {
                 viewName: viewName,
                 name: name,
                 subjectId: id,
-              })
+              }) 
             }
           >
             <Box

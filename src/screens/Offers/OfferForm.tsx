@@ -75,7 +75,7 @@ function OfferForm({ route, navigation }) {
     setTimeout(() => {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
-    }, 3000);
+    }, 6000);
   }
 
   const uploadImage = async () => {
@@ -129,7 +129,7 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-              Describí de la forma más detallada que puedas la oferta laboral, así se entiende claro que estás buscando! :)
+            Describí de la forma más detallada que puedas, así se entiende claro que estás publicando! Gracias :)
             </Text>
           </Box>
 
@@ -219,7 +219,7 @@ function OfferForm({ route, navigation }) {
           </Box>
         </ScrollView>
         <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Publicación exitosa"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
       </Layout>
     </Container>
   );

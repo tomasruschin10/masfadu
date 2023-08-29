@@ -484,7 +484,7 @@ export function ModalWarning({
                 >
                   No podés anotarte a esta materia :(
                 </Text>
-                <Text marginLeft={"6.5%"} fontSize={12} textAlign={"left"}>
+                <Text marginTop={"5%"} marginLeft={"6.5%"} fontSize={12} textAlign={"center"}>
                   Primero tenés que aprobar:
                 </Text>
                 <HStack
@@ -524,11 +524,12 @@ export function ModalWarning({
                 w={"100%"}
                 marginY={5}
                 numberOfLines={2}>
-                No podés anotarte a esta materia sin terminar el nivel anterior
+              {/*   No podés anotarte a esta materia sin terminar el nivel anterior */}
+              ¿Querés agregar una nota en esta materia?
               </Text>
             ) : (
               <Text fontSize={15} textAlign={"center"}>
-                Desea anotarse a esta materia?
+               ¿Querés agregar una nota en esta materia?
               </Text>
             )}
           </FormControl>

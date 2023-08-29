@@ -105,7 +105,7 @@ function ResourceForm({ route, navigation }) {
     setTimeout(() => {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
-    }, 3000);
+    }, 6000);
   }
 
 
@@ -225,7 +225,7 @@ function ResourceForm({ route, navigation }) {
           </Box>
         </ScrollView>
         <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Publicación exitosa"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
       </Layout>
     </Container>
   );

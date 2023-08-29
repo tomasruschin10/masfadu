@@ -40,7 +40,7 @@ function ResourcesAndTools({ route, navigation, mainTitle }) {
       <Layout
         route={route}
         navigation={navigation}
-        title={mainTitle || "Recursos Y Herramientas"}
+        title={mainTitle || "Recursos y herramientas"}
       >
         <ScrollView>
           {

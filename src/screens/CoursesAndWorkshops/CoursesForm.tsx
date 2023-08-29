@@ -28,8 +28,7 @@ function OfferForm({ route, navigation }) {
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const [nombreApellido, setNombreApellido] = useState("");
-  const [numeroTelefono, setTitulo] = useState("");
-  const [empresa, setEmpresa] = useState("");
+
   const [tituloEmpleo, setTituloEmpleo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
@@ -50,7 +49,7 @@ function OfferForm({ route, navigation }) {
     setTimeout(() => {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
-    }, 3000);
+    }, 6000);
   }
 
   const uploadImage = async () => {
@@ -185,7 +184,7 @@ function OfferForm({ route, navigation }) {
           </Box>
         </ScrollView>
         <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Publicación exitosa"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
       </Layout>
     </Container>
   );

@@ -1,15 +1,14 @@
  import React, { useState } from 'react'
-import { Box, Button, Checkbox, FormControl, HStack, Icon, Input, Modal, ScrollView, Text, TextArea } from 'native-base'
+import { Box, Button, CheckIcon, Checkbox, FormControl, HStack, Icon, Input, Modal, ScrollView, Select, Text, TextArea } from 'native-base'
 import Container from '../../components/Container'
 import Layout from '../../utils/LayoutHeader&BottomTab'
 import { FontAwesome5, Ionicons, AntDesign} from '@expo/vector-icons';
-import { getServices, postServices, postTags } from '../../utils/hooks/services';
+import { getServices, postServices } from '../../utils/hooks/services';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
 import { useEffect } from 'react';
 import RecommendedTags from '../../utils/RecommendedTags';
-import Alert from "../../components/alert/Alert";
 import { baseApi } from "../../utils/api";
 import { store } from "../../redux/store";
 function CreateNewThread({route, navigation}) {
@@ -21,43 +20,46 @@ function CreateNewThread({route, navigation}) {
   const [loading, setLoading] = useState(false)
 	const [searchText, setSearchText] = useState('');
 
-  const [alert, setAlert] = React.useState(null);
 
-  const showAlert = (type, message) => {
-    setAlert({ type, message });
-  };
+  
+  const [selectedSubjectId, setSelectedSubjectId] = useState(""); 
+  const [subjects, setSubjects] = useState([]); // Estado para almacenar el ID de la materia seleccionada
 
-  const closeAlert = () => {
-    setAlert(null);
+  const handleSubjectChange = (itemValue) => {
+    setSelectedSubjectId(itemValue);
+    setForm({ ...form, subject_id: itemValue })
   };
   
-  const {subject_id, title, description, time, hours, method, id, rating, value} = route.params
-  
-  const [form, setForm] = useState<any>({ title: "", anonymous: 0, description: "", subject_id: parseInt(subject_id), tags: [], professor: "" })
+
+  const [form, setForm] = useState<any>({ title: "",
+   anonymous: 0, description: "",
+    subject_id: selectedSubjectId, tags: [], professor: "" })
   const dispatch = useDispatch()
   
   const sendForm = () => {
+    console.log("created opinion", form)
+
     setLoading(true)
     postServices(`opinion/create`, form).then(({data}:any) => {
       dispatch(updateMessage({body: "Publicado correctamente", open: true, type: "success"}))
-      /* showAlert('success', 'Publicado correctamente') */
       setShowModal(false)
-      navigation.navigate('SeeSubjectThread', {
-        value: value ? false : true,
-        subject_id: subject_id,
-        title: title,
-        description: description,
-        time: time,
-        hours: hours,
-        method: method,
-        id: id,
-        rating: rating
+      console.log("created opinion 0", data)
+      
+    navigation.navigate('SeeSubjectThread', {
+        value: data?.value ? false : true,
+        subject_id: data.subject.id,
+        title: data.title,
+        description: data.description,
+        time: data.subject.info,
+        hours: "",
+        method: "",
+        id: data.id,
+        rating: data.subject.opinionsCount
       })
     }).catch(() => {
       setShowModal(false)
       setShowModalError(true)
       dispatch(updateMessage({body: "Hubo un error al intentar hacer la publicación :(", open: true, type: "danger"}))
-    /*   showAlert('error', 'Hubo un error al intentar hacer la publicación :(') */
     }).finally(() => setLoading(false))
   }
 
@@ -65,6 +67,12 @@ function CreateNewThread({route, navigation}) {
     getServices("tag/all")
       .then(({ data }: any) => {
         setAllTags(data);
+      })
+      .catch(() => {});
+
+      getServices("subject/all")
+      .then(({ data }: any) => {
+        setSubjects(data);
       })
       .catch(() => {});
   }, []);
@@ -118,11 +126,50 @@ function CreateNewThread({route, navigation}) {
   return (
     <Container>
 
-      <Layout route={route} navigation={navigation} title={`Crear Hilo ${title}`}>
+      <Layout route={route} navigation={navigation} title={`Crear Hilo`}>
         <ScrollView nestedScrollEnabled={true} keyboardShouldPersistTaps={'handled'}>
             <Box mx={5} mt={5} borderTopWidth={1} borderTopColor={'#EBEEF2'} pt={6}>
               <Text fontSize={15}>Información</Text>
             </Box>
+
+            <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              pt={2}
+              >
+            {subjects.length > 0 ? (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                selectedValue={selectedSubjectId}
+                minWidth="335"
+                accessibilityLabel="Elegir Materia"
+                placeholder="Elegir Materia"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={handleSubjectChange}
+                textAlign={"left"}
+              >
+                {subjects.map((item) => (
+                  <Select.Item label={item.name} value={item.id} key={item.id} />
+                ))}
+              </Select>
+            ) : (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                rounded={"3xl"}
+                textAlign={"center"}
+                isDisabled
+                accessibilityLabel="Elegir Materia"
+                placeholder="No hay más materias"
+              ></Select>
+            )}
+          </Box>
 
           <Box>
             <Box

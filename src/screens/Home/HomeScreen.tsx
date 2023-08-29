@@ -1,10 +1,9 @@
 import { memo, useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
-import { Box, HStack, Image, Input, ScrollView, Text } from "native-base";
+import { Box, HStack, Icon, IconButton, Image, Input, ScrollView, Text } from "native-base";
 import {
   FlatList,
   Dimensions,
-  Linking,
   TouchableOpacity,
   Platform,
   View,
@@ -21,6 +20,16 @@ import { store } from "../../redux/store";
 import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
 import Menu from "../Menu/Menu";
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
+
+
+const handleError = (error) => {
+  if (__DEV__) {
+    console.log("Error:", error);
+  }
+};
+
+
 
 function HomeScreen({ route, navigation }) {
   const isFocused = useIsFocused();
@@ -54,6 +63,8 @@ function HomeScreen({ route, navigation }) {
     React.useState<Notifications.Notification>();
   const notificationListener = React.useRef<any>();
   const responseListener = React.useRef<any>();
+
+  
   React.useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
@@ -83,14 +94,7 @@ function HomeScreen({ route, navigation }) {
         .then(({ data }: { data: Config }) => {
           setOffertTitle(data.value);
         })
-        .catch((error) => {
-          if (__DEV__) {
-            console.log(
-              "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-              error
-            );
-          }
-        });
+        .catch(handleError);
     });
   }, []);
 
@@ -99,64 +103,32 @@ function HomeScreen({ route, navigation }) {
       .then(({ data }: any) => {
         setTextNews(data);
       })
-      .catch((error) => {
-        if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
-        }
-      });
+      .catch(handleError);
+
     getServices("advertisement/all/active?key=home")
       .then(({ data }: any) => {
         setAdvertisement(data);
       })
-      .catch((error) => {
-        if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
-        }
-      });
+      .catch(handleError);
+
     getServices("offer/all")
       .then(({ data }: any) => {
         setOffer(data);
       })
-      .catch((error) => {
-        if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
-        }
-      });
+      .catch(handleError);
 
     getServices("offer/all/course")
       .then(({ data }: any) => {
         setCourses(data);
       })
-      .catch((error) => {
-        if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
-        }
-      });
+      .catch(handleError);
 
-    getServices("career/all/")
+    getServices("resource/all/first")
       .then(({ data }: any) => {
         setCareer(data);
       })
-      .catch((error) => {
-        if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
-        }
-      });
+      .catch(handleError);
+
   }, [setAdvertisement, setTextNews, setOffer, setCourses]);
 
   const renderTextNews = ({ item }) => (
@@ -205,107 +177,25 @@ function HomeScreen({ route, navigation }) {
       </TouchableOpacity>
     </Box>
   );
-  const renderOfertas = ({ item }) => {
-    const { title, description, url, image, partner } = item;
-    return (
-      <Box
-        shadow={"0"}
-        bgColor={"white"}
-        m={2}
-        p={1}
-        borderRadius={"md"}
-        mr={2}
-        ml={3}
-        mb={5}
-        minH={150}
-        w={308}
-      >
-        <Box
-          flexDirection={"row"}
-          pt={1}
-          pl={2}
-          borderBottomColor={"light.200"}
-          borderBottomWidth={1}
-          minH={135}
-        >
-          <Image
-            alt={"logo"}
-            w={92}
-            h={92}
-            style={{ marginTop: 16 }}
-            resizeMode={"cover"}
-            borderRadius={"md"}
-            source={{ uri: image.url }}
-          />
-          <Box px={3} minH={105} w={180}>
-            <Text
-              style={{ fontSize: 16, marginTop: 8 }}
-              fontWeight={700}
-              fontFamily="Manrope"
-              numberOfLines={2}
-            >
-              {title}
-            </Text>
-            <Text
-              fontWeight={700}
-              fontFamily="Manrope"
-              style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
-              numberOfLines={2}
-              mt={1}
-              fontSize={"sm"}
-            >
-              {partner?.name}
-            </Text>
-            <Box w={180} mb={3}>
-              <Text
-                fontFamily="Manrope"
-                numberOfLines={2}
-                fontSize={16}
-                lineHeight={21.86}
-              >
-                {description}
-              </Text>
-            </Box>
-          </Box>
-        </Box>
-        <TouchableOpacity
-          onPress={() =>
-            Linking.openURL(url.includes("http") ? url : `https://${url}`)
-          }
-          style={{ justifyContent: "center" }}
-        >
-          <Text
-            py={2}
-            fontWeight={700}
-            style={{ fontSize: 16 }}
-            color={"alternativeLink"}
-            fontFamily="Manrope"
-            textAlign={"center"}
-          >
-            Ir al sitio web
-          </Text>
-        </TouchableOpacity>
-      </Box>
-    );
-  };
 
   const renderCareer = ({ item }) => {
     const { title, description, url, image, partner, name } = item;
-
+    item.subject.subjectId = item.subject.id
+    console.log("AAA ", item.subject)
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("Subjects", item)}
+        onPress={() => navigation.navigate("SubjectContent",  item.subject)}
         style={{
-          width:cardWidth,
+          width: cardWidth,
           maxWidth: cardWidth,
-          height:cardHeight,
+          height: cardHeight,
           minHeight: cardHeight,
           maxHeight: cardHeight,
           marginRight: 2,
           marginLeft: 10,
           marginTop: 10
         }}
-        
+
       >
         <Box
           shadow={"0"}
@@ -315,32 +205,81 @@ function HomeScreen({ route, navigation }) {
           height={cardHeight - 20}
           mb={5}
         >
-          <Box borderRadius={15} overflow="hidden"
-          >
-            <Image
-              alt={"logo"}
-              style={{
-                width:cardWidth
-              }}
-              resizeMethod="scale"
-              h={125}
-              resizeMode="cover"
-              source={{ uri: image.url }}
-            />
-            <Box pt={1} pb={3} pl={2}>
-              <Text
-                style={{ fontSize: 16, marginTop: 8 }}
-                fontWeight={700}
-                fontFamily="Manrope"
-                numberOfLines={2}
-              >
-                {name}
-              </Text>
-            </Box>
+          <Icon
+            as={FontAwesome}
+            size={"6xl"}
+            color="red.400"
+            mx={"auto"}
+            my={"1/6"}
+            name={
+              image?.url.endsWith(".pdf")
+                ? "file-pdf-o"
+                : /\.(jpe?g|png|gif|bmp)$/i.test(image?.url)
+                  ? "file-image-o"
+                  : "file-o"
+            }
+          />
+          <Box pt={1} pb={3} px={4} pl={2}>
+            <Text
+              style={{ fontSize: 16, marginTop: 8 }}
+              fontWeight={700}
+              fontFamily="Manrope"
+              numberOfLines={2}
+            >
+              {name}
+            </Text>
           </Box>
-        </Box>
-      </TouchableOpacity>
-    );
+          </Box>
+      </TouchableOpacity>);
+    /*     return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Subjects", item)}
+            style={{
+              width:cardWidth,
+              maxWidth: cardWidth,
+              height:cardHeight,
+              minHeight: cardHeight,
+              maxHeight: cardHeight,
+              marginRight: 2,
+              marginLeft: 10,
+              marginTop: 10
+            }}
+            
+          >
+            <Box
+              shadow={"0"}
+              bgColor={"white"}
+              borderRadius={15}
+              maxWidth={cardWidth}
+              height={cardHeight - 20}
+              mb={5}
+            >
+              <Box borderRadius={15} overflow="hidden"
+              >
+                <Image
+                  alt={"logo"}
+                  style={{
+                    width:cardWidth
+                  }}
+                  resizeMethod="scale"
+                  h={125}
+                  resizeMode="cover"
+                  source={{ uri: image.url }}
+                />
+                <Box pt={1} pb={3} pl={2}>
+                  <Text
+                    style={{ fontSize: 16, marginTop: 8 }}
+                    fontWeight={700}
+                    fontFamily="Manrope"
+                    numberOfLines={2}
+                  >
+                    {name}
+                  </Text>
+                </Box>
+              </Box>
+            </Box>
+          </TouchableOpacity>
+        ); */
   };
 
 
@@ -351,11 +290,11 @@ function HomeScreen({ route, navigation }) {
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketDetail", item)}
         style={{
-          width:cardWidth,
+          width: cardWidth,
           marginRight: 2,
           marginLeft: 10,
           marginTop: 10,
-          height:cardHeight,
+          height: cardHeight,
           minHeight: cardHeight,
           maxHeight: cardHeight,
         }}
@@ -373,23 +312,23 @@ function HomeScreen({ route, navigation }) {
             <Image
               alt={"logo"}
               style={{
-                width:cardWidth
+                width: cardWidth
               }}
               resizeMethod="scale"
               h={125}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
-            <Box pt={1} px={2}  pb={3}>
+            <Box pt={1} px={2} pb={3}>
               <Text
-                style={{ fontSize: 16, marginTop: 8}}
+                style={{ fontSize: 16, marginTop: 8 }}
                 fontWeight={700}
                 fontFamily="Manrope"
                 numberOfLines={2}
               >
                 {title}
               </Text>
-          
+
               <Text
                 fontWeight={700}
                 fontFamily="Manrope"
@@ -413,16 +352,16 @@ function HomeScreen({ route, navigation }) {
       <TouchableOpacity
         onPress={() => navigation.navigate("Anoffer", { mainTitle: "Cursos & Workshops", title: item.title, url: item.url, description: item.description, id: item.id, partner: item.partner, image: item.image.url })}
         style={{
-          width:cardWidth,
+          width: cardWidth,
           maxWidth: cardWidth,
-          height:cardHeight,
+          height: cardHeight,
           minHeight: cardHeight,
           maxHeight: cardHeight,
           marginRight: 2,
           marginLeft: 10,
           marginTop: 10
         }}
-        
+
       >
         <Box
           shadow={"0"}
@@ -437,18 +376,18 @@ function HomeScreen({ route, navigation }) {
             <Image
               alt={"logo"}
               style={{
-                width:cardWidth,
+                width: cardWidth,
                 maxWidth: cardWidth,
               }}
-              
+
               resizeMethod="scale"
               h={125}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
-            <Box pt={1} px={2} pb={3}  maxWidth={cardWidth}>
+            <Box pt={1} px={2} pb={3} maxWidth={cardWidth}>
               <Text
-                style={{ fontSize: 16, marginTop: 8}}
+                style={{ fontSize: 16, marginTop: 8 }}
                 fontWeight={700}
                 fontFamily="Manrope"
                 numberOfLines={2}
@@ -655,7 +594,7 @@ function HomeScreen({ route, navigation }) {
           {offer.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
-              contentContainerStyle={{ justifyContent: "space-between",  paddingBottom: 20  }}
+              contentContainerStyle={{ justifyContent: "space-between", paddingBottom: 20 }}
               showsHorizontalScrollIndicator={false}
               horizontal
               data={offer.slice(0, 3)}

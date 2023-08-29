@@ -463,7 +463,7 @@ function SeeSubjectThread({ route, navigation }) {
       </ScrollView>
 
 
-      <Box
+     {/*  <Box
         bg="#E85E29"
         shadow={"3"}
         borderRadius="lg"
@@ -503,7 +503,7 @@ function SeeSubjectThread({ route, navigation }) {
             </Text>
           </Box>
         </TouchableHighlight>
-      </Box>
+      </Box> */}
 
       <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
     </Container>
