@@ -37,7 +37,7 @@ export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours,
           <Box w="74%">
             <Text style={fontStyles.headingText} fontSize={15} numberOfLines={2}>{title}</Text>
             <Text style={fontStyles.bodyText} fontSize={12} numberOfLines={2}>{text}</Text>
-            <Text style={fontStyles.bodyText} numberOfLines={2} fontWeight={'bold'} fontSize={10} mt={1}>{time?.name}  {hours}  {method}</Text>
+            <Text style={fontStyles.bodyText} numberOfLines={2} fontWeight={'bold'} fontSize={10} mt={1}>{name}  {hours}  {method}</Text>
           </Box>
         </Box>
         <Box mr='4' alignItems={'flex-end'} justifyContent='center'>

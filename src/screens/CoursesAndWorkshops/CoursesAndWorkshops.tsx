@@ -204,6 +204,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
                   text={item.description}
                   url={item.url}
                   time={item.partner}
+                  name={item.name}
                   hours={""}
                   method={""}
                   rating={item.point}

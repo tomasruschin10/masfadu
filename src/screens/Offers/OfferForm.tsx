@@ -129,7 +129,7 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-            Describí de la forma más detallada que puedas, así se entiende claro que estás publicando! Gracias :)
+            Describí de la forma más detallada posible lo que vas a publicar, así queda claro!
             </Text>
           </Box>
 

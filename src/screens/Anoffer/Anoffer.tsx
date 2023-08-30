@@ -21,14 +21,6 @@ function Anoffer({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
   const { mainTitle, title, buttonValue, url, partner, description, id, name, phone, company, image } =
     route.params;
-  console.log("route.params", route.params)
-  /*
-      {data?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Nombre y apellido:</Text> {data?.name}</Text>}
-              {data?.company && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Empresa:</Text> {data?.company}</Text>}
-              {data?.phone && <Text><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Teléfono:</Text> {data?.phone}</Text>}
-              {data?.career?.name && <Text style={{ marginBottom: 10 }}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Carrera:</Text> {data?.career?.name}</Text>}
-              
-  */
 
   return (
     <Container>
@@ -84,7 +76,7 @@ function Anoffer({ route, navigation }) {
             </Box>
 
             <Box mt="2" mb={3}>
-              <Text fontSize={14}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{name ? name : partner?.name || "" }</Text>
+              <Text fontSize={14}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{name || "" }</Text>
             </Box>
 
             <Box>
