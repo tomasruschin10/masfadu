@@ -28,7 +28,7 @@ function OfferForm({ route, navigation }) {
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const [nombreApellido, setNombreApellido] = useState("");
-
+  const [url, setUrlEmpleo] = useState("");
   const [tituloEmpleo, setTituloEmpleo] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
@@ -61,6 +61,7 @@ function OfferForm({ route, navigation }) {
         name: nombreApellido,
         title: tituloEmpleo,
         description: descripcion,
+        url: url,
         image: imagen
       })
 
@@ -132,7 +133,19 @@ function OfferForm({ route, navigation }) {
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
-
+              <Box     alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}>
+              <Input
+                  onChangeText={(text) => setUrlEmpleo(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Url"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+                />
+              </Box>
               <Box
 
                 alignItems={"center"}

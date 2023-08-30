@@ -22,7 +22,7 @@ export const RenderOffer = ({firstLetter, redirect_to, title, text, time, hours,
         redirect_to, {mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time, name, phone, company}
       )}
     >
-      <Box shadow={2} mx='5' bg='white' py="4" flexDir={'row'} justifyContent="space-around" mb="5" rounded="2xl" borderColor={ border ? '#EC5F5F' : 'white'} borderWidth="2">
+      <Box shadow={2} mx='5' bg='white' py="4" flexDir={'row'} justifyContent="space-around" mb="2.5" rounded="2xl" borderColor={ border ? '#EC5F5F' : 'white'} borderWidth="2">
         <Box flexDir={'row'} ml='4'>
           <Box mr='4' my={'auto'}>
             {

@@ -184,9 +184,9 @@ function AboutSubject_Logic({
             color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
             // fontWeight={"bold"}
             textAlign={"center"}
-            style={[fontStyles.headingText, {fontSize: (Platform.OS === "ios" ? 32: 28 ), paddingVertical: (Platform.OS === "ios" ? "5%": "3%" ) , marginTop:10, marginRight: 10}]}
+            style={[fontStyles.headingText, {fontSize: (Platform.OS === "ios" ? 32: 28 ), paddingVertical: (Platform.OS === "ios" ? "6.2%": "3%" ) , marginTop:10, marginRight: 10}]}
           >
-            {userSubject?.score} 
+            {userSubject?.score}
           </Text>
           {/* <Text
               position={"absolute"}

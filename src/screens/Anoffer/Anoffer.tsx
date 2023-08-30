@@ -84,16 +84,12 @@ function Anoffer({ route, navigation }) {
             </Box>
 
             <Box mt="2" mb={3}>
-              <Text fontSize={14}> <Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{name ? name : partner?.name || "" }</Text>
+              <Text fontSize={14}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{name ? name : partner?.name || "" }</Text>
             </Box>
 
             <Box>
-              <Text fontSize={16} fontWeight="bold" mb="3">
-                Descripción
-              </Text>
-              <Text fontWeight={14} mb="4">
-                {description}
-              </Text>
+              <Text fontSize={14} mb="3"><Text style={[fontStyles.headingText, { fontSize: 16 }]} mb="3">Descripción: </Text>{description}</Text>
+
             </Box>
           </Box>
         </ScrollView>

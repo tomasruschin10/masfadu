@@ -59,7 +59,7 @@ const MarketDetail = ({ navigation }) => {
                   fontSize={24}
                   mb={3}
                 >
-                  {data?.title}
+                {data?.title}
                 </Text>
                 {/*  <HStack alignItems={"flex-start"}>
                 <IconButton
@@ -80,7 +80,7 @@ const MarketDetail = ({ navigation }) => {
                   }
                 />
               </HStack> */}
-                {" "}  {" "}
+                {" "}  {" "}    {" "}  {" "}
               </Box>
               <Box>
                 <Text fontSize={16} fontWeight="bold" mb="3">

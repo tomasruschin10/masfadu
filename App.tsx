@@ -54,19 +54,14 @@ import {
   Manrope_800ExtraBold,
 } from "@expo-google-fonts/manrope";
 import { Theme } from "./src/utils/Theme";
-import { LogBox, View, StyleSheet, TouchableOpacity, Text, Button } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistor, store } from "./src/redux/store";
 import Message from "./src/components/Message";
 import { navigationRef } from "./src/navigation/RootNavigation";
 import { initializeApp } from "firebase/app";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Rect } from "react-native-svg";
-import { Platform } from "react-native";
-import Menu from "./src/screens/Menu/Menu";
-import { InicioMateria } from "./src/components/iconsMenu/inicio-menu";
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -121,8 +116,8 @@ export default ({ children }: any) => {
     SourceSansPro_900Black,
     SourceSansPro_900Black_Italic,
   });
-  const [appIsReady, setAppIsReady] = React.useState(false);
-
+/*   const [appIsReady, setAppIsReady] = React.useState(false);
+ */
   // 	LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   // LogBox.ignoreAllLogs();//Ignore all log notifications
   const theme = extendTheme(Theme);

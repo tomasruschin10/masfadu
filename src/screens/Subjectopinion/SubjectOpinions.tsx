@@ -13,21 +13,6 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   const { search, setSearch, filteredSubjects, allSubjects, loading } = useSearchSubject()
   const [showWarning, setShowWarning] = useState(true);
   const { notice } = useSelector((state: any) => state.notice);
-/* 
-  addButtonUrl={{
-        
-    name: "CreateNewThread", props:  {
-      subject_id: subject_id,
-      title: title,
-      description: description,
-      time: time,
-      hours: hours,
-      method: method,
-      id: id,
-      rating: rating,
-      value: value,
-    }
-  }} */
 
 
   useEffect(() => {

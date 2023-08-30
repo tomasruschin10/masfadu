@@ -40,6 +40,7 @@ function ResourcesAndTools({ route, navigation, mainTitle }) {
       <Layout
         route={route}
         navigation={navigation}
+        addButtonUrl={"CreateNewThread"}
         title={mainTitle || "Recursos y herramientas"}
       >
         <ScrollView>

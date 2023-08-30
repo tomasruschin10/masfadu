@@ -211,7 +211,7 @@ function OfferForm({ route, navigation }) {
                 justifyContent="center"
                 flexDir={"row"}
               >
-                <Input
+  {/*               <Input
                   onChangeText={(text) => setDescripcion(text)}
                   type={"text"}
                   p={3.5}
@@ -219,17 +219,28 @@ function OfferForm({ route, navigation }) {
                   placeholder="Sobre el puesto"
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
-                />
+                /> */}
+
+                <TextArea
+                onChangeText={(text) => setDescripcion(text)}
+                placeholder="Sobre el puesto"
+                autoCompleteType={"off"}
+                fontSize={15}
+                h={100}
+                width={"100%"}
+                backgroundColor={"#F7FAFC"}
+                borderWidth={0}
+                placeholderTextColor={"#d3d3d3"}
+                mb={6}
+              />  
               </Box>
-
-
               <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 70, }}>
                 {previewImage && <Image alt="IMAGEN" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
                 <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "4.5%", position: "absolute", height: "50%" }} onPress={selectImage}>Agregar Imagen</Button>
               </Box>
             </Box>
 
-            <Box mt={-20} alignItems="center">
+            <Box mt={"-23%"} alignItems="center">
               <Button
                 style={{ backgroundColor: "#EB5E29" }}
                 isLoading={loading}

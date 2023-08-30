@@ -77,7 +77,6 @@ function HomeScreen({ route, navigation }) {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("res", response);
       });
 
     return () => {
@@ -181,7 +180,6 @@ function HomeScreen({ route, navigation }) {
   const renderCareer = ({ item }) => {
     const { title, description, url, image, partner, name } = item;
     item.subject.subjectId = item.subject.id
-    console.log("AAA ", item.subject)
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("SubjectContent",  item.subject)}
@@ -285,7 +283,6 @@ function HomeScreen({ route, navigation }) {
 
   const renderShop = ({ item }) => {
     const { title, description, url, image, partner } = item;
-    console.log("ITEM <>0", item)
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketDetail", item)}

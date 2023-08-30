@@ -15,25 +15,38 @@ function CreateNewThread({route, navigation}) {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [showModalIcon, setShowModalIcon] = useState(false);
-  const [menuShow, setMenu] = useState(false)
-  const [allTags, setAllTags] = useState([{}])
-  const [loading, setLoading] = useState(false)
+  /* const [menuShow, setMenu] = useState(false) */
+  const [allTags, setAllTags] = useState([{}]);
+  const [careers, setCareers] = useState([]);
+  const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
-
-
-  
   const [selectedSubjectId, setSelectedSubjectId] = useState(""); 
+  const [selectedCareerId, setSelectedCareerId] = useState(null); 
   const [subjects, setSubjects] = useState([]); // Estado para almacenar el ID de la materia seleccionada
+
+  if (route.params && route.params?.career_id) {
+    setSelectedCareerId(route.params.career_id)
+    alert(route.params.career_id)
+  } 
 
   const handleSubjectChange = (itemValue) => {
     setSelectedSubjectId(itemValue);
     setForm({ ...form, subject_id: itemValue })
   };
-  
 
-  const [form, setForm] = useState<any>({ title: "",
-   anonymous: 0, description: "",
-    subject_id: selectedSubjectId, tags: [], professor: "" })
+  const handleCareerChange = (itemValue) => {
+    setSelectedCareerId(itemValue);
+    setSelectedSubjectId(null);
+
+  };
+
+  const [form, setForm] = useState<any>({ 
+    title: "",
+    anonymous: 0,
+    description: "",
+    subject_id: selectedSubjectId,
+    tags: [], 
+    professor: "" })
   const dispatch = useDispatch()
   
   const sendForm = () => {
@@ -64,15 +77,25 @@ function CreateNewThread({route, navigation}) {
   }
 
   useEffect(() => {
+    getServices('career/all').then((res: any) => {
+      setCareers(res.data)
+      console.log(res.data)
+    }).catch(() => {});
+  }, [careers])
+
+  useEffect(() => {
+    getServices("subject/career/" + selectedCareerId)
+    .then(({ data }: any) => {
+      setSubjects(data);
+    })
+    .catch(() => {});
+  }, [selectedCareerId])
+
+
+  useEffect(() => {
     getServices("tag/all")
       .then(({ data }: any) => {
         setAllTags(data);
-      })
-      .catch(() => {});
-
-      getServices("subject/all")
-      .then(({ data }: any) => {
-        setSubjects(data);
       })
       .catch(() => {});
   }, []);
@@ -133,6 +156,44 @@ function CreateNewThread({route, navigation}) {
             </Box>
 
             <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              pt={2}
+              >
+            {careers.length > 0 ? (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                selectedValue={selectedCareerId}
+                minWidth="335"
+                accessibilityLabel="Elegir Carrera"
+                placeholder="Elegir Carrera"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={handleCareerChange}
+                textAlign={"left"}
+              >
+                {careers.map((item) => (
+                  <Select.Item label={item.name} value={item.id} key={item.id} />
+                ))}
+              </Select>
+            ) : (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                rounded={"3xl"}
+                textAlign={"center"}
+                isDisabled
+                accessibilityLabel="Elegir Materia"
+                placeholder="No hay más materias"
+              ></Select>
+            )}
+          </Box>
+          <Box
               mx="5"
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
