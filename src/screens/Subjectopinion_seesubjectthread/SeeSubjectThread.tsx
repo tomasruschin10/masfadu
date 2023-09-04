@@ -205,7 +205,6 @@ function SeeSubjectThread({ route, navigation }) {
       .then(({ data }: any) => {
         setAllOpinions(data);
         setLength(-100000);
-
       })
       .catch((error) => {
         __DEV__ &&
@@ -252,7 +251,7 @@ function SeeSubjectThread({ route, navigation }) {
     <Container>
 { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
 
-      <HeaderBack title="Opiniones de materias" />
+      <HeaderBack title="Opiniones de materias" addButtonUrl={"CreateNewThread"}/>
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -412,7 +411,7 @@ function SeeSubjectThread({ route, navigation }) {
             color={"primary.100"}
             fontSize={20}
           >
-            No hay hilos para mostrar
+            No hay hilos para mosstrar
           </Text>
         )}
         <Box mx={5} mb={32}>
