@@ -92,9 +92,7 @@ function SubjectContent({ route, navigation }) {
   return (
     <Container>
 
-      <Layout addButtonUrl={{
-        name: "ResourceForm", props: { subject_id: subjectId,name}
-      }} route={route} navigation={navigation} title={`${name} ${viewName ? "-" : ""} ${viewName || ""}`}>
+      <Layout addButtonUrl={"ResourceForm"} route={route} navigation={navigation} title={`${name} ${viewName ? "-" : ""} ${viewName || ""}`}>
       <ScrollView keyboardShouldPersistTaps={'handled'}>
 
         {!loading ? (

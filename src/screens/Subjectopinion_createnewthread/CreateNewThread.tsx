@@ -22,11 +22,10 @@ function CreateNewThread({route, navigation}) {
 	const [searchText, setSearchText] = useState('');
   const [selectedSubjectId, setSelectedSubjectId] = useState(""); 
   const [selectedCareerId, setSelectedCareerId] = useState(null); 
-  const [subjects, setSubjects] = useState([]); // Estado para almacenar el ID de la materia seleccionada
+  const [subjects, setSubjects] = useState([]);
 
   if (route.params && route.params?.career_id) {
     setSelectedCareerId(route.params.career_id)
-    alert(route.params.career_id)
   } 
 
   const handleSubjectChange = (itemValue) => {
@@ -37,7 +36,6 @@ function CreateNewThread({route, navigation}) {
   const handleCareerChange = (itemValue) => {
     setSelectedCareerId(itemValue);
     setSelectedSubjectId(null);
-
   };
 
   const [form, setForm] = useState<any>({ 
@@ -79,9 +77,8 @@ function CreateNewThread({route, navigation}) {
   useEffect(() => {
     getServices('career/all').then((res: any) => {
       setCareers(res.data)
-      console.log(res.data)
     }).catch(() => {});
-  }, [careers])
+  }, [])
 
   useEffect(() => {
     getServices("subject/career/" + selectedCareerId)

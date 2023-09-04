@@ -5,8 +5,9 @@ import {
   Input,
   ScrollView,
   Text,
-  TextArea,
   Image,
+  Select,
+  CheckIcon,
 } from "native-base";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
@@ -48,19 +49,54 @@ const customPickerStyles = StyleSheet.create({
 
 
 function ResourceForm({ route, navigation }) {
-  const { subject_id, name: subjectName } = route.params;
+  /* const { subject_id, name: subjectName } = route.params; */
 
-  console.log("DATA<>", route.params)
+  console.log("DATA<>")
   const [loading, setLoading] = useState(false);
   const [resourceCategories, setResourceCategory] = React.useState([]);
 
   const [previewImage, setPreviewImage] = useState(null);
   const [imagen, setImagen] = useState(null)
   const [name, setName] = useState(null)
-
+  const [subjectName, setSubjectName] = useState("");
   const [categoriaId, setCategoria] = useState("")
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [selectedSubjectId, setSelectedSubjectId] = useState(""); 
+  const [selectedCareerId, setSelectedCareerId] = useState(null); 
+  const [careers, setCareers] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+
+  if (route.params && route.params?.career_id) {
+    setSelectedCareerId(route.params.career_id)
+  } 
+
+  const handleSubjectChange = (itemValue) => {
+    setSelectedSubjectId(itemValue);
+    setSubjectName(subjects.find(el => el.id === itemValue).name)
+  };
+
+  const handleCareerChange = (itemValue) => {
+    setSelectedCareerId(itemValue);
+    setSelectedSubjectId(null);
+  };
+
+
+  useEffect(() => {
+    getServices('career/all').then((res: any) => {
+      setCareers(res.data)
+    }).catch(() => {});
+  }, [])
+
+  useEffect(() => {
+    getServices("subject/career/" + selectedCareerId)
+    .then(({ data }: any) => {
+      setSubjects(data);
+    })
+    .catch(() => {});
+  }, [selectedCareerId])
+
+
 
   useEffect(() => {
     setLoading(true)
@@ -119,7 +155,7 @@ function ResourceForm({ route, navigation }) {
       setLoading(true);
 
       const response = await publishDoc({
-        subject_id,
+        subject_id: selectedSubjectId,
         resource_category_id: categoriaId,
         image: imagen,
         name
@@ -164,11 +200,90 @@ function ResourceForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-             Publicá un documento en
+             Publicá un documento {subjectName && "en"}
             </Text>
-            <Text style={[fontStyles.headingText]}>{subjectName}</Text>
-          </Box>
+            { subjectName && <Text style={[fontStyles.headingText]}>{subjectName}</Text> }
+          </Box> 
           <Box>
+
+
+          <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              pt={2}
+              >
+            {careers.length > 0 ? (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                selectedValue={selectedCareerId}
+                minWidth="335"
+                accessibilityLabel="Elegir Carrera"
+                placeholder="Elegir Carrera"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={(e) => handleCareerChange(e)}
+                textAlign={"left"}
+              >
+                {careers.map((item) => (
+                  <Select.Item label={item.name} value={item.id} key={item.id} />
+                ))}
+              </Select>
+            ) : (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                rounded={"3xl"}
+                textAlign={"center"}
+                isDisabled
+                accessibilityLabel="Elegir Materia"
+                placeholder="No hay más materias"
+              ></Select>
+            )}
+          </Box>
+          <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              pt={2}
+              >
+            {subjects.length > 0 ? (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                selectedValue={selectedSubjectId}
+                minWidth="335"
+                accessibilityLabel="Elegir Materia"
+                placeholder="Elegir Materia"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={(e) => handleSubjectChange(e)}
+                textAlign={"left"}
+              >
+                {subjects.map((item) => (
+                  <Select.Item label={item.name} value={item.id} key={item.id} />
+                ))}
+              </Select>
+            ) : (
+              <Select
+              backgroundColor={"#F7FAFC"}
+              placeholderTextColor={"#C4C4C4"}
+                rounded={"3xl"}
+                textAlign={"center"}
+                isDisabled
+                accessibilityLabel="Elegir Materia"
+                placeholder="No hay más materias"
+              ></Select>
+            )}
+          </Box>
+
             <Box
               mx="5"
               borderBottomWidth={1}
@@ -204,7 +319,7 @@ function ResourceForm({ route, navigation }) {
               </Box>
 
               <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
-                {previewImage && <Image source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
+                {previewImage && <Image alt="Imagen" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
                 <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Subir Archivo</Button>
               </Box>
             </Box>
