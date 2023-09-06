@@ -10,6 +10,10 @@ export const fontStyles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: Fonts.fontConfig.Poppins["700"].normal,
   },
+  headingTextBold: {
+    fontWeight: "bold",
+    fontFamily: Fonts.fontConfig.Poppins["700"].normal,
+  },
   bodyText: {
     fontFamily: Fonts.fontConfig.Poppins["200"].normal,
   },
