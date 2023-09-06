@@ -83,11 +83,11 @@ const MarketDetail = ({ navigation }) => {
                 {" "}  {" "}    {" "}  {" "}
               </Box>
               <Box>
-                <Text fontSize={16} fontWeight="bold" mb="3">
-                  Descripción
+                <Text fontSize={14}  mb="3">
+                  <Text fontSize={16} fontWeight="bold"  mb="4">
+                  Descripción: {" "}  
                 </Text>
-                <Text fontWeight={14} mb="4">
-                  {data?.description}
+                {data?.description}
                 </Text>
               </Box>
               {data?.company && <Box>
@@ -103,7 +103,44 @@ const MarketDetail = ({ navigation }) => {
         </ScrollView>
         <Box alignSelf={"center"} position={"absolute"} top={Dimensions.get("screen").height - (Platform.OS === "ios" ? 160 : 280)}>
 
-          {data?.url && data.url.includes("@") &&
+        {data?.email &&
+            <TouchableOpacity
+              style={{
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                justifyContent: 'center',
+              }}
+
+              onPress={() =>
+                Linking.openURL(`mailto:${data.email}`)
+              }
+            >
+
+              <View
+                style={{
+                  backgroundColor: "#EB5E29",
+                  height: 50,
+                  width: 218,
+                  borderRadius: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#ffffff",
+                    fontSize: 13,
+                    textAlign: "center",
+                    marginTop: 13,
+                    fontWeight: "bold",
+                    letterSpacing: 0.5
+                  }}
+                >
+                 CONTACTAR
+                </Text>
+              </View>
+            </TouchableOpacity>
+          }    
+
+{/*           {data?.url && data.url.includes("@") &&
             <TouchableOpacity
               style={{
                 marginLeft: 'auto',
@@ -139,7 +176,7 @@ const MarketDetail = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           }
-
+ */}
         </Box>
       </Layout>
     </Container>

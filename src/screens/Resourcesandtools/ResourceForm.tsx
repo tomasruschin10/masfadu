@@ -22,6 +22,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 import { StyleSheet } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
+import { AxiosError } from "axios";
 
 const customPickerStyles = StyleSheet.create({
   inputIOS: {
@@ -126,7 +127,7 @@ function ResourceForm({ route, navigation }) {
 
   const selectImage = async () => {
     try {
-      const image = await ImagePicker.launchImageLibraryAsync();
+      const image = await ImagePicker.launchImageLibraryAsync({base64: false});
 
       if (!image.canceled && image.assets.length > 0) {
         setImagen(image.assets[0])
@@ -172,7 +173,7 @@ function ResourceForm({ route, navigation }) {
       cleanModals();
       navigation.navigate('Home');
     } catch (error) {
-      console.log('Error al enviar la imagen al backend:', error);
+      console.log('Error al enviar la imagen al backend:', (error as AxiosError).request);
       setErrorModalOpen(true);
       setLoading(false);
 

@@ -10,5 +10,6 @@ export interface Offer {
     name?:string;
     company?: string;
     phone?: string;
+    email?: string;
     approved?: boolean
 } 

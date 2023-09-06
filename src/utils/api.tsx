@@ -38,7 +38,7 @@ instances.forEach(async (instance) => {
                     store.dispatch(updateUserdata({}));
                     RootNavigation.reset('SplashScreen')
                 }	
-				console.log(errorResponse);
+				 /* console.log(errorResponse); */
 			}
 			return Promise.reject(error);
 		}

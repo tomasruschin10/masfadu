@@ -32,6 +32,7 @@ function OfferForm({ route, navigation }) {
   const [imagen, setImagen] = useState(null)
   const [asunto, setAsunto] = useState("")
   const [email, setEmail] = useState("")
+  const [url, setUrl] = useState("")
   const [mensaje, setMensaje] = useState("")
   const [categoryId, setCategoryId] = useState("")
   const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -85,7 +86,8 @@ function OfferForm({ route, navigation }) {
         title: asunto,
         description: mensaje,
         offer_category_id: "3",
-        url: email,
+        url: url,
+        email: email,
         image: imagen
       })
 
@@ -179,6 +181,23 @@ function OfferForm({ route, navigation }) {
 
                   mb={4}
                   placeholder={"Email"}
+                  placeholderTextColor={"#d3d3d3"}
+                  backgroundColor={"#F7FAFC"}
+
+                />
+              </Box>
+              <Box
+                mb={searchText !== "" ? 2 : 2}
+                alignItems={"center"}
+                justifyContent="center"
+                flexDir={"row"}
+              >
+                <Input
+                  onChangeText={(text) => setUrl(text)}
+                  type={"text"}
+                  p={3.5}
+                  mb={4}
+                  placeholder={"Enlace"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
 
