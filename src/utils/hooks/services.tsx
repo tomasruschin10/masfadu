@@ -126,6 +126,8 @@ export const publishOffer = async ({ name,email, phone, title, description, offe
     parameters,
   };
 
+  console.log("PARAMETERS <>", parameters)
+
   return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
 
 };

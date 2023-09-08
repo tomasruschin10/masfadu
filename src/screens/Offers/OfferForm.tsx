@@ -76,7 +76,7 @@ function OfferForm({ route, navigation }) {
     setTimeout(() => {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
-    }, 6000);
+    }, 30000);
   }
 
   const uploadImage = async () => {
@@ -178,12 +178,10 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setEmail(text)}
                   type={"text"}
                   p={3.5}
-
                   mb={4}
                   placeholder={"Email"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
-
                 />
               </Box>
               <Box

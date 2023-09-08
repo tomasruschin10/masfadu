@@ -62,16 +62,16 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
           height: 2,
         },
         borderColor: "#c7cbce",
-        shadowOpacity: 0.04,
-        shadowRadius: 4.27,
+        shadowOpacity: 0.24,
+        shadowRadius: 6.27,
         borderRadius: 8,
         borderWidth: 0.5,
         elevation: 10,
-      }} mx='5' bg='white' py={3.5} flexDir={'row'} justifyContent="space-around" mb="3" >
+      }} mx='5' bg='white' py={2.5} flexDir={'row'} justifyContent="space-around" mb="3" >
         <Box flexDir={'row'} ml='3'>
           <Box mr='4'>
             {
-              <Box rounded={'md'} alignItems={'center'} justifyContent={'center'} w={60} height={75} >
+              <Box rounded={'md'} alignItems={'center'} justifyContent={'center'} w={60} height={60} >
                 <Avatar marginX={"auto"} rounded={5} _text={{ fontSize: (30 / firstLetter?.length) + (firstLetter?.length * 1.5) }} bg={color} mr="1" >{firstLetter.toUpperCase()}</Avatar>
               </Box>
             }

@@ -9,7 +9,7 @@ import {
   Text,
 
 } from "native-base";
-import { Image, TextInput } from "react-native";
+import { Image } from "react-native";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { getServices } from "../../utils/hooks/services";
 import { EvilIcons } from "@expo/vector-icons";
@@ -22,12 +22,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 import { fontStyles } from "../../utils/colors/fontColors";
-const { width: screenWidth, height } = Dimensions.get("window");
+import Container from "../../components/Container";
+const { width: screenWidth } = Dimensions.get("window");
 const filterWidth = screenWidth * 0.29; // Ancho de cada tarjeta, ajustado al 35% del ancho total
 
 
 function Offers({ route, navigation }) {
-  const [menuShow, setMenu] = useState(false)
   const [offerCategory, setOfferCategory] = useState([]);
   const [items, setItems] = useState([]);
   const [AllItems, setAllItems] = useState([]);
@@ -86,11 +86,12 @@ function Offers({ route, navigation }) {
             color: item.id == currentFilter ? "#fff" : "#EB5E29",
             width: filterWidth,
             maxWidth: filterWidth,
+            zIndex:9999,
             borderRadius: 12,
             overflow: "hidden",
             textAlign: "center",
             paddingVertical: 5,
-            paddingHorizontal:10
+            paddingHorizontal: 10
           }}
         >
           {item.name}
@@ -132,8 +133,8 @@ function Offers({ route, navigation }) {
         });
         result.unshift(filter);
         setOfferCategory(result);
-        setItems(data.map((obj) => obj.offers).flat());
-        setAllItems(data.map((obj) => obj.offers).flat());
+        setItems(data.map((obj) => obj.filter.offers).flat());
+        setAllItems(data.map((obj) => obj.filter.offers).flat());
       })
       .catch((error) => {
         if (__DEV__) {
@@ -179,11 +180,10 @@ function Offers({ route, navigation }) {
         style={{
           width: cardWidth,
           marginBottom: "5%",
-          marginHorizontal: 10,
           backgroundColor: "#f6f7f9",
           elevation: 3,
           borderRadius: 15,
-          paddingBottom:3
+          paddingBottom: 3
         }}
       >
         <View>
@@ -247,106 +247,110 @@ function Offers({ route, navigation }) {
   }
 
   return (
-    <Layout route={route} navigation={navigation} title="El Mercado de Fadu" addButtonUrl={'OfferForm'}>
-      <HStack mt={0} mb={4} alignItems={"center"} justifyContent="center">
-        <MaterialIcons
-          name={"search"}
-          size={17}
-          color="gray"
-          style={{ position: 'absolute', left: "8.8%", zIndex: 1 }}
-        />
+      <Layout route={route} navigation={navigation} title="El Mercado de Fadu" addButtonUrl={'OfferForm'}>
+        <HStack mt={0} mb={4} alignItems={"center"} justifyContent="center">
+          <MaterialIcons
+            name={"search"}
+            size={17}
+            color="gray"
+            style={{ position: 'absolute', left: "8.8%", zIndex: 1 }}
+          />
 
-        <Input
-          style={{ marginLeft: "8%" }}
-          onChangeText={(text) => setSearch(text)}
-          value={search}
+          <Input
+            style={{ marginLeft: "8%" }}
+            onChangeText={(text) => setSearch(text)}
+            value={search}
 
-          w={{ base: "75%", md: "25%" }}
-          pb="1"
-          type={"text"}
-          placeholder="Buscar"
-          placeholderTextColor="#666666"
+            w={{ base: "80%", md: "25%" }}
+            pb="1"
+            type={"text"}
+            placeholder="Buscar"
+            placeholderTextColor="#666666"
 
 
-        />
-        <IconButton
-          onPress={() => {
-            setSearch("");
+          />
+          <IconButton
+            onPress={() => {
+              setSearch("");
+            }}
+            ml="3"
+            rounded={"xl"}
+            backgroundColor={"primary.900"}
+            icon={
+              <Icon
+                as={EvilIcons}
+                name="close-o"
+                size="md"
+                color={search.length > 0 ? "red.500" : "muted.400"}
+              />
+            }
+          />
+        </HStack>
+
+
+        <Box alignContent={"center"} mt={3} mb={1}>
+          <FlatList
+            alignSelf={"center"}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(_, index) => index.toString()}
+            horizontal
+            data={advertisement}
+            renderItem={renderNews}
+          />
+        </Box>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            height: 50,
+            marginTop: -20,
+            marginBottom: 10,
           }}
-          ml="3"
-          rounded={"xl"}
-          backgroundColor={"primary.900"}
-          icon={
-            <Icon
-              as={EvilIcons}
-              name="close-o"
-              size="md"
-              color={search.length > 0 ? "red.500" : "muted.400"}
+        >
+          <ScrollView contentContainerStyle={
+            {
+              alignSelf: "center"
+            }
+          } paddingTop={"10%"} paddingBottom={"20%"} showsVerticalScrollIndicator={false}>
+            <FlatList
+
+              contentContainerStyle={
+                {
+                  justifyContent: "space-between",
+                  width: filterWidth * offerCategory.length + 25,
+                }
+              }
+              horizontal={true}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              data={offerCategory}
+              renderItem={HeaderFilters}
             />
+          </ScrollView>
+        </View>
+        <FlatList
+          style={{
+            width: "100%",
+          }}
+          data={items}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          contentContainerStyle={{
+            alignItems: "center",
+            paddingBottom: 50,
+            justifyContent: "space-evenly",
+          }}
+          columnWrapperStyle={
+            {
+             columnGap: 40
+            }
+
           }
         />
-      </HStack>
 
-
-      <Box alignContent={"center"} mt={3} mb={1}>
-        <FlatList
-          alignSelf={"center"}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(_, index) => index.toString()}
-          horizontal
-          data={advertisement}
-          renderItem={renderNews}
-        />
-      </Box>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          height: 50,
-          justifyContent: "center",
-          marginTop: -20,
-          marginBottom: 10,
-          marginLeft: "3%",
-          marginRight: "6.5%"
-
-        }}
-      >
-
-        <ScrollView  paddingTop={"10%"} paddingBottom={"20%"} showsVerticalScrollIndicator={false}>
-          <FlatList
-          
-            contentContainerStyle={
-              {
-                justifyContent: "space-between",
-                width: filterWidth * offerCategory.length + 25,
-                paddingLeft: 5,
-                paddingVertical: "auto"
-              }
-            }
-            horizontal={true}
-            keyExtractor={(item) => item.id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            data={offerCategory}
-            renderItem={HeaderFilters}
-          />
-        </ScrollView>
-      </View>
-      <FlatList
-        style={{
-          width: "100%",
-        }}
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        contentContainerStyle={{
-          alignItems: "center",
-          paddingBottom: 50,
-        }}
-      />
-
-    </Layout>
+      </Layout>
   );
 }
 

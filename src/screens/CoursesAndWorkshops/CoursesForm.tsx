@@ -49,7 +49,7 @@ function OfferForm({ route, navigation }) {
     setTimeout(() => {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
-    }, 6000);
+    }, 30000);
   }
 
   const uploadImage = async () => {

@@ -112,7 +112,6 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   };
 
   return (
-    <Container>
     <Layout route={route} navigation={navigation} title="Cursos & Workshops" addButtonUrl={'CoursesForm'}>
 
 
@@ -223,7 +222,6 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
       </ScrollView>
 
       </Layout>
-    </Container>
   );
 }
 
