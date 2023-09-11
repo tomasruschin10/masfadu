@@ -44,7 +44,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               value={search}
               isDisabled={allSubjects.length > 0 ? false : true}
 
-              w={{ base: "75%", md: "25%", }}
+              w={{ base: "80%", md: "25%", }}
               pb="1"
               type={"text"}
               placeholder="Buscar "

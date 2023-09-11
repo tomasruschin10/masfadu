@@ -69,7 +69,14 @@ export function HeaderBack({ ...props }) {
               }
               size={"50px"}
               icon={
-                <Text fontSize="40px" fontWeight="bold">+</Text>
+                <Icon
+                  as={Ionicons}
+                  name="add"
+                  size="md"
+                  color="#f4faff"
+                  width={"20px"}
+                  height={"20px"}
+                />
               }
             />
           </Box>
