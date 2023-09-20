@@ -108,6 +108,9 @@ function Offers({ route, navigation }) {
     );
 
     setItems(data);
+
+    console.log("item.id == 0? <>", item, AllItems )
+
     if (item.id == 0) {
       setItems(AllItems);
     }
@@ -133,8 +136,8 @@ function Offers({ route, navigation }) {
         });
         result.unshift(filter);
         setOfferCategory(result);
-        setItems(data.map((obj) => obj.filter.offers).flat());
-        setAllItems(data.map((obj) => obj.filter.offers).flat());
+        setItems(data.map((obj) => obj.offers).flat());
+        setAllItems(data.map((obj) => obj.offers).flat());
       })
       .catch((error) => {
         if (__DEV__) {
@@ -305,6 +308,7 @@ function Offers({ route, navigation }) {
             height: 50,
             marginTop: -20,
             marginBottom: 10,
+            paddingHorizontal: "3%"
           }}
         >
           <ScrollView contentContainerStyle={
@@ -317,7 +321,7 @@ function Offers({ route, navigation }) {
               contentContainerStyle={
                 {
                   justifyContent: "space-between",
-                  width: filterWidth * offerCategory.length + 25,
+                  width: filterWidth * offerCategory.length + 50,
                 }
               }
               horizontal={true}
