@@ -15,7 +15,6 @@ import {
   publishDoc,
   getServices
 } from "../../utils/hooks/services";
-import RNPickerSelect from "react-native-picker-select";
 import { useEffect } from "react";
 
 import * as ImagePicker from 'expo-image-picker';
@@ -24,35 +23,8 @@ import { StyleSheet } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { AxiosError } from "axios";
 
-const customPickerStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 14,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    marginBottom: 20,
-    color: '#d3d3d3',
-    paddingRight: 20, // to ensure the text is never behind the icon
-  },
-  inputAndroid: {
-    fontSize: 14,
-    backgroundColor: "#F7FAFC",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: 'blue',
-    marginBottom: 20,
-    color: '#d3d3d3',
-    paddingRight: 20,
-
-  },
-});
-
 
 function ResourceForm({ route, navigation }) {
-  /* const { subject_id, name: subjectName } = route.params; */
-
-  console.log("DATA<>")
   const [loading, setLoading] = useState(false);
   const [resourceCategories, setResourceCategory] = React.useState([]);
 
@@ -60,17 +32,17 @@ function ResourceForm({ route, navigation }) {
   const [imagen, setImagen] = useState(null)
   const [name, setName] = useState(null)
   const [subjectName, setSubjectName] = useState("");
-  const [categoriaId, setCategoria] = useState("")
+  const [selectedCategoryId, setCategory] = useState("")
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
-  const [selectedSubjectId, setSelectedSubjectId] = useState(""); 
-  const [selectedCareerId, setSelectedCareerId] = useState(null); 
+  const [selectedSubjectId, setSelectedSubjectId] = useState("");
+  const [selectedCareerId, setSelectedCareerId] = useState(null);
   const [careers, setCareers] = useState([]);
   const [subjects, setSubjects] = useState([]);
 
   if (route.params && route.params?.career_id) {
     setSelectedCareerId(route.params.career_id)
-  } 
+  }
 
   const handleSubjectChange = (itemValue) => {
     setSelectedSubjectId(itemValue);
@@ -82,19 +54,23 @@ function ResourceForm({ route, navigation }) {
     setSelectedSubjectId(null);
   };
 
+  const handleCategoryChange = (itemValue) => {
+    setCategory(itemValue)
+  };
+
 
   useEffect(() => {
     getServices('career/all').then((res: any) => {
       setCareers(res.data)
-    }).catch(() => {});
+    }).catch(() => { });
   }, [])
 
   useEffect(() => {
     getServices("subject/career/" + selectedCareerId)
-    .then(({ data }: any) => {
-      setSubjects(data);
-    })
-    .catch(() => {});
+      .then(({ data }: any) => {
+        setSubjects(data);
+      })
+      .catch(() => { });
   }, [selectedCareerId])
 
 
@@ -127,7 +103,7 @@ function ResourceForm({ route, navigation }) {
 
   const selectImage = async () => {
     try {
-      const image = await ImagePicker.launchImageLibraryAsync({base64: false});
+      const image = await ImagePicker.launchImageLibraryAsync({ base64: false });
 
       if (!image.canceled && image.assets.length > 0) {
         setImagen(image.assets[0])
@@ -157,7 +133,7 @@ function ResourceForm({ route, navigation }) {
 
       const response = await publishDoc({
         subject_id: selectedSubjectId,
-        resource_category_id: categoriaId,
+        resource_category_id: selectedCategoryId,
         image: imagen,
         name
       })
@@ -201,95 +177,95 @@ function ResourceForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-             Publicá un documento {subjectName && "en"}
+              Publicá un documento {subjectName && "en"}
             </Text>
-            { subjectName && <Text style={[fontStyles.headingText]}>{subjectName}</Text> }
-          </Box> 
+            {subjectName && <Text style={[fontStyles.headingText]}>{subjectName}</Text>}
+          </Box>
           <Box>
 
 
-          <Box
+            <Box
               mx="5"
+              mb={3}
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
               pt={2}
-              >
-            {careers.length > 0 ? (
-              <Select
-              backgroundColor={"#F7FAFC"}
-              placeholderTextColor={"#C4C4C4"}
-                selectedValue={selectedCareerId}
-                minWidth="335"
-                accessibilityLabel="Elegir Carrera"
-                placeholder="Elegir Carrera"
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                onValueChange={(e) => handleCareerChange(e)}
-                textAlign={"left"}
-              >
-                {careers.map((item) => (
-                  <Select.Item label={item.name} value={item.id} key={item.id} />
-                ))}
-              </Select>
-            ) : (
-              <Select
-              backgroundColor={"#F7FAFC"}
-              placeholderTextColor={"#C4C4C4"}
-                rounded={"3xl"}
-                textAlign={"center"}
-                isDisabled
-                accessibilityLabel="Elegir Materia"
-                placeholder="No hay más materias"
-              ></Select>
-            )}
-          </Box>
-          <Box
+            >
+              {careers.length > 0 ? (
+                <Select
+                  backgroundColor={"#F7FAFC"}
+                  placeholderTextColor={"#C4C4C4"}
+                  selectedValue={selectedCareerId}
+                  minWidth="335"
+                  accessibilityLabel="Elegir Carrera"
+                  placeholder="Elegir Carrera"
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />,
+                  }}
+                  mt={1}
+                  onValueChange={(e) => handleCareerChange(e)}
+                  textAlign={"left"}
+                >
+                  {careers.map((item) => (
+                    <Select.Item label={item.name} value={item.id} key={item.id} />
+                  ))}
+                </Select>
+              ) : (
+                <Select
+                  backgroundColor={"#F7FAFC"}
+                  placeholderTextColor={"#C4C4C4"}
+         
+                  textAlign={"center"}
+                  isDisabled
+                  accessibilityLabel="Elegir Materia"
+                  placeholder="No hay más materias"
+                ></Select>
+              )}
+            </Box>
+            <Box
               mx="5"
+              mb={3}
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
-              pt={2}
-              >
-            {subjects.length > 0 ? (
-              <Select
-              backgroundColor={"#F7FAFC"}
-              placeholderTextColor={"#C4C4C4"}
-                selectedValue={selectedSubjectId}
-                minWidth="335"
-                accessibilityLabel="Elegir Materia"
-                placeholder="Elegir Materia"
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                onValueChange={(e) => handleSubjectChange(e)}
-                textAlign={"left"}
-              >
-                {subjects.map((item) => (
-                  <Select.Item label={item.name} value={item.id} key={item.id} />
-                ))}
-              </Select>
-            ) : (
-              <Select
-              backgroundColor={"#F7FAFC"}
-              placeholderTextColor={"#C4C4C4"}
-                rounded={"3xl"}
-                textAlign={"center"}
-                isDisabled
-                accessibilityLabel="Elegir Materia"
-                placeholder="No hay más materias"
-              ></Select>
-            )}
-          </Box>
+            >
+              {subjects.length > 0 ? (
+                <Select
+                  backgroundColor={"#F7FAFC"}
+                  placeholderTextColor={"#C4C4C4"}
+                  selectedValue={selectedSubjectId}
+                  minWidth="335"
+                  accessibilityLabel="Elegir Materia"
+                  placeholder="Elegir Materia"
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />,
+                  }}
+                  mt={1}
+                  onValueChange={(e) => handleSubjectChange(e)}
+                  textAlign={"left"}
+                >
+                  {subjects.map((item) => (
+                    <Select.Item label={item.name} value={item.id} key={item.id} />
+                  ))}
+                </Select>
+              ) : (
+                <Select
+                  backgroundColor={"#F7FAFC"}
+                  placeholderTextColor={"#C4C4C4"}
+                  textAlign={"center"}
+                  isDisabled
+                  accessibilityLabel="Elegir Materia"
+                  placeholder="No hay más materias"
+                ></Select>
+              )}
+            </Box>
 
             <Box
               mx="5"
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
-              pt={2}
+
               pb={"24"}
             >
 
@@ -302,8 +278,7 @@ function ResourceForm({ route, navigation }) {
                   onChangeText={(text) => setName(text)}
                   type={"text"}
                   p={3.5}
-
-                  mb={4}
+                  mb={3}
                   placeholder={"Nombre de archivo"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
@@ -312,14 +287,40 @@ function ResourceForm({ route, navigation }) {
               </Box>
 
               <Box>
-                <RNPickerSelect
-                  style={customPickerStyles}
-                  onValueChange={(value) => setCategoria(value)}
-                  items={resourceCategories.length ? resourceCategories : categorysEmpty}
-                  placeholder={{ label: 'Categoría', value: null }} />
+                {resourceCategories.length > 0 ? (
+                  <Select
+                    backgroundColor={"#F7FAFC"}
+                    placeholderTextColor={"#C4C4C4"}
+                    selectedValue={selectedCategoryId}
+                    minWidth="335"
+                    accessibilityLabel="Elegir Materia"
+                    placeholder="Elegir Materia"
+                    _selectedItem={{
+                      bg: "teal.600",
+                      endIcon: <CheckIcon size="5" />,
+                    }}  
+                    mt={1}
+                    onValueChange={(e) => handleCategoryChange(e)}
+                    textAlign={"left"}
+                  >
+                    {resourceCategories.map((item) => (
+                      <Select.Item label={item.name} value={item.id} key={item.id} />
+                      ))}
+                  </Select>
+                ) : (
+                  <Select
+                    backgroundColor={"#F7FAFC"}
+                    placeholderTextColor={"#C4C4C4"}
+                    rounded={"3xl"}
+                    textAlign={"center"}
+                    isDisabled
+                    accessibilityLabel="Sin Categorías"
+                    placeholder="No hay categorías"
+                  ></Select>
+                )}
               </Box>
 
-              <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
+              <Box mb={5} mt={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
                 {previewImage && <Image alt="Imagen" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
                 <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Subir Archivo</Button>
               </Box>
