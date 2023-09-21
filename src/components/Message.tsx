@@ -26,7 +26,7 @@ function Message() {
     setTimeout(() => {
       dispatch(updateMessage({ body: "", open: false, type: "" }));
     }, 7000);
-  }
+  } 
 
   //uncomment for manually activation
   /*   useEffect(() => {
