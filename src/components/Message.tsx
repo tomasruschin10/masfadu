@@ -1,34 +1,38 @@
 import {
   Box,
-  Button,
   Center,
-  HStack,
   Input,
   Slide,
   Text,
   View,
-  VStack,
 } from "native-base";
 import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { updateMessage } from "../redux/actions/message";
-import { TouchableOpacity } from "react-native";
-import { NoHeader } from "./Header";
+import { Dimensions, PixelRatio, TouchableOpacity } from "react-native";
+/* import { NoHeader } from "./Header";*/
 import { MaterialIcons } from "@expo/vector-icons";
+
+const { height } = Dimensions.get("window");
+const messageOffset = height * 0.07;
+
+
 function Message() {
   const message = useSelector((state: any) => state.message);
   const dispatch = useDispatch();
-   if (message.open) {
-      setTimeout(() => {
-        dispatch(updateMessage({ body: "", open: false, type: "" }));
-      }, 7000);
-    }
+
+  if (message.open) {
+    setTimeout(() => {
+      dispatch(updateMessage({ body: "", open: false, type: "" }));
+    }, 7000);
+  }
+
   //uncomment for manually activation
-/*    useEffect(() => {
-     dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
+  /*   useEffect(() => {
+      dispatch(updateMessage({ body: "Tú sesión expiró, volvé a iniciar sesión para continuar", type: "danger", open: true }));
   
-   }, [])  */
+    }, []) */
 
   const getColors = (type, resource) => {
     switch (type) {
@@ -105,7 +109,8 @@ function Message() {
               borderWidth: 1,
               borderColor: "#d6e9c6",
               width: "95%",
-              top: "7.5%",
+              aspectRatio: 10,
+              top: messageOffset,
               position: "absolute",
               alignSelf: "center",
               paddingTop: "0%",
@@ -140,7 +145,7 @@ function Message() {
                     fontWeight="normal"
                     style={{
                       overflow: "hidden",
-                      fontSize: 10,
+                      fontSize: PixelRatio.roundToNearestPixel(12),
                     }}
                   >
                     {message.body}

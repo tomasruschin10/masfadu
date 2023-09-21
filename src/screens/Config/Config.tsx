@@ -37,7 +37,7 @@ function Config({ route, navigation, value }) {
     const dispatch = useDispatch();
     const version = Constants?.manifest?.version || "1.0.0"
     const logout = () => {
-        store.dispatch(updateMessage({ body: "Tu sesion se ha expirado, por favor vuelve a iniciar", type: "danger", open: true }));
+        store.dispatch(updateMessage({ body: "Tú sesión expiró, volvé a iniciar sesión para continuar", type: "danger", open: true }));
         store.dispatch(updatetoken(''));
         store.dispatch(updateUserdata({}));
         store.dispatch(removemenu())

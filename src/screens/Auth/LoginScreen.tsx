@@ -9,15 +9,13 @@ import { getUserDataWithToken } from "../../utils/storage";
 import { useDispatch, useSelector } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
-import { AntDesign } from "@expo/vector-icons";
 
-import * as Google from "expo-auth-session/providers/google";
-
+/* import * as Google from "expo-auth-session/providers/google";*/
 import {
   ScrollView,
   TouchableWithoutFeedback,
   Platform,
-  TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import jwtDecode from "jwt-decode";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -26,11 +24,15 @@ import {
   getAuth,
   OAuthProvider,
   signInWithCredential,
-  FacebookAuthProvider,
-  GoogleAuthProvider,
+  /*   FacebookAuthProvider,
+    GoogleAuthProvider, */
 } from "firebase/auth";
 import { updateUserdata } from "../../redux/actions/user";
 import { baseApi } from "../../utils/api";
+
+const { height } = Dimensions.get("window");
+const bodyOffset = height * 0.15;
+
 function LoginScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -38,8 +40,9 @@ function LoginScreen({ route, navigation }) {
   const [loading, setLoading] = React.useState(false);
 
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const { uid } = useSelector((state: any) => state.user);
+  /*   const [isLoading, setIsLoading] = React.useState(false);
+    const { uid } = useSelector((state: any) => state.user);
+   */
 
   React.useEffect(() => {
     if (__DEV__) {
@@ -68,7 +71,7 @@ function LoginScreen({ route, navigation }) {
           type: "danger",
         })
       );
-     /*  showAlert("error", "Por favor, llená todos los campos para iniciar sesión.") */
+      /*  showAlert("error", "Por favor, llená todos los campos para iniciar sesión.") */
       return false;
     }
     setLoading(true);
@@ -78,15 +81,15 @@ function LoginScreen({ route, navigation }) {
     })
       .then((res: any) => {
         showAlert('success', 'Inicio correcto!')
-         dispatch(updatetoken(res.data.token));
+        dispatch(updatetoken(res.data.token));
         getUserDataWithToken(res.data.token);
         let data: any = jwtDecode(res.data.token);
         if (data.userData.career) {
-          
+
           navigation.navigate("Home");
         } else {
           navigation.navigate("Onboarding1");
-        } 
+        }
       })
       .catch((e) => {
         if (__DEV__) {
@@ -99,7 +102,7 @@ function LoginScreen({ route, navigation }) {
             type: "danger",
           })
         )
-      
+
       })
       .finally(() => {
         setLoading(false);
@@ -112,7 +115,7 @@ function LoginScreen({ route, navigation }) {
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <VStack px={5}>
-          <Box mt={20} alignItems="center">
+          <Box mt={20} style={{ marginTop: bodyOffset }} alignItems="center">
             <Image
               w={100}
               mb={5}
@@ -220,7 +223,7 @@ function LoginScreen({ route, navigation }) {
 
                       await signInWithCredential(auth, credential)
                         .then(async (res) => {
-                           console.log('user',res)
+                          console.log('user', res)
 
                           let user = res.user;
 
@@ -245,7 +248,7 @@ function LoginScreen({ route, navigation }) {
                                 })
                               );
 
-                            /*   showAlert('sucess', 'Inicio correcto!') */
+                              /*   showAlert('sucess', 'Inicio correcto!') */
                               setLoading(false);
                               const dataa = jwtDecode(us.data.token);
                               dispatch(updateUserdata(dataa));
@@ -265,7 +268,7 @@ function LoginScreen({ route, navigation }) {
                                   })
                                 );
 
-                               /*  showAlert('warning', 'El usuario no existe :(') */
+                                /*  showAlert('warning', 'El usuario no existe :(') */
                               } else {
                                 setLoading(false);
                                 dispatch(
@@ -295,7 +298,7 @@ function LoginScreen({ route, navigation }) {
                             })
                           );
 
-                         /*  showAlert('error', 'Ups Algo salió mal, por favor volvé a intentar.') */
+                          /*  showAlert('error', 'Ups Algo salió mal, por favor volvé a intentar.') */
                         });
                       // signed in
                     }

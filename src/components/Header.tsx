@@ -88,8 +88,8 @@ export function HeaderBack({ ...props }) {
 export function NoHeader({ ...props }) {
   return (
     <>
-      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
-      <Box safeAreaTop bg="#ffffff" />
+      <StatusBar hidden={true} translucent={true} backgroundColor="#ffffff" barStyle="dark-content" />
+      <Box  bg="" />
     </>
   );
 }
@@ -104,6 +104,7 @@ export function HeaderPerfil({ showIcon, ...props }) {
       <StatusBar
         backgroundColor={props.statusBarColor}
         barStyle={props.barStyle}
+        
       />
       <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
       <Box justifyContent="space-between" px={4} flexDirection="row" pb={2}>

@@ -40,7 +40,7 @@ function Offers({ route, navigation }) {
     useSearchOfferts();
 
   const { width } = Dimensions.get("window");
-  const cardWidth = width * 0.42; // Ancho de cada tarjeta, ajustado al 40% del ancho total
+  const cardWidth = width * 0.44; // Ancho de cada tarjeta, ajustado al 40% del ancho total
 
 
   const renderNews = ({ item }) => {
@@ -344,11 +344,11 @@ function Offers({ route, navigation }) {
           contentContainerStyle={{
             alignItems: "center",
             paddingBottom: 50,
-            justifyContent: "space-evenly",
+
           }}
           columnWrapperStyle={
             {
-             columnGap: 40
+             columnGap: 20
             }
 
           }

@@ -134,7 +134,7 @@ const MarketDetail = ({ navigation }) => {
                     letterSpacing: 0.5
                   }}
                 >
-                 CONTACTAR
+                 Contactar
                 </Text>
               </View>
             </TouchableOpacity>

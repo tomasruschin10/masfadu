@@ -18,10 +18,8 @@ import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { useEffect } from "react";
 import { getServices } from "../../utils/hooks/services";
 import { Dimensions, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import { HeaderBack } from "../../components/Header";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 function JobOffers({ route, navigation, mainTitle }) {
@@ -63,7 +61,7 @@ function JobOffers({ route, navigation, mainTitle }) {
 
   const byWords = () => {
     setLoading(true);
-    getServices("offer/all/work", `?search=${searchText.trim()}`)
+    getServices(`offer/all/work?search=${searchText.trim()}`)
       .then(({ data }: any) => {
         setAllOffers(data);
         setSearchText("");
@@ -112,36 +110,9 @@ function JobOffers({ route, navigation, mainTitle }) {
         route={route}
         navigation={navigation}
         title={`Ofertas Laborales`}
+        addButtonUrl={"JobOfferForm"}
       >
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("JobOfferForm");
-        }}
-      >
-        <Box
-          position={"absolute"}
-          style={{
-            zIndex: 99,
-            right: 10, // Ajusta la posición derecha según tus necesidades
-
-            borderRadius: 50,
-            margin: 0,
-            marginTop: -50,
-            marginRight: 15,
-          }}
-        >
-          <Box
-            style={{
-              backgroundColor: "#E85E29",
-
-              borderRadius: 50,
-              padding: 6,
-            }}
-          >
-            <Entypo name="plus" size={28} color="#f4faff" />
-          </Box>
-        </Box>
-      </TouchableOpacity>
+ 
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>

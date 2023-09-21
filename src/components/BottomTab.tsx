@@ -164,13 +164,7 @@ export default function BottomTab({ route, navigation, setMenu }) {
             alignItems: "center",
           }}
           onPress={() => {
-          
-            
-  
              navigation.navigate("OfferForm")
-
-
-          
           }}
 
         >
