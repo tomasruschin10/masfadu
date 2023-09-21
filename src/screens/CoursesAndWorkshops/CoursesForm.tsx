@@ -125,7 +125,7 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setNombreApellido(text)}
                   type={"text"}
                   p={3.5}
-                  mb={3}
+                  mb={5}
                   placeholder={"Quién lo dicta?"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
@@ -138,14 +138,14 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setUrlEmpleo(text)}
                   type={"text"}
                   p={3.5}
-                  mb={3}
+                  mb={5}
                   placeholder={"Url"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
               <Box
-                mb={3}
+                mb={5}
                 alignItems={"center"}
                 justifyContent="center"
                 flexDir={"row"}
@@ -169,7 +169,7 @@ function OfferForm({ route, navigation }) {
                 backgroundColor={"#F7FAFC"}
                 borderWidth={0}
                 placeholderTextColor={"#d3d3d3"}
-                mb={3}
+                mb={5}
               />
 
               <Box mt={1} mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>

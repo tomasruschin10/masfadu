@@ -124,7 +124,7 @@ function OfferForm({ route, navigation }) {
         >
           <Box
             mx={5}
-            mb={3}
+            mb={5}
             borderTopWidth={1}
             borderTopColor={"#EBEEF2"}
             pt={6}
@@ -144,7 +144,7 @@ function OfferForm({ route, navigation }) {
               {allTags.length > 0 && (
                 <>
                   <Box
-                    mb={3}
+                    mb={5}
                     alignItems={"center"}
                     justifyContent="center"
                     flexDir={"row"}
@@ -163,7 +163,7 @@ function OfferForm({ route, navigation }) {
               )}
 
               <Box
-                mb={3}
+                mb={5}
                 alignItems={"center"}
                 justifyContent="center"
                 flexDir={"row"}
@@ -178,7 +178,7 @@ function OfferForm({ route, navigation }) {
                 />
               </Box>
               <Box
-                mb={3}
+                mb={5}
                 alignItems={"center"}
                 justifyContent="center"
                 flexDir={"row"}
@@ -203,7 +203,7 @@ function OfferForm({ route, navigation }) {
                 backgroundColor={"#F7FAFC"}
                 borderWidth={0}
                 placeholderTextColor={"#d3d3d3"}
-                mb={3}
+                mb={5}
               />
 
               <Box mt={1} mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>

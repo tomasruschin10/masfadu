@@ -112,115 +112,117 @@ function JobOffers({ route, navigation, mainTitle }) {
         title={`Ofertas Laborales`}
         addButtonUrl={"JobOfferForm"}
       >
- 
 
-      <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <Box>
+
+        <ScrollView keyboardShouldPersistTaps={"handled"}>
           <Box>
-            <Box alignContent={"center"} mt={3} mb={1}>
-              <FlatList
-                alignSelf={"center"}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(_, index) => index.toString()}
-                horizontal
-                data={advertisement}
-                renderItem={renderNews}
-              />
+            <Box>
+              <Box alignContent={"center"} mt={3} mb={1}>
+                <FlatList
+                  alignSelf={"center"}
+                  showsHorizontalScrollIndicator={false}
+                  keyExtractor={(_, index) => index.toString()}
+                  horizontal
+                  data={advertisement}
+                  renderItem={renderNews}
+                />
+              </Box>
             </Box>
           </Box>
-        </Box>
 
-        <Box
-          mx="5"
-          alignItems={"center"}
-          justifyContent="center"
-          flexDir={"row"}
-        >
-          <MaterialIcons
-            name={"search"}
-            size={17}
-            color="gray"
-            style={{ position: "absolute", left: "3%", zIndex: 1 }}
-          />
-          <Input
-            style={{ marginLeft: "8%" }}
-            fontSize={12.27}
-            onChangeText={(text) => setSearchText(text)}
-            w={{ base: "87%", md: "25%" }}
-            pb="1"
-            type={"text"}
-            placeholder={"Buscar"}
-            placeholderTextColor="#666666"
-            mr="2"
-          />
-
-          <HStack alignItems={"flex-start"}>
-            <IconButton
-              rounded={"xl"}
-              backgroundColor={"primary.900"}
-              icon={
-                <Icon
-                  as={EvilIcons}
-                  name="close-o"
-                  size="md"
-                  color={"muted.400"}
-                />
-              }
-            />
-          </HStack>
-        </Box>
-
-        {!loading ? (
-          <Button display={"none"} />
-        ) : (
-          <HStack mt={2} space={2} justifyContent="center">
-            <Spinner accessibilityLabel="Loading posts" />
-            <Heading color="brand.primary" fontSize="md">
-              Cargando
-            </Heading>
-          </HStack>
-        )}
-
-        {allOffers.length === 0 && !loading && (
-          <Text
-            mx={8}
-            mt={4}
-            fontWeight={"bold"}
-            color={"primary.100"}
-            fontSize={20}
+          <Box
+            mx="5"
+            alignItems={"center"}
+            justifyContent="center"
+            flexDir={"row"}
           >
-            No hay Ofertas
-          </Text>
-        )}
+            <MaterialIcons
+              name={"search"}
+              size={17}
+              color="gray"
+              style={{ position: "absolute", left: "3%", zIndex: 1 }}
+            />
+            <Input
+              style={{ marginLeft: "8%" }}
+              fontSize={12.27}
+              onChangeText={(text) => setSearchText(text)}
+              w={{ base: "87%", md: "25%" }}
+              pb="1"
+              type={"text"}
+              placeholder={"Buscar"}
+              placeholderTextColor="#666666"
+              mr="2"
+            />
 
-        <Box mt="5" mb={"48"}>
-          {allOffers.length > 0 &&
-            allOffers.map((item) => (
-              <RenderOffer
-                key={item.id}
-                image={item.image.url}
-                title={item.title}
-                text={item.description}
-                url={item.url}
-                time={item.partner}
-                hours={""}
-                method={""}
-                rating={item.point}
-                navigation={navigation}
-                mainTitle={mainTitle}
-                buttonValue={"Ver más"}
-                redirect_to={"Anoffer"}
-                border={false}
-                subject_id={0}
-                id={item.id}
-                name={item.name}
-                phone={item.phone}
-                company={item.company}
-                firstLetter={item.title.toString().substring(0, 1)}
+            <HStack alignItems={"flex-start"}>
+              <IconButton
+                rounded={"xl"}
+                backgroundColor={"primary.900"}
+                icon={
+                  <Icon
+                    as={EvilIcons}
+                    name="close-o"
+                    size="md"
+                    color={"muted.400"}
+                  />
+                }
               />
-            ))}
-        </Box>
-      </ScrollView>
+            </HStack>
+          </Box>
+
+          {!loading ? (
+            <Button display={"none"} />
+          ) : (
+            <HStack mt={2} space={2} justifyContent="center">
+              <Spinner accessibilityLabel="Loading posts" />
+              <Heading color="brand.primary" fontSize="md">
+                Cargando
+              </Heading>
+            </HStack>
+          )}
+
+          {allOffers.length === 0 && !loading && (
+            <Text
+              mx={8}
+              mt={4}
+              fontWeight={"bold"}
+              color={"primary.100"}
+              fontSize={20}
+            >
+              No hay Ofertas
+            </Text>
+          )}
+
+          <Box mt="5" mb={"48"}>
+            {allOffers.length > 0 &&
+              allOffers.map((item) => (
+                <Box mb={1}>
+                  <RenderOffer
+                    key={item.id}
+                    image={item.image.url}
+                    title={item.title}
+                    text={item.description}
+                    url={item.url}
+                    time={item.partner}
+                    hours={""}
+                    method={""}
+                    rating={item.point}
+                    navigation={navigation}
+                    mainTitle={mainTitle}
+                    buttonValue={"Ver más"}
+                    redirect_to={"Anoffer"}
+                    border={false}
+                    subject_id={0}
+                    id={item.id}
+                    name={item.name}
+                    phone={item.phone}
+                    company={item.company}
+                    firstLetter={item.title.toString().substring(0, 1)}
+                  />
+                </Box>
+              ))}
+          </Box>
+        </ScrollView>
       </Layout>
     </Container>
   );

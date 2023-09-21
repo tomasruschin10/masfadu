@@ -186,7 +186,7 @@ function ResourceForm({ route, navigation }) {
 
             <Box
               mx="5"
-              mb={3}
+              mb={5}
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
               pt={2}
@@ -224,7 +224,7 @@ function ResourceForm({ route, navigation }) {
             </Box>
             <Box
               mx="5"
-              mb={3}
+              mb={5}
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
             >
@@ -277,7 +277,7 @@ function ResourceForm({ route, navigation }) {
                   onChangeText={(text) => setName(text)}
                   type={"text"}
                   p={3.5}
-                  mb={3}
+                  mb={5}
                   placeholder={"Nombre de archivo"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
@@ -285,7 +285,7 @@ function ResourceForm({ route, navigation }) {
                 />
               </Box>
 
-              <Box mb={3}>
+              <Box mb={5}>
                 {resourceCategories.length > 0 ? (
                   <Select
                     backgroundColor={"#F7FAFC"}

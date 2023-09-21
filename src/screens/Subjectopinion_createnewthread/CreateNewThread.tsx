@@ -157,7 +157,7 @@ function CreateNewThread({ route, navigation }) {
             borderBottomWidth={1}
             borderBottomColor={"#EBEEF2"}
             pt={2}
-            mb={3}
+            mb={5}
           >
             {careers.length > 0 ? (
               <Select
@@ -194,7 +194,7 @@ function CreateNewThread({ route, navigation }) {
             mx="5"
             borderBottomWidth={1}
             borderBottomColor={"#EBEEF2"}
-            mb={3}
+            mb={5}
           >
             {subjects.length > 0 ? (
               <Select
@@ -232,7 +232,7 @@ function CreateNewThread({ route, navigation }) {
             mx="5"
             borderBottomWidth={1}
             borderBottomColor={"#EBEEF2"}
-            mb={3}
+            mb={5}
           >
             <Input
               backgroundColor={"#F7FAFC"}
@@ -245,7 +245,7 @@ function CreateNewThread({ route, navigation }) {
             mx="5"
             borderBottomWidth={1}
             borderBottomColor={"#EBEEF2"}
-            mb={3}
+            mb={5}
           >
             <TextArea
               onChangeText={(text) => setForm({ ...form, description: text })}
@@ -276,7 +276,7 @@ function CreateNewThread({ route, navigation }) {
                   mx="5"
                   borderBottomWidth={1}
                   borderBottomColor={"#EBEEF2"}
-                  mb={3}
+                  mb={5}
                 >
                   <Input
                     onChangeText={(text) => setSearchText(text)}
