@@ -109,7 +109,7 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-            Describí de la forma más detallada que puedas la oferta laboral, así se entiende claro que estás buscando! :)
+              Describí de la forma más detallada que puedas la oferta laboral, así se entiende claro que estás buscando! :)
             </Text>
           </Box>
 
@@ -121,7 +121,6 @@ function OfferForm({ route, navigation }) {
               pt={2}
               pb={"24"}
             >
-
               <Box
                 alignItems={"center"}
                 justifyContent="center"
@@ -137,7 +136,6 @@ function OfferForm({ route, navigation }) {
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
-
               <Box
                 alignItems={"center"}
                 justifyContent="center"
@@ -211,7 +209,7 @@ function OfferForm({ route, navigation }) {
                 justifyContent="center"
                 flexDir={"row"}
               >
-  {/*               <Input
+                {/*               <Input
                   onChangeText={(text) => setDescripcion(text)}
                   type={"text"}
                   p={3.5}
@@ -222,17 +220,17 @@ function OfferForm({ route, navigation }) {
                 /> */}
 
                 <TextArea
-                onChangeText={(text) => setDescripcion(text)}
-                placeholder="Sobre el puesto"
-                autoCompleteType={"off"}
-                fontSize={15}
-                h={100}
-                width={"100%"}
-                backgroundColor={"#F7FAFC"}
-                borderWidth={0}
-                placeholderTextColor={"#d3d3d3"}
-                mb={6}
-              />  
+                  onChangeText={(text) => setDescripcion(text)}
+                  placeholder="Sobre el puesto"
+                  autoCompleteType={"off"}
+                  fontSize={15}
+                  h={100}
+                  width={"100%"}
+                  backgroundColor={"#F7FAFC"}
+                  borderWidth={0}
+                  placeholderTextColor={"#d3d3d3"}
+                  mb={6}
+                />
               </Box>
               <Box mb={5} style={{ backgroundColor: "#F7FAFC", height: 70, }}>
                 {previewImage && <Image alt="IMAGEN" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
