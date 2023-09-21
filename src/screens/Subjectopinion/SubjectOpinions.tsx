@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 import { Box, Button, Icon, IconButton, Input, ScrollView, Text, HStack, Spinner, Heading } from 'native-base';
 import { RenderOpinion } from '../../utils/hooks/useMultiple'
 import useSearchSubject from '../../utils/hooks/useSearchSubject';
-import { NoHeader } from '../../components/Header';
 import { ModalWarning2 } from "../../screens/AboutSubject/Modals";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from 'react-redux';
@@ -14,10 +13,11 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   const [showWarning, setShowWarning] = useState(true);
   const { notice } = useSelector((state: any) => state.notice);
 
+  console.log("NOTICE STsATE ", filteredSubjects.map((item) => item))
 
-  useEffect(() => {
-    console.log("NOTICE STsATE ", notice.value)
-  }, [notice?.value])
+/*   useEffect(() => {
+     console.log("NOTICE STsATE ", notice.value)
+  }, [notice?.value]) */
 
 
   const colores = ['#E85E29']

@@ -24,7 +24,6 @@ import { HeaderBack } from "../../components/Header";
 import { getServices } from "../../utils/hooks/services";
 import { updateMessage } from "../../redux/actions/message";
 import { useDispatch } from "react-redux";
-import Alert from "../../components/alert/Alert";
 import Menu from "../Menu/Menu";
 
 function SeeSubjectThread({ route, navigation }) {
@@ -411,7 +410,7 @@ function SeeSubjectThread({ route, navigation }) {
             color={"primary.100"}
             fontSize={20}
           >
-            No hay hilos para mosstrar
+            No hay hilos para mostrar
           </Text>
         )}
         <Box mx={5} mb={32}>

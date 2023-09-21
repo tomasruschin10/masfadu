@@ -1,5 +1,5 @@
 import { Box, Text, Image, Avatar, Pressable } from 'native-base';
-import { TouchableHighlight } from 'react-native';
+import { StyleProp, TextStyle, TouchableHighlight } from 'react-native';
 import { fontStyles } from '../colors/fontColors';
 
 export const RenderItem = ({ title, id, setIdCopy, idCopy }) => (
@@ -76,23 +76,26 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
               </Box>
             }
           </Box>
-          <Box w="64%" justifyContent={'center'} >
-            <Text style={[fontStyles.headingText, {
+          <Box w="70%" justifyContent={'center'} >
+            <Text style={[fontStyles.manrope500, {
               fontSize: 14.5,
-
-              color: "#000000",
               marginBottom: -2,
-            }]} fontSize={14} lineHeight={17} fontWeight={'bold'} numberOfLines={2}>{title}</Text>
+            }]} lineHeight={17} numberOfLines={2}>
+              {title}
+            </Text>
             {
               text ? <Text style={[fontStyles.bodyText, { color: "#939aa0", fontSize: 13, marginTop: 2 }]} fontWeight={'bold'}>{text}</Text> : null
             }
             {
-              time ? <Text style={[fontStyles.bodyText, { color: "#939aa0", fontSize: 13, marginTop: 2 }]} numberOfLines={2} fontSize={10}>{time}</Text> : null
+              time ? <Text style={[fontStyles.manrope400, {    fontSize: 13, marginTop: 2 }]} numberOfLines={2} fontSize={10}>{time}</Text> : null
             }
           </Box>
         </Box>
         <Box mr='4' alignItems={'flex-end'} justifyContent='center'>
-          <Text fontSize={16} style={fontStyles.headingText} color='primary.100' >{rating}</Text>
+          <Text fontSize={16} style={(() => {
+            delete fontStyles.manrope400["color"];
+            return [[{ ...fontStyles.manrope300 }]]
+          }) as StyleProp<TextStyle>} color='primary.100' >{rating}</Text>
         </Box>
       </Box>
     </Pressable >
