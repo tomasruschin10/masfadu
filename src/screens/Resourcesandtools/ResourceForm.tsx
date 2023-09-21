@@ -215,8 +215,7 @@ function ResourceForm({ route, navigation }) {
                 <Select
                   backgroundColor={"#F7FAFC"}
                   placeholderTextColor={"#C4C4C4"}
-         
-                  textAlign={"center"}
+                  textAlign={"left"}
                   isDisabled
                   accessibilityLabel="Elegir Materia"
                   placeholder="No hay más materias"
@@ -253,7 +252,7 @@ function ResourceForm({ route, navigation }) {
                 <Select
                   backgroundColor={"#F7FAFC"}
                   placeholderTextColor={"#C4C4C4"}
-                  textAlign={"center"}
+                  textAlign={"left"}
                   isDisabled
                   accessibilityLabel="Elegir Materia"
                   placeholder="No hay más materias"
@@ -312,7 +311,7 @@ function ResourceForm({ route, navigation }) {
                     backgroundColor={"#F7FAFC"}
                     placeholderTextColor={"#C4C4C4"}
                     rounded={"3xl"}
-                    textAlign={"center"}
+                    textAlign={"left"}
                     isDisabled
                     accessibilityLabel="Sin Categorías"
                     placeholder="No hay categorías"

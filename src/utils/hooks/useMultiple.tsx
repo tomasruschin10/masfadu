@@ -77,7 +77,7 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
             }
           </Box>
           <Box w="70%" justifyContent={'center'} >
-            <Text style={[fontStyles.manrope500, {
+            <Text style={[fontStyles.manrope600, {
               fontSize: 14.5,
               marginBottom: -2,
             }]} lineHeight={17} numberOfLines={2}>

@@ -148,7 +148,7 @@ function ChangeCareer({ route, navigation }) {
               textAlign={"center"}
               isDisabled
               accessibilityLabel="Elegir carrera"
-              placeholder="No hay mas carreras"
+              placeholder="No hay más carreras"
             ></Select>
           )}
         </Box>
