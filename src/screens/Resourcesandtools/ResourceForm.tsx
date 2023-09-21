@@ -292,8 +292,8 @@ function ResourceForm({ route, navigation }) {
                     placeholderTextColor={"#C4C4C4"}
                     selectedValue={selectedCategoryId}
                     minWidth="335"
-                    accessibilityLabel="Elegir Materia"
-                    placeholder="Elegir Materia"
+                    accessibilityLabel="Elegir Categpría"
+                    placeholder="Elegir Categoría"
                     _selectedItem={{
                       bg: "teal.600",
                       endIcon: <CheckIcon size="5" />,
