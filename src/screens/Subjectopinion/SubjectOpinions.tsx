@@ -13,12 +13,9 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   const [showWarning, setShowWarning] = useState(true);
   const { notice } = useSelector((state: any) => state.notice);
 
-  console.log("NOTICE STsATE ", filteredSubjects.map((item) => item))
-
 /*   useEffect(() => {
      console.log("NOTICE STsATE ", notice.value)
   }, [notice?.value]) */
-
 
   const colores = ['#E85E29']
 

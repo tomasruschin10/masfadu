@@ -79,7 +79,7 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
           <Box w="70%" justifyContent={'center'} >
             <Text style={[fontStyles.manrope600, {
               fontSize: 14.5,
-              marginBottom: -2,
+              marginBottom: 2,
             }]} lineHeight={17} numberOfLines={2}>
               {title}
             </Text>
@@ -87,7 +87,7 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
               text ? <Text style={[fontStyles.bodyText, { color: "#939aa0", fontSize: 13, marginTop: 2 }]} fontWeight={'bold'}>{text}</Text> : null
             }
             {
-              time ? <Text style={[fontStyles.manrope400, {    fontSize: 13, marginTop: 2 }]} numberOfLines={2} fontSize={10}>{time}</Text> : null
+              time ? <Text style={[fontStyles.manrope400, {    fontSize: 12, marginTop: 2 }]} numberOfLines={2} fontSize={10}>{time}</Text> : null
             }
           </Box>
         </Box>
