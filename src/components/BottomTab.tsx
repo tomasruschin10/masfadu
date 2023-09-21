@@ -357,7 +357,6 @@ export default function BottomTab({ route, navigation, setMenu }) {
               </Box>
             </Box>
             <Text
-              /* fontFamily={"Sans"} */
               fontSize={12}
               style={{
                 bottom: "-14%",

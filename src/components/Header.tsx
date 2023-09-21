@@ -67,16 +67,9 @@ export function HeaderBack({ ...props }) {
                 }
               }
               }
-              size={"50px"}
+              size={"40px"}
               icon={
-                <Icon
-                  as={Ionicons}
-                  name="add"
-                  size="md"
-                  color="#f4faff"
-                  width={"20px"}
-                  height={"20px"}
-                />
+                <Entypo name="plus" size={27} color="#f4faff" />
               }
             />
           </Box>
@@ -89,7 +82,7 @@ export function NoHeader({ ...props }) {
   return (
     <>
       <StatusBar hidden={true} translucent={true} backgroundColor="#ffffff" barStyle="dark-content" />
-      <Box  bg="" />
+      <Box bg="" />
     </>
   );
 }
@@ -104,7 +97,7 @@ export function HeaderPerfil({ showIcon, ...props }) {
       <StatusBar
         backgroundColor={props.statusBarColor}
         barStyle={props.barStyle}
-        
+
       />
       <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
       <Box justifyContent="space-between" px={4} flexDirection="row" pb={2}>
