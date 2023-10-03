@@ -1,12 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Box, Button, Icon, Image, Input, Text, VStack } from "native-base";
+import { Box, Button, Icon, Image, Input, Text, View, VStack } from "native-base";
 import * as React from "react";
 import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
-import Hr from "../../components/Hr";
+/* import Hr from "../../components/Hr"; */
 import { postServices } from "../../utils/hooks/services";
 import { getUserDataWithToken } from "../../utils/storage";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
 
@@ -16,6 +16,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
   Dimensions,
+  PixelRatio,
 } from "react-native";
 import jwtDecode from "jwt-decode";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -29,9 +30,11 @@ import {
 } from "firebase/auth";
 import { updateUserdata } from "../../redux/actions/user";
 import { baseApi } from "../../utils/api";
+import { fontStyles } from "../../utils/colors/fontColors";
+import DefaultButton from "../../components/DefaultButton";
 
 const { height } = Dimensions.get("window");
-const bodyOffset = height * 0.15;
+const bodyOffset = height * 0.10;
 
 function LoginScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -118,19 +121,24 @@ function LoginScreen({ route, navigation }) {
           <Box mt={20} style={{ marginTop: bodyOffset }} alignItems="center">
             <Image
               w={100}
-              mb={5}
+              mb={PixelRatio.roundToNearestPixel(55)}
               h={100}
               alt="Logo de Fadu"
               source={require("../../../assets/logo.png")}
             />
 
             <Input
-              mx="3"
-              mb={4}
               value={email}
               onChangeText={(text) => setEmail(text)}
               placeholder="Email"
+              type={"text"}
+              mx="3"
+              mb={4}
               w="90%"
+              h={PixelRatio.roundToNearestPixel(60)}
+              rounded={PixelRatio.roundToNearestPixel(14)}
+              placeholderTextColor={"#d3d3d3"}
+              backgroundColor={"#F7FAFC"}
             />
             <Input
               value={password}
@@ -140,6 +148,8 @@ function LoginScreen({ route, navigation }) {
                 md: "25%",
               }}
               mb={4}
+              h={PixelRatio.roundToNearestPixel(60)}
+              rounded={PixelRatio.roundToNearestPixel(14)}
               type={showPassword ? "text" : "password"}
               InputRightElement={
                 <Icon
@@ -156,38 +166,48 @@ function LoginScreen({ route, navigation }) {
               }
               placeholder="Contraseña"
             />
-            <Button onPress={getLogin} mb={3} w="90%" isLoading={loading}>
-              Iniciar Sesión
-            </Button>
+            <DefaultButton buttonStyle={{
+              backgroundColor: "#DA673A",
+              borderRadius: PixelRatio.roundToNearestPixel(14),
+              height: PixelRatio.roundToNearestPixel(60),
+              width: PixelRatio.roundToNearestPixel(410),
+            }}
+
+              containerStyle={{
+                marginBottom: PixelRatio.roundToNearestPixel(15)
+              }}
+
+              title="Iniciar Sesión"
+              callBack={getLogin} />
+
             <Button
               onPress={() => navigation.navigate("RecoveryPassword")}
               isLoading={loading}
               variant="link"
             >
-              ¿Te olvidaste la contraseña?
+              <Text style={[fontStyles.poppins400, {
+                color: "#797979"
+              }]} >
+                ¿Te olvidaste la contraseña?
+              </Text>
             </Button>
           </Box>
-          <Box py={2} px={5}>
+          {/*           <Box py={2} px={5}>
             <Hr text={"ó"} />
-          </Box>
-          <Box alignItems="center">
+          </Box> */}
+
+          <Box alignItems="center" pt={PixelRatio.roundToNearestPixel(50)}>
             <Button
               mb={5}
               w="90%"
+              h={PixelRatio.roundToNearestPixel(60)}
+              rounded={PixelRatio.roundToNearestPixel(14)}
+              backgroundColor={"#FFFFFF"}
               onPress={() => navigation.navigate("GoogleLogin")}
               _spinner={{ color: "black" }}
               isLoading={loading}
-              leftIcon={
-                <TouchableWithoutFeedback>
-                  <Image
-                    source={require("../../../assets/icons/google.png")}
-                    size={5}
-                    mr="2"
-                    alt={"logo de google"}
-                  />
-                </TouchableWithoutFeedback>
-              }
-              _text={{ color: "darkText" }}
+
+              _text={{ color: "#797979" }}
               colorScheme={"ligth"}
               color={"darkText"}
             >
@@ -202,7 +222,12 @@ function LoginScreen({ route, navigation }) {
                   AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
                 }
                 cornerRadius={5}
-                style={{ width: 200, height: 44 }}
+                style={{
+                  width: 200,
+                  borderRadius: PixelRatio.roundToNearestPixel(14),
+                  height: PixelRatio.roundToNearestPixel(60),
+                }}
+
                 onPress={async () => {
                   try {
                     const credential = await AppleAuthentication.signInAsync({
@@ -320,13 +345,13 @@ function LoginScreen({ route, navigation }) {
 
             <Box flexDirection={"row"} justifyContent={"center"}>
               <Box justifyContent={"center"}>
-                <Text>¿No tenés una cuenta?</Text>
+                <Text color="#797979">¿No tenés una cuenta?</Text>
               </Box>
               <Button
                 isLoading={loading}
                 onPress={() => navigation.navigate("Registro")}
                 variant="link"
-                _text={{ fontWeight: "bold" }}
+                _text={{ fontWeight: "bold", color: "#797979" }}
               >
                 Registrate
               </Button>
