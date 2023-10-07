@@ -33,9 +33,9 @@ import { baseApi } from "../../utils/api";
 import { fontStyles } from "../../utils/colors/fontColors";
 import DefaultButton from "../../components/DefaultButton";
 
-const { height } = Dimensions.get("window");
-const bodyOffset = height * 0.10;
-
+const { height, width } = Dimensions.get("window");
+const bodyOffset = height * 0.15;
+const contentWidth = width / 1.2;
 function LoginScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -117,8 +117,8 @@ function LoginScreen({ route, navigation }) {
       <NoHeader />
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <VStack px={5}>
-          <Box mt={20} style={{ marginTop: bodyOffset }} alignItems="center">
+        <VStack maxWidth={contentWidth} mx={"auto"}>
+          <Box style={{ marginTop: bodyOffset }} alignItems="center">
             <Image
               w={100}
               mb={PixelRatio.roundToNearestPixel(55)}
@@ -134,7 +134,7 @@ function LoginScreen({ route, navigation }) {
               type={"text"}
               mx="3"
               mb={4}
-              w="90%"
+              w="100%"
               h={PixelRatio.roundToNearestPixel(60)}
               rounded={PixelRatio.roundToNearestPixel(14)}
               placeholderTextColor={"#d3d3d3"}
@@ -144,7 +144,7 @@ function LoginScreen({ route, navigation }) {
               value={password}
               onChangeText={(text) => setPassword(text)}
               w={{
-                base: "90%",
+                base: "100%",
                 md: "25%",
               }}
               mb={4}
@@ -170,7 +170,8 @@ function LoginScreen({ route, navigation }) {
               backgroundColor: "#DA673A",
               borderRadius: PixelRatio.roundToNearestPixel(14),
               height: PixelRatio.roundToNearestPixel(60),
-              width: PixelRatio.roundToNearestPixel(410),
+              width: 500,
+              maxWidth: contentWidth,
             }}
 
               containerStyle={{
@@ -199,7 +200,7 @@ function LoginScreen({ route, navigation }) {
           <Box alignItems="center" pt={PixelRatio.roundToNearestPixel(50)}>
             <Button
               mb={5}
-              w="90%"
+              w="100%"
               h={PixelRatio.roundToNearestPixel(60)}
               rounded={PixelRatio.roundToNearestPixel(14)}
               backgroundColor={"#FFFFFF"}
@@ -223,7 +224,8 @@ function LoginScreen({ route, navigation }) {
                 }
                 cornerRadius={5}
                 style={{
-                  width: 200,
+                  width: 500,
+                  maxWidth: contentWidth,
                   borderRadius: PixelRatio.roundToNearestPixel(14),
                   height: PixelRatio.roundToNearestPixel(60),
                 }}
