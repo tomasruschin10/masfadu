@@ -1,6 +1,5 @@
 import { Box, Text, useTheme } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {  TouchableOpacity } from "react-native";
 
 interface SectionProps {
   title: string;
