@@ -1,13 +1,13 @@
 import { Text, View } from "native-base";
-import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps, TouchableOpacity } from "react-native";
- 
-export const defaultTextStyle =             {
+import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps, TouchableOpacity, PixelRatio } from "react-native";
+
+export const defaultTextStyle = {
     width: 150,
     color: "#ffffff",
     fontSize: 13,
     fontWeight: "bold",
     letterSpacing: 0.5
-  };
+};
 interface DefaultButtonProps extends TouchableOpacityProps {
     callBack: () => void;
     title: string;
@@ -47,12 +47,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     button: {
-        backgroundColor: "#EB5E29",
+        backgroundColor: "#DA673A",
         height: 50,
         width: "100%",
         borderRadius: 10,
-        paddingHorizontal: "5%"
-        },
+         paddingHorizontal: "5%",
+        alignItems: "center",
+        alignContent:  "center",
+
+    },
     text: {
         color: "#ffffff",
         fontSize: 13,

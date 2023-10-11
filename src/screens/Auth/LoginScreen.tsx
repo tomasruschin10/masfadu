@@ -32,10 +32,15 @@ import { updateUserdata } from "../../redux/actions/user";
 import { baseApi } from "../../utils/api";
 import { fontStyles } from "../../utils/colors/fontColors";
 import DefaultButton from "../../components/DefaultButton";
+import { moderateScale } from "../../utils/media.screens";
 
 const { height, width } = Dimensions.get("window");
+/* const bodyOffset = height * 0.15;
+const contentWidth = width / 1.2; */
+
 const bodyOffset = height * 0.15;
 const contentWidth = width / 1.2;
+
 function LoginScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -136,9 +141,8 @@ function LoginScreen({ route, navigation }) {
               mb={4}
               w="100%"
               h={PixelRatio.roundToNearestPixel(60)}
-              rounded={PixelRatio.roundToNearestPixel(14)}
-              placeholderTextColor={"#d3d3d3"}
-              backgroundColor={"#F7FAFC"}
+              rounded={moderateScale(14)}
+ 
             />
             <Input
               value={password}
@@ -149,7 +153,7 @@ function LoginScreen({ route, navigation }) {
               }}
               mb={4}
               h={PixelRatio.roundToNearestPixel(60)}
-              rounded={PixelRatio.roundToNearestPixel(14)}
+              rounded={moderateScale(14)}
               type={showPassword ? "text" : "password"}
               InputRightElement={
                 <Icon
@@ -168,11 +172,16 @@ function LoginScreen({ route, navigation }) {
             />
             <DefaultButton buttonStyle={{
               backgroundColor: "#DA673A",
-              borderRadius: PixelRatio.roundToNearestPixel(14),
+              borderRadius: moderateScale(14),
               height: PixelRatio.roundToNearestPixel(60),
               width: 500,
               maxWidth: contentWidth,
             }}
+              textStyle={
+                {
+                  fontSize: moderateScale(12)
+                }
+              }
 
               containerStyle={{
                 marginBottom: PixelRatio.roundToNearestPixel(15)
@@ -202,13 +211,13 @@ function LoginScreen({ route, navigation }) {
               mb={5}
               w="100%"
               h={PixelRatio.roundToNearestPixel(60)}
-              rounded={PixelRatio.roundToNearestPixel(14)}
+              rounded={ moderateScale(14)}
               backgroundColor={"#FFFFFF"}
               onPress={() => navigation.navigate("GoogleLogin")}
               _spinner={{ color: "black" }}
               isLoading={loading}
 
-              _text={{ color: "#797979" }}
+              _text={{ color: "#797979", fontSize:  moderateScale(12) }}
               colorScheme={"ligth"}
               color={"darkText"}
             >
@@ -222,11 +231,11 @@ function LoginScreen({ route, navigation }) {
                 buttonStyle={
                   AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
                 }
-                cornerRadius={5}
+                cornerRadius={moderateScale(14)}
                 style={{
                   width: 500,
                   maxWidth: contentWidth,
-                  borderRadius: PixelRatio.roundToNearestPixel(14),
+                  borderRadius: moderateScale(14),
                   height: PixelRatio.roundToNearestPixel(60),
                 }}
 

@@ -25,7 +25,7 @@ function Message() {
   if (message.open) {
     setTimeout(() => {
       dispatch(updateMessage({ body: "", open: false, type: "" }));
-    }, 7000);
+    }, 10000);
   } 
 
   //uncomment for manually activation

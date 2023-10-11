@@ -29,7 +29,7 @@ export default function TitleSliders({
           <Box
             flexDirection={"row"}
             alignItems={"center"}
-            bg={"#f2fdfb"}
+        /*     bg={"#f2fdfb"} */
             rounded={"full"}
             pl={3}
             pr={3}
@@ -44,7 +44,7 @@ export default function TitleSliders({
             >
               ver más
             </Text>
-            <AntDesign name="arrowright" size={12} color={"#ec7245"} />
+           {/*  <AntDesign name="arrowright" size={12} color={"#ec7245"} /> */}
           </Box>
         </TouchableOpacity>
       ) : null}

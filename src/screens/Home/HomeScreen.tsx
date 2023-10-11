@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   View,
+  PixelRatio,
 } from "react-native";
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
@@ -21,6 +22,9 @@ import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
 import Menu from "../Menu/Menu";
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { fontStyles } from "../../utils/colors/fontColors";
+import DefaultButton from "../../components/DefaultButton";
 
 
 const handleError = (error) => {
@@ -64,7 +68,7 @@ function HomeScreen({ route, navigation }) {
   const notificationListener = React.useRef<any>();
   const responseListener = React.useRef<any>();
 
-  
+
   React.useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
@@ -182,7 +186,7 @@ function HomeScreen({ route, navigation }) {
     item.subject.subjectId = item.subject.id
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("SubjectContent",  item.subject)}
+        onPress={() => navigation.navigate("SubjectContent", item.subject)}
         style={{
           width: cardWidth,
           maxWidth: cardWidth,
@@ -227,7 +231,7 @@ function HomeScreen({ route, navigation }) {
               {name}
             </Text>
           </Box>
-          </Box>
+        </Box>
       </TouchableOpacity>);
     /*     return (
           <TouchableOpacity
@@ -506,13 +510,13 @@ function HomeScreen({ route, navigation }) {
                 justifyContent: "space-between",
                 backgroundColor: "#ffffff",
                 padding: 10,
-                borderRadius: 10,
+                borderRadius: PixelRatio.roundToNearestPixel(14),
               }}
             >
               <View>
                 <Text
                   fontWeight={"700"}
-                  style={{
+                  style={[{
                     flex: 1,
                     // backgroundColor: "#b1b1b3",
                     alignItems: "center",
@@ -520,23 +524,26 @@ function HomeScreen({ route, navigation }) {
                     padding: 2,
                     marginTop: 4,
                     // fontWeight: "bold",
-                    fontSize: 16,
-                  }}
+                    fontSize: 16
+                  }, fontStyles.poppins600]}
                 >
                   ¿En qué aula curso?
                 </Text>
                 <Text
-                  style={{
-                    flex: 1,
-                    // backgroundColor: "#3A71E1",
-                    alignItems: "center",
-                    color: "#808990",
-                    fontSize: 13,
-                    padding: 2,
-                    marginTop: 2,
-                  }}
+                  style={[
+                    {
+                      flex: 1,
+                      // backgroundColor: "#3A71E1",
+                      alignItems: "center",
+                      color: "#808990",
+                      fontSize: 13,
+                      padding: 2,
+                      marginTop: 2,
+                    },
+                    fontStyles.poppins400
+                  ]}
                 >
-                  ENCONTRA DONDE CURSAS
+                  Encontrá dónde cursás
                 </Text>
               </View>
               <View
@@ -548,7 +555,35 @@ function HomeScreen({ route, navigation }) {
                   marginRight: 12,
                 }}
               >
-                <TouchableOpacity
+
+
+                <DefaultButton
+                  callBack={() =>
+                    navigation.navigate("SearchCourse", {
+                      title: "Buscar curso",
+                      url: "https://aulas.fadu.uba.ar/aulas.php",
+                    })
+                  }
+                  textStyle={
+                    
+                      {
+                        ...fontStyles.poppins700,
+                        color: "#ffffff",
+                        marginTop: "unset",
+                        margin: "10%"
+                       }
+
+                  }
+
+                  buttonStyle={{
+                    height: PixelRatio.roundToNearestPixel(45),
+                    width: "100%",
+                    alignItems: "center",
+                    paddingHorizontal: PixelRatio.roundToNearestPixel(40),
+                  }}
+
+                  title="buscar" />
+                {/*                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("SearchCourse", {
                       title: "Buscar curso",
@@ -556,7 +591,8 @@ function HomeScreen({ route, navigation }) {
                     })
                   }
                 >
-                  <View
+
+                   <View
                     style={{
                       backgroundColor: "#EB5E29",
                       height: 24,
@@ -565,17 +601,20 @@ function HomeScreen({ route, navigation }) {
                     }}
                   >
                     <Text
-                      style={{
-                        color: "#ffffff",
-                        fontSize: 11,
-                        textAlign: "center",
-                        marginTop: 1.5,
-                      }}
+                      style={[
+                        {
+                          fontSize: 11,
+                          textAlign: "center",
+                          marginTop: 1.5,
+                        },
+                        fontStyles.poppins700,
+                        {   color: "#ffffff" }
+                      ]}
                     >
                       Buscar
                     </Text>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           </HStack>
