@@ -66,19 +66,10 @@ const carriers = [
 
 
 function Menu({ route, navigation, setMenu }) {
-
-
-
   return (
 
     <Box style={{ width: "100%", height: "100%", zIndex: 101, position: "absolute" }} flex={1} mt={0} pt={0} backgroundColor="transparent">
       <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.leftColumn}
-        onPress={() => setMenu(false)}
-      >
-        <Text>Columna Izquierda</Text>
-      </TouchableOpacity>
         <View style={styles.rightColumn}>
           <Box marginLeft={"20%"} >
             <HeaderPerfil
@@ -148,6 +139,12 @@ function Menu({ route, navigation, setMenu }) {
             </View>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.leftColumn}
+          onPress={() => setMenu(false)}
+        >
+          <Text>Columna Izquierda</Text>
+        </TouchableOpacity>
       </View>
     </Box>
   );
@@ -164,7 +161,7 @@ const styles = StyleSheet.create({
   },
   rightColumn: {
     flex: 80, // Ocupa el 80% del ancho total
-    backgroundColor:"#F5FAFE",
+    backgroundColor: "#F5FAFE",
     padding: 10,
   },
 });
