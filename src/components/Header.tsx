@@ -87,7 +87,8 @@ export function NoHeader({ ...props }) {
   );
 }
 
-export function HeaderPerfil({ showIcon, ...props }) {
+export function HeaderPerfil(props) {
+  const { showIcon } = props
   const navigation: any = useNavigation();
   const { colors }: any = useTheme();
   const userdata = useSelector((state: any) => state.user.userdata);
