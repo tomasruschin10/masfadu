@@ -2,6 +2,16 @@ import { Box, Text, useTheme } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
+interface SectionProps {
+  title: string;
+  more?: boolean;
+  navigateTo: string;
+  isSubsection?: boolean;
+  to?: string;
+  navigation: any; // TODO: Definir el tipo de `navigation`
+}
+
+
 export default function TitleSliders({
   navigateTo,
   isSubsection,
@@ -9,7 +19,7 @@ export default function TitleSliders({
   to,
   navigation,
   more = true,
-}) {
+}: SectionProps) {
   const { colors }: any = useTheme();
 
   return (
