@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
-import { Box, HStack, Icon, IconButton, Image, Input, ScrollView, Text } from "native-base";
+import { Box, HStack, Icon, Image, ScrollView, Text } from "native-base";
 import {
   FlatList,
   Dimensions,
@@ -21,10 +21,10 @@ import { store } from "../../redux/store";
 import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
 import Menu from "../Menu/Menu";
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
-import { Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { FontAwesome } from '@expo/vector-icons';
 import { fontStyles } from "../../utils/colors/fontColors";
 import DefaultButton from "../../components/DefaultButton";
+import { horizontalScale, moderateScale, verticalScale } from "../../utils/media.screens";
 
 
 const handleError = (error) => {
@@ -51,7 +51,7 @@ function HomeScreen({ route, navigation }) {
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
   const [offer, setOffer] = useState([]);
-  const [offertTitle, setOffertTitle] = useState("...");
+  const [offertTitle, setOffertTitle] = useState("El Mercado de Fadu");
   const [courses, setCourses] = useState([]);
   const [career, setCareer] = useState([]);
   const SLIDER_WIDTH = Dimensions.get("window").width;
@@ -60,36 +60,6 @@ function HomeScreen({ route, navigation }) {
   const { width, height } = Dimensions.get("window");
   const cardWidth = width * 0.35; // Ancho de cada tarjeta, ajustado al 35% del ancho total
   const cardHeight = height * 0.25; // alto de cada tarjeta, ajustado al 25% del alto total
-
-
-  const [expoPushToken, setExpoPushToken] = React.useState("");
-  const [notification, setNotification] =
-    React.useState<Notifications.Notification>();
-  const notificationListener = React.useRef<any>();
-  const responseListener = React.useRef<any>();
-
-
-  React.useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -148,7 +118,6 @@ function HomeScreen({ route, navigation }) {
         h={"90"}
         style={{ borderRadius: 8 }}
       />
-      {/* <Text bold textAlign={"center"} color={"white"}>{ item.name }</Text> */}
     </Box>
   );
   const renderNews = ({ item }) => (
@@ -223,9 +192,8 @@ function HomeScreen({ route, navigation }) {
           />
           <Box pt={1} pb={3} px={4} pl={2}>
             <Text
-              style={{ fontSize: 16, marginTop: 8 }}
+              style={[fontStyles.poppins400, { fontSize: 16, marginTop: 8 }]}
               fontWeight={700}
-              fontFamily="Manrope"
               numberOfLines={2}
             >
               {name}
@@ -233,55 +201,6 @@ function HomeScreen({ route, navigation }) {
           </Box>
         </Box>
       </TouchableOpacity>);
-    /*     return (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Subjects", item)}
-            style={{
-              width:cardWidth,
-              maxWidth: cardWidth,
-              height:cardHeight,
-              minHeight: cardHeight,
-              maxHeight: cardHeight,
-              marginRight: 2,
-              marginLeft: 10,
-              marginTop: 10
-            }}
-            
-          >
-            <Box
-              shadow={"0"}
-              bgColor={"white"}
-              borderRadius={15}
-              maxWidth={cardWidth}
-              height={cardHeight - 20}
-              mb={5}
-            >
-              <Box borderRadius={15} overflow="hidden"
-              >
-                <Image
-                  alt={"logo"}
-                  style={{
-                    width:cardWidth
-                  }}
-                  resizeMethod="scale"
-                  h={125}
-                  resizeMode="cover"
-                  source={{ uri: image.url }}
-                />
-                <Box pt={1} pb={3} pl={2}>
-                  <Text
-                    style={{ fontSize: 16, marginTop: 8 }}
-                    fontWeight={700}
-                    fontFamily="Manrope"
-                    numberOfLines={2}
-                  >
-                    {name}
-                  </Text>
-                </Box>
-              </Box>
-            </Box>
-          </TouchableOpacity>
-        ); */
   };
 
 
@@ -322,7 +241,7 @@ function HomeScreen({ route, navigation }) {
             />
             <Box pt={1} px={2} pb={3}>
               <Text
-                style={{ fontSize: 16, marginTop: 8 }}
+                style={[fontStyles.poppins400, { fontSize: 16, marginTop: 8 }]}
                 fontWeight={700}
                 fontFamily="Manrope"
                 numberOfLines={2}
@@ -333,7 +252,7 @@ function HomeScreen({ route, navigation }) {
               <Text
                 fontWeight={700}
                 fontFamily="Manrope"
-                style={{ fontSize: 12, marginBottom: 4, color: "#bcbecc" }}
+                style={[fontStyles.poppins400, { fontSize: 12, marginBottom: 4, color: "#bcbecc" }]}
                 numberOfLines={1}
                 mt={1}
               >
@@ -388,9 +307,8 @@ function HomeScreen({ route, navigation }) {
             />
             <Box pt={1} px={2} pb={3} maxWidth={cardWidth}>
               <Text
-                style={{ fontSize: 16, marginTop: 8 }}
+                style={[fontStyles.poppins400, { fontSize: 16, marginTop: 8 }]}
                 fontWeight={700}
-                fontFamily="Manrope"
                 numberOfLines={2}
               >
                 {title}
@@ -398,8 +316,7 @@ function HomeScreen({ route, navigation }) {
 
               <Text
                 fontWeight={700}
-                fontFamily="Manrope"
-                style={{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }}
+                style={[fontStyles.poppins400,{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }]}
                 numberOfLines={1}
                 mt={1}
                 fontSize={"sm"}
@@ -453,7 +370,11 @@ function HomeScreen({ route, navigation }) {
               mt={4}
               backgroundColor={"primary.200"}
             >
-              <Text bold textAlign={"center"} color={"white"}>
+              <Text style={
+                {
+                  ...fontStyles.poppins400,
+                }
+              } bold textAlign={"center"} color={"white"}>
                 No hay noticias para ver!
               </Text>
             </Box>
@@ -486,6 +407,11 @@ function HomeScreen({ route, navigation }) {
                   px={4}
                   fontWeight={"bold"}
                   color="white"
+                  style={
+                    {
+                      ...fontStyles.poppins400,
+                    }
+                  }
                 >
                   No hay publicidad para mostrar
                 </Text>
@@ -495,22 +421,16 @@ function HomeScreen({ route, navigation }) {
         </Box>
 
         <Box w={"100%"} flex={1} px={3} mb={32}>
-          <HStack justifyContent={"space-between"} mb={5} mt={1}>
-            {/* <TitleSliders
-              navigateTo={"a"}
-              title={"¿En qué aula cursó?"}
-              to={null}
-              more={false}
-              navigation={navigation}
-            /> */}
+          <HStack justifyContent={"space-around"} mb={5} mt={1}>
             <View
               style={{
                 flex: 1,
                 flexDirection: "row",
-                justifyContent: "space-between",
+                justifyContent: "space-around",
                 backgroundColor: "#ffffff",
-                padding: 10,
-                borderRadius: PixelRatio.roundToNearestPixel(14),
+                paddingHorizontal: verticalScale(20),
+                paddingVertical: verticalScale(25),
+                borderRadius: moderateScale(14),
               }}
             >
               <View>
@@ -523,9 +443,8 @@ function HomeScreen({ route, navigation }) {
                     justifyContent: "center",
                     padding: 2,
                     marginTop: 4,
-                    // fontWeight: "bold",
                     fontSize: 16
-                  }, fontStyles.poppins600]}
+                  }, fontStyles.poppins700]}
                 >
                   ¿En qué aula curso?
                 </Text>
@@ -540,7 +459,7 @@ function HomeScreen({ route, navigation }) {
                       padding: 2,
                       marginTop: 2,
                     },
-                    fontStyles.poppins400
+                    fontStyles.poppins500
                   ]}
                 >
                   Encontrá dónde cursás
@@ -552,7 +471,7 @@ function HomeScreen({ route, navigation }) {
                   flexDirection: "row",
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  marginRight: 12,
+                  marginRight: verticalScale(-20),
                 }}
               >
 
@@ -565,56 +484,25 @@ function HomeScreen({ route, navigation }) {
                     })
                   }
                   textStyle={
-                    
-                      {
-                        ...fontStyles.poppins700,
-                        color: "#ffffff",
-                        marginTop: "unset",
-                        margin: "10%"
-                       }
+
+                    {
+                      ...fontStyles.poppins700,
+                      color: "#ffffff",
+                      marginTop: "11%",
+
+                    }
 
                   }
 
                   buttonStyle={{
-                    height: PixelRatio.roundToNearestPixel(45),
+                    height: horizontalScale(35),
                     width: "100%",
                     alignItems: "center",
-                    paddingHorizontal: PixelRatio.roundToNearestPixel(40),
+                    borderRadius: moderateScale(14),
+                    paddingHorizontal: horizontalScale(35),
                   }}
 
                   title="buscar" />
-                {/*                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("SearchCourse", {
-                      title: "Buscar curso",
-                      url: "https://aulas.fadu.uba.ar/aulas.php",
-                    })
-                  }
-                >
-
-                   <View
-                    style={{
-                      backgroundColor: "#EB5E29",
-                      height: 24,
-                      width: 118,
-                      borderRadius: 7,
-                    }}
-                  >
-                    <Text
-                      style={[
-                        {
-                          fontSize: 11,
-                          textAlign: "center",
-                          marginTop: 1.5,
-                        },
-                        fontStyles.poppins700,
-                        {   color: "#ffffff" }
-                      ]}
-                    >
-                      Buscar
-                    </Text>
-                  </View>
-                </TouchableOpacity> */}
               </View>
             </View>
           </HStack>

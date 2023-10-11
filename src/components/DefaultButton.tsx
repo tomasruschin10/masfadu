@@ -1,5 +1,6 @@
 import { Text, View } from "native-base";
 import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps, TouchableOpacity, PixelRatio } from "react-native";
+import { fontStyles } from "../utils/colors/fontColors";
 
 export const defaultTextStyle = {
     width: 150,
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 13,
         fontWeight: "bold",
-        letterSpacing: 0.5
+        letterSpacing: 0.5,
+        ...fontStyles.poppins700,
     }
 });
 

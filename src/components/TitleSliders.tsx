@@ -1,5 +1,6 @@
 import { Box, Text, useTheme } from "native-base";
 import {  TouchableOpacity } from "react-native";
+import { fontStyles } from "../utils/colors/fontColors";
 
 interface SectionProps {
   title: string;
@@ -29,7 +30,7 @@ export default function TitleSliders({
       alignItems={"center"}
       flexDirection={"row"}
     >
-      <Text fontWeight={700} fontFamily="Manrope" style={{ fontSize: 16 }}>
+      <Text fontWeight={700} style={[fontStyles.poppins600,{ fontSize: 16 }]}>
         {title}
       </Text>
 
