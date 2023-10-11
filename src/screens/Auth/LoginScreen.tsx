@@ -32,7 +32,7 @@ import { updateUserdata } from "../../redux/actions/user";
 import { baseApi } from "../../utils/api";
 import { fontStyles } from "../../utils/colors/fontColors";
 import DefaultButton from "../../components/DefaultButton";
-import { moderateScale } from "../../utils/media.screens";
+import { moderateScale, verticalScale } from "../../utils/media.screens";
 
 const { height, width } = Dimensions.get("window");
 /* const bodyOffset = height * 0.15;
@@ -126,7 +126,7 @@ function LoginScreen({ route, navigation }) {
           <Box style={{ marginTop: bodyOffset }} alignItems="center">
             <Image
               w={100}
-              mb={PixelRatio.roundToNearestPixel(55)}
+              mb={verticalScale(50)}
               h={100}
               alt="Logo de Fadu"
               source={require("../../../assets/logo.png")}
@@ -140,7 +140,7 @@ function LoginScreen({ route, navigation }) {
               mx="3"
               mb={4}
               w="100%"
-              h={PixelRatio.roundToNearestPixel(60)}
+              h={verticalScale(50)}
               rounded={moderateScale(14)}
  
             />
@@ -152,7 +152,7 @@ function LoginScreen({ route, navigation }) {
                 md: "25%",
               }}
               mb={4}
-              h={PixelRatio.roundToNearestPixel(60)}
+              h={verticalScale(50)}
               rounded={moderateScale(14)}
               type={showPassword ? "text" : "password"}
               InputRightElement={
@@ -173,7 +173,7 @@ function LoginScreen({ route, navigation }) {
             <DefaultButton buttonStyle={{
               backgroundColor: "#DA673A",
               borderRadius: moderateScale(14),
-              height: PixelRatio.roundToNearestPixel(60),
+              height: verticalScale(50),
               width: 500,
               maxWidth: contentWidth,
             }}
@@ -210,7 +210,7 @@ function LoginScreen({ route, navigation }) {
             <Button
               mb={5}
               w="100%"
-              h={PixelRatio.roundToNearestPixel(60)}
+              h={verticalScale(50)}
               rounded={ moderateScale(14)}
               backgroundColor={"#FFFFFF"}
               onPress={() => navigation.navigate("GoogleLogin")}
@@ -236,7 +236,7 @@ function LoginScreen({ route, navigation }) {
                   width: 500,
                   maxWidth: contentWidth,
                   borderRadius: moderateScale(14),
-                  height: PixelRatio.roundToNearestPixel(60),
+                  height: verticalScale(50),
                 }}
 
                 onPress={async () => {
