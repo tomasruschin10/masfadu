@@ -1,13 +1,12 @@
 import {
-  Box,
-  FlatList,
-  Text,
-
+  Box, Text
 } from "native-base";
 import * as React from "react";
 import { HeaderPerfil } from "../../components/Header";
-import Sections from "./Sections";
-import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { PixelRatio, StyleSheet, TouchableOpacity, View } from "react-native";
+import SectionsV2 from "./SectionsV2";
+import { horizontalScale, moderateScale, screenWidth, verticalScale } from "../../utils/media.screens";
+import DefaultButton from "../../components/DefaultButton";
 
 
 const carriers = [
@@ -71,7 +70,7 @@ function Menu({ route, navigation, setMenu }) {
     <Box style={{ width: "100%", height: "100%", zIndex: 101, position: "absolute" }} flex={1} mt={0} pt={0} backgroundColor="transparent">
       <View style={styles.container}>
         <View style={styles.rightColumn}>
-          <Box marginLeft={"20%"} >
+          <Box marginLeft={horizontalScale(5)} marginBottom={horizontalScale(10)}>
             <HeaderPerfil
               showICon={false}
               statusBarColor="#e8eef3"
@@ -80,64 +79,40 @@ function Menu({ route, navigation, setMenu }) {
             />
 
           </Box>
-          <Box justifyContent={"center"} my={10} alignContent={"center"}>
-            <FlatList
-              ItemSeparatorComponent={() => <Box mb={5}></Box>}
-              showsVerticalScrollIndicator={false}
-              columnWrapperStyle={{ justifyContent: "space-evenly" }}
-              numColumns={2}
-              keyExtractor={(_, index) => index.toString()}
-              data={carriers}
-              renderItem={({ item }) => (
-                <Sections
+          {carriers?.length ? carriers.map(item => {
+            return (
+              <Box justifyContent={"center"} my={verticalScale(7)} alignContent={"center"}>
+                <SectionsV2
                   setMenu={setMenu}
                   icon={item.icon}
                   title={item.title}
-                  comingSoon={item.comingSoon}
                   navigation={navigation}
                 />
-              )}
-            />
-          </Box>
+              </Box>
+            )
+          })
+            : ""}
 
 
-          <TouchableOpacity
-            style={{
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              justifyContent: 'center',
-              position: 'absolute',
-              bottom: "5%",
-              left: "15.5%",
-              right: 0
+          <DefaultButton
+            buttonStyle={{
+              backgroundColor: "#DA673A",
+              borderRadius: moderateScale(14),
+              height: verticalScale(50),
+              width: screenWidth - (screenWidth / 3),
             }}
-            onPress={() => setMenu(false)}
-          >
+            textStyle={
+              {
+                fontSize: moderateScale(12),
+                color: "white"
+              }
+            }
 
-            <View
-              style={{
-                backgroundColor: "#EB5E29",
-                height: 50,
-                width: 218,
-                borderRadius: 10,
+            containerStyle={{
+              marginTop: verticalScale(50)
+            }}
 
-
-              }}
-            >
-              <Text
-                style={{
-                  color: "#ffffff",
-                  fontSize: 13,
-                  textAlign: "center",
-                  marginTop: 13,
-                  fontWeight: "bold",
-                  letterSpacing: 0.5
-                }}
-              >
-                Cerrar
-              </Text>
-            </View>
-          </TouchableOpacity>
+            callBack={() => setMenu(false)} title="Cerrar" />
         </View>
         <TouchableOpacity
           style={styles.leftColumn}

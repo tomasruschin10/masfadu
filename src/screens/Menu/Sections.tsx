@@ -35,8 +35,7 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
           alignItems="center"
           style={{
             justifyContent: "center", // Centrar contenido verticalmente
-            overflow: "hidden", // Evitar recorte del ícono
-          }}
+           }}
         >
           {comingSoon ? (
             <IconButton
@@ -82,12 +81,8 @@ export default function Sections({ title, icon, comingSoon, navigation, setMenu 
                 </Box>
               }
             />
-
-            
           ) : (
-            <Box
-
-          >
+            <Box>
             <Image
               size={55}
               alt="image"
