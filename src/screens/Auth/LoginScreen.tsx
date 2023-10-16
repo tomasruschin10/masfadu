@@ -65,6 +65,7 @@ function LoginScreen({ route, navigation }) {
     setAlert({ type, message });
   };
 
+
   const closeAlert = () => {
     setAlert(null);
   };
@@ -142,7 +143,7 @@ function LoginScreen({ route, navigation }) {
               w="100%"
               h={verticalScale(50)}
               rounded={moderateScale(14)}
- 
+              fontSize={moderateScale(18)}
             />
             <Input
               value={password}
@@ -169,6 +170,7 @@ function LoginScreen({ route, navigation }) {
                 />
               }
               placeholder="Contraseña"
+              fontSize={moderateScale(18)}
             />
             <DefaultButton buttonStyle={{
               backgroundColor: "#DA673A",
@@ -176,15 +178,19 @@ function LoginScreen({ route, navigation }) {
               height: verticalScale(50),
               width: 500,
               maxWidth: contentWidth,
+              paddingTop: verticalScale(7)
             }}
               textStyle={
                 {
-                  fontSize: moderateScale(12)
+                  fontSize: moderateScale(18),
+                  fontWeight:"500",
+                  color: "white",
+
                 }
               }
 
               containerStyle={{
-                marginBottom: PixelRatio.roundToNearestPixel(15)
+                marginBottom: PixelRatio.roundToNearestPixel(15),
               }}
 
               title="Iniciar Sesión"
@@ -196,7 +202,8 @@ function LoginScreen({ route, navigation }) {
               variant="link"
             >
               <Text style={[fontStyles.poppins400, {
-                color: "#797979"
+                color: "#797979",
+                fontSize: moderateScale(18),
               }]} >
                 ¿Te olvidaste la contraseña?
               </Text>
@@ -217,7 +224,7 @@ function LoginScreen({ route, navigation }) {
               _spinner={{ color: "black" }}
               isLoading={loading}
 
-              _text={{ color: "#797979", fontSize:  moderateScale(12) }}
+              _text={{ color: "#797979", fontSize: moderateScale(18), fontWeight: "400" }}
               colorScheme={"ligth"}
               color={"darkText"}
             >
@@ -238,7 +245,7 @@ function LoginScreen({ route, navigation }) {
                   borderRadius: moderateScale(14),
                   height: verticalScale(50),
                 }}
-
+                
                 onPress={async () => {
                   try {
                     const credential = await AppleAuthentication.signInAsync({

@@ -429,7 +429,7 @@ function HomeScreen({ route, navigation }) {
                 justifyContent: "space-around",
                 backgroundColor: "#ffffff",
                 paddingHorizontal: verticalScale(20),
-                paddingVertical: verticalScale(25),
+                paddingVertical: verticalScale(15),
                 borderRadius: moderateScale(14),
               }}
             >
@@ -443,7 +443,7 @@ function HomeScreen({ route, navigation }) {
                     justifyContent: "center",
                     padding: 2,
                     marginTop: 4,
-                    fontSize: 16
+                    fontSize: moderateScale(18)
                   }, fontStyles.poppins700]}
                 >
                   ¿En qué aula curso?
@@ -454,12 +454,12 @@ function HomeScreen({ route, navigation }) {
                       flex: 1,
                       // backgroundColor: "#3A71E1",
                       alignItems: "center",
-                      color: "#808990",
-                      fontSize: 13,
+                      color: "#797979",
+                      fontSize: moderateScale(14),
                       padding: 2,
                       marginTop: 2,
                     },
-                    fontStyles.poppins500
+                    fontStyles.poppins400
                   ]}
                 >
                   Encontrá dónde cursás
@@ -484,25 +484,21 @@ function HomeScreen({ route, navigation }) {
                     })
                   }
                   textStyle={
-
                     {
-                      ...fontStyles.poppins700,
-                      color: "#ffffff",
-                      marginTop: "11%",
-
+                      ...fontStyles.poppins500,
+                      color: "#F5F5F5",
+                      marginTop: verticalScale(5),
+                      fontWeight: "500"
                     }
-
                   }
-
                   buttonStyle={{
-                    height: horizontalScale(35),
+                    height: horizontalScale(30),
                     width: "100%",
                     alignItems: "center",
                     borderRadius: moderateScale(14),
                     paddingHorizontal: horizontalScale(35),
-                  }}
-
-                  title="buscar" />
+                   }}
+                  title="Buscar" />
               </View>
             </View>
           </HStack>

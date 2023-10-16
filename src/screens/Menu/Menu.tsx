@@ -107,11 +107,9 @@ function Menu({ route, navigation, setMenu }) {
                 color: "white"
               }
             }
-
             containerStyle={{
               marginTop: verticalScale(50)
             }}
-
             callBack={() => setMenu(false)} title="Cerrar" />
         </View>
         <TouchableOpacity

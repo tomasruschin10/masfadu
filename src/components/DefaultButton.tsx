@@ -1,12 +1,13 @@
 import { Text, View } from "native-base";
 import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps, TouchableOpacity, PixelRatio } from "react-native";
 import { fontStyles } from "../utils/colors/fontColors";
+import { Fonts } from "../utils/Fonts";
 
 export const defaultTextStyle = {
     width: 150,
     color: "#ffffff",
     fontSize: 13,
-    fontWeight: "bold",
+    fontWeight: "semibold",
     letterSpacing: 0.5
 };
 interface DefaultButtonProps extends TouchableOpacityProps {
@@ -27,7 +28,7 @@ const DefaultButton = ({
     const containerStyleCombined = { ...styles.container, ...containerStyle };
     const buttonStyleCombined = { ...styles.button, ...buttonStyle };
     const textStyleCombined = { ...styles.text, ...textStyle };
-
+    textStyleCombined.fontFamily = Fonts.fontConfig.Poppins[textStyle?.fontWeight || "700"]?.normal
     return (
         <TouchableOpacity style={containerStyleCombined} onPress={() => {
             callBack()
@@ -52,19 +53,19 @@ const styles = StyleSheet.create({
         height: 50,
         width: "100%",
         borderRadius: 10,
-         paddingHorizontal: "5%",
+        paddingHorizontal: "5%",
         alignItems: "center",
-        alignContent:  "center",
-
+        alignContent: "center",
+        fontWeight: "300",
     },
     text: {
+        ...fontStyles.poppins700,
         color: "#ffffff",
         fontSize: 13,
         textAlign: "center",
         marginTop: 13,
-        fontWeight: "bold",
+        fontWeight: "semibold",
         letterSpacing: 0.5,
-        ...fontStyles.poppins700,
     }
 });
 
