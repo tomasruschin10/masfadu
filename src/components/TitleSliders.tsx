@@ -1,6 +1,7 @@
 import { Box, Text, useTheme } from "native-base";
 import {  TouchableOpacity } from "react-native";
 import { fontStyles } from "../utils/colors/fontColors";
+import { moderateScale } from "../utils/media.screens";
 
 interface SectionProps {
   title: string;
@@ -30,7 +31,7 @@ export default function TitleSliders({
       alignItems={"center"}
       flexDirection={"row"}
     >
-      <Text fontWeight={700} style={[fontStyles.poppins600,{ fontSize: 16 }]}>
+      <Text fontWeight={700} style={[fontStyles.poppins600,{ fontSize: moderateScale(17) }]}>
         {title}
       </Text>
 
@@ -46,15 +47,14 @@ export default function TitleSliders({
           >
             <Text
               style={{
-                fontSize: 12,
-                color: "#ec7245",
+                fontSize: moderateScale(16),
+                color: "#DA673A",
                 marginRight: 2,
                 padding: 2,
               }}
             >
               ver más
             </Text>
-           {/*  <AntDesign name="arrowright" size={12} color={"#ec7245"} /> */}
           </Box>
         </TouchableOpacity>
       ) : null}

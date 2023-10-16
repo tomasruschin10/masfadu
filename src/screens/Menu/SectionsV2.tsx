@@ -18,7 +18,7 @@ export default function SectionsV2({ title, icon, navigation, setMenu }) {
                 alignItems: 'center', // Center items vertically
                 backgroundColor: isHovered ? '#E18561' : 'transparent', // Change background color on hover
                 width: "100%",
-                height: verticalScale(60),
+                height: verticalScale(45),
                 paddingVertical: verticalScale(10),
             }}
             onPressIn={() => setIsHovered(true)}
@@ -34,13 +34,13 @@ export default function SectionsV2({ title, icon, navigation, setMenu }) {
                     alt="imagen"
                     source={icon}
                     resizeMode="contain"
-                    style={{ width: 45, height: 45 }} // Adjust icon size
+                    style={{ width: 30, height: 30 }} // Adjust icon size
                 />
             </Box>
-            <Box ml={10}>
+            <Box ml={6}>
                 <Text
-                    style={[fontStyles.poppins500, { color: "#EB5E29" }]}
-                    fontSize={moderateScale(10)}
+                    style={[fontStyles.poppins400, { color: "#DA673A" }]}
+                    fontSize={moderateScale(13)}
                     textAlign="center"
                 >
                     {title}

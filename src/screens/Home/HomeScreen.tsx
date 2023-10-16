@@ -427,7 +427,7 @@ function HomeScreen({ route, navigation }) {
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "space-around",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#F5F6FA",
                 paddingHorizontal: verticalScale(20),
                 paddingVertical: verticalScale(15),
                 borderRadius: moderateScale(14),

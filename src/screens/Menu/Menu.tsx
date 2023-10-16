@@ -100,15 +100,16 @@ function Menu({ route, navigation, setMenu }) {
               borderRadius: moderateScale(14),
               height: verticalScale(50),
               width: screenWidth - (screenWidth / 3),
+              paddingTop: verticalScale(5.5)
             }}
             textStyle={
               {
-                fontSize: moderateScale(12),
+                fontSize: moderateScale(14),
                 color: "white"
               }
             }
             containerStyle={{
-              marginTop: verticalScale(50)
+              marginTop: verticalScale(75)
             }}
             callBack={() => setMenu(false)} title="Cerrar" />
         </View>
