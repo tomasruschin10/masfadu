@@ -14,6 +14,7 @@ import React from "react";
 import { Platform, SafeAreaView, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { fontStyles } from "../utils/colors/fontColors";
+import { moderateScale } from "../utils/media.screens";
 
 
 export function HeaderBack({ ...props }) {
@@ -26,14 +27,13 @@ export function HeaderBack({ ...props }) {
 
   return (
     <>
-      <StatusBar backgroundColor="#e8eef4" barStyle="dark-content" />
-      <Box safeAreaTop bg="#e8eef4" />
+      <StatusBar barStyle="dark-content" />
+      <Box safeAreaTop   />
 
-      <HStack px="5" py="3" w="100%" alignItems="center">
+      <HStack py="3" w="100%" alignItems="center">
         {navigation.canGoBack() && (
           <IconButton
             rounded="xl"
-            backgroundColor="primary.900"
             onPress={handleGoBack}
             icon={
               <Icon
@@ -43,8 +43,8 @@ export function HeaderBack({ ...props }) {
                     ? 'close-sharp'
                     : 'chevron-back'
                 }
-                size="md"
-                color="primary.1000"
+                size={moderateScale(25)}
+                color="black"
               />
             }
           />

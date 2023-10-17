@@ -9,7 +9,6 @@ import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Logic({
   index,
-  // lastItem,
   subject,
   nav,
   setShowWarning,
@@ -24,12 +23,6 @@ function AboutSubject_Logic({
   if (navigationEvent == "materias" && index == 0) {
     margginTop = 5;
   }
-
-  // if (navigationEvent == "menu" && index == 0) {
-  //   margginTop = ;
-  // }
-
-  console.log("margginTop ", margginTop);
 
   const { available, id, name, subjects, userSubject } = subject;
   const [FontsLoaded, setFontsLoaded] = useState(false);
@@ -59,7 +52,7 @@ function AboutSubject_Logic({
       mt={margginTop}
       justifyContent={"space-between"}
       style={{
-        backgroundColor: "#F1F6FA",
+        backgroundColor: "white",
         padding: 10,
         marginHorizontal: 5,
         borderRadius: 10,

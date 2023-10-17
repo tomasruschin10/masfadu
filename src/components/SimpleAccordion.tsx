@@ -83,7 +83,6 @@ const SimpleAccordion = ({
                 style={{
                   fontSize: 14.5,
                   fontWeight: "bold",
-
                   color: "#000000",
                   marginBottom: -2,
                 }}
@@ -104,8 +103,6 @@ const SimpleAccordion = ({
             <Box
               backgroundColor={"#ffffff"}
               style={{
-                borderColor: "#c7cbce",
-                borderWidth: 1,
                 borderRadius: 2,
                 padding: 2,
                 marginRight: 8,
@@ -117,7 +114,7 @@ const SimpleAccordion = ({
               alignItems={"center"}
             >
               <Text
-                color={"#6e7981"}
+                color={"e7981#6"}
                 style={{
                   padding: 3,
                   marginHorizontal: 5,
@@ -129,10 +126,6 @@ const SimpleAccordion = ({
               </Text>
             </Box>
           </TouchableOpacity>
-          {/* {
-                    showArrows &&
-                    <Image source={isCollapsed ? downArrow : upArrow} style={[styles.arrows, {tintColor: arrowColor}]}/>
-                } */}
         </Box>
         <Collapsible
           collapsed={isCollapsed}

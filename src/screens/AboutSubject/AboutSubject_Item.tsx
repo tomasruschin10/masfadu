@@ -5,6 +5,8 @@ import { ModalIcon, ModalNotes, ModalWarning } from "./Modals";
 import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
+import { moderateScale } from "../../utils/media.screens";
+import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
 
@@ -95,13 +97,13 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
       >
         <HStack p={4} justifyContent="space-between">
           <Box flex={1}>
-            <Text color={"#9f9f9f"} fontWeight={"600"} fontSize={12}>
+            <Text style={[fontStyles.poppins600, {color: "#9f9f9f", fontSize: moderateScale(15)}]}>
               Materias aprobadas
             </Text>
             <Text
-              fontFamily={"soraRegular"}
-              color={"#ababb4"}
-              fontSize={31}
+              style={fontStyles.poppins600}
+              color={"#171717"}
+              fontSize={moderateScale(30)}
               mt={2}
             >
               {`${materias.length}/${subjCategory.total}`}
@@ -124,17 +126,16 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             </Box>
           </Box>
           <Box ml={4}>
-            <Text color={"#b1b1b1"} fontWeight={"600"} fontSize={12}>
+            <Text style={[fontStyles.poppins600, {color: "#9f9f9f", fontSize: moderateScale(15)}]}>
               Promedio
             </Text>
-            <Box bg={"#f8f8f8"} rounded={"xl"} mt={2}>
+            <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
               {FontsLoaded ? <Text
-                fontFamily={"soraSemiBold"}
-                color={"#9a9a9a"}
-                fontWeight={"500"}
+
+                style={[fontStyles.poppins600, {color: "#646464", fontSize: moderateScale(25)}]}
                 textAlign={"center"}
-                fontSize={28}
-                py={1}
+                mt={2}
+                py={3}
               >
                 {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
               </Text> : null}
