@@ -2,6 +2,7 @@ import { Text, View } from "native-base";
 import { StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacityProps, TouchableOpacity, PixelRatio } from "react-native";
 import { fontStyles } from "../utils/colors/fontColors";
 import { Fonts } from "../utils/Fonts";
+import { moderateScale } from "../utils/media.screens";
 
 export const defaultTextStyle = {
     width: 150,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#DA673A",
         height: 50,
         width: "100%",
-        borderRadius: 10,
+        borderRadius: moderateScale(14),
         paddingHorizontal: "5%",
         alignItems: "center",
         alignContent: "center",

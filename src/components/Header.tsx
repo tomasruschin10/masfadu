@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { Platform, SafeAreaView, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
+import { fontStyles } from "../utils/colors/fontColors";
 
 
 export function HeaderBack({ ...props }) {
@@ -49,7 +50,7 @@ export function HeaderBack({ ...props }) {
           />
         )}
         <Box flex={12}>
-          <Text marginLeft={3} fontSize="18" fontWeight="600" textAlign={"left"}>
+          <Text marginLeft={3} fontSize="18" style={fontStyles.poppins500} textAlign={"left"}>
             {props.title ?? ''}
           </Text>
         </Box>

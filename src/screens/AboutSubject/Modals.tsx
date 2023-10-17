@@ -1,10 +1,8 @@
 import { useRef, useState, useEffect } from "react";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { Alert, PixelRatio, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Entypo } from "@expo/vector-icons";
-
 import {
-  Feather,
   AntDesign,
   MaterialCommunityIcons,
   EvilIcons,
@@ -30,7 +28,8 @@ import {
 } from "./ModalFunctions";
 import DefaultButton from "../../components/DefaultButton";
 import { REMEMBER_NOTICE, rememberNotice } from "../../redux/actions/notice";
-
+import { fontStyles } from "../../utils/colors/fontColors";
+import { moderateScale, verticalScale, screenWidth } from "../../utils/media.screens";
 
 
 function RenderArrow() {
@@ -43,6 +42,26 @@ function RenderArrow() {
         height: 25,
       }}>
       <Entypo name="arrow-right" size={13} color="white" />
+    </View>
+  );
+}
+
+
+const ExclamationComponent = () => {
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        width: 80,
+        height: 80,
+        borderRadius: 100,
+        borderColor: "#DA673A",
+        borderWidth: 6,
+        margin: 'auto'
+      }}
+    >
+      <AntDesign name="exclamation" style={{ fontWeight: "bold", fontSize: 50 }} color="#DA673A" />
     </View>
   );
 }
@@ -428,19 +447,6 @@ export function ModalWarning({
   console.log("dataItems typw", typeof dataItems);
 
   let arrSinDuplicaciones = [];
-  //   arrSinDuplicaciones = [...new Set(dataItems)];
-  //   arrSinDuplicaciones = dataItems.reduce((acc, item) => {
-  //     if (!acc.includes(item)) {
-  //       acc.push(item);
-  //     }
-  //     return acc;
-  //   }, []);
-  // console.log("dataItems ", JSON.stringify(dataItems, null, 2));
-  // if (dataItems && dataItems.length > 0) {
-  //   arrSinDuplicaciones = dataItems.filter((item, index) => {
-  //     return dataItems.indexOf(item) === index;
-  //   });
-  // }
 
   if (dataItems && dataItems.length > 0) {
     let set = new Set(dataItems.map(JSON.stringify));
@@ -449,30 +455,32 @@ export function ModalWarning({
     console.log("arrSinDuplicaciones ", arrSinDuplicaciones);
   }
 
+  function hideModal() {
+    setShowWarning(false)
+  } 
+
   return (
     <Modal
       isOpen={showWarning}
       animationPreset={"slide"}
-      size={"md"}
+      size={"xl"}
       onClose={() => setShowWarning(false)}
       mt={5}
     >
       <Modal.Content rounded={"2xl"}>
         <Modal.Body alignItems={"center"}>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 70,
-              height: 70,
-              borderRadius: 35,
-              backgroundColor: "#E85E29",
-            }}
+        <ExclamationComponent />
+        <Text
+            fontSize={20}
+            mt={3}
+            style={fontStyles.poppins500}
+            textAlign={"center"}
           >
-            <AntDesign name="exclamation" size={40} color="white" />
-          </View>
+            Advertencias
+          </Text>
 
-          <FormControl mr={"9.5%"} mt={4}>
+
+          <FormControl mr={"9.5%"}>
             {currentSubj?.available === false ? (
               <>
                 <Text
@@ -512,39 +520,56 @@ export function ModalWarning({
                 </HStack>
               </>
             ) : true ? (
+              <Box style={{ display: "flex", flexDirection: "row" }}>
+                <Text        marginLeft={"5%"} mt={verticalScale(26)}>
+                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                </Text>
               <Text
                 textAlign={"center"}
                 style={
-                  {
-                    textAlign: "center"
-                  }
+                  [{ textAlign: "center", fontSize: moderateScale(12) }, fontStyles.poppins400]
                 }
-                marginLeft={"5%"}
-                fontSize={12}
+          
+                paddingRight={"3%"}
                 w={"100%"}
                 marginY={5}
                 numberOfLines={2}>
-              {/*   No podés anotarte a esta materia sin terminar el nivel anterior */}
-              ¿Querés agregar una nota en esta materia?
+                No podés anotarte a esta materia sin terminar el nivel anterior
+                ¿Querés agregar una nota en esta materia?
               </Text>
+              </Box>
             ) : (
               <Text fontSize={15} textAlign={"center"}>
-               ¿Querés agregar una nota en esta materia?
+                ¿Querés agregar una nota en esta materia?
               </Text>
             )}
           </FormControl>
           <Button.Group space={2} mt={2}>
             {!currentSubj?.available ? (
-              <Button
-                px={4}
-                w={"60%"}
-                mb={5}
-                _text={{ fontSize: 10.65 }}
-                onPress={() => setShowWarning(false)}
-                style={{ backgroundColor: "#E85E29" }}
-              >
-                Dale!
-              </Button>
+            
+              <DefaultButton buttonStyle={{
+                backgroundColor: "#DA673A",
+                borderRadius: moderateScale(14),
+                height: verticalScale(45),
+                width: 500,
+                maxWidth: screenWidth - (screenWidth / 5),
+                paddingTop: verticalScale(3)
+              }}
+                textStyle={
+                  {
+                    fontSize: moderateScale(14),
+                    fontWeight:"500",
+                    color: "white",
+                  }
+                }
+  
+                containerStyle={{
+                  marginBottom: PixelRatio.roundToNearestPixel(15),
+                }}
+  
+                title="Ver más"
+                callBack={hideModal} />
+  
             ) : (
               <>
                 <Button
@@ -573,7 +598,7 @@ export function ModalWarning({
                   variant={"link"}
                   isLoading={loading}
                   _text={{ fontSize: 10.65 }}
-                  onPress={() => setShowWarning(false)}
+                  onPress={() => hideModal()}
                 >
                   No
                 </Button>
@@ -606,28 +631,15 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
         blockNotice();
         setShowWarning(false)
       }}
-      mt={5}
     >
       <Modal.Content rounded={"2xl"}>
         <Modal.Body alignItems={"center"}>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 70,
-              height: 70,
-              borderRadius: 35,
-              backgroundColor: "#E85E29",
-              margin: 'auto'
-            }}
-          >
-            <AntDesign name="exclamation" size={40} color="white" />
-          </View>
+          <ExclamationComponent />
           <Text
             fontSize={20}
             mt={3}
             mb={"4%"}
-            fontWeight={"bold"}
+            style={fontStyles.poppins500}
             textAlign={"center"}
           >
             Advertencias
@@ -641,7 +653,9 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             >
               <Box
                 style={{ display: "flex", flexDirection: "row" }}>
-                <Text> -</Text>
+                <Text mt={verticalScale(8)}>
+                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                </Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -650,8 +664,10 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
-                <Text> -</Text>
+                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
+                <Text mt={verticalScale(8)}>
+                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                </Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -659,8 +675,10 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
-                <Text> -</Text>
+                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
+                <Text mt={verticalScale(8)}>
+                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                </Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -668,8 +686,10 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "2%", display: "flex", flexDirection: "row" }}>
-                <Text> -</Text>
+                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
+                <Text mt={verticalScale(8)}>
+                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                </Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -677,9 +697,12 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                px={2}
+                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}
               >
-                <Text mt={"5%"} textAlign={"left"}>
+                <Text mt={verticalScale(8)}>
+                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                </Text>
+                <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
                   Saltarse algunas de estas normas implicará:
@@ -687,12 +710,11 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
               <Box
-                style={{ display: "flex", flexDirection: "row" }}
+                style={{ marginTop: "3%", display: "flex", flexDirection: "row" }}
                 px={2}
               >
                 <Text>1</Text>
-                <Text>-</Text>
-                <Text textAlign={"left"}>
+                <Text px={"1.5"} textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
                   Baneo temporal sin poder comentar duante un tiempo indefinido.
@@ -701,10 +723,9 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               <Box
                 style={{ display: "flex", flexDirection: "row" }}
                 px={2}
-                pb={10}
+                pb={5}
               >
                 <Text>2</Text>
-                <Text>-</Text>
                 <Text textAlign={"left"}>
                   {" "}
                   {/* Alinea el texto a la izquierda */}
@@ -713,8 +734,8 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               </Box>
             </HStack>
           </FormControl>
-          <Button.Group space={2} mt={"10%"}>
-            <DefaultButton buttonStyle={{ backgroundColor: "#007BFF" }} title="Entiendo, voy a respetar" callBack={() =>closeModal()} />
+          <Button.Group space={2} my={"7%"}>
+            <DefaultButton buttonStyle={{ backgroundColor: "#DA673A" }} title="Entiendo, voy a respetar" callBack={() => closeModal()} />
           </Button.Group>
         </Modal.Body>
       </Modal.Content>
@@ -756,21 +777,7 @@ export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setO
         backgroundColor={'white'}
         paddingTop={5}
       >
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            alignSelf: "center",
-            width: 50,
-            height: 50,
-            borderRadius: 35,
-            backgroundColor: "#E85E29",
-            margin: 'auto'
-          }}
-        >
-          <AntDesign name="exclamation" size={32} color="white" />
-        </View>
-
+        <ExclamationComponent />
         <Modal.Body alignItems={"center"}>
           <FormControl>
             <Text fontSize={14} textAlign={"center"}>

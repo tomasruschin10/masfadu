@@ -3,7 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Box, ScrollView, Text } from 'native-base'
 import { Alert, Linking, TouchableHighlight } from 'react-native';
 import Container from '../../components/Container'
-import Layout from '../../utils/LayoutHeader&BottomTab';
 import { updateMessage } from '../../redux/actions/message';
 import { updatetoken } from '../../redux/actions/token';
 import { updateUserdata } from '../../redux/actions/user';
@@ -17,6 +16,8 @@ import { removemenu } from '../../redux/actions/menu';
 import Menu from '../Menu/Menu';
 import { useDispatch } from 'react-redux';
 import { FORGET_NOTICE, forgetNotice } from '../../redux/actions/notice';
+import { fontStyles } from '../../utils/colors/fontColors';
+import { moderateScale, verticalScale } from '../../utils/media.screens';
 
 const config = [
     { title: 'Escribinos tu sugerencia' },
@@ -67,12 +68,12 @@ function Config({ route, navigation, value }) {
                     dispatch(forgetNotice({ type: FORGET_NOTICE, value: false }));
                 }
                 }>
-                    <Box bg={'blueGray.100'} mb={3} borderRadius={'full'} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                    <Box bg={'white'} mb={3} py={verticalScale(7)} borderRadius={moderateScale(14)} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'}>
                         <Box ml={9}>
-                            <Text fontFamily={'Manrope'} fontSize={14} py={3}>{title}</Text>
+                            <Text style={fontStyles.poppins300} color="#171717" fontSize={14} py={3}>{title}</Text>
                         </Box>
-                        <Box mr={4}>
-                            <Ionicons name="arrow-forward-circle" size={35} color="#2972FE" />
+                        <Box mr={4} background={"#FBF0EB"} borderRadius={"full"} p={moderateScale(5)}>
+                            <Ionicons name="arrow-forward" size={moderateScale(20)} color="#DA673A" />
                         </Box>
                     </Box>
                 </TouchableHighlight>

@@ -3,7 +3,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { HeaderPerfil } from "../../components/Header";
-import { PixelRatio, StyleSheet, TouchableOpacity, View } from "react-native";
+import {StyleSheet, TouchableOpacity, View } from "react-native";
 import SectionsV2 from "./SectionsV2";
 import { horizontalScale, moderateScale, screenWidth, verticalScale } from "../../utils/media.screens";
 import DefaultButton from "../../components/DefaultButton";

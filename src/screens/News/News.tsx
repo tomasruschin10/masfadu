@@ -5,6 +5,7 @@ import * as React from "react";
 import { Linking, TouchableHighlight } from "react-native";
 import Container from "../../components/Container";
 import DefaultButton from "../../components/DefaultButton";
+import { moderateScale, screenWidth, verticalScale } from "../../utils/media.screens";
 
 function News({ route, navigation }) {
   const { colors }: any = useTheme();
@@ -53,15 +54,22 @@ function News({ route, navigation }) {
           position={"absolute"}
         >
          <DefaultButton
-          textStyle={
-            {
-              width: 150,
-              color: "#ffffff",
-              fontSize: 13,
-              fontWeight: "bold",
-              letterSpacing: 0.5
+            buttonStyle={{
+              backgroundColor: "#DA673A",
+              borderRadius: moderateScale(14),
+              height: verticalScale(50),
+              width: screenWidth - (screenWidth / 7),
+              paddingTop: verticalScale(5.5)
+            }}
+            textStyle={
+              {
+                fontSize: moderateScale(14),
+                color: "white"
+              }
             }
-          }
+            containerStyle={{
+              marginTop: verticalScale(75)
+            }}
          callBack={() =>
               Linking.openURL(url.includes("http") ? url : `https://${url}`)
             }
