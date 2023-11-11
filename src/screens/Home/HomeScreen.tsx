@@ -443,7 +443,7 @@ function HomeScreen({ route, navigation }) {
                     justifyContent: "center",
                     padding: 2,
                     marginTop: 4,
-                    fontSize: moderateScale(18)
+                    fontSize: moderateScale(14)
                   }, fontStyles.poppins700]}
                 >
                   ¿En qué aula curso?
