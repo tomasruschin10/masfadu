@@ -143,7 +143,7 @@ function LoginScreen({ route, navigation }) {
               w="100%"
               h={verticalScale(50)}
               rounded={moderateScale(14)}
-              fontSize={moderateScale(18)}
+              fontSize={moderateScale(14)}
             />
             <Input
               value={password}
@@ -170,7 +170,7 @@ function LoginScreen({ route, navigation }) {
                 />
               }
               placeholder="Contraseña"
-              fontSize={moderateScale(18)}
+              fontSize={moderateScale(14)}
             />
             <DefaultButton buttonStyle={{
               backgroundColor: "#DA673A",
@@ -182,7 +182,7 @@ function LoginScreen({ route, navigation }) {
             }}
               textStyle={
                 {
-                  fontSize: moderateScale(18),
+                  fontSize: moderateScale(14),
                   fontWeight:"500",
                   color: "white",
 
@@ -203,7 +203,7 @@ function LoginScreen({ route, navigation }) {
             >
               <Text style={[fontStyles.poppins400, {
                 color: "#797979",
-                fontSize: moderateScale(18),
+                fontSize: moderateScale(14),
               }]} >
                 ¿Te olvidaste la contraseña?
               </Text>
@@ -224,142 +224,12 @@ function LoginScreen({ route, navigation }) {
               _spinner={{ color: "black" }}
               isLoading={loading}
 
-              _text={{ color: "#797979", fontSize: moderateScale(18), fontWeight: "400" }}
+              _text={{ color: "#797979", fontSize: moderateScale(14), fontWeight: "400" }}
               colorScheme={"ligth"}
               color={"darkText"}
             >
               Iniciar Sesión con Google
             </Button>
-            {Platform.OS === "ios" ? (
-              <AppleAuthentication.AppleAuthenticationButton
-                buttonType={
-                  AppleAuthentication.AppleAuthenticationButtonType.CONTINUE
-                }
-                buttonStyle={
-                  AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-                }
-                cornerRadius={moderateScale(14)}
-                style={{
-                  width: 500,
-                  maxWidth: contentWidth,
-                  borderRadius: moderateScale(14),
-                  height: verticalScale(50),
-                }}
-                
-                onPress={async () => {
-                  try {
-                    const credential = await AppleAuthentication.signInAsync({
-                      requestedScopes: [
-                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                      ],
-                    });
-                    const identuityToken = credential.identityToken;
-                    if (identuityToken) {
-                      const provider = new OAuthProvider("apple.com");
-                      provider.addScope("email");
-                      provider.addScope("fullName");
-                      const credential = provider.credential({
-                        idToken: identuityToken,
-                      });
-                      const auth = getAuth();
-
-                      await signInWithCredential(auth, credential)
-                        .then(async (res) => {
-                          console.log('user', res)
-
-                          let user = res.user;
-
-                          const newUser = {
-                            userOrEmail: user?.email,
-                            password: user?.uid,
-                          };
-                          await baseApi
-                            .post(`/auth/login`, newUser, {})
-                            .then((us) => {
-                              console.log(
-                                "🚀 ~ file: GoogleScreen.tsx ~ line 51 ~ signInWithCredential ~ us",
-                                us
-                              );
-
-                              dispatch(updatetoken(us.data.token));
-                              dispatch(
-                                updateMessage({
-                                  body: "Inicio correcto. ",
-                                  open: true,
-                                  type: "success",
-                                })
-                              );
-
-                              /*   showAlert('sucess', 'Inicio correcto!') */
-                              setLoading(false);
-                              const dataa = jwtDecode(us.data.token);
-                              dispatch(updateUserdata(dataa));
-                              navigation.reset({
-                                routes: [{ name: "SplashScreen" }],
-                                index: 0,
-                              });
-                            })
-                            .catch((err) => {
-                              if (err.response.status === 401) {
-                                setLoading(false);
-                                dispatch(
-                                  updateMessage({
-                                    body: "El usuario no existe :(",
-                                    open: true,
-                                    type: "warning",
-                                  })
-                                );
-
-                                /*  showAlert('warning', 'El usuario no existe :(') */
-                              } else {
-                                setLoading(false);
-                                dispatch(
-                                  updateMessage({
-                                    body: "Ups Algo salio mal, porfavor vuelva a intentar. ",
-                                    open: true,
-                                    type: "danger",
-                                  })
-                                );
-                              }
-                            })
-                            .finally(() => {
-                              setLoading(false);
-                            });
-                        })
-                        .catch((err) => {
-                          console.log(
-                            "🚀 ~ file: LoginScreen.tsx ~ line 193 ~ signInWithCredential ~ err",
-                            err
-                          );
-                          setLoading(false);
-                          dispatch(
-                            updateMessage({
-                              body: "Ups Algo salió mal, por favor volvé a intentar.' ",
-                              open: true,
-                              type: "danger",
-                            })
-                          );
-
-                          /*  showAlert('error', 'Ups Algo salió mal, por favor volvé a intentar.') */
-                        });
-                      // signed in
-                    }
-                  } catch (e) {
-                    console.log(
-                      "🚀 ~ file: LoginScreen.tsx ~ line 173 ~ onPress={ ~ e",
-                      e
-                    );
-                    if (e.code === "ERR_CANCELED") {
-                      // handle that the user canceled the sign-in flow
-                    } else {
-                      // handle other errors
-                    }
-                  }
-                }}
-              />
-            ) : null}
-
 
             <Box flexDirection={"row"} justifyContent={"center"}>
               <Box justifyContent={"center"}>
