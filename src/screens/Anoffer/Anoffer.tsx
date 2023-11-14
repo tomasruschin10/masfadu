@@ -75,11 +75,15 @@ function Anoffer({ route, navigation }) {
               </HStack>
             </Box>
 
-            <Box mt="2" mb={3}>
+            <Box p={3} mt="3" mb={3}
+              rounded={"lg"}
+              backgroundColor={"white"}>
               <Text fontSize={14}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{name || ""}</Text>
             </Box>
 
-            <Box>
+            <Box p={3}  mt={3}
+              rounded={"lg"}
+              backgroundColor={"white"}>
               <Text style={[fontStyles.headingText, { fontSize: 16 }]} mb="3">Descripción: </Text>
               <Text fontSize={14} mb="3">
                 {description}

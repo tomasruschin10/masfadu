@@ -95,7 +95,7 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
           <Text fontSize={16} style={(() => {
             delete fontStyles.manrope400["color"];
             return [[{ ...fontStyles.manrope300 }]]
-          }) as StyleProp<TextStyle>} color='primary.100' >{rating}</Text>
+          }) as StyleProp<TextStyle>} color={'#DA673A'} >{rating}</Text>
         </Box>
       </Box>
     </Pressable >

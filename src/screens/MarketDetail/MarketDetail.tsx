@@ -51,6 +51,7 @@ const MarketDetail = ({ navigation }) => {
                 flexDir="row"
                 justifyContent="space-around"
                 alignItems={"center"}
+                px={3}
               >
                 <Text
                   w="88%"
@@ -59,7 +60,7 @@ const MarketDetail = ({ navigation }) => {
                   fontSize={24}
                   mb={3}
                 >
-                {data?.title}
+                  {data?.title}
                 </Text>
                 {/*  <HStack alignItems={"flex-start"}>
                 <IconButton
@@ -82,16 +83,22 @@ const MarketDetail = ({ navigation }) => {
               </HStack> */}
                 {" "}  {" "}    {" "}  {" "}
               </Box>
-              <Box>
-              <Text fontSize={16} fontWeight="bold"  mb="4">
-                  Descripción: {" "}  
+              <Box
+                mt={3}
+                rounded={"lg"}
+                backgroundColor={"white"}
+                px={3}>
+                <Text fontSize={16} backgroundColor="white" fontWeight="bold" mb="4">
+                  Descripción: {" "}
                 </Text>
-                <Text fontSize={14}  mb="3">
-                 
-                {data?.description}
+                <Text fontSize={14} mb="3" backgroundColor="white">
+
+                  {data?.description}
                 </Text>
               </Box>
-              {data?.company && <Box>
+              {data?.company && <Box mt={3}
+                rounded={"lg"}
+                backgroundColor={"white"}>
                 <Text fontSize={16} fontWeight="bold" mb="3">
                   Compañía
                 </Text>
@@ -104,7 +111,7 @@ const MarketDetail = ({ navigation }) => {
         </ScrollView>
         <Box alignSelf={"center"} position={"absolute"} top={Dimensions.get("screen").height - (Platform.OS === "ios" ? 160 : 280)}>
 
-        {data?.email &&
+          {data?.email &&
             <TouchableOpacity
               style={{
                 marginLeft: 'auto',
@@ -135,13 +142,13 @@ const MarketDetail = ({ navigation }) => {
                     letterSpacing: 0.5
                   }}
                 >
-                 Contactar
+                  Contactar
                 </Text>
               </View>
             </TouchableOpacity>
-          }    
+          }
 
-{/*           {data?.url && data.url.includes("@") &&
+          {/*           {data?.url && data.url.includes("@") &&
             <TouchableOpacity
               style={{
                 marginLeft: 'auto',
