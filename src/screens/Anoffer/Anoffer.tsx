@@ -16,6 +16,7 @@ import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { TouchableOpacity } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
+import { horizontalScale, screenWidth, verticalScale } from "../../utils/media.screens";
 
 function Anoffer({ route, navigation }) {
   const [menuShow, setMenu] = useState(false)
@@ -110,8 +111,8 @@ function Anoffer({ route, navigation }) {
             <View
               style={{
                 backgroundColor: "#EB5E29",
-                height: 50,
-                width: 218,
+                height: verticalScale(45),
+                width: screenWidth - horizontalScale(40),
                 borderRadius: 10,
               }}
             >
