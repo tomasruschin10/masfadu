@@ -653,7 +653,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             >
               <Box
                 style={{ display: "flex", flexDirection: "row" }}>
-                <Text mt={verticalScale(8)}>
+                <Text mt="0">
                   <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
                 </Text>
                 <Text textAlign={"left"}>
@@ -665,7 +665,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               </Box>
               <Box
                 style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
-                <Text mt={verticalScale(8)}>
+                <Text mt="0">
                   <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
                 </Text>
                 <Text textAlign={"left"}>
@@ -676,7 +676,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               </Box>
               <Box
                 style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
-                <Text mt={verticalScale(8)}>
+                <Text mt="0">
                   <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
                 </Text>
                 <Text textAlign={"left"}>
@@ -687,7 +687,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               </Box>
               <Box
                 style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
-                <Text mt={verticalScale(8)}>
+                <Text mt="0">
                   <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
                 </Text>
                 <Text textAlign={"left"}>
@@ -699,7 +699,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               <Box
                 style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}
               >
-                <Text mt={verticalScale(8)}>
+                <Text mt="0">
                   <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
                 </Text>
                 <Text textAlign={"left"}>

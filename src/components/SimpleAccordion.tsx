@@ -13,6 +13,7 @@ import Collapsible from "react-native-collapsible";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useEventNavigation } from "../context";
+import { moderateScale } from "../utils/media.screens";
 
 const SimpleAccordion = ({
   title = "",
@@ -81,7 +82,7 @@ const SimpleAccordion = ({
                 allowFontScaling={false}
                 bold={true}
                 style={{
-                  fontSize: 14.5,
+                  fontSize: moderateScale(14),
                   fontWeight: "bold",
                   color: "#000000",
                   marginBottom: -2,
@@ -90,7 +91,7 @@ const SimpleAccordion = ({
                 {title}
               </Text>
               {description && (
-                <Text style={{ color: "#939aa0", fontSize: 13, marginTop: 2 }}>
+                <Text style={{ color: "#939aa0", fontSize: moderateScale(11), marginTop: 2 }}>
                   {description}
                 </Text>
               )}

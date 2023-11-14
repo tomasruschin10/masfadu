@@ -103,7 +103,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             <Text
               style={fontStyles.poppins600}
               color={"#171717"}
-              fontSize={moderateScale(30)}
+              fontSize={moderateScale(26)}
               mt={2}
             >
               {`${materias.length}/${subjCategory.total}`}
@@ -132,7 +132,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
               {FontsLoaded ? <Text
 
-                style={[fontStyles.poppins600, {color: "#646464", fontSize: moderateScale(25)}]}
+                style={[fontStyles.poppins600, {color: "#646464", fontSize: moderateScale(21)}]}
                 textAlign={"center"}
                 mt={2}
                 py={3}
