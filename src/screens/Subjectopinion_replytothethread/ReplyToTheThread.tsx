@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import Alert from "../../components/alert/Alert";
 function ReplyToTheThread({route, navigation}) {
   const dispatch = useDispatch()
   const {student, idOpinion, anonymous, title, description, created_at, opinionTags, value} = route.params
@@ -15,9 +15,20 @@ function ReplyToTheThread({route, navigation}) {
   const [form, setForm] = useState({description: "", opinion_id: idOpinion})
 	const {canGoBack, goBack} = useNavigation();
 
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+  };
+
+  const closeAlert = () => {
+    setAlert(null);
+  };
+
   const postAnswer = () => {
     if (form.description.startsWith(' ')) {
-      dispatch(updateMessage({body: 'La descripción no debe estar vacía, elimina los espacios del inicio!', open: true, type: "danger"}))
+      dispatch(updateMessage({body: 'La descripción no debe estar vacía, elimina los espacios del inicio!', open: true, type: "warning"}))
+/* showAlert('warning', 'La descripción no debe estar vacía, elimina los espacios del inicio!') */
       return false
     }
 
@@ -37,15 +48,20 @@ function ReplyToTheThread({route, navigation}) {
     }).catch((err)=> {
       if( err.message == 'Request failed with status code 404' ) {
         dispatch(updateMessage({body: 'Publicado Correctamente', open: true, type: "success"}))
+       /*  showAlert('success', 'Publicado Correctamente') */
         {canGoBack() && (goBack())}
       } else {
         dispatch(updateMessage({body: 'Error al publicar', open: true, type: "danger"}))
+        /* showAlert('error', 'Error al publicar') */
       }
     }).finally(() => setLoading(false))
   }
   
   return (
     <Container>
+            {alert && (
+        <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
+      )}
       <Layout route={route} navigation={navigation} title={'Responder al hilo'}>
         <ScrollView keyboardShouldPersistTaps={'handled'}>
           <Box mx={5} mt={5} borderTopWidth={1} borderTopColor={'#EBEEF2'}>

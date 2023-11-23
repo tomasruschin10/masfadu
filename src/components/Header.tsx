@@ -1,6 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { FontAwesome5, EvilIcons } from "@expo/vector-icons";
 import {
   Avatar,
   Box,
@@ -10,117 +9,122 @@ import {
   StatusBar,
   Text,
   useTheme,
-  View,
 } from "native-base";
 import React from "react";
-import {
-  Dimensions,
-  Platform,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
+import { Platform, SafeAreaView, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
-// import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { fontStyles } from "../utils/colors/fontColors";
+import { moderateScale } from "../utils/media.screens";
+
 
 export function HeaderBack({ ...props }) {
-  const { canGoBack, goBack } = useNavigation();
-  // const insets = useSafeAreaInsets();
+  const navigation: any = useNavigation();
+  const route = useRoute();
 
-  const { name } = useRoute();
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <Box safeAreaTop bg="#ffffff" />
+      <StatusBar barStyle="dark-content" />
+      <Box safeAreaTop   />
 
-      <HStack px="5" py="3" w="100%" maxW="350" alignItems={"flex-start"}>
-        {canGoBack() && (
+      <HStack py="3" w="100%" alignItems="center">
+        {navigation.canGoBack() && (
           <IconButton
-            rounded={"xl"}
-            backgroundColor={"primary.900"}
-            onPress={() => goBack()}
+            rounded="xl"
+            onPress={handleGoBack}
             icon={
               <Icon
                 as={Ionicons}
                 name={
-                  name == "ThreadSuggestions" ? "close-sharp" : "chevron-back"
+                  route.name === 'ThreadSuggestions'
+                    ? 'close-sharp'
+                    : 'chevron-back'
                 }
-                size="md"
-                color="primary.1000"
+                size={moderateScale(25)}
+                color="black"
               />
             }
           />
         )}
-        <Box ml={3} h={"100%"} maxH="350" justifyContent="center">
-          <Text fontSize="20" fontWeight="600">
-            {props.title ?? ""}
+        <Box flex={12}>
+          <Text marginLeft={3} fontSize="18" style={fontStyles.poppins500} textAlign={"left"}>
+            {props.title ?? ''}
           </Text>
         </Box>
+        {props?.addButtonUrl && (
+          <Box >
+            <IconButton
+              rounded="full"
+              backgroundColor="#E85E29"
+              onPress={() => {
+                if (typeof props.addButtonUrl === "string") {
+                  navigation.navigate(props.addButtonUrl);
+                } else if (props.addButtonUrl && typeof props.addButtonUrl === "object") {
+                  const { name, props: additionalProps } = props.addButtonUrl;
+                  navigation.navigate(name, additionalProps);
+                }
+              }
+              }
+              size={"40px"}
+              icon={
+                <Entypo name="plus" size={27} color="#f4faff" />
+              }
+            />
+          </Box>
+        )}
       </HStack>
     </>
   );
 }
 export function NoHeader({ ...props }) {
-  // const insets = useSafeAreaInsets();
-
-  const { canGoBack, goBack } = useNavigation();
   return (
     <>
-      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
-      <Box safeAreaTop bg="#ffffff" />
+      <StatusBar hidden={true} translucent={true} backgroundColor="#ffffff" barStyle="dark-content" />
+      <Box bg="" />
     </>
   );
 }
-export function HeaderPerfil({ ...props }) {
-  const { canGoBack, goBack, navigate }: any = useNavigation();
-  // const insets = useSafeAreaInsets();
 
-  const { name } = useRoute();
+export function HeaderPerfil(props) {
+  const { showIcon } = props
+  const navigation: any = useNavigation();
   const { colors }: any = useTheme();
   const userdata = useSelector((state: any) => state.user.userdata);
 
   return (
-    <>
+    <SafeAreaView>
       <StatusBar
         backgroundColor={props.statusBarColor}
         barStyle={props.barStyle}
+
       />
-      <Box safeAreaTop={4} bg={props.statusBarColor} />
-      <Box justifyContent={"space-between"} px={6} flexDirection={"row"} pb={2}>
-        <Avatar
-          bg="brand.primary"
-          source={{ uri: userdata.image.url }}
-          size="md"
-        >
+      <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
+      <Box justifyContent="space-between" px={4} flexDirection="row" pb={2}>
+        <Avatar bg="#e8eef4" source={{ uri: userdata.image.url }} size="md">
           BR
-          <Avatar.Badge bg="green.500" />
+          <Avatar.Badge bg="#4fd441" />
         </Avatar>
 
-        <Box px={3} flex={1} justifyContent={"center"}>
-          <Text
-            color={name == "Menu" ? "white" : "black"}
-            bold
-            fontSize={16}
-            lineHeight={"sm"}
-          >
+        <Box px={3} flex={1} justifyContent="center">
+          <Text color="black" bold fontSize={16} lineHeight="sm">
             {userdata.name} {userdata.lastname}
           </Text>
-          <Text
-            color={name == "Menu" ? "white" : "mutedText"}
-            fontSize={14}
-            lineHeight={"sm"}
-          >
+          <Text color="#50545a" fontSize={13} lineHeight="sm">
             {userdata.career == null
               ? "Carrera Sin Seleccionar"
               : userdata.career.name}
           </Text>
         </Box>
 
-        <Box justifyContent={"center"}>
-          {name == "Home" ? (
+        <Box justifyContent="center">
+          {showIcon ? (
             <TouchableOpacity
-              onPress={() => navigate("Config")}
+              onPress={() => navigation.navigate("Config")}
               style={{
-                backgroundColor: "#EAF1FF",
+                backgroundColor: "#ffffff",
                 paddingHorizontal: 14,
                 paddingVertical: 10,
                 borderRadius: 12,
@@ -132,15 +136,9 @@ export function HeaderPerfil({ ...props }) {
                 color={colors.brand.primary}
               />
             </TouchableOpacity>
-          ) : (
-            canGoBack() && (
-              <TouchableHighlight underlayColor="" onPress={() => goBack()}>
-                <EvilIcons name="close" size={30} color={"white"} />
-              </TouchableHighlight>
-            )
-          )}
+          ) : null}
         </Box>
       </Box>
-    </>
+    </SafeAreaView>
   );
 }
