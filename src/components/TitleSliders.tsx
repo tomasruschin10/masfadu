@@ -31,7 +31,7 @@ export default function TitleSliders({
       alignItems={"center"}
       flexDirection={"row"}
     >
-      <Text fontWeight={700} style={[fontStyles.poppins600,{ fontSize: moderateScale(17) }]}>
+      <Text fontWeight={700} style={[fontStyles.poppins600,{ fontSize: moderateScale(16) }]}>
         {title}
       </Text>
 

@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Mas Fadu",
-    "slug": "masfadu",
+    "slug": "masfaduapp",
     "version": "1.0.19",
     "orientation": "portrait",
     "privacy": "unlisted",
     "scheme": "faduapp",
     "icon": "./assets/icon.png",
-    "owner": "merakioffice",
+    "owner": "masfadu-updates",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -15,7 +15,7 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/cbdc858a-c587-4e18-bc3a-3fa2063aafe0"
+      "url": "https://u.expo.dev/34582600-811f-4183-b0a0-861c46c64826"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -29,7 +29,8 @@
         "CFBundleAllowMixedLocalizations": true,
         "ASAuthorizationAppleIDButton": "Continuar con apple",
         "jsEngine": "hermes"
-      }    },
+      }
+    },
     "android": {
       "package": "dev.millionsolutions.faduapp",
       "adaptiveIcon": {
@@ -43,21 +44,26 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "cbdc858a-c587-4e18-bc3a-3fa2063aafe0"
-      }
-    },
     "plugins": [
       [
         "expo-build-properties",
         {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          },
           "ios": {
-         "useFrameworks": "static"
+            "useFrameworks": "static"
           }
         }
       ]
     ],
-    "runtimeVersion": "1.0.0"
+    "runtimeVersion": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "34582600-811f-4183-b0a0-861c46c64826"
+      }
+    }
   }
 }

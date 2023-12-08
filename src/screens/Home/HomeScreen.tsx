@@ -58,7 +58,7 @@ function HomeScreen({ route, navigation }) {
   const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 
   const { width, height } = Dimensions.get("window");
-  const cardWidth = width * 0.35; // Ancho de cada tarjeta, ajustado al 35% del ancho total
+  const cardWidth = width * 0.41; // Ancho de cada tarjeta, ajustado al 35% del ancho total
   const cardHeight = height * 0.25; // alto de cada tarjeta, ajustado al 25% del alto total
 
   useEffect(() => {
@@ -211,7 +211,7 @@ function HomeScreen({ route, navigation }) {
         onPress={() => navigation.navigate("MarketDetail", item)}
         style={{
           width: cardWidth,
-          marginRight: 2,
+          marginRight: 5,
           marginLeft: 10,
           marginTop: 10,
           height: cardHeight,
@@ -430,7 +430,7 @@ function HomeScreen({ route, navigation }) {
                 backgroundColor: "#F5F6FA",
                 paddingHorizontal: verticalScale(20),
                 paddingVertical: verticalScale(15),
-                borderRadius: moderateScale(14),
+                borderRadius: moderateScale(8),
               }}
             >
               <View>
@@ -468,10 +468,10 @@ function HomeScreen({ route, navigation }) {
               <View
                 style={{
                   flex: 1,
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
+                  flexDirection: "column",
+                  justifyContent: "center",
                   alignItems: "center",
-                  marginRight: verticalScale(-20),
+                  marginRight: verticalScale(-50),
                 }}
               >
 
@@ -487,7 +487,7 @@ function HomeScreen({ route, navigation }) {
                     {
                       ...fontStyles.poppins500,
                       color: "#F5F5F5",
-                      marginTop: verticalScale(5),
+                      marginTop: verticalScale(6),
                       fontWeight: "500"
                     }
                   }
@@ -495,7 +495,7 @@ function HomeScreen({ route, navigation }) {
                     height: horizontalScale(30),
                     width: "100%",
                     alignItems: "center",
-                    borderRadius: moderateScale(14),
+                    borderRadius: moderateScale(8),
                     paddingHorizontal: horizontalScale(35),
                    }}
                   title="Buscar" />

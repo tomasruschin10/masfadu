@@ -29,7 +29,7 @@ import {
 import DefaultButton from "../../components/DefaultButton";
 import { REMEMBER_NOTICE, rememberNotice } from "../../redux/actions/notice";
 import { fontStyles } from "../../utils/colors/fontColors";
-import { moderateScale, verticalScale, screenWidth } from "../../utils/media.screens";
+import { moderateScale, verticalScale, screenWidth, horizontalScale } from "../../utils/media.screens";
 
 
 function RenderArrow() {
@@ -58,7 +58,8 @@ const ExclamationComponent = () => {
         borderRadius: 100,
         borderColor: "#DA673A",
         borderWidth: 6,
-        margin: 'auto'
+        margin: 'auto',
+        marginTop: 4
       }}
     >
       <AntDesign name="exclamation" style={{ fontWeight: "bold", fontSize: 50 }} color="#DA673A" />
@@ -480,7 +481,7 @@ export function ModalWarning({
           </Text>
 
 
-          <FormControl mr={"9.5%"}>
+          <FormControl>
             {currentSubj?.available === false ? (
               <>
                 <Text
@@ -519,29 +520,39 @@ export function ModalWarning({
                     ))}
                 </HStack>
               </>
-            ) : true ? (
-              <Box style={{ display: "flex", flexDirection: "row" }}>
-                <Text        marginLeft={"5%"} mt={verticalScale(26)}>
+            ) : !currentSubj?.available ? (
+              <Box
+              display={"flex"}
+              flexDirection={"row"}
+              alignItems={"center"}
+              marginY={5}
+              px={2}
+              >
+                <Text>
                   <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
                 </Text>
               <Text
-                textAlign={"center"}
+              ml={2}
                 style={
-                  [{ textAlign: "center", fontSize: moderateScale(12) }, fontStyles.poppins400]
+                  [{ fontSize: moderateScale(12) }, fontStyles.poppins400]
                 }
-          
-                paddingRight={"3%"}
                 w={"100%"}
-                marginY={5}
-                numberOfLines={2}>
+                numberOfLines={3}
+                >
                 No podés anotarte a esta materia sin terminar el nivel anterior
-                ¿Querés agregar una nota en esta materia?
               </Text>
               </Box>
             ) : (
-              <Text fontSize={15} textAlign={"center"}>
-                ¿Querés agregar una nota en esta materia?
-              </Text>
+              <Box
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"center"}
+              w={"100%"}
+              >
+                <Text fontSize={15}>
+                  ¿Querés agregar una nota en esta materia?
+                </Text>                
+              </Box>
             )}
           </FormControl>
           <Button.Group space={2} mt={2}>
@@ -549,11 +560,11 @@ export function ModalWarning({
             
               <DefaultButton buttonStyle={{
                 backgroundColor: "#DA673A",
-                borderRadius: moderateScale(14),
+                borderRadius: moderateScale(8),
                 height: verticalScale(45),
                 width: 500,
                 maxWidth: screenWidth - (screenWidth / 5),
-                paddingTop: verticalScale(3)
+                // paddingTop: verticalScale(2)
               }}
                 textStyle={
                   {
@@ -567,7 +578,7 @@ export function ModalWarning({
                   marginBottom: PixelRatio.roundToNearestPixel(15),
                 }}
   
-                title="Ver más"
+                title="Entiendo"
                 callBack={hideModal} />
   
             ) : (
@@ -591,7 +602,7 @@ export function ModalWarning({
                     )
                   }
                 >
-                  Si, genial!
+                  Si
                 </Button>
                 <Button
                   px={5}
@@ -622,6 +633,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
     blockNotice();
     setShowWarning(false)
   };
+
   return (
     <Modal
       isOpen={showWarning}
@@ -645,73 +657,97 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             Advertencias
           </Text>
 
-          <FormControl maxWidth={"100%"} pl={"5%"} pr={"18%"}>
+          {/* <FormControl maxWidth={"100%"} pl={"5%"} pr={"18%"}> */}
             <HStack
+              maxWidth={"100%"} 
+              px={"5%"} 
               justifyContent={"center"}
-              flexWrap={"wrap"}
               flexDirection={"column"}
             >
               <Box
-                style={{ display: "flex", flexDirection: "row" }}>
-                <Text mt="0">
-                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
-                </Text>
-                <Text textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
+              display={"flex"}
+              flexDirection={"row"}
+              mb={1.5}
+              alignItems={"center"}
+              >
+                <Box 
+                height={moderateScale(8)} 
+                width={moderateScale(8)} 
+                borderRadius="full" 
+                background={"#DA673A"} 
+                />
+                <Text textAlign={"left"} ml={2}>
                   No se permiten las faltas de respeto de ningún tipo, insultos
                   o agresiones.
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
-                <Text mt="0">
-                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
-                </Text>
-                <Text textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
+              display={"flex"}
+              flexDirection={"row"}
+              // alignItems={"center"}
+              mb={1.5}
+              alignItems={"center"}
+              >
+                <Box 
+                height={moderateScale(8)} 
+                width={moderateScale(8)} 
+                borderRadius="full" 
+                background={"#DA673A"} 
+                />
+                <Text textAlign={"left"} ml={2}>
                   Criticar sin motivo a nadie. ni nada.
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
-                <Text mt="0">
-                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
-                </Text>
-                <Text textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
+              display={"flex"}
+              flexDirection={"row"}
+              mb={1.5}
+              alignItems={"center"}
+              >
+                <Box 
+                height={moderateScale(8)} 
+                width={moderateScale(8)} 
+                borderRadius="full" 
+                background={"#DA673A"} 
+                />
+                <Text textAlign={"left"} ml={2}>
                   Spam.
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}>
-                <Text mt="0">
-                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
-                </Text>
-                <Text textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
+              display={"flex"}
+              flexDirection={"row"}
+              mb={1.5}
+              alignItems={"center"}>
+                <Box 
+                height={moderateScale(8)}
+                width={moderateScale(8)} 
+                borderRadius="full" 
+                background={"#DA673A"}/>
+                <Text textAlign={"left"} ml={2}>
                   ser un troll, no molestes.
                 </Text>
               </Box>
               <Box
-                style={{ paddingTop: "5%", display: "flex", flexDirection: "row" }}
+              display={"flex"}
+              flexDirection={"row"}
+              mb={1.5}
+              alignItems={"center"}
               >
-                <Text mt="0">
-                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
-                </Text>
-                <Text textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
+                <Box 
+                height={moderateScale(8)} 
+                width={moderateScale(8)} 
+                borderRadius="full" 
+                background={"#DA673A"}
+                />
+                <Text textAlign={"left"} ml={2}>
                   Saltarse algunas de estas normas implicará:
-
                 </Text>
               </Box>
               <Box
                 style={{ marginTop: "3%", display: "flex", flexDirection: "row" }}
                 px={2}
+                mb={1}
               >
                 <Text>1</Text>
                 <Text px={"1.5"} textAlign={"left"}>
@@ -733,9 +769,25 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 </Text>
               </Box>
             </HStack>
-          </FormControl>
+          {/* </FormControl> */}
           <Button.Group space={2} my={"7%"}>
-            <DefaultButton buttonStyle={{ backgroundColor: "#DA673A" }} title="Entiendo, voy a respetar" callBack={() => closeModal()} />
+            <DefaultButton 
+            buttonStyle={{ 
+              height: horizontalScale(40),
+              backgroundColor: "#DA673A", 
+              paddingHorizontal: horizontalScale(45),
+              width: 300,
+              alignItems: "center",
+              borderRadius: moderateScale(8),
+             }}   
+             textStyle={
+              {
+                marginTop: verticalScale(10),
+              }
+            }         
+            title="Entiendo, voy a respetar" 
+            callBack={() => closeModal()} 
+            />
           </Button.Group>
         </Modal.Body>
       </Modal.Content>

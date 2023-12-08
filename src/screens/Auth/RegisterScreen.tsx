@@ -20,6 +20,7 @@ import { baseApi } from "../../utils/api";
 import { updatetoken } from "../../redux/actions/token";
 import jwtDecode from "jwt-decode";
 import { updateUserdata } from "../../redux/actions/user";
+import { moderateScale, verticalScale } from "../../utils/media.screens";
 function RegisterScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showRePassword, setShowRePassword] = React.useState(false);
@@ -109,9 +110,9 @@ function RegisterScreen({ route, navigation }) {
         <VStack px={5}>
           <Box mt={5} alignItems="center">
             <Image
-              w={100}
+              w={120}
               mb={5}
-              h={100}
+              h={120}
               alt="Logo de Fadu"
               source={require("../../../assets/logo.png")}
             />
@@ -122,25 +123,44 @@ function RegisterScreen({ route, navigation }) {
               mx="3"
               mb={4}
               placeholder="Nombre"
-              w="90%"
+              w="100%"
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              placeholderTextColor="#797979"               
+              borderColor={"transparent"}
+              focusOutlineColor={"transparent"}
             />
             <Input
               onChangeText={(text) => setForm({ ...form, lastname: text })}
               mx="3"
               mb={4}
               placeholder="Apellido"
-              w="90%"
+              w="100%"
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              placeholderTextColor="#797979"               
+              borderColor={"transparent"}
+              focusOutlineColor={"transparent"}
             />
             <Input
               onChangeText={(text) => setForm({ ...form, email: text })}
               mx="3"
               mb={4}
               placeholder="Email"
-              w="90%"
+              w="100%"
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              placeholderTextColor="#797979"               
+              borderColor={"transparent"}
+              focusOutlineColor={"transparent"}
             />
             <Input
               onChangeText={(text) => setForm({ ...form, password: text })}
-              w={{ base: "90%", md: "25%" }}
+              w={{ base: "100%", md: "25%" }}h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              placeholderTextColor="#797979"               
+              borderColor={"transparent"}
+              focusOutlineColor={"transparent"}
               mb={4}
               type={showPassword ? "text" : "password"}
               InputRightElement={
@@ -159,7 +179,12 @@ function RegisterScreen({ route, navigation }) {
               placeholder="Contraseña"
             />
             <Input
-              w={{ base: "90%", md: "25%" }}
+              w={{ base: "100%", md: "25%" }}
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              placeholderTextColor="#797979" 
+              focusOutlineColor={"transparent"}           
+              borderColor={"transparent"}
               mb={4}
               type={showRePassword ? "text" : "password"}
               InputRightElement={
@@ -182,8 +207,11 @@ function RegisterScreen({ route, navigation }) {
             <Button
               onPress={() => getRegister()}
               mb={3}
-              w="90%"
-              isLoading={loading}
+              w="100%"
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              isLoading={loading}              
+              bg="#DA673A"
             >
               Registrarse
             </Button>
@@ -195,7 +223,9 @@ function RegisterScreen({ route, navigation }) {
             <Button
               mb={5}
               onPress={() => navigation.navigate("GoogleRegister")}
-              w="90%"
+              w="100%"
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
               leftIcon={
                 <TouchableWithoutFeedback>
                   <Image
@@ -212,7 +242,7 @@ function RegisterScreen({ route, navigation }) {
             >
               Registrate con Google
             </Button>
-            {Platform.OS === "ios" ? (
+            {/* {Platform.OS === "ios" ? (
               <AppleAuthentication.AppleAuthenticationButton
                 buttonType={
                   AppleAuthentication.AppleAuthenticationButtonType.CONTINUE
@@ -333,7 +363,7 @@ function RegisterScreen({ route, navigation }) {
                   }
                 }}
               />
-            ) : null}
+            ) : null} */}
           </Box>
         </VStack>
       </ScrollView>

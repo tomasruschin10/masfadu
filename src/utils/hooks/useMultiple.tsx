@@ -22,12 +22,18 @@ export const RenderOffer = ({ firstLetter, redirect_to, title, text, time, hours
       redirect_to, { mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time, name, phone, company }
     )}
     >
-      <Box shadow={2} mx='5' bg='white' py="4" flexDir={'row'} justifyContent="space-around" mb="2.5" rounded="2xl" borderColor={border ? '#EC5F5F' : 'white'} borderWidth="2">
+      <Box mx='5' bg='white' py="4" flexDir={'row'} justifyContent="space-around" mb="2.5" rounded={8} borderColor={border ? '#EC5F5F' : 'white'} borderWidth="2">
         <Box flexDir={'row'} ml='4'>
           <Box mr='4' my={'auto'}>
             {
               image?.length > 0 ?
-                <Image source={{ uri: image }} w={'12'} h={'12'} alt="logo" />
+                <Image 
+                source={{ uri: image }} 
+                w={'12'} 
+                h={'12'} 
+                alt="logo" 
+                borderRadius={8} 
+                />
                 :
                 <Box rounded={'md'} alignItems={'center'} w={52.57} h={52.57} bg={"#0A968E"}>
                   <Text position={'absolute'} bottom={2} h={'100%'} fontSize={42.06} color={'white'} bold={true} fontFamily='SourceSansPro_400Regular'>{firstLetter}</Text>
@@ -54,32 +60,42 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
       redirect_to, { mainTitle: mainTitle, title: title, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, rating: rating, color: color, firstLetter: firstLetter }
     )}
     >
-      <Box shadow={2} style={{
-        shadowColor: "#000",
+      <Box style={{
         backgroundColor: "#fbfbfb",
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        borderColor: "#c7cbce",
-        shadowOpacity: 0.24,
-        shadowRadius: 6.27,
         borderRadius: 8,
-        borderWidth: 0.5,
-        elevation: 10,
-      }} mx='5' bg='white' py={2.5} flexDir={'row'} justifyContent="space-around" mb="3" >
+        // borderWidth: 0.5,
+        elevation: 0,
+      }} mx='5' bg='white' py={3.5} flexDir={'row'} justifyContent="space-around" mb="3" >
         <Box flexDir={'row'} ml='3'>
           <Box mr='4'>
             {
-              <Box rounded={'md'} alignItems={'center'} justifyContent={'center'} w={60} height={60} >
-                <Avatar marginX={"auto"} rounded={5} _text={{ fontSize: (30 / firstLetter?.length) + (firstLetter?.length * 1.5) }} bg={color} mr="1" >{firstLetter.toUpperCase()}</Avatar>
+              <Box 
+              rounded={8} 
+              alignItems={'center'} 
+              justifyContent={'center'} 
+              w={60} 
+              height={60} 
+              >
+                <Avatar 
+                marginX={"auto"} 
+                rounded={5} 
+                _text={{ 
+                  fontSize: (30 / firstLetter?.length) + (firstLetter?.length * 1.5), 
+                  color:"#DA673A"
+                }} 
+                bg={"#FBF0EB"} 
+                mr="1"
+                >{firstLetter.toUpperCase()}
+                </Avatar>
               </Box>
             }
           </Box>
           <Box w="70%" justifyContent={'center'} >
-            <Text style={[fontStyles.manrope600, {
+            <Text style={[fontStyles.poppins700, {
               fontSize: 14.5,
               marginBottom: 2,
+              fontWeight:"bold",
+              color:"#171717"
             }]} lineHeight={17} numberOfLines={2}>
               {title}
             </Text>
@@ -87,7 +103,7 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
               text ? <Text style={[fontStyles.bodyText, { color: "#939aa0", fontSize: 13, marginTop: 2 }]} fontWeight={'bold'}>{text}</Text> : null
             }
             {
-              time ? <Text style={[fontStyles.manrope400, {    fontSize: 12, marginTop: 2 }]} numberOfLines={2} fontSize={10}>{time}</Text> : null
+              time ? <Text style={[fontStyles.poppins400, {    fontSize: 12, marginTop: 2 }]} numberOfLines={2} fontSize={10}>{time}</Text> : null
             }
           </Box>
         </Box>

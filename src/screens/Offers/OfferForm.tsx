@@ -170,8 +170,10 @@ function OfferForm({ route, navigation }) {
                       onChangeText={(text) => setAsunto(text)}
                       type={"text"}
                       px={3.5}
+                      borderColor={"transparent"}
+                      borderRadius={8}
                       placeholder={"Título"}
-                      placeholderTextColor={"#d3d3d3"}
+                      placeholderTextColor={"#797979"}
                       backgroundColor={"#F7FAFC"}
                     />
                   </Box>
@@ -188,8 +190,10 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setEmail(text)}
                   type={"text"}
                   px={3.5}
+                  borderColor={"transparent"}
+                  borderRadius={8}
                   placeholder={"Email"}
-                  placeholderTextColor={"#d3d3d3"}
+                  placeholderTextColor={"#797979"}
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
@@ -203,8 +207,10 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setUrl(text)}
                   type={"text"}
                   px={3.5}
+                  borderColor={"transparent"}
+                  borderRadius={8}
                   placeholder={"Enlace"}
-                  placeholderTextColor={"#d3d3d3"}
+                  placeholderTextColor={"#797979"}
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
@@ -215,9 +221,11 @@ function OfferForm({ route, navigation }) {
                 autoCompleteType={"off"}
                 fontSize={15}
                 h={100}
+                borderColor={"transparent"}
+                borderRadius={8}
                 backgroundColor={"#F7FAFC"}
-                borderWidth={0}
-                placeholderTextColor={"#d3d3d3"}
+                borderWidth={0}                
+                placeholderTextColor="#797979" 
                 mb={5}
               />
 
@@ -297,7 +305,7 @@ function OfferForm({ route, navigation }) {
                 w="90%"
                 py={5}
                 backgroundColor="blue.500"
-                rounded={"2xl"}
+                rounded={8}
               >
                 Enviar
               </Button>

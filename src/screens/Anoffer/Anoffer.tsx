@@ -27,13 +27,12 @@ function Anoffer({ route, navigation }) {
     <Container>
       <Layout route={route} navigation={navigation} title={mainTitle}>
         <ScrollView>
-          <Box mx="5" mt="3" mb={"48"}>
+          <Box mx="3" mt="3" mb={"48"}>
             <Image
               style={{
                 height: 140,
-                width: "50%",
-                marginLeft: "25%",
-                borderRadius: 15,
+                width: "100%",
+                borderRadius: 8,
                 marginBottom: "10%"
               }}
               alt="LOGO"
@@ -62,7 +61,7 @@ function Anoffer({ route, navigation }) {
                       `https://fadu-1c40d.web.app/app?offer=${id}`
                     )
                   }
-                  rounded={"xl"}
+                  rounded={8}
                   backgroundColor={"primary.900"}
                   icon={
                     <Icon
@@ -78,14 +77,14 @@ function Anoffer({ route, navigation }) {
 
             {name && (
               <Box p={3} mt="3" mb={3}
-                rounded={"lg"}
+                rounded={8}
                 backgroundColor={"white"}>
                 <Text fontSize={14}><Text style={[fontStyles.headingText, { fontSize: 16 }]}>Ofrecido por: </Text>{name}</Text>
               </Box>
             )}
 
             <Box p={3}  mt={3}
-              rounded={"lg"}
+              rounded={8}
               backgroundColor={"white"}>
               <Text style={[fontStyles.headingText, { fontSize: 16 }]} mb="3">Descripción: </Text>
               <Text fontSize={14} mb="3">
@@ -113,7 +112,7 @@ function Anoffer({ route, navigation }) {
                 backgroundColor: "#EB5E29",
                 height: verticalScale(45),
                 width: screenWidth - horizontalScale(40),
-                borderRadius: 10,
+                borderRadius: 8,
               }}
             >
               <Text

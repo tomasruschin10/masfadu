@@ -103,34 +103,58 @@ function Message() {
   return (
     <Center>
       <Box>
-        <Slide in={message.open} placement="top">
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#d6e9c6",
-              width: "95%",
-              aspectRatio: 10,
-              top: messageOffset,
-              position: "absolute",
-              alignSelf: "center",
-              paddingTop: "0%",
-              paddingRight: "2.607%",
-              paddingBottom: "2%",
-              paddingLeft: "2.669%",
-              borderRadius: 20,
-            }}
+        <Slide 
+        in={message.open} 
+        placement="top"
+        >
+          <Box
+          w={"95%"}
+          position={"absolute"}
+          left={"auto"}
+          right={"auto"}
+          top={messageOffset}
+          display={"flex"}
+          flexDirection={"row"}
+          alignItems={"center"}
+          justifyContent={"space-around"}
+          alignSelf={"center"}
+          pr={"2.607%"}
+          pl={"2.669%"}
+          py={"3%"}
+          borderRadius={8}
+            // style={{
+            //   borderWidth: 1,
+            //   borderColor: "#d6e9c6",
+            //   width: "95%",
+            //   aspectRatio: 10,
+            //   top: messageOffset,
+            //   position: "absolute",
+            //   alignSelf: "center",
+            //   // paddingTop: "0%",
+            //   paddingRight: "2.607%",
+            //   // paddingBottom: "2%",
+            //   paddingLeft: "2.669%",
+            //   borderRadius: 8,
+            // }}
             bg={getColors(message.type, "color") as string}
           >
             <TouchableOpacity
-              style={
-                { marginTop: "3%" }
-              }
               onPress={() =>
                 dispatch(updateMessage({ body: "", open: false, type: "" }))
               }
             >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Box
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"space-between"} 
+              alignItems={"center"}
+              gap={4}
+              >
+                <Box 
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"center"}
+                >
                   <Text
                     color="black"
                     textAlign="left"
@@ -150,17 +174,19 @@ function Message() {
                   >
                     {message.body}
                   </Text>
-                </View>
-                <MaterialIcons
-                  name={"close"}
-                  size={20}
-                  color="black"
-                />
-              </View>
+                </Box>
+                <Box>
+                  <MaterialIcons
+                    name={"close"}
+                    size={20}
+                    color="black"
+                    />
+                </Box>
+              </Box>
 
 
             </TouchableOpacity>
-          </View>
+          </Box>
         </Slide>
       </Box>
     </Center>

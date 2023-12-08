@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 import { Box, Button, Icon, Image, Input, Text, View, VStack } from "native-base";
 import * as React from "react";
 import Container from "../../components/Container";
@@ -17,6 +18,7 @@ import {
   Platform,
   Dimensions,
   PixelRatio,
+  StyleSheet,
 } from "react-native";
 import jwtDecode from "jwt-decode";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -39,7 +41,7 @@ const { height, width } = Dimensions.get("window");
 const contentWidth = width / 1.2; */
 
 const bodyOffset = height * 0.15;
-const contentWidth = width / 1.2;
+const contentWidth = width / 1.08;
 
 function LoginScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -126,64 +128,79 @@ function LoginScreen({ route, navigation }) {
         <VStack maxWidth={contentWidth} mx={"auto"}>
           <Box style={{ marginTop: bodyOffset }} alignItems="center">
             <Image
-              w={100}
+              w={120}
               mb={verticalScale(50)}
-              h={100}
+              h={120}
               alt="Logo de Fadu"
               source={require("../../../assets/logo.png")}
             />
 
             <Input
+              type="text"
               value={email}
-              onChangeText={(text) => setEmail(text)}
-              placeholder="Email"
-              type={"text"}
-              mx="3"
-              mb={4}
-              w="100%"
-              h={verticalScale(50)}
-              rounded={moderateScale(14)}
+              variant="unstyled"
               fontSize={moderateScale(14)}
-            />
+              placeholder="Email"
+              h={verticalScale(55)}
+              onChangeText={(text) => setEmail(text)}
+              mx="1"
+              mb={4}
+              placeholderTextColor="#797979"
+              rounded={8}
+              bg="#FFFFFF"
+              borderColor="#FFFFFF"
+              focusOutlineColor="#FFFFFF"
+              shadow="none"
+              style={styles.inputField}
+              />
             <Input
               value={password}
-              onChangeText={(text) => setPassword(text)}
+              variant="unstyled"
+              type={showPassword ? "text" : "password"}
               w={{
                 base: "100%",
                 md: "25%",
               }}
               mb={4}
-              h={verticalScale(50)}
-              rounded={moderateScale(14)}
-              type={showPassword ? "text" : "password"}
+              h={verticalScale(55)}
+              rounded={8}
               InputRightElement={
                 <Icon
-                  as={
-                    <MaterialIcons
-                      name={showPassword ? "visibility" : "visibility-off"}
-                    />
-                  }
-                  size={5}
-                  mr="2"
-                  color="muted.400"
-                  onPress={() => setShowPassword(!showPassword)}
+                as={
+                  <MaterialIcons
+                  name={showPassword ? "visibility" : "visibility-off"}
+                  />
+                }
+                borderColor="#FFFFFF"
+                shadow="none"
+                size={5}
+                mr="3"
+                color="#797979"
+                onPress={() => setShowPassword(!showPassword)}
                 />
               }
               placeholder="Contraseña"
+              placeholderTextColor="#797979" 
               fontSize={moderateScale(14)}
+              bg="#FFFFFF"
+              borderColor="#FFFFFF"
+              focusOutlineColor="#FFFFFF"
+              onChangeText={(text) => setPassword(text)}
+              shadow="none"
+              style={styles.inputField}
             />
             <DefaultButton buttonStyle={{
               backgroundColor: "#DA673A",
-              borderRadius: moderateScale(14),
-              height: verticalScale(50),
+              borderRadius: moderateScale(8),
+              height: verticalScale(55),
               width: 500,
               maxWidth: contentWidth,
-              paddingTop: verticalScale(7)
+              paddingTop: verticalScale(6)
             }}
               textStyle={
                 {
                   fontSize: moderateScale(14),
-                  fontWeight:"500",
+                  fontWeight:"600",
                   color: "white",
 
                 }
@@ -213,20 +230,29 @@ function LoginScreen({ route, navigation }) {
             <Hr text={"ó"} />
           </Box> */}
 
-          <Box alignItems="center" pt={PixelRatio.roundToNearestPixel(50)}>
+          <Box pt={PixelRatio.roundToNearestPixel(50)}>
             <Button
               mb={5}
               w="100%"
-              h={verticalScale(50)}
-              rounded={ moderateScale(14)}
+              h={verticalScale(55)}
+              rounded={ moderateScale(8)}
               backgroundColor={"#FFFFFF"}
               onPress={() => navigation.navigate("GoogleLogin")}
               _spinner={{ color: "black" }}
               isLoading={loading}
-
               _text={{ color: "#797979", fontSize: moderateScale(14), fontWeight: "400" }}
               colorScheme={"ligth"}
               color={"darkText"}
+              leftIcon={
+              <TouchableWithoutFeedback>
+                <Image
+                  source={require("../../../assets/icons/google.png")}
+                  size={5}
+                  mr="2"
+                  alt={"logo de google"}
+                />
+              </TouchableWithoutFeedback>
+              }
             >
               Iniciar Sesión con Google
             </Button>
@@ -236,6 +262,7 @@ function LoginScreen({ route, navigation }) {
                 <Text color="#797979">¿No tenés una cuenta?</Text>
               </Box>
               <Button
+                px={1.5}
                 isLoading={loading}
                 onPress={() => navigation.navigate("Registro")}
                 variant="link"
@@ -250,5 +277,15 @@ function LoginScreen({ route, navigation }) {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  inputField: {
+    shadowColor: "#FFFFFF",
+    color: "#797979",
+    borderRadius: 8,
+    borderBottomColor: "#FFFFFF",
+    borderColor: "#FFFFFF"
+  }
+})
 
 export default React.memo(LoginScreen);

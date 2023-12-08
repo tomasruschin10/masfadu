@@ -1,6 +1,9 @@
 import { Avatar, Box, Text, HStack } from "native-base";
 import React from "react";
 
+import { fontStyles } from '../../utils/colors/fontColors';
+import { StyleProp, TextStyle } from 'react-native';
+
 function SeeSubjectThread_Top({
   title,
   text,
@@ -13,12 +16,13 @@ function SeeSubjectThread_Top({
   fadeAnim,
   color,
   firstLetter,
+  rating
 }) {
   return (
-    <HStack rounded="3xl" bg="white" p={4} shadow={2} my={1} mx={5} space={3}>
+    <HStack rounded="8" bg="white" p={4} my={1} mx={5} space={3}>
       <Box>
         <Box
-          rounded={"md"}
+          rounded={8}
           alignItems={"center"}
           justifyContent={"center"}
           w={52}
@@ -27,12 +31,13 @@ function SeeSubjectThread_Top({
           <Avatar
             h={"100%"}
             rounded={5}
-            _text={{
-              fontSize: 30 / firstLetter?.length + firstLetter?.length * 1.5,
-            }}
+            _text={{ 
+              fontSize: (30 / firstLetter?.length) + (firstLetter?.length * 1.5), 
+              color:"#DA673A"
+            }} 
             fontFamily="SourceSansPro_400Regular"
             fontSize={40}
-            bg={color}
+            bg={"#FBF0EB"}
             mr="1"
           >
             {firstLetter}
@@ -46,15 +51,16 @@ function SeeSubjectThread_Top({
         {/* <Text position={'absolute'} bottom={2} h={'100%'} fontSize={42.06} color={'white'} bold={true} fontFamily='SourceSansPro_400Regular'>{title.substring(0,1)}</Text> */}
         {/* </Box> */}
       </Box>
-      <Box style={{ flex: 1, justifyContent: "center" }}>
-        <Text fontSize={13} fontWeight={"500"}>
+      <Box style={[fontStyles.poppins700, { flex: 1, justifyContent: "center" }]}>
+        <Text style={[fontStyles.poppins700]} fontSize={13} color={"#171717"}>
           {title}
         </Text>
         {/* <Text fontFamily={'SourceSansPro_400Regular'} numberOfLines={2} fontWeight={'bold'}>{text}</Text> */}
         {/* <Text fontFamily={'SourceSansPro_400Regular'} numberOfLines={2} fontSize={7.89}>{time} {hours} {method}</Text> */}
         {time && (
           <Text
-            fontFamily={"SourceSansPro_400Regular"}
+            // fontFamily={"SourceSansPro_400Regular"}
+            style={[fontStyles.poppins400]}
             numberOfLines={2}
             fontSize={12}
           >
@@ -62,6 +68,12 @@ function SeeSubjectThread_Top({
           </Text>
         )}
       </Box>
+      <Box mr='2' alignItems={'flex-end'} justifyContent='center'>
+          <Text fontSize={16} style={(() => {
+            delete fontStyles.manrope400["color"];
+            return [[{ ...fontStyles.manrope300 }]]
+          }) as StyleProp<TextStyle>} color={'#DA673A'} >{rating}</Text>
+        </Box>
     </HStack>
   );
 }

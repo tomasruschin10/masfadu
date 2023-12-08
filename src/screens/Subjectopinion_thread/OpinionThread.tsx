@@ -100,11 +100,11 @@ function OpinionThread({ route, navigation }) {
       
       <HeaderBack title="Opiniones" />
       <ScrollView>
-        <Box mx="5" mt={6}>
-          <Box flexDir={"row"} bg={"#306EED"} py="5" rounded={"2xl"} pr={4}>
+        <Box mx="5" mt={6} >
+          <Box flexDir={"row"} bg={'#F4F6F9'} py="5" rounded={8} pr={4}>
             <Box mx="4">
               {anonymous ? (
-                <FontAwesome name="user-secret" size={35} color="white" />
+                <FontAwesome name="user-secret" size={35} />
               ) : (
                 <Avatar
                   bg="brand.primary"
@@ -114,11 +114,11 @@ function OpinionThread({ route, navigation }) {
               )}
             </Box>
 
-            <Box bg={"#306EED"} flex={1}>
-              <Text color="white" fontSize={16} fontWeight="bold" mb="1">
+            <Box flex={1}>
+              <Text fontSize={16} fontWeight="bold" mb="1">
                 {title}
               </Text>
-              <Text color="white" fontSize={10}>
+              <Text fontSize={10}>
                 {description}
               </Text>
               <Text color="#A8A8A8" fontSize={12} my={3}>
@@ -129,10 +129,10 @@ function OpinionThread({ route, navigation }) {
                   : ""}
               </Text>
               <Box flexDir={"row"} justifyContent={"space-between"}>
-                <Text fontSize={12} color="white">
+                <Text fontSize={12}>
                   {answerOpiniones.length} respuestas
                 </Text>
-                <Text fontSize={12} color="white" mr={5}>
+                <Text fontSize={12} mr={5}>
                   {created_at.substring(0, 10)}
                 </Text>
               </Box>
@@ -145,14 +145,14 @@ function OpinionThread({ route, navigation }) {
             </Text>
             <IconButton
               onPress={() => setReload(!reload)}
-              rounded={"xl"}
-              backgroundColor={"primary.900"}
+              rounded={8}
+              backgroundColor={"#fff"}
               icon={
                 <Icon
                   as={AntDesign}
                   name="reload1"
                   size="sm"
-                  color="primary.1000"
+                  color={"muted.400"}
                 />
               }
             />
