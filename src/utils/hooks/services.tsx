@@ -1,6 +1,6 @@
 import { store } from "../../redux/store";
 import { baseApi } from "../api";
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from "expo-file-system";
 import { Offer } from "../typos/offer.interface";
 
 export const getServices = (url) => {
@@ -15,6 +15,21 @@ export const getServices = (url) => {
 
   return new Promise((resolve) => {
     resolve(baseApi.get(`/${url}`, headers));
+  });
+};
+
+export const getCategories = async () => {
+  const state: any = store.getState();
+  const authToken = state.token;
+
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
+
+  return new Promise((resolve) => {
+    resolve(baseApi.get("/offer-category/all", headers));
   });
 };
 
@@ -38,11 +53,10 @@ export const postServices = (url, body, ContentType?) => {
   });
 };
 
-
 export const postTags = (url, body) => {
   const state: any = store.getState();
   const authToken = state.token;
-  let tags
+  let tags;
   new Promise((resolve, reject) => {
     baseApi
       .post(`/${url}`, body, {
@@ -52,14 +66,14 @@ export const postTags = (url, body) => {
         },
       })
       .then((res) => {
-        tags = res
+        tags = res;
         resolve(res);
       })
       .catch((err) => {
         reject(err);
       });
   });
-  return tags
+  return tags;
 };
 
 export const putServices = (url, body, ContentType?) => {
@@ -83,70 +97,107 @@ export const deleteServices = (url) => {
   });
 };
 
-
-export const publishOffer = async ({ name,email, phone, title, description, offer_category_id, image, partner_id, company, url }: Offer) => {
-
+export const publishOffer = async ({
+  name,
+  email,
+  phone,
+  title,
+  description,
+  offer_category_id,
+  image,
+  partner_id,
+  company,
+  url,
+}: Offer) => {
   const state: any = store.getState();
   const authToken = state.token;
 
-  const { userdata: { career_id } } = state.user;
+  const {
+    userdata: { career_id },
+  } = state.user;
 
   const parameters: any = {
     title,
     description,
-    offer_category_id,
     career_id,
+    offer_category_id,
     name,
-    company,
     phone,
+    email,
     image,
-    email
-  }
+  };
 
-  if(url) {
+  if (url) {
     parameters.url = url;
   }
 
-  if(email) {
-    parameters.email = email;
+  if (!partner_id) {
+    try {
+      const response = await fetch(
+        baseApi.defaults.baseURL + "/partner/create",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: "partner" }),
+        }
+      );
+
+      const responseData = await response.json();
+      parameters.partner_id = responseData.id;
+    } catch (error) {
+      console.error("Error al crear el partner:", error);
+    }
   }
 
-  if (partner_id) {
-    parameters.partner_id = partner_id;
-  }
-
-  const uploadUrl = baseApi.defaults.baseURL + '/offer/create';
+  const uploadUrl = baseApi.defaults.baseURL + "/offer/create";
   const options: FileSystem.FileSystemUploadOptions = {
-    httpMethod: 'POST',
+    httpMethod: "POST",
     uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-    fieldName: 'image',
+    fieldName: "image",
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
     parameters,
   };
 
-  console.log("PARAMETERS <>", parameters)
+  console.log("PARAMETERS <>", parameters);
 
   return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
-
 };
 
-export const publishDoc = async ({ resource_category_id, image, name, subject_id }:
-  { resource_category_id: string, image: any, name: string, subject_id: string }) => {
-
+export const publishDoc = async ({
+  resource_category_id,
+  image,
+  name,
+  subject_id,
+}: {
+  resource_category_id: string;
+  image: any;
+  name: string;
+  subject_id: string;
+}) => {
   const state: any = store.getState();
   const authToken = state.token;
-  const { userdata: { id: user_id } } = state.user
+  const {
+    userdata: { id: user_id },
+  } = state.user;
 
+  const parameters: any = {
+    resource_category_id,
+    image,
+    name,
+    subject_id,
+    user_id,
+  };
 
-  const parameters: any = { resource_category_id, image, name, subject_id, user_id };
-
-  const uploadUrl = baseApi.defaults.baseURL + '/resource/create';
+  const uploadUrl = baseApi.defaults.baseURL + "/resource/create";
   const options: FileSystem.FileSystemUploadOptions = {
-    httpMethod: 'POST',
+    httpMethod: "POST",
     uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-    fieldName: 'image',
+    fieldName: "image",
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
@@ -154,5 +205,4 @@ export const publishDoc = async ({ resource_category_id, image, name, subject_id
   };
 
   return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
-
 };
