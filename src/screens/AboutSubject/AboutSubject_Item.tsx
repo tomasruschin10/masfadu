@@ -9,7 +9,6 @@ import { moderateScale, verticalScale } from "../../utils/media.screens";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
-
   // const [materias, setMaterias] = useState([]);
   const materias = [];
   subjCategory.data.forEach((item) => {
@@ -48,9 +47,8 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         setFontsLoaded(true);
       };
 
-      loadAsync()
+      loadAsync();
     }
-
   }, []);
 
   const loadFonts = async () => {
@@ -64,6 +62,18 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   if (!FontsLoaded) {
     return null;
   }
+
+  const usePercentage = (total, current) => {
+    console.log(total, current)
+    let percentage;
+    if (total > 0) {
+      percentage = (current / total) * 100;
+      percentage = (percentage / 10).toFixed(1);
+    } else {
+      percentage = 0; 
+    }
+    return percentage;
+  };
 
   return (
     <>
@@ -95,22 +105,65 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         // mb={4}
         mx={5}
       >
-        <Box p={4}>
-          <HStack justifyContent="space-between">
-            <Box flex={1}>
-              <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(15)}]}>
-                Materias aprobadas
-              </Text>
-              <Text
-                style={fontStyles.poppins600}
-                color={"#171717"}
-                fontSize={moderateScale(26)}
-                mt={2}
-                py={2}
-              >
-                {`${materias.length}/${subjCategory.total}`}
-                {/* {`${subjCategory.on}/${subjCategory.total}`} */}
-              </Text>
+        <HStack p={4} justifyContent="space-between">
+          <Box flex={1}>
+            <Text
+              style={[
+                fontStyles.poppins600,
+                { color: "#9f9f9f", fontSize: moderateScale(15) },
+              ]}
+            >
+              Materias aprobadas
+            </Text>
+            <Text
+              style={fontStyles.poppins600}
+              color={"#171717"}
+              fontSize={moderateScale(26)}
+              mt={2}
+            >
+              {`${subjCategory.on}/${subjCategory.total}`}
+              {/* {`${subjCategory.on}/${subjCategory.total}`} */}
+            </Text>
+            <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
+              <LinearGradient
+                start={{ x: -1, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
+                style={{
+                  height: "100%",
+                  width: `${
+                    subjCategory.total !== 0
+                      ? (100 / subjCategory.total) * subjCategory.on
+                      : (100 / 1) * subjCategory.on
+                  }%`,
+                  borderRadius: 10,
+                }}
+              />
+            </Box>
+          </Box>
+          <Box ml={4}>
+            <Text
+              style={[
+                fontStyles.poppins600,
+                { color: "#9f9f9f", fontSize: moderateScale(15) },
+              ]}
+            >
+              Promedio
+            </Text>
+            <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
+              {FontsLoaded ? (
+                <Text
+                  style={[
+                    fontStyles.poppins600,
+                    { color: "#646464", fontSize: moderateScale(21) },
+                  ]}
+                  textAlign={"center"}
+                  mt={2}
+                  py={3}
+                >
+                  {usePercentage(subjCategory.total, subjCategory.on)}
+                </Text>
+              ) : null}
             </Box>
             <Box ml={4}>
               <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(14)}]}>
@@ -144,6 +197,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 null
                 }
             </Box>
+          </Box>
           </HStack>        
           <Box mt={1.5} bg={"#EBEEF2"} rounded={"full"} height={2}>
             <LinearGradient
@@ -161,7 +215,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             />
           </Box>
         </Box>
-      </Box>
 
       <Box px={4}>
         {subjCategory.data.map((item, index) => (

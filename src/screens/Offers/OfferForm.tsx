@@ -8,19 +8,20 @@ import {
   TextArea,
   Image,
 } from "native-base";
+import { TouchableOpacity, FlatList, View } from "react-native";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import {
+  getCategories,
   getServices,
-
   publishOffer,
 } from "../../utils/hooks/services";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
+import { Picker } from "@react-native-picker/picker";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
-
 
 function OfferForm({ route, navigation }) {
   const [allTags, setAllTags] = useState([{}]);
@@ -29,22 +30,23 @@ function OfferForm({ route, navigation }) {
 
   const [previewImage, setPreviewImage] = useState(null);
 
-  const [imagen, setImagen] = useState(null)
-  const [asunto, setAsunto] = useState("")
-  const [email, setEmail] = useState("")
-  const [url, setUrl] = useState("")
-  const [mensaje, setMensaje] = useState("")
-  const [categoryId, setCategoryId] = useState("")
+  const [imagen, setImagen] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [asunto, setAsunto] = useState("");
+  const [email, setEmail] = useState("");
+  const [url, setUrl] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [categories, setCategories] = useState();
+  const [categoryId, setCategoryId] = useState([]);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
-
 
   const selectImage = async () => {
     try {
       const image = await ImagePicker.launchImageLibraryAsync();
-      console.log("image <>", image)
+      console.log("image <>", image);
       if (!image.canceled && image.assets.length > 0) {
-        setImagen(image.assets[0])
+        setImagen(image.assets[0]);
         setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
       }
     } catch (error) {
@@ -59,25 +61,33 @@ function OfferForm({ route, navigation }) {
       .then(({ data }: any) => {
         setAllTags(data);
       })
-      .catch(() => { });
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getCategories()
+      .then(({ data }: any) => {
+        setCategories(data);
+        console.log(data);
+      })
+      .catch(() => {});
   }, []);
 
   let FilterTags = () =>
     allTags.length > 0
       ? allTags.filter((it: any) =>
-        it.name
-          .toLowerCase()
-          .includes(searchText.toLowerCase().replace("#", ""))
-      )
+          it.name
+            .toLowerCase()
+            .includes(searchText.toLowerCase().replace("#", ""))
+        )
       : [];
-
 
   const cleanModals = () => {
     setTimeout(() => {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
     }, 30000);
-  }
+  };
 
   const uploadImage = async () => {
     try {
@@ -85,30 +95,36 @@ function OfferForm({ route, navigation }) {
       const response = await publishOffer({
         title: asunto,
         description: mensaje,
-        offer_category_id: "3",
+        offer_category_id: categoryId.id,
         url: url,
         email: email,
-        image: imagen
-      })
+        image: imagen,
+      });
 
       if (response.status != 201) {
-        throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
+        throw new Error(JSON.stringify(response), {
+          cause: "no se obtuvo el status 201",
+        });
       }
-      console.log('RESPONSE', response.body);
+      console.log("RESPONSE", response.body);
 
       setSuccessModalOpen(true);
       setLoading(false);
 
       cleanModals();
-      navigation.navigate('Home');
+      navigation.navigate("Home");
     } catch (error) {
-
-      console.log('Error al enviar la imagen al backend:', error);
+      console.log("Error al enviar la imagen al backend:", error);
       setErrorModalOpen(true);
       setLoading(false);
 
       cleanModals();
     }
+  };
+
+  const selectCategory = (category) => {
+    setCategoryId(category);
+    setIsVisible(false);
   };
 
   return (
@@ -127,16 +143,19 @@ function OfferForm({ route, navigation }) {
             mb={5}
             borderTopWidth={1}
             borderTopColor={"#EBEEF2"}
-            pt={6}
+            pt={0}
           >
             <Text fontSize={15}>
-              Describí de la forma más detallada posible lo que vas a publicar, así queda claro!
+              Describí de la forma más detallada posible lo que vas a publicar,
+              así queda claro!
             </Text>
           </Box>
 
           <Box>
             <Box
               mx="5"
+              borderBottomWidth={2}
+              borderBottomColor={"#EBEEF2"}
               pb={"24"}
             >
               {allTags.length > 0 && (
@@ -156,7 +175,6 @@ function OfferForm({ route, navigation }) {
                       placeholder={"Título"}
                       placeholderTextColor={"#797979"}
                       backgroundColor={"#F7FAFC"}
-
                     />
                   </Box>
                 </>
@@ -194,7 +212,6 @@ function OfferForm({ route, navigation }) {
                   placeholder={"Enlace"}
                   placeholderTextColor={"#797979"}
                   backgroundColor={"#F7FAFC"}
-
                 />
               </Box>
 
@@ -212,15 +229,71 @@ function OfferForm({ route, navigation }) {
                 mb={5}
               />
 
-              <Box 
-              mt={1} 
-              mb={5} 
-              style={{ backgroundColor: "#F7FAFC", height: 150, }}
-              borderColor={"transparent"}
-              borderRadius={8}
+              <TouchableOpacity
+                style={{
+                  marginBottom: 10,
+                  width: "100%",
+                  height: 50,
+                  alignItems: "flex-start",
+                  backgroundColor: "#F7FAFC",
+                }}
+                onPress={() => setIsVisible(!isVisible)}
               >
-                {previewImage && <Image alt="imagen" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar Imagen</Button>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: "black",
+                    marginLeft: 10,
+                    marginTop: 10,
+                  }}
+                >
+                  {categoryId && categoryId.name
+                    ? categoryId.name
+                    : "Seleccione una categoría"}
+                </Text>
+              </TouchableOpacity>
+              {isVisible && (
+                <View>
+                  <FlatList
+                    data={categories}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity onPress={() => selectCategory(item)}>
+                        <Text>{item.name}</Text>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+              )}
+
+              <Box
+                mt={1}
+                mb={5}
+                style={{ backgroundColor: "#F7FAFC", height: 150 }}
+              >
+                {previewImage && (
+                  <Image
+                    alt="imagen"
+                    source={{ uri: previewImage }}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                )}
+                <Button
+                  fontSize={1}
+                  zIndex={99}
+                  style={{
+                    backgroundColor: "#d3d3d3",
+                    width: "30%",
+                    borderRadius: 50,
+                    marginLeft: "30%",
+                    marginTop: "13%",
+                    position: "absolute",
+                    height: "20%",
+                  }}
+                  onPress={selectImage}
+                >
+                  Agregar Imagen
+                </Button>
               </Box>
             </Box>
 
@@ -239,8 +312,18 @@ function OfferForm({ route, navigation }) {
             </Box>
           </Box>
         </ScrollView>
-        <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+        <ErrorModal
+          message={"Error al publicar"}
+          isOpen={errorModalOpen}
+          setOpen={setErrorModalOpen}
+        />
+        <SuccessModal
+          message={
+            "Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"
+          }
+          isOpen={successModalOpen}
+          setOpen={setSuccessModalOpen}
+        />
       </Layout>
     </Container>
   );
