@@ -32,14 +32,14 @@ const MarketDetail = ({ navigation }) => {
     <Container>
       <Layout route={route} navigation={navigation} title={"Detalle"}>
         <ScrollView>
-          <Box mx="5" mt="3">
+          <Box mx="3" mt="3">
             <View>
               <Image
                 style={{
                   height: 140,
-                  width: "50%",
-                  marginLeft: "25%",
-                  borderRadius: 15,
+                  width: "100%",
+                  // marginLeft: "25%",
+                  borderRadius: 8,
                   marginBottom: "10%"
                 }}
                 alt="LOGO"
@@ -87,8 +87,10 @@ const MarketDetail = ({ navigation }) => {
                 mt={3}
                 rounded={"lg"}
                 backgroundColor={"white"}
-                px={3}>
-                <Text fontSize={16} backgroundColor="white" fontWeight="bold" mb="4">
+                px={3}
+                py={3}
+                >
+                <Text fontSize={16} backgroundColor="white" fontWeight="bold" mb={3}>
                   Descripción: {" "}
                 </Text>
                 <Text fontSize={14} mb="3" backgroundColor="white">

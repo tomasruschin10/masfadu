@@ -12,7 +12,7 @@ import {
 import { Image } from "react-native";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { getServices } from "../../utils/hooks/services";
-import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import {
   TouchableOpacity,
   Dimensions,
@@ -260,7 +260,7 @@ function Offers({ route, navigation }) {
           />
 
           <Input
-            style={{ marginLeft: "8%" }}
+            style={{ marginLeft: "10%" }}
             onChangeText={(text) => setSearch(text)}
             value={search}
 
@@ -269,22 +269,21 @@ function Offers({ route, navigation }) {
             type={"text"}
             placeholder="Buscar"
             placeholderTextColor="#666666"
-
-
+            rounded={8}
           />
           <IconButton
             onPress={() => {
               setSearch("");
             }}
             ml="3"
-            rounded={"xl"}
-            backgroundColor={"primary.900"}
+            rounded={8}
+            backgroundColor={"#fff"}
             icon={
               <Icon
-                as={EvilIcons}
-                name="close-o"
+                as={AntDesign}
+                name="close"
                 size="md"
-                color={search.length > 0 ? "red.500" : "muted.400"}
+                color={"muted.400"}
               />
             }
           />

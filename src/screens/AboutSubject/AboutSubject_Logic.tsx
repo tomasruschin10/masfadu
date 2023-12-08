@@ -51,11 +51,12 @@ function AboutSubject_Logic({
     <HStack
       mt={margginTop}
       justifyContent={"space-between"}
+      alignItems={"center"}
       style={{
         backgroundColor: "white",
         padding: 10,
         marginHorizontal: 5,
-        borderRadius: 10,
+        borderRadius: 8,
         height: 80,
       }}
     >
@@ -89,6 +90,7 @@ function AboutSubject_Logic({
             //     ? "primary.100"
             //     : "light.100"
             // }
+            color={'#171717'}
           >
             {name}
           </Text>
@@ -124,8 +126,8 @@ function AboutSubject_Logic({
             }
           >
             <Image
-              source={require("../../../assets/icons/emoticons.png")}
-              style={{ width: 33, height: 33, marginLeft: 20, marginRight: -5 }}
+              source={require("../../../assets/icons/smile.png")}
+              style={{ width: 26, height: 26, marginLeft: 20, marginRight: -5 }}
             />
           </TouchableOpacity>
         </HStack>
@@ -159,13 +161,13 @@ function AboutSubject_Logic({
           name="dots-three-vertical"
           size={22}
           style={{ marginRight: 6, padding: 2 }}
-          color="#c5c5c5"
+          color="#454545"
         />
       </TouchableOpacity>
       {available && userSubject?.score ? (
         <TouchableOpacity
           style={{
-            // backgroundColor: "white",
+            backgroundColor: "white",
             alignItems: "center",
             justifyContent: "center",
             overflow:"visible",
@@ -174,10 +176,18 @@ function AboutSubject_Logic({
         >
           {/* <Box style={{ backgroundColor: "cyan" }}> */}
           <Text
-            color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
+            color={userSubject?.score < 11 ? "#eb5e29" : "#3a71e1"}
+            // color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
             // fontWeight={"bold"}
-            textAlign={"center"}
-            style={[fontStyles.headingText, {fontSize: (Platform.OS === "ios" ? 32: 28 ), paddingVertical: (Platform.OS === "ios" ? "6.2%": "3%" ) , marginTop:10, marginRight: 10}]}
+            // textAlign={"center"}
+            style={[fontStyles.headingText, 
+            {
+              fontSize: (Platform.OS === "ios" ? 32: 28 ), 
+              paddingVertical: (Platform.OS === "ios" ? "7.2%": "6.2%" ) , 
+              marginTop:10, 
+              marginRight: 10
+            }
+          ]}
           >
             {userSubject?.score}
           </Text>

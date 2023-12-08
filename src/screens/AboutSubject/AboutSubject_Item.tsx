@@ -5,7 +5,7 @@ import { ModalIcon, ModalNotes, ModalWarning } from "./Modals";
 import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
-import { moderateScale } from "../../utils/media.screens";
+import { moderateScale, verticalScale } from "../../utils/media.screens";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
@@ -88,61 +88,79 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
 
       <Box
         bg={"white"}
-        borderColor={"#D4D4D4"}
+        borderColor={"transparent"}
         borderWidth={1}
         rounded={"xl"}
         mt={1}
         // mb={4}
         mx={5}
       >
-        <HStack p={4} justifyContent="space-between">
-          <Box flex={1}>
-            <Text style={[fontStyles.poppins600, {color: "#9f9f9f", fontSize: moderateScale(15)}]}>
-              Materias aprobadas
-            </Text>
-            <Text
-              style={fontStyles.poppins600}
-              color={"#171717"}
-              fontSize={moderateScale(26)}
-              mt={2}
-            >
-              {`${materias.length}/${subjCategory.total}`}
-              {/* {`${subjCategory.on}/${subjCategory.total}`} */}
-            </Text>
-            <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
-              <LinearGradient
-                start={{ x: -1, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                  style={{
-                  height: "100%",
-                  width: `${subjCategory.total !== 0
-                      ? (100 / subjCategory.total) * subjCategory.on
-                      : (100 / 1) * subjCategory.on
-                    }%`,
-                  borderRadius: 10,
-                }}
-              />
-            </Box>
-          </Box>
-          <Box ml={4}>
-            <Text style={[fontStyles.poppins600, {color: "#9f9f9f", fontSize: moderateScale(15)}]}>
-              Promedio
-            </Text>
-            <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
-              {FontsLoaded ? <Text
-
-                style={[fontStyles.poppins600, {color: "#646464", fontSize: moderateScale(21)}]}
-                textAlign={"center"}
+        <Box p={4}>
+          <HStack justifyContent="space-between">
+            <Box flex={1}>
+              <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(15)}]}>
+                Materias aprobadas
+              </Text>
+              <Text
+                style={fontStyles.poppins600}
+                color={"#171717"}
+                fontSize={moderateScale(26)}
                 mt={2}
-                py={3}
+                py={2}
               >
-                {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
-              </Text> : null}
-
+                {`${materias.length}/${subjCategory.total}`}
+                {/* {`${subjCategory.on}/${subjCategory.total}`} */}
+              </Text>
             </Box>
+            <Box ml={4}>
+              <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(14)}]}>
+                Promedio
+              </Text>
+                {
+                  FontsLoaded 
+                ? 
+                <Box 
+                bg={"#F2F2F2"} 
+                rounded={"8"} 
+                mt={2} 
+                display={"flex"}
+                alignItems={"center"}
+                >
+                  <Text 
+                  style={[fontStyles.poppins600, 
+                    {
+                      color: "#646464", 
+                      fontSize: 25
+                    }
+                  ]}
+                  textAlign={"center"}
+                  mt={3}
+                  py={3}
+                  >
+                    {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
+                  </Text> 
+                </Box>
+                : 
+                null
+                }
+            </Box>
+          </HStack>        
+          <Box mt={1.5} bg={"#EBEEF2"} rounded={"full"} height={2}>
+            <LinearGradient
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
+                style={{
+                height: "100%",
+                width: `${subjCategory.total !== 0
+                    ? (100 / subjCategory.total) * subjCategory.on
+                    : (100 / 1) * subjCategory.on
+                  }%`,
+                borderRadius: 8,
+              }}
+            />
           </Box>
-        </HStack>
+        </Box>
       </Box>
 
       <Box px={4}>

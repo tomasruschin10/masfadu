@@ -20,7 +20,7 @@ import { getServices } from "../../utils/hooks/services";
 import { HeaderBack } from "../../components/Header";
 import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { MaterialIcons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function CoursesAndWorkshops({ route, navigation, mainTitle }) {
@@ -143,6 +143,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
               style={{ position: 'absolute', left: "3%", zIndex: 1 }}
             />
             <Input
+            rounded={8}
               style={{ marginLeft: "8%" }}
               fontSize={12.27}
               onChangeText={(text) => setSearchText(text)}
@@ -156,12 +157,12 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
 
             <HStack alignItems={"flex-start"}>
               <IconButton
-                rounded={"xl"}
-                backgroundColor={"primary.900"}
+                rounded={8}
+                backgroundColor={"#fff"}
                 icon={
                   <Icon
-                    as={EvilIcons}
-                    name="close-o"
+                    as={AntDesign}
+                    name="close"
                     size="md"
                     color={"muted.400"}
                   />

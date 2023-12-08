@@ -42,8 +42,8 @@ function Notificaciones({ route, navigation }) {
                 borderColor: "muted.50"
               }} borderColor="muted.800" pl={["0", "4"]} pr={["0", "3"]} py="2">
 
-                  <HStack space={[4, 3]} justifyContent="space-between">
-                    <Avatar size="60px" source={require('../../../assets/icons/new_notificaciones.png')} />
+                  <HStack space={[4, 3]} justifyContent="space-between" alignItems={"center"}>
+                    <Avatar size="60px" bg={"transparent"} source={require('../../../assets/icons/new_notificaciones_new.png')} />
                     <VStack width={'85%'} pr={2}>
                       <Text color="black">
                         {item.body}{" "}

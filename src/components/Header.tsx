@@ -50,12 +50,12 @@ export function HeaderBack({ ...props }) {
           />
         )}
         <Box flex={12}>
-          <Text marginLeft={3} fontSize="18" style={fontStyles.poppins500} textAlign={"left"}>
+          <Text marginLeft={0} fontSize="18" style={fontStyles.poppins500} textAlign={"left"}>
             {props.title ?? ''}
           </Text>
         </Box>
         {props?.addButtonUrl && (
-          <Box >
+          <Box mr={4}>
             <IconButton
               rounded="full"
               backgroundColor="#E85E29"

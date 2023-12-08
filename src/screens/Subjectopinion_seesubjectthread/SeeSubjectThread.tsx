@@ -14,7 +14,6 @@ import {
   Spinner,
   Text,
 } from "native-base";
-import { EvilIcons } from "@expo/vector-icons";
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import SeeSubjectThread_Item from "./SeeSubjectThread_Item";
@@ -250,7 +249,7 @@ function SeeSubjectThread({ route, navigation }) {
     <Container>
 { menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
 
-      <HeaderBack title="Opiniones de materias" addButtonUrl={"CreateNewThread"}/>
+      <HeaderBack title="Opiniones de materias"/>
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <Box>
@@ -266,10 +265,11 @@ function SeeSubjectThread({ route, navigation }) {
             toggle={toggle}
             color={color}
             firstLetter={firstLetter}
+            rating={rating}
           />
         </Box>
 
-        <Box mx={3} mt={4}>
+        <Box mx={1} mt={4}>
           {allTags.length > 0 && (
             <>
               {changeFilt && searchText.length > 0 && (
@@ -286,14 +286,16 @@ function SeeSubjectThread({ route, navigation }) {
                 alignItems={"center"}
                 justifyContent="center"
                 flexDir={"row"}
+                rounded={8}
               >
                 <MaterialIcons
                   name={"search"}
                   size={17}
                   color="gray"
-                  style={{ position: "absolute", left: "5%", zIndex: 1 }}
+                  style={{ position: "absolute", left: "6%", zIndex: 1 }}
                 />
                 <Input
+                  rounded={8}
                   value={searchText}
                   style={{ marginLeft: "8%" }}
                   onChangeText={(text) => setSearchText(text)}
@@ -309,15 +311,16 @@ function SeeSubjectThread({ route, navigation }) {
                   onBlur={() => setSearchText("")}
                 />
 
-                <HStack alignItems={"flex-start"} mr={3}>
+                <HStack alignItems={"flex-start"}>
                   <IconButton
                     onPress={() =>{ search()}}
-                    rounded={"xl"}
-                    backgroundColor={"primary.900"}
+                    rounded={8}
+                    ml={1}
+                    backgroundColor={"#FFFFFF"}
                     icon={
                       <Icon
-                        as={EvilIcons}
-                        name="close-o"
+                        as={AntDesign}
+                        name="close"
                         size="md"
                         color={"muted.400"}
                       />
@@ -325,8 +328,8 @@ function SeeSubjectThread({ route, navigation }) {
                   />
                   <IconButton
                     onPress={() => setChangeFilt(!changeFilt)}
-                    rounded={"xl"}
-                    backgroundColor={"primary.900"}
+                    rounded={8}
+                    backgroundColor={"#FFFFFF"}
                     mx={2}
                     icon={
                       <Icon
@@ -335,7 +338,7 @@ function SeeSubjectThread({ route, navigation }) {
                           changeFilt ? "pricetag" : "chatbubble-ellipses-sharp"
                         }
                         size="md"
-                        color={"primary.1000"}
+                        color={"muted.400"}
                       />
                     }
                   />
@@ -346,14 +349,14 @@ function SeeSubjectThread({ route, navigation }) {
                       setLength(rating);
                       setLimit(0);
                     }}
-                    rounded={"xl"}
-                    backgroundColor={"primary.900"}
+                    rounded={8}
+                    backgroundColor={"#FFFFFF"}
                     icon={
                       <Icon
                         as={AntDesign}
                         name="reload1"
                         size="md"
-                        color="primary.1000"
+                        color="muted.400"
                       />
                     }
                   />

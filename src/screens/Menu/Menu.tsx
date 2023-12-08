@@ -18,7 +18,7 @@ const carriers = [
   },
   {
     title: "Opiniones de materias",
-    icon: require("../../../assets/menu/opiniones.png"),
+    icon: require("../../../assets/menu/opiniones2.png"),
     iconType: "MaterialIcons",
     comingSoon: false,
   },

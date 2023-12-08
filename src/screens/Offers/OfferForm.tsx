@@ -137,8 +137,6 @@ function OfferForm({ route, navigation }) {
           <Box>
             <Box
               mx="5"
-              borderBottomWidth={1}
-              borderBottomColor={"#EBEEF2"}
               pb={"24"}
             >
               {allTags.length > 0 && (
@@ -153,8 +151,10 @@ function OfferForm({ route, navigation }) {
                       onChangeText={(text) => setAsunto(text)}
                       type={"text"}
                       px={3.5}
+                      borderColor={"transparent"}
+                      borderRadius={8}
                       placeholder={"Título"}
-                      placeholderTextColor={"#d3d3d3"}
+                      placeholderTextColor={"#797979"}
                       backgroundColor={"#F7FAFC"}
 
                     />
@@ -172,8 +172,10 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setEmail(text)}
                   type={"text"}
                   px={3.5}
+                  borderColor={"transparent"}
+                  borderRadius={8}
                   placeholder={"Email"}
-                  placeholderTextColor={"#d3d3d3"}
+                  placeholderTextColor={"#797979"}
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
@@ -187,8 +189,10 @@ function OfferForm({ route, navigation }) {
                   onChangeText={(text) => setUrl(text)}
                   type={"text"}
                   px={3.5}
+                  borderColor={"transparent"}
+                  borderRadius={8}
                   placeholder={"Enlace"}
-                  placeholderTextColor={"#d3d3d3"}
+                  placeholderTextColor={"#797979"}
                   backgroundColor={"#F7FAFC"}
 
                 />
@@ -200,13 +204,21 @@ function OfferForm({ route, navigation }) {
                 autoCompleteType={"off"}
                 fontSize={15}
                 h={100}
+                borderColor={"transparent"}
+                borderRadius={8}
                 backgroundColor={"#F7FAFC"}
-                borderWidth={0}
-                placeholderTextColor={"#d3d3d3"}
+                borderWidth={0}                
+                placeholderTextColor="#797979" 
                 mb={5}
               />
 
-              <Box mt={1} mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
+              <Box 
+              mt={1} 
+              mb={5} 
+              style={{ backgroundColor: "#F7FAFC", height: 150, }}
+              borderColor={"transparent"}
+              borderRadius={8}
+              >
                 {previewImage && <Image alt="imagen" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
                 <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar Imagen</Button>
               </Box>
@@ -220,7 +232,7 @@ function OfferForm({ route, navigation }) {
                 w="90%"
                 py={5}
                 backgroundColor="blue.500"
-                rounded={"2xl"}
+                rounded={8}
               >
                 Enviar
               </Button>

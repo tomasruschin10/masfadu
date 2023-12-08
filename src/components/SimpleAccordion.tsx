@@ -67,7 +67,7 @@ const SimpleAccordion = ({
           >
             {/* {navigationEvent === "materias" && ( */}
             <Image
-              source={require("../../assets/icons/star.png")}
+              source={require("../../assets/icons/star2.png")}
               style={{
                 width: 30,
                 height: 30,
@@ -91,7 +91,7 @@ const SimpleAccordion = ({
                 {title}
               </Text>
               {description && (
-                <Text style={{ color: "#939aa0", fontSize: moderateScale(11), marginTop: 2 }}>
+                <Text style={{ color: "#646464", fontSize: moderateScale(12), marginTop: 2 }}>
                   {description}
                 </Text>
               )}
@@ -102,7 +102,7 @@ const SimpleAccordion = ({
           <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
             {/* {navigationEvent === "materias" ? ( */}
             <Box
-              backgroundColor={"#ffffff"}
+              // backgroundColor={"#ffffff"}
               style={{
                 borderRadius: 2,
                 padding: 2,
@@ -115,13 +115,12 @@ const SimpleAccordion = ({
               alignItems={"center"}
             >
               <Text
-                color={"e7981#6"}
+                color={"#797979"}
                 style={{
                   padding: 3,
                   marginHorizontal: 5,
-                  fontWeight: "bold",
                 }}
-                fontSize={9}
+                fontSize={12}
               >
                 {isCollapsed ? "Ver más" : "Ver menos"}
               </Text>
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   defaultBannerStyle: {
-    height: 80,
+    height: 95,
     marginHorizontal: 5,
     borderRadius: 8,
     // marginBottom: 10,
@@ -170,18 +169,17 @@ const styles = StyleSheet.create({
     // marginBottom: -10,
     // backgroundColor: "#294871",
     flexDirection: "row",
-    backgroundColor: "#fbfbfb",
+    backgroundColor: "#fff",
     padding: 16,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.24,
-    shadowRadius: 6.27,
-
-    elevation: 10,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.24,
+    // shadowRadius: 6.27,
+    // elevation: 3,
   },
   defaultViewContainer: {
     // padding: 8,

@@ -92,7 +92,7 @@ function SubjectContent({ route, navigation }) {
   return (
     <Container>
 
-      <Layout addButtonUrl={"ResourceForm"} route={route} navigation={navigation} title={`${name} ${viewName ? "-" : ""} ${viewName || ""}`}>
+      <Layout route={route} navigation={navigation} title={`${name} ${viewName ? "-" : ""} ${viewName || ""}`}>
       <ScrollView keyboardShouldPersistTaps={'handled'}>
 
         {!loading ? (

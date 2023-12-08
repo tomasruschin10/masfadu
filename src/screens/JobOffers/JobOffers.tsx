@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import { getServices } from "../../utils/hooks/services";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 function JobOffers({ route, navigation, mainTitle }) {
@@ -135,13 +135,13 @@ function JobOffers({ route, navigation, mainTitle }) {
             alignItems={"center"}
             justifyContent="center"
             flexDir={"row"}
-          >
+            >
             <MaterialIcons
               name={"search"}
               size={17}
               color="gray"
               style={{ position: "absolute", left: "3%", zIndex: 1 }}
-            />
+              />
             <Input
               style={{ marginLeft: "8%" }}
               fontSize={12.27}
@@ -151,17 +151,19 @@ function JobOffers({ route, navigation, mainTitle }) {
               type={"text"}
               placeholder={"Buscar"}
               placeholderTextColor="#666666"
+              borderRadius={8}
+              borderColor={"transparent"}
               mr="2"
             />
 
-            <HStack alignItems={"flex-start"}>
+            <HStack>
               <IconButton
-                rounded={"xl"}
-                backgroundColor={"primary.900"}
+                rounded={8}
+                backgroundColor={"#fff"}
                 icon={
                   <Icon
-                    as={EvilIcons}
-                    name="close-o"
+                    as={AntDesign}
+                    name="close"
                     size="md"
                     color={"muted.400"}
                   />

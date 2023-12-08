@@ -6,7 +6,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 function SeeSubjectThread_Item({navigation, title, description, created_at, opinionTags, idOpinion, anonymous, student, answersCount, tags, professor}) {
   return (
     <TouchableHighlight underlayColor={''} onPress={() => navigation.navigate('OpinionThread', {anonymous: anonymous, student: student,title: title, description: description, created_at: created_at, opinionTags: opinionTags, idOpinion: idOpinion})}>
-      <Box flexDir={'row'} bg={'#F4F6F9'} py='5' rounded={'2xl'} mb={5}>
+      <Box flexDir={'row'} bg={'#F4F6F9'} py='5' rounded={8} mb={5}>
         <Box mx='4'>
           {
             anonymous ? <FontAwesome name="user-secret" size={35} color="black" /> 
@@ -34,7 +34,21 @@ function SeeSubjectThread_Item({navigation, title, description, created_at, opin
         </Box>
 
         <Box ml='3' mr='5'>
-          <Ionicons name="arrow-forward-circle" size={35} color="#2972FE" />
+          <Box 
+          h={"30"} 
+          w={"30"} 
+          borderRadius={"50"}
+          bgColor={"#FBF0EB"}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          >
+            <Ionicons 
+            name="arrow-forward" 
+            size={20} 
+            color="#DA673A" 
+            />
+          </Box>
         </Box>
       </Box>
     </TouchableHighlight>
