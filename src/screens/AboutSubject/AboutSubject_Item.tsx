@@ -9,7 +9,6 @@ import { moderateScale } from "../../utils/media.screens";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
-
   // const [materias, setMaterias] = useState([]);
   const materias = [];
   subjCategory.data.forEach((item) => {
@@ -48,9 +47,8 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         setFontsLoaded(true);
       };
 
-      loadAsync()
+      loadAsync();
     }
-
   }, []);
 
   const loadFonts = async () => {
@@ -64,6 +62,18 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   if (!FontsLoaded) {
     return null;
   }
+
+  const usePercentage = (total, current) => {
+    console.log(total, current)
+    let percentage;
+    if (total > 0) {
+      percentage = (current / total) * 100;
+      percentage = (percentage / 10).toFixed(1);
+    } else {
+      percentage = 0; 
+    }
+    return percentage;
+  };
 
   return (
     <>
@@ -97,7 +107,12 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
       >
         <HStack p={4} justifyContent="space-between">
           <Box flex={1}>
-            <Text style={[fontStyles.poppins600, {color: "#9f9f9f", fontSize: moderateScale(15)}]}>
+            <Text
+              style={[
+                fontStyles.poppins600,
+                { color: "#9f9f9f", fontSize: moderateScale(15) },
+              ]}
+            >
               Materias aprobadas
             </Text>
             <Text
@@ -106,7 +121,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               fontSize={moderateScale(26)}
               mt={2}
             >
-              {`${materias.length}/${subjCategory.total}`}
+              {`${subjCategory.on}/${subjCategory.total}`}
               {/* {`${subjCategory.on}/${subjCategory.total}`} */}
             </Text>
             <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
@@ -114,32 +129,41 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 start={{ x: -1, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                  style={{
+                style={{
                   height: "100%",
-                  width: `${subjCategory.total !== 0
+                  width: `${
+                    subjCategory.total !== 0
                       ? (100 / subjCategory.total) * subjCategory.on
                       : (100 / 1) * subjCategory.on
-                    }%`,
+                  }%`,
                   borderRadius: 10,
                 }}
               />
             </Box>
           </Box>
           <Box ml={4}>
-            <Text style={[fontStyles.poppins600, {color: "#9f9f9f", fontSize: moderateScale(15)}]}>
+            <Text
+              style={[
+                fontStyles.poppins600,
+                { color: "#9f9f9f", fontSize: moderateScale(15) },
+              ]}
+            >
               Promedio
             </Text>
             <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
-              {FontsLoaded ? <Text
-
-                style={[fontStyles.poppins600, {color: "#646464", fontSize: moderateScale(21)}]}
-                textAlign={"center"}
-                mt={2}
-                py={3}
-              >
-                {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
-              </Text> : null}
-
+              {FontsLoaded ? (
+                <Text
+                  style={[
+                    fontStyles.poppins600,
+                    { color: "#646464", fontSize: moderateScale(21) },
+                  ]}
+                  textAlign={"center"}
+                  mt={2}
+                  py={3}
+                >
+                  {usePercentage(subjCategory.total, subjCategory.on)}
+                </Text>
+              ) : null}
             </Box>
           </Box>
         </HStack>
