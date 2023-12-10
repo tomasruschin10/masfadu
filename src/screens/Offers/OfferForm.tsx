@@ -7,8 +7,9 @@ import {
   Text,
   TextArea,
   Image,
+  Select,
+  CheckIcon,
 } from "native-base";
-import { TouchableOpacity, FlatList, View } from "react-native";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import {
@@ -20,7 +21,6 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import * as ImagePicker from "expo-image-picker";
-import { Picker } from "@react-native-picker/picker";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 
 function OfferForm({ route, navigation }) {
@@ -31,13 +31,12 @@ function OfferForm({ route, navigation }) {
   const [previewImage, setPreviewImage] = useState(null);
 
   const [imagen, setImagen] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [asunto, setAsunto] = useState("");
   const [email, setEmail] = useState("");
   const [url, setUrl] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [categories, setCategories] = useState();
-  const [categoryId, setCategoryId] = useState([]);
+  const [categoryId, setCategoryId] = useState();
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
@@ -68,7 +67,6 @@ function OfferForm({ route, navigation }) {
     getCategories()
       .then(({ data }: any) => {
         setCategories(data);
-        console.log(data);
       })
       .catch(() => {});
   }, []);
@@ -95,7 +93,7 @@ function OfferForm({ route, navigation }) {
       const response = await publishOffer({
         title: asunto,
         description: mensaje,
-        offer_category_id: categoryId.id,
+        offer_category_id: categoryId,
         url: url,
         email: email,
         image: imagen,
@@ -122,9 +120,8 @@ function OfferForm({ route, navigation }) {
     }
   };
 
-  const selectCategory = (category) => {
-    setCategoryId(category);
-    setIsVisible(false);
+  const selectCategory = (item) => {
+    setCategoryId(item.id);
   };
 
   return (
@@ -224,51 +221,46 @@ function OfferForm({ route, navigation }) {
                 borderColor={"transparent"}
                 borderRadius={8}
                 backgroundColor={"#F7FAFC"}
-                borderWidth={0}                
-                placeholderTextColor="#797979" 
+                borderWidth={0}
+                placeholderTextColor="#797979"
                 mb={5}
               />
 
-              <TouchableOpacity
-                style={{
-                  marginBottom: 10,
-                  width: "100%",
-                  height: 50,
-                  alignItems: "flex-start",
-                  backgroundColor: "#F7FAFC",
-                }}
-                onPress={() => setIsVisible(!isVisible)}
-              >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    color: "black",
-                    marginLeft: 10,
-                    marginTop: 10,
+              <Box borderBottomWidth={1} borderBottomColor={"#EBEEF2"} mb={5}>
+                <Select
+                  backgroundColor={"#F7FAFC"}
+                  placeholderTextColor={"#C4C4C4"}
+                  selectedValue={categoryId}
+                  minWidth="335"
+                  accessibilityLabel="Elegir categoria"
+                  placeholder="Elegir categoria"
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />,
                   }}
+                  onValueChange={(itemId) => {
+                    const selectedItem = categories.find(
+                      (item) => item.id === itemId
+                    );
+                    if (selectedItem) {
+                      selectCategory(selectedItem);
+                    }
+                  }}
+                  textAlign={"left"}
                 >
-                  {categoryId && categoryId.name
-                    ? categoryId.name
-                    : "Seleccione una categoría"}
-                </Text>
-              </TouchableOpacity>
-              {isVisible && (
-                <View>
-                  <FlatList
-                    data={categories}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity onPress={() => selectCategory(item)}>
-                        <Text>{item.name}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              )}
-
+                  {categories &&
+                    categories.map((item) => (
+                      <Select.Item
+                        label={item.name}
+                        value={item.id}
+                        key={item.id}
+                      />
+                    ))}
+                </Select>
+              </Box>
               <Box
                 mt={1}
-                mb={5}
+                mb={2}
                 style={{ backgroundColor: "#F7FAFC", height: 150 }}
               >
                 {previewImage && (

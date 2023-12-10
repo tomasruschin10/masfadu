@@ -17,9 +17,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/34582600-811f-4183-b0a0-861c46c64826"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "dev.millionsolutions.faduapp",
       "supportsTablet": true,
@@ -45,6 +43,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/crashlytics",
       [
         "expo-build-properties",
         {
