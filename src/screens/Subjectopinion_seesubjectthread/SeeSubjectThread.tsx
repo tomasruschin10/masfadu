@@ -252,7 +252,7 @@ function SeeSubjectThread({ route, navigation }) {
       <HeaderBack title="Opiniones de materias"/>
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <Box>
+        {/* <Box>
           <SeeSubjectThread_Top
             fadeAnim={fadeAnim}
             title={title}
@@ -267,9 +267,9 @@ function SeeSubjectThread({ route, navigation }) {
             firstLetter={firstLetter}
             rating={rating}
           />
-        </Box>
+        </Box> */}
 
-        <Box mx={1} mt={4}>
+        <Box mx={1}>
           {allTags.length > 0 && (
             <>
               {changeFilt && searchText.length > 0 && (
