@@ -105,7 +105,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         // mb={4}
         mx={5}
       >
-        <HStack p={4} justifyContent="space-between">
+        <HStack p={4} pb={1} justifyContent="space-between">
           <Box flex={1}>
             <Text
               style={[
@@ -120,51 +120,13 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               color={"#171717"}
               fontSize={moderateScale(26)}
               mt={2}
+              py={3}
             >
               {`${subjCategory.on}/${subjCategory.total}`}
               {/* {`${subjCategory.on}/${subjCategory.total}`} */}
             </Text>
-            <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
-              <LinearGradient
-                start={{ x: -1, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                style={{
-                  height: "100%",
-                  width: `${
-                    subjCategory.total !== 0
-                      ? (100 / subjCategory.total) * subjCategory.on
-                      : (100 / 1) * subjCategory.on
-                  }%`,
-                  borderRadius: 10,
-                }}
-              />
-            </Box>
           </Box>
           <Box ml={4}>
-            <Text
-              style={[
-                fontStyles.poppins600,
-                { color: "#9f9f9f", fontSize: moderateScale(15) },
-              ]}
-            >
-              Promedio
-            </Text>
-            <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
-              {FontsLoaded ? (
-                <Text
-                  style={[
-                    fontStyles.poppins600,
-                    { color: "#646464", fontSize: moderateScale(21) },
-                  ]}
-                  textAlign={"center"}
-                  mt={2}
-                  py={3}
-                >
-                  {usePercentage(subjCategory.total, subjCategory.on)}
-                </Text>
-              ) : null}
-            </Box>
             <Box ml={4}>
               <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(14)}]}>
                 Promedio
@@ -198,22 +160,24 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 }
             </Box>
           </Box>
-          </HStack>        
-          <Box mt={1.5} bg={"#EBEEF2"} rounded={"full"} height={2}>
-            <LinearGradient
-              start={{ x: -1, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                style={{
-                height: "100%",
-                width: `${subjCategory.total !== 0
-                    ? (100 / subjCategory.total) * subjCategory.on
-                    : (100 / 1) * subjCategory.on
-                  }%`,
-                borderRadius: 8,
-              }}
-            />
-          </Box>
+          </HStack>  
+          <Box mb={2} px={2}>
+            <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
+              <LinearGradient
+                start={{ x: -1, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
+                  style={{
+                  height: "100%",
+                  width: `${subjCategory.total !== 0
+                      ? (100 / subjCategory.total) * subjCategory.on
+                      : (100 / 1) * subjCategory.on
+                    }%`,
+                  borderRadius: 8,
+                }}
+              />
+            </Box>
+          </Box>      
         </Box>
 
       <Box px={4}>

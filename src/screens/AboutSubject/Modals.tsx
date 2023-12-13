@@ -829,7 +829,9 @@ export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setO
         backgroundColor={'white'}
         paddingTop={5}
       >
-        <ExclamationComponent />
+        <Center>
+          <ExclamationComponent />
+        </Center>
         <Modal.Body alignItems={"center"}>
           <FormControl>
             <Text fontSize={14} textAlign={"center"}>
