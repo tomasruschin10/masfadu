@@ -51,6 +51,7 @@ function HomeScreen({ route, navigation }) {
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
   const [offer, setOffer] = useState([]);
+  const [allOffers, setAllOffers] = useState([]);
   const [offertTitle, setOffertTitle] = useState("El Mercado de Fadu");
   const [courses, setCourses] = useState([]);
   const [career, setCareer] = useState([]);
@@ -87,6 +88,12 @@ function HomeScreen({ route, navigation }) {
     getServices("offer/all")
       .then(({ data }: any) => {
         setOffer(data);
+      })
+      .catch(handleError);
+
+      getServices("offer/all/work")
+      .then(({ data }: any) => {
+        setAllOffers(data);
       })
       .catch(handleError);
 
@@ -203,6 +210,69 @@ function HomeScreen({ route, navigation }) {
       </TouchableOpacity>);
   };
 
+  const renderOffer = ({ item }) => {
+    const { title, description, url, image, partner, time, hours, id, name, phone, company  } = item;
+    return (
+      <TouchableOpacity
+        // onPress={() => navigation.navigate("MarketDetail", item)}
+        onPress={() => navigation.navigate(
+          "Anoffer", { mainTitle: "Ofertas Laborales", image: image.url, title: title, buttonValue: "Ver más", url: url, description: description, time: time, hours: hours, method: "", subject_id: 0, id: id, partner: partner, name, phone, company })}
+        style={{
+          width: cardWidth,
+          marginRight: 5,
+          marginLeft: 10,
+          marginTop: 10,
+          height: cardHeight,
+          minHeight: cardHeight,
+          maxHeight: cardHeight,
+        }}
+      >
+        <Box
+          shadow={"0"}
+          bgColor={"white"}
+          borderRadius={15}
+          maxWidth={cardWidth}
+          height={cardHeight}
+          mb={5}
+        >
+          <Box borderRadius={15} overflow="hidden"
+          >
+            <Image
+              alt={"logo"}
+              style={{
+                width: cardWidth
+              }}
+              resizeMethod="scale"
+              h={125}
+              resizeMode="cover"
+              source={{ uri: image.url }}
+            />
+            <Box pt={1} px={2} pb={3}>
+              <Text
+                style={[fontStyles.poppins400, { fontSize: 16, marginTop: 8 }]}
+                fontWeight={700}
+                fontFamily="Manrope"
+                numberOfLines={2}
+              >
+                {title}
+              </Text>
+
+              <Text
+                fontWeight={700}
+                fontFamily="Manrope"
+                style={[fontStyles.poppins400, { fontSize: 12, marginBottom: 4, color: "#bcbecc" }]}
+                numberOfLines={1}
+                mt={1}
+              >
+                {partner?.name}
+              </Text>
+
+            </Box>
+          </Box>
+        </Box>
+      </TouchableOpacity>
+    );
+  };
 
   const renderShop = ({ item }) => {
     const { title, description, url, image, partner } = item;
@@ -555,6 +625,33 @@ function HomeScreen({ route, navigation }) {
               _text={{ fontSize: 15 }}
             >
               No Hay Cursos o Workshops
+            </Box>
+          )}
+
+          <TitleSliders
+            navigateTo={'Ofertas Laborales'}
+            isSubsection={true}
+            title={"Ofertas Laborales"}
+            to={null}
+            navigation={navigation}
+          /> 
+          {allOffers.length > 0 ? (
+            <FlatList
+              keyExtractor={(item) => item?.id}
+              contentContainerStyle={{ justifyContent: "space-between" }}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={allOffers.slice(0, 3)}
+              renderItem={renderOffer}
+            />
+          ) : (
+            <Box
+              alignItems={"center"}
+              justifyContent={"center"}
+              h={"100"}
+              _text={{ fontSize: 15 }}
+            >
+              No Hay ofertas disponibles
             </Box>
           )}
 

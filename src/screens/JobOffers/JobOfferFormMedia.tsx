@@ -54,7 +54,7 @@ function OfferFormMedia({ route, navigation }) {
         setTimeout(() => {
             setSuccessModalOpen(false);
             setErrorModalOpen(false);
-        }, inmediate ? 0 : 30000);
+        }, 3000);
     }
 
     const uploadImage = async () => {
@@ -91,8 +91,8 @@ function OfferFormMedia({ route, navigation }) {
                 throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
             }
 
-            setSuccessModalOpen(true);
             setLoading(false);
+            setSuccessModalOpen(true);
 
             cleanModals();
             navigation.navigate('Home');

@@ -70,8 +70,8 @@ function OfferForm({ route, navigation }) {
         throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
       }
 
-      setSuccessModalOpen(true);
       setLoading(false);
+      setSuccessModalOpen(true);
 
       cleanModals();
       navigation.navigate('Home');

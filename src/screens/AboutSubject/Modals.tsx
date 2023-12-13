@@ -582,10 +582,27 @@ export function ModalWarning({
                 callBack={hideModal} />
   
             ) : (
-              <>
+              <VStack space={2} w='full' px={6}>
                 <Button
                   px={5}
-                  bg={"#2972FE"}
+                  w="100%"
+                  variant={"outline"}
+                  isLoading={loading}
+                  _text={{ fontSize: 10.65 }}
+                  onPress={() => hideModal()}
+                  borderRadius={8}
+                  py={4}
+                  px={6}
+                >
+                  No
+                </Button>
+                <Button
+                  borderRadius={8}
+                  py={4}
+                  px={6}
+                  w="100%"
+                  bg={"#DA673A"}
+                  color="white"
                   isLoading={loading}
                   _text={{ fontSize: 10.65 }}
                   onPress={() =>
@@ -604,16 +621,7 @@ export function ModalWarning({
                 >
                   Si
                 </Button>
-                <Button
-                  px={5}
-                  variant={"link"}
-                  isLoading={loading}
-                  _text={{ fontSize: 10.65 }}
-                  onPress={() => hideModal()}
-                >
-                  No
-                </Button>
-              </>
+              </VStack>
             )}
           </Button.Group>
         </Modal.Body>

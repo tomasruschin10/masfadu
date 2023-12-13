@@ -106,8 +106,8 @@ function OfferForm({ route, navigation }) {
       }
       console.log("RESPONSE", response.body);
 
-      setSuccessModalOpen(true);
       setLoading(false);
+      setSuccessModalOpen(true);
 
       cleanModals();
       navigation.navigate("Home");

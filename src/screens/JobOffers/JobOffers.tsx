@@ -33,6 +33,7 @@ function JobOffers({ route, navigation, mainTitle }) {
     setLoading(true);
     getServices("offer/all/work")
       .then(({ data }: any) => {
+        console.log(data)
         setAllOffers(data);
       })
       .catch((error) => {
