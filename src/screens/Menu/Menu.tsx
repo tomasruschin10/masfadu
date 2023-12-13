@@ -28,12 +28,12 @@ const carriers = [
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
-  {
-    title: "Recursos y herramientas",
-    icon: require("../../../assets/menu/recursos.png"),
-    iconType: "Entypo",
-    comingSoon: false,
-  },
+  // {
+  //   title: "Recursos y herramientas",
+  //   icon: require("../../../assets/menu/recursos.png"),
+  //   iconType: "Entypo",
+  //   comingSoon: false,
+  // },
   {
     title: "Ofertas Laborales",
     icon: require("../../../assets/menu/ofertas.png"),
@@ -70,7 +70,7 @@ function Menu({ route, navigation, setMenu }) {
     <Box style={{ width: "100%", height: "100%", zIndex: 101, position: "absolute" }} flex={1} mt={0} pt={0} backgroundColor="transparent">
       <View style={styles.container}>
         <View style={styles.rightColumn}>
-          <Box marginLeft={horizontalScale(5)} marginBottom={horizontalScale(10)}>
+          <TouchableOpacity onPress={() => navigation.navigate("Subsections", { title: "Cuenta" })} marginLeft={horizontalScale(5)} marginBottom={horizontalScale(10)}>
             <HeaderPerfil
               showICon={false}
               statusBarColor="#e8eef3"
@@ -78,7 +78,7 @@ function Menu({ route, navigation, setMenu }) {
               navigation={navigation}
             />
 
-          </Box>
+          </TouchableOpacity>
           {carriers?.length ? carriers.map(item => {
             return (
               <Box justifyContent={"center"} my={verticalScale(7)} alignContent={"center"}>

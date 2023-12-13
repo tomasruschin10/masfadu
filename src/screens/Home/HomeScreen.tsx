@@ -337,19 +337,20 @@ function HomeScreen({ route, navigation }) {
       {menuShow ? (
         <Menu navigation={navigation} route={route} setMenu={setMenu} />
       ) : null}
-
-      <HeaderPerfil
-        showICon={true}
-        statusBarColor="#e8eef4"
-        barStyle="dark-content"
-        navigation={navigation}
-        style={{ marginTop: 10 }}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("Config")}>
+        <HeaderPerfil
+          showICon={true}
+          statusBarColor="#e8eef4"
+          barStyle="dark-content"
+          navigation={navigation}
+          style={{ marginTop: 10 }}
+        />
+      </TouchableOpacity>
       <ScrollView
         backgroundColor={"#e8eef3"}
         showsVerticalScrollIndicator={false}
       >
-        <Box>
+        {/* <Box>
           {textNews.length > 0 ? (
             <Carousel
               autoplay={true}
@@ -379,7 +380,7 @@ function HomeScreen({ route, navigation }) {
               </Text>
             </Box>
           )}
-        </Box>
+        </Box> */}
 
         <Box>
           {advertisement.length > 0 ? (
@@ -557,14 +558,14 @@ function HomeScreen({ route, navigation }) {
             </Box>
           )}
 
-          <TitleSliders
+          {/* <TitleSliders
             navigateTo={'Recursos y herramientas'}
             isSubsection={true}
             title={"Recursos y herramientas"}
             to={null}
             navigation={navigation}
-          />
-          {courses.length > 0 ? (
+          /> */}
+          {/* {courses.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
               contentContainerStyle={{ justifyContent: "space-between" }}
@@ -582,7 +583,7 @@ function HomeScreen({ route, navigation }) {
             >
               No Hay Carreras disponibles
             </Box>
-          )}
+          )} */}
         </View>
       </ScrollView>
       <BottomTab setMenu={setMenu} navigation={navigation} route={route} />

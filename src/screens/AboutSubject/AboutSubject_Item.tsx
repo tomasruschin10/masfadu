@@ -104,7 +104,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         // mb={4}
         mx={5}
       >
-        <HStack p={4} justifyContent="space-between">
+        <HStack p={4} pb={1} justifyContent="space-between">
           <Box flex={1}>
             <Text
               style={[
@@ -119,54 +119,66 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               color={"#171717"}
               fontSize={moderateScale(26)}
               mt={2}
+              py={3}
             >
               {`${subjCategory.on}/${subjCategory.total}`}
               {/* {`${subjCategory.on}/${subjCategory.total}`} */}
             </Text>
+          </Box>
+          <Box ml={4}>
+            <Box ml={4}>
+              <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(14)}]}>
+                Promedio
+              </Text>
+                {
+                  FontsLoaded 
+                ? 
+                <Box 
+                bg={"#F2F2F2"} 
+                rounded={"8"} 
+                mt={2} 
+                display={"flex"}
+                alignItems={"center"}
+                >
+                  <Text 
+                  style={[fontStyles.poppins600, 
+                    {
+                      color: "#646464", 
+                      fontSize: 25
+                    }
+                  ]}
+                  textAlign={"center"}
+                  mt={3}
+                  py={3}
+                  >
+                    {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
+                  </Text> 
+                </Box>
+                : 
+                null
+                }
+            </Box>
+          </Box>
+          </HStack>  
+          <Box px={2} pb={2}>
             <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
               <LinearGradient
                 start={{ x: -1, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                style={{
+                  style={{
                   height: "100%",
-                  width: `${
-                    subjCategory.total !== 0
+                  width: `${subjCategory.total !== 0
                       ? (100 / subjCategory.total) * subjCategory.on
                       : (100 / 1) * subjCategory.on
-                  }%`,
-                  borderRadius: 10,
+                    }%`,
+                  borderRadius: 8,
                 }}
               />
             </Box>
-          </Box>
-          <Box ml={4}>
-            <Text
-              style={[
-                fontStyles.poppins600,
-                { color: "#9f9f9f", fontSize: moderateScale(15) },
-              ]}
-            >
-              Promedio
-            </Text>
-            <Box bg={"#F2F2F2"} rounded={"xl"} mt={2}>
-              {FontsLoaded ? (
-                <Text
-                  style={[
-                    fontStyles.poppins600,
-                    { color: "#646464", fontSize: moderateScale(21) },
-                  ]}
-                  textAlign={"center"}
-                  mt={2}
-                  py={3}
-                >
-                  {usePercentage(subjCategory.total, subjCategory.on)}
-                </Text>
-              ) : null}
-            </Box>
-          </Box>
-        </HStack>
-      </Box>
+          </Box>      
+        </Box>
+
       <Box px={4}>
         {subjCategory.data.map((item, index) => (
           <SimpleAccordion
