@@ -66,13 +66,13 @@ import { initializeApp } from "firebase/app";
 SplashScreen.preventAutoHideAsync();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBDEIpAX7mXUJDm1Xx2zW0ll58A0CgUDZE",
-  authDomain: "fadu-1c40d.firebaseapp.com",
-  projectId: "fadu-1c40d",
-  storageBucket: "fadu-1c40d.appspot.com",
-  messagingSenderId: "58870024888",
-  appId: "1:58870024888:web:cc03f8f4313765ec08424d",
-  measurementId: "G-1TSRDZQXF6",
+  apiKey: "AIzaSyDVXoVRviTdtElSiS7c0O_vSjuxgbsM_aM",
+  authDomain: "muy-fadu.firebaseapp.com",
+  projectId: "muy-fadu",
+  storageBucket: "muy-fadu.appspot.com",
+  messagingSenderId: "306204851546",
+  appId: "1:306204851546:web:c96a2f48279e16a3408763",
+  measurementId: "G-0K1LQY8PR1"
 };
 
 initializeApp(firebaseConfig);

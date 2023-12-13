@@ -64,13 +64,12 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   }
 
   const usePercentage = (total, current) => {
-    console.log(total, current)
     let percentage;
     if (total > 0) {
       percentage = (current / total) * 100;
       percentage = (percentage / 10).toFixed(1);
     } else {
-      percentage = 0; 
+      percentage = 0;
     }
     return percentage;
   };
@@ -161,7 +160,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             </Box>
           </Box>
           </HStack>  
-          <Box mb={2} px={2}>
+          <Box px={2} pb={2}>
             <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
               <LinearGradient
                 start={{ x: -1, y: 0 }}
