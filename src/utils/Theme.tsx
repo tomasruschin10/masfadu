@@ -66,6 +66,7 @@ export const Theme = {
 			variants: {
 				solid: {
 					rounded: "md",
+                    backgroundColor: "red,"
 				},
 			},
 

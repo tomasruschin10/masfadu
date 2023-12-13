@@ -582,12 +582,16 @@ export function ModalWarning({
                 callBack={hideModal} />
   
             ) : (
-              <>
+              <VStack space={3} w='full' px={6} mt={6}>
                 <Button
-                  px={5}
-                  bg={"#2972FE"}
+                  borderRadius={8}
+                  py={4}
+                  px={6}
+                  w="100%"
                   isLoading={loading}
-                  _text={{ fontSize: 10.65 }}
+                  bg={"#DA673A"}
+                  _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+                  _text={{ fontSize: 14, fontWeight: '600' }}
                   onPress={() =>
                     createNote(
                       currentSubj?.id,
@@ -606,14 +610,19 @@ export function ModalWarning({
                 </Button>
                 <Button
                   px={5}
-                  variant={"link"}
+                  w="100%"
+                  variant={"outline"}
+                  colorScheme="gray"
                   isLoading={loading}
-                  _text={{ fontSize: 10.65 }}
+                  _text={{ fontSize: 14, fontWeight: '600' }}
                   onPress={() => hideModal()}
+                  borderRadius={8}
+                  py={4}
+                  fontWeight='bold'
                 >
                   No
                 </Button>
-              </>
+              </VStack>
             )}
           </Button.Group>
         </Modal.Body>

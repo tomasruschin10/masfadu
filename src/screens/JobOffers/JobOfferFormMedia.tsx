@@ -54,8 +54,13 @@ function OfferFormMedia({ route, navigation }) {
         setTimeout(() => {
             setSuccessModalOpen(false);
             setErrorModalOpen(false);
-        }, inmediate ? 0 : 30000);
+        }, 30000);
     }
+
+    const cleanSuccessModal = () => {
+        setSuccessModalOpen(false);
+        navigation.navigate("Home");
+      };
 
     const uploadImage = async () => {
         try {
@@ -91,10 +96,11 @@ function OfferFormMedia({ route, navigation }) {
                 throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
             }
 
-            setSuccessModalOpen(true);
             setLoading(false);
-
-            cleanModals();
+            setSuccessModalOpen(true);
+            setTimeout(() => {
+                cleanSuccessModal()
+            }, 3000);
             navigation.navigate('Home');
         } catch (error) {
             console.log('Error al enviar la imagen al backend:', error);
@@ -190,13 +196,13 @@ function OfferFormMedia({ route, navigation }) {
                         </Box>
                         <Box alignItems="center">
                             <Button
-                                style={{ backgroundColor: "#EB5E29" }}
+                                _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+                                _text={{ fontSize: 14, fontWeight: '600' }}
                                 isLoading={loading}
                                 onPress={() => uploadImage()}
                                 w="90%"
                                 py={5}
-                                backgroundColor="blue.500"
-                                rounded={"2xl"}
+                                rounded={8}
                             >
                                 Enviar
                             </Button>
@@ -204,7 +210,7 @@ function OfferFormMedia({ route, navigation }) {
                     </Box>
                 </ScrollView>
                 <ErrorModal message={customErrorMessage || "Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-                <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+                <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={cleanSuccessModal} />
             </Layout>
         </Container>
     );

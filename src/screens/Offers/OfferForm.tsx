@@ -86,6 +86,11 @@ function OfferForm({ route, navigation }) {
       setErrorModalOpen(false);
     }, 30000);
   };
+ 
+  const cleanSuccessModal = () => {
+    setSuccessModalOpen(false);
+    navigation.navigate("Home");
+  };
 
   const uploadImage = async () => {
     try {
@@ -106,11 +111,12 @@ function OfferForm({ route, navigation }) {
       }
       console.log("RESPONSE", response.body);
 
-      setSuccessModalOpen(true);
       setLoading(false);
+      setSuccessModalOpen(true);
+      setTimeout(() => {
+        cleanSuccessModal()
+      }, 3000);
 
-      cleanModals();
-      navigation.navigate("Home");
     } catch (error) {
       console.log("Error al enviar la imagen al backend:", error);
       setErrorModalOpen(true);
@@ -291,12 +297,13 @@ function OfferForm({ route, navigation }) {
 
             <Box mt={-20} alignItems="center">
               <Button
-                style={{ backgroundColor: "#EB5E29" }}
+                _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+                _text={{ fontSize: 14, fontWeight: '600' }}                
+                bg={"#DA673A"}
                 isLoading={loading}
                 onPress={() => uploadImage()}
                 w="90%"
                 py={5}
-                backgroundColor="blue.500"
                 rounded={8}
               >
                 Enviar
@@ -314,7 +321,7 @@ function OfferForm({ route, navigation }) {
             "Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"
           }
           isOpen={successModalOpen}
-          setOpen={setSuccessModalOpen}
+          setOpen={cleanSuccessModal}
         />
       </Layout>
     </Container>
