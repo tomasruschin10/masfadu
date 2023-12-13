@@ -360,13 +360,17 @@ function CreateNewThread({ route, navigation }) {
 
           <Box alignItems="center" mb={"32"}>
             <Button
+              _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+              _text={{ fontSize: 14, fontWeight: '600' }}
+              bg={"#DA673A"}
+              borderRadius={8}
+              py={5}
+              px={6}
               isDisabled={form.title && form.description ? false : true}
               isLoading={loading}
               onPress={() => setShowModal(true)}
               w="90%"
-              py={5}
-              backgroundColor="blue.500"
-              rounded={"2xl"}
+              rounded={8}
             >
               Publicar
             </Button>
@@ -394,17 +398,18 @@ function CreateNewThread({ route, navigation }) {
                     ¿Deseas publicar?
                   </Text>
                 </FormControl>
-                <FormControl mb={8}>
+                <FormControl mb={6}>
                   <Text fontSize={15} textAlign={"center"}>
                     Genial! Vas a publicar un hilo nuevo!
                   </Text>
                 </FormControl>
 
-                <Button.Group space={2} direction='column' textAlign="center" w="full" px={6}>
+                <Button.Group space={3} direction='column' textAlign="center" w="full" px={6}>
                   <Button
                     isLoading={loading}
-                    _text={{ fontSize: 10.65 }}
+                    _text={{ fontSize: 14, fontWeight: '600' }}
                     variant="outline"
+                    colorScheme="gray"
                     onPress={() => {
                       setShowModal(false);
                     }}
@@ -416,7 +421,8 @@ function CreateNewThread({ route, navigation }) {
                   </Button>
                   <Button
                     isLoading={loading}
-                    _text={{ fontSize: 10.65, textAlign: 'center' }}
+                    _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+                    _text={{ fontSize: 14, fontWeight: '600' }}
                     bg={"#DA673A"}
                     onPress={sendForm}
                     borderRadius={8}
@@ -456,9 +462,12 @@ function CreateNewThread({ route, navigation }) {
                   </Text>
                 </FormControl>
 
-                <Button.Group space={2}>
+                <Button.Group space={2} w="full" px={6}>
                   <Button
-                    _text={{ fontSize: 10.65 }}
+                    w='full'
+                    py={4}
+                    _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+                    _text={{ fontSize: 14, fontWeight: '600' }}
                     bg={"#DA673A"}
                     onPress={() => {
                       setShowModalError(false);
