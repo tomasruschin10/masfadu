@@ -51,6 +51,11 @@ function OfferForm({ route, navigation }) {
       setErrorModalOpen(false);
     }, 30000);
   }
+  
+  const cleanSuccessModal = () => {
+    setSuccessModalOpen(false);    
+    navigation.navigate('Home');
+  }
 
   const uploadImage = async () => {
     try {
@@ -71,10 +76,10 @@ function OfferForm({ route, navigation }) {
       }
 
       setLoading(false);
-      setSuccessModalOpen(true);
-
-      cleanModals();
-      navigation.navigate('Home');
+      setSuccessModalOpen(true);      
+      setTimeout(() => {
+        cleanSuccessModal()
+      }, 30000);
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', error);
       setErrorModalOpen(true);
@@ -194,7 +199,7 @@ function OfferForm({ route, navigation }) {
           </Box>
         </ScrollView>
         <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={cleanSuccessModal} />
       </Layout>
     </Container>
   );

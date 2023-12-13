@@ -120,8 +120,13 @@ function ResourceForm({ route, navigation }) {
       setErrorModalOpen(false);
     }, 30000);
   }
-
-
+  
+  const cleanSuccessModal = () => {
+    setSuccessModalOpen(false);
+    navigation.navigate('Home');
+  }
+  
+  
   const categorysEmpty = [{
     label: "No existen partners",
     value: "1"
@@ -130,7 +135,7 @@ function ResourceForm({ route, navigation }) {
   const uploadImage = async () => {
     try {
       setLoading(true);
-
+      
       const response = await publishDoc({
         subject_id: selectedSubjectId,
         resource_category_id: selectedCategoryId,
@@ -142,12 +147,12 @@ function ResourceForm({ route, navigation }) {
         throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
       }
       console.log('RESPONSE', response.body);
-
-      setSuccessModalOpen(true);
+      
       setLoading(false);
-
-      cleanModals();
-      navigation.navigate('Home');
+      setSuccessModalOpen(true);
+      setTimeout(() => {
+        cleanSuccessModal()
+      }, 30000);
     } catch (error) {
       console.log('Error al enviar la imagen al backend:', (error as AxiosError).request);
       setErrorModalOpen(true);
@@ -341,7 +346,7 @@ function ResourceForm({ route, navigation }) {
           </Box>
         </ScrollView>
         <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={setSuccessModalOpen} />
+        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={cleanSuccessModal} />
       </Layout>
     </Container>
   );

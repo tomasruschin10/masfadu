@@ -98,7 +98,6 @@ function OfferFormMedia({ route, navigation }) {
 
             setLoading(false);
             setSuccessModalOpen(true);
-
             setTimeout(() => {
                 cleanSuccessModal()
             }, 3000);
