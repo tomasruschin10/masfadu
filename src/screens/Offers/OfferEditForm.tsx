@@ -60,7 +60,6 @@ function OfferEditForm({ route, navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("holaaa", route.params.data.description);
     getServices("tag/all")
       .then(({ data }: any) => {
         setAllTags(data);
