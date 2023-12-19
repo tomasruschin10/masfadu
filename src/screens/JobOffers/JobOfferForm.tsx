@@ -102,7 +102,9 @@ function OfferForm({ route, navigation }) {
 
             <Box alignItems="center">
               <Button
-                style={{ backgroundColor: "#EB5E29" }}
+                 _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+                 _text={{ fontSize: 14, fontWeight: '600' }}                            
+                 bg={"#DA673A"}
                 isLoading={loading}
                 onPress={() => {
                   if (tituloEmpleo && url && descripcion) {
@@ -115,8 +117,7 @@ function OfferForm({ route, navigation }) {
                 }}
                 w="90%"
                 py={5}
-                backgroundColor="blue.500"
-                rounded={"2xl"}
+                rounded={8}
               >
                 siguiente
               </Button>

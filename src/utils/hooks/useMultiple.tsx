@@ -6,11 +6,11 @@ export const RenderItem = ({ title, id, setIdCopy, idCopy }) => (
   <TouchableHighlight underlayColor='white' onPress={() => setIdCopy(id)}>
     {
       id == idCopy ?
-        <Box borderWidth={1} backgroundColor={'primary.100'} borderColor="primary.100" px="4" py="2" rounded={'full'} mx='1.5'>
+        <Box borderWidth={1} backgroundColor={'brand.primary'} borderColor="brand.primary" px="4" py="2" rounded={'full'} mx='1.5'>
           <Text color={'white'}>{title}</Text>
         </Box> :
-        <Box borderWidth={1} backgroundColor={'white'} borderColor="primary.100" px="4" py="2" rounded={'full'} mx='1.5'>
-          <Text color={'primary.100'}>{title}</Text>
+        <Box borderWidth={1} backgroundColor={'white'} borderColor="brand.primary" px="4" py="2" rounded={'full'} mx='1.5'>
+          <Text color={'brand.primary'}>{title}</Text>
         </Box>
     }
   </TouchableHighlight>
@@ -47,7 +47,7 @@ export const RenderOffer = ({ firstLetter, redirect_to, title, text, time, hours
           </Box>
         </Box>
         <Box mr='4' alignItems={'flex-end'} justifyContent='center'>
-          {/* <Text fontSize={15.86} color='primary.100' fontWeight="600">{rating}</Text> */}
+          {/* <Text fontSize={15.86} color='brand.primary' fontWeight="600">{rating}</Text> */}
         </Box>
       </Box>
     </TouchableHighlight>

@@ -87,7 +87,7 @@ function AboutSubject_Logic({
             //   !available
             //     ? "#C4C4C4"
             //     : !userSubject || userSubject?.score < 4
-            //     ? "primary.100"
+            //     ? "brand.primary"
             //     : "light.100"
             // }
             color={'#171717'}

@@ -177,7 +177,7 @@ function JobOffers({ route, navigation, mainTitle }) {
             <Button display={"none"} />
           ) : (
             <HStack mt={2} space={2} justifyContent="center">
-              <Spinner accessibilityLabel="Loading posts" />
+              <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
               <Heading color="brand.primary" fontSize="md">
                 Cargando
               </Heading>
@@ -189,7 +189,7 @@ function JobOffers({ route, navigation, mainTitle }) {
               mx={8}
               mt={4}
               fontWeight={"bold"}
-              color={"primary.100"}
+              color={"brand.primary"}
               fontSize={20}
             >
               No hay Ofertas

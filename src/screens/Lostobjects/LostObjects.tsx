@@ -39,7 +39,7 @@ function LostObjects({route, navigation}) {
           <Button display={'none'} /> :
           <HStack space={2} justifyContent="center">
 
-            <Spinner accessibilityLabel="Loading posts" />
+            <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
             <Heading color="brand.primary" fontSize="md">Cargando</Heading>
           </HStack>
         }
@@ -59,7 +59,7 @@ function LostObjects({route, navigation}) {
           }
           </Box>
           
-          { objects.length === 0 && loading === false && <Text mx={8} mt={4} fontWeight={'bold'} color={'primary.100'} fontSize={20}>No hay objetos perdidos</Text> }
+          { objects.length === 0 && loading === false && <Text mx={8} mt={4} fontWeight={'bold'} color={'brand.primary'} fontSize={20}>No hay objetos perdidos</Text> }
             
         </Box>
       </ScrollView>

@@ -156,7 +156,7 @@ function ChangeCareer({ route, navigation }) {
           <TouchableOpacity onPress={() => sendForm()}>
             <Box
               flexDir={"row"}
-              bg="blue.500"
+              bg="brand.primary"
               alignItems={"center"}
               borderRadius="2xl"
               p="2"

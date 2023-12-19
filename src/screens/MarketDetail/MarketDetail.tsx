@@ -1,6 +1,6 @@
 import { View, Linking, Dimensions, Platform } from "react-native";
 import { HStack, Icon, IconButton, ScrollView, Text } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -8,7 +8,8 @@ import ButtonMas from "../../components/ButtonMas";
 import { Box, Image } from "native-base";
 import { TouchableOpacity } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome  } from "@expo/vector-icons";
+import { ImageModal } from "../AboutSubject/Modals";
 
 type RootStackParamList = {
   MarketDetail: { data: any };
@@ -19,6 +20,8 @@ type MarketDetailRouteProp = RouteProp<RootStackParamList, "MarketDetail">;
 const MarketDetail = ({ navigation }) => {
   //   console.log("route.params ", route.params);
   const { canGoBack, goBack, navigate } = useNavigation();
+  const [showImage, setShowImage] = useState(null)
+  const [openModal, setOpeModal] = useState<boolean>(false)
   //   const route = useRoute();
   const route = useRoute<MarketDetailRouteProp>();
   const data = route.params?.data ? route.params.data : route.params;
@@ -28,25 +31,44 @@ const MarketDetail = ({ navigation }) => {
     JSON.stringify(data, null, 2)
   );
 
+  const handleShowImage = (image) => {
+    setShowImage(image)
+    setOpeModal(true)
+  }
+
+  const hideModal = () => {
+    setOpeModal(false)
+    setShowImage(null)
+  }
+
   return (
     <Container>
+      <ImageModal image={showImage} showImage={openModal} hideModal={hideModal} />
       <Layout route={route} navigation={navigation} title={"Detalle"}>
         <ScrollView>
           <Box mx="3" mt="3">
             <View>
-              <Image
-                style={{
-                  height: 140,
-                  width: "100%",
-                  // marginLeft: "25%",
-                  borderRadius: 8,
-                  marginBottom: "10%"
-                }}
-                alt="LOGO"
-                source={{
-                  uri: data?.image?.url,
-                }}
-              />
+              <TouchableOpacity onPress={() => handleShowImage(data?.image?.url)}>
+                {
+                  !openModal &&
+                  <Box position="absolute" zIndex={99} right={2} top={2}>
+                    <FontAwesome name="expand" size={24} color="#DA673A" />
+                  </Box>
+                }
+                <Image
+                  style={{
+                    height: 140,
+                    width: "100%",
+                    // marginLeft: "25%",
+                    borderRadius: 8,
+                    marginBottom: "10%"
+                  }}
+                  alt="LOGO"
+                  source={{
+                    uri: data?.image?.url,
+                  }}
+                />
+              </TouchableOpacity>
               <Box
                 flexDir="row"
                 justifyContent="space-around"
@@ -76,7 +98,7 @@ const MarketDetail = ({ navigation }) => {
                       as={Ionicons}
                       name="share-social"
                       size="md"
-                      color="primary.1000"
+                      color="brand.primary0"
                     />
                   }
                 />

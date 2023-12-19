@@ -57,7 +57,7 @@ function AboutSubject({ route, navigation, value }) {
         <ScrollView backgroundColor={"#e8eef3"} >
           {!loading ? null : (
             <HStack space={2} justifyContent="center">
-              <Spinner accessibilityLabel="Loading posts" />
+              <Spinner accessibilityLabel="Loading posts" color="brand.primary" />
               <Heading color="brand.primary" fontSize="md">
                 Cargando
               </Heading>
@@ -74,7 +74,7 @@ function AboutSubject({ route, navigation, value }) {
               />
             </>
           ) : !subjCategory.data.length && loading === false ? (
-            <Text mx={8} fontWeight={"bold"} color={"primary.100"} fontSize={20}>
+            <Text mx={8} fontWeight={"bold"} color={"brand.primary"} fontSize={20}>
               No Hay materias para mostrar
             </Text>
           ) : null}
