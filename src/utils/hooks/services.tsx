@@ -106,14 +106,13 @@ export const publishOffer = async ({
   offer_category_id,
   image,
   partner_id,
-  company,
   url,
 }: Offer) => {
   const state: any = store.getState();
   const authToken = state.token;
 
   const {
-    userdata: { career_id },
+    userdata: { career_id, id },
   } = state.user;
 
   const parameters: any = {
@@ -124,6 +123,7 @@ export const publishOffer = async ({
     name,
     phone,
     email,
+    userId: id,
     image,
   };
 
@@ -166,6 +166,65 @@ export const publishOffer = async ({
   console.log("PARAMETERS <>", parameters);
 
   return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
+};
+
+export const updateOffer = async ({
+  name,
+  email,
+  phone,
+  title,
+  description,
+  offer_category_id,
+  image,
+  partner_id,
+  url,
+  id,
+}: Offer) => {
+  const state: any = store.getState();
+  const authToken = state.token;
+
+  const {
+    userdata: { career_id },
+  } = state.user;
+
+  const parameters: any = {
+    title,
+    description,
+    career_id,
+    offer_category_id,
+    name,
+    phone,
+    email,
+    partner_id,
+    url,
+    image,
+  };
+
+  const uploadUrl = baseApi.defaults.baseURL + `/offer/update/${id}`;
+  const options: FileSystem.FileSystemUploadOptions = {
+    httpMethod: "PUT",
+    uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+    fieldName: "image",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+    parameters,
+  };
+
+  console.log("PARAMETERS <>", parameters);
+
+  if (image && image.uri) {
+    return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
+  } else {
+    return await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(parameters),
+    });
+  }
 };
 
 export const publishDoc = async ({
