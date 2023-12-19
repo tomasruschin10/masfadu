@@ -31,6 +31,7 @@ function OfferForm({ route, navigation }) {
   const [url, setUrlEmpleo] = useState("");
   const [tituloEmpleo, setTituloEmpleo] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const selectImage = async () => {
     try {
@@ -81,7 +82,8 @@ function OfferForm({ route, navigation }) {
         cleanSuccessModal()
       }, 30000);
     } catch (error) {
-      console.log('Error al enviar la imagen al backend:', error);
+      setErrorMessage("Error al publicar")
+      console.log('Error al enviar la imagen al backend:', error.message);
       setErrorModalOpen(true);
       setLoading(false);
 
@@ -179,7 +181,9 @@ function OfferForm({ route, navigation }) {
 
               <Box mt={1} mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
                 {previewImage && <Image source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Agregar logo o imagen</Button>
+                <Box position="absolute" h="100%" w="100%" zIndex={99} display="flex" alignItems="center" justifyContent="center">
+                  <Button fontSize={1}style={{ backgroundColor: "#d3d3d3", borderRadius: 50}} onPress={selectImage}>Agregar logo o imagen</Button>
+                </Box>
               </Box>
             </Box>
 
@@ -190,7 +194,6 @@ function OfferForm({ route, navigation }) {
                 onPress={() => uploadImage()}
                 w="90%"
                 py={5}
-                backgroundColor="blue.500"
                 rounded={"2xl"}
               >
                 Enviar
@@ -198,7 +201,7 @@ function OfferForm({ route, navigation }) {
             </Box>
           </Box>
         </ScrollView>
-        <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
+        <ErrorModal message={errorMessage} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
         <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={cleanSuccessModal} />
       </Layout>
     </Container>

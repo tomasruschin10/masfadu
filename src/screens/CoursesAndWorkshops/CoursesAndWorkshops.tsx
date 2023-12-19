@@ -175,8 +175,8 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
             <Button display={"none"} />
           ) : (
             <HStack mt={2} space={2} justifyContent="center">
-              <Spinner color="primary.100" accessibilityLabel="Loading posts" />
-              <Heading color="primary.100" fontSize="md">
+              <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
+              <Heading color="brand.primary" fontSize="md">
                 Cargando
               </Heading>
             </HStack>
@@ -187,7 +187,7 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
               mx={8}
               mt={4}
               fontWeight={"bold"}
-              color={"primary.100"}
+              color={"brand.primary"}
               fontSize={20}
             >
               No hay Workshops

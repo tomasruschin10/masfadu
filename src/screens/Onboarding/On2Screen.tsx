@@ -99,7 +99,13 @@ function On2Screen({ route, navigation }) {
       </ScrollView>
 
       <Button
+        _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+        _text={{ fontSize: 14, fontWeight: '600' }}                            
+        bg="brand.primary"
+        py={5}
+        rounded={8}
         position={"absolute"}
+        zIndex={99}
         opacity={carrier < 1 ? 0.5 : 1}
         disabled={carrier < 1}
         bottom={5}

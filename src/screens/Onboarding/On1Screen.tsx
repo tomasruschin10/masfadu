@@ -15,9 +15,18 @@ function On1Screen({ route, navigation }) {
 							alt="Logo de Fadu"
 							source={require("../../../assets/logo.png")}
 						/>
-						<Text fontSize={'4xl'} fontWeight={500}>¡Bienvenidx!</Text>
+						<Text fontSize={'4xl'} fontWeight={500}>¡Qué lindo verte!</Text>
 						<Text mb={10} fontSize={'xl'} color={'text.400'}>Elegí tu carrera</Text>
-						<Button onPress={()=>navigation.navigate('Onboarding2')} mb={3} w="90%">
+						<Button 
+						_pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+						_text={{ fontSize: 14, fontWeight: '600' }}                            
+						bg="brand.primary"
+						onPress={()=>navigation.navigate('Onboarding2')} 
+						mb={3} 
+						w="90%"
+						py={5}
+						rounded={8}
+						>
 							¡Empecemos!
 						</Button>
 					</Box>

@@ -34,7 +34,7 @@ export const Theme = {
             800: "#d4d4d4",
         },
 		brand: {
-			primary: "#306EED",
+			primary: "#DA673A",
 			secondary: "#0082CD",
             principal: "#0170F5"
 		},

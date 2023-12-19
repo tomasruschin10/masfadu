@@ -122,6 +122,8 @@ function Message() {
           pl={"2.669%"}
           py={"3%"}
           borderRadius={8}
+          flex={1}
+          flexWrap="wrap"
             // style={{
             //   borderWidth: 1,
             //   borderColor: "#d6e9c6",
@@ -163,7 +165,10 @@ function Message() {
                     {getColors(message.type, "icon")} {" "}
                   </Text>
                   <Text
-                    numberOfLines={1}
+                    // numberOfLines={1}
+                    flex={1}
+                    maxWidth={"85%"}
+                    flexWrap="wrap"
                     color="black"
                     textAlign="left"
                     fontWeight="normal"

@@ -51,7 +51,8 @@ function ReplyToTheThread({route, navigation}) {
        /*  showAlert('success', 'Publicado Correctamente') */
         {canGoBack() && (goBack())}
       } else {
-        dispatch(updateMessage({body: 'Error al publicar', open: true, type: "danger"}))
+        dispatch(updateMessage({body: 'Error al publicar, verifica los datos e intenta de nuevo', open: true, type: "danger"}))
+        // dispatch(updateMessage({body: err.message, open: true, type: "danger"}))
         /* showAlert('error', 'Error al publicar') */
       }
     }).finally(() => setLoading(false))
@@ -87,7 +88,7 @@ function ReplyToTheThread({route, navigation}) {
             </Box>
             
             <Box mb={24} my={8} alignItems="center">
-              <Button isDisabled={form.description ? false : true} isLoading={loading} onPress={postAnswer} w="90%" py={5} backgroundColor="blue.500">Enviar</Button>
+              <Button isDisabled={form.description ? false : true} isLoading={loading} onPress={postAnswer} w="90%" py={5} backgroundColor="brand.primary">Enviar</Button>
             </Box>
           </Box>
         </ScrollView>

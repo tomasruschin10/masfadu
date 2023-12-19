@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import {
   Box,
   Button,
@@ -17,29 +17,52 @@ import Layout from "../../utils/LayoutHeader&BottomTab";
 import { TouchableOpacity } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { horizontalScale, screenWidth, verticalScale } from "../../utils/media.screens";
+import { ImageModal } from "../AboutSubject/Modals";
 
 function Anoffer({ route, navigation }) {
-  const [menuShow, setMenu] = useState(false)
+  const [menuShow, setMenu] = useState(false)  
+  const [showImage, setShowImage] = useState(null)
+  const [openModal, setOpeModal] = useState<boolean>(false)
   const { mainTitle, title, buttonValue, url, partner, description, id, name, phone, company, image } =
     route.params;
 
+    const handleShowImage = (image) => {
+      setShowImage(image)
+      setOpeModal(true)
+    }
+  
+    const hideModal = () => {
+      setOpeModal(false)
+      setShowImage(null)
+    }
+
   return (
-    <Container>
+    <Container>      
+      <ImageModal image={showImage} showImage={openModal} hideModal={hideModal} />
       <Layout route={route} navigation={navigation} title={mainTitle}>
         <ScrollView>
           <Box mx="3" mt="3" mb={"48"}>
-            <Image
-              style={{
-                height: 140,
-                width: "100%",
-                borderRadius: 8,
-                marginBottom: "10%"
-              }}
-              alt="LOGO"
-              source={{
-                uri: image,
-              }}
-            />
+            <TouchableOpacity onPress={() => handleShowImage(image)}>
+              {
+                !openModal &&
+                <Box position="absolute" zIndex={99} right={2} top={2}>
+                  <FontAwesome name="expand" size={24} color="#DA673A" />
+                </Box>
+              }
+              <Image
+                style={{
+                  height: 140,
+                  width: "100%",
+                  // marginLeft: "25%",
+                  borderRadius: 8,
+                  marginBottom: "10%"
+                }}
+                alt="LOGO"
+                source={{
+                  uri: image,
+                }}
+              />
+            </TouchableOpacity>
             <Box
               flexDir="row"
               justifyContent="space-around"
@@ -68,7 +91,7 @@ function Anoffer({ route, navigation }) {
                       as={Ionicons}
                       name="share-social"
                       size="md"
-                      color="primary.1000"
+                      color="brand.primary0"
                     />
                   }
                 />

@@ -60,14 +60,14 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
 
           {filteredSubjects.length === 0 && loading === false &&
             <Box mx={8}>
-              <Text fontWeight={'bold'} color={'primary.100'} fontSize={20}>No hay hilos para mostrar</Text>
+              <Text fontWeight={'bold'} color={'brand.primary'} fontSize={20}>No hay hilos para mostrar</Text>
             </Box>
           }
           {
             !loading ?
               <Button display={'none'} /> :
               <HStack mb={3} space={2} justifyContent="center">
-                <Spinner accessibilityLabel="Loading posts" />
+                <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
                 <Heading color="brand.primary" fontSize="md">Cargando</Heading>
               </HStack>
           }

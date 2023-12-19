@@ -10,7 +10,7 @@ export default function LoaderFull() {
 			justifyContent: 'center',
 		}} flex={1}>
 			<HStack space={2} justifyContent="center">
-			<Spinner accessibilityLabel="Cargando" />
+			<Spinner color="brand.primary" accessibilityLabel="Cargando" />
 			<Heading color="brand.primary" fontSize="md">
 				Cargando...
 			</Heading>

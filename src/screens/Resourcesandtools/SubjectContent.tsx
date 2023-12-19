@@ -99,7 +99,7 @@ function SubjectContent({ route, navigation }) {
           <Button display={"none"} />
         ) : (
           <HStack space={2} justifyContent="center">
-            <Spinner accessibilityLabel="Loading posts" />
+            <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
             <Heading color="brand.primary" fontSize="md">
               Cargando
             </Heading>
@@ -111,7 +111,7 @@ function SubjectContent({ route, navigation }) {
             mx={8}
             mt={4}
             fontWeight={"bold"}
-            color={"primary.100"}
+            color={"brand.primary"}
             fontSize={20}
           >
             No hay nada por aquí

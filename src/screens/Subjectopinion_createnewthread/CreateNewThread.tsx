@@ -69,7 +69,8 @@ function CreateNewThread({ route, navigation }) {
         id: data.id,
         rating: data.subject.opinionsCount
       })
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err.message)
       setShowModal(false)
       setShowModalError(true)
       dispatch(updateMessage({ body: "Hubo un error al intentar hacer la publicación :(", open: true, type: "danger" }))
@@ -130,6 +131,7 @@ function CreateNewThread({ route, navigation }) {
         },
       })
       .then((res) => {
+        console.log(res)
         Concat(res.data)
         setSearchText("")
       })
@@ -322,7 +324,7 @@ function CreateNewThread({ route, navigation }) {
                           <Text
                             key={i}
                             mr={2}
-                            bg={"primary.100"}
+                            bg={"brand.primary"}
                             color={"white"}
                             py={1}
                             px={3}
