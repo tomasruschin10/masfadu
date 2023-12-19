@@ -23,6 +23,7 @@ function useSearchSubject() {
         if(allSubjects.length > 0) {
             setLoading(true);
             const delayDebounceFn = setTimeout(() => {
+                console.log('probando')
                 const result = allSubjects.filter (
                         subj => subj.name.toLowerCase()
                                         .normalize("NFD")

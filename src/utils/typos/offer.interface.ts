@@ -6,10 +6,11 @@ export interface Offer {
     career_id?: number | string;
     description: string;
     url?: string;
-    image: any;
+    image?: any;
     name?:string;
     company?: string;
     phone?: string;
     email?: string;
     approved?: boolean
+    id?: number 
 } 

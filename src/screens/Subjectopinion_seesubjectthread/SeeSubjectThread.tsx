@@ -99,7 +99,6 @@ function SeeSubjectThread({ route, navigation }) {
     getServices(`opinion/all?offset=0&limit=10&subject_id=${subject_id}`)
       .then(({ data }: any) => {
         setAllOpinions(data);
-        console.log(data);
       })
       .catch((error) => {
         __DEV__ &&
