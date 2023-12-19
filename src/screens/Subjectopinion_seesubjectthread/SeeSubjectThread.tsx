@@ -375,7 +375,7 @@ function SeeSubjectThread({ route, navigation }) {
                           <TouchableOpacity onPress={() => deleteTag(it, i)}>
                             <Text
                               mr={2}
-                              bg={"primary.100"}
+                              bg={"brand.primary"}
                               color={"white"}
                               py={1}
                               px={3}
@@ -398,7 +398,7 @@ function SeeSubjectThread({ route, navigation }) {
           <Button display={"none"} />
         ) : (
           <HStack mt={3} mb={2} space={2} justifyContent="center">
-            <Spinner accessibilityLabel="Loading posts" />
+            <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
             <Heading color="brand.primary" fontSize="md">
               Cargando
             </Heading>
@@ -409,7 +409,7 @@ function SeeSubjectThread({ route, navigation }) {
             mx={8}
             mt={4}
             fontWeight={"bold"}
-            color={"primary.100"}
+            color={"brand.primary"}
             fontSize={20}
           >
             No hay hilos para mostrar

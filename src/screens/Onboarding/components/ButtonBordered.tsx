@@ -15,14 +15,15 @@ export default function ButtonBordered({
     <TouchableOpacity onPress={() => setCarrier(id)} style={{ width: "48%" }}>
       <HStack
         pt={5}
+        px={3}
         mb={5}
         shadow={4}
         borderWidth={1}
-        borderRadius={20}
+        borderRadius={8}
         backgroundColor={"white"}
         justifyContent={"center"}
         alignContent={"center"}
-        borderColor={carrier === id ? "primary.100" : "light.200"}
+        borderColor={carrier === id ? "brand.primary" : "light.200"}
         style={styles.shadow}
         w={163.38}
         h={126.97}

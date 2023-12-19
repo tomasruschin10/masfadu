@@ -101,7 +101,6 @@ function OfferFormMedia({ route, navigation }) {
             setTimeout(() => {
                 cleanSuccessModal()
             }, 3000);
-            navigation.navigate('Home');
         } catch (error) {
             console.log('Error al enviar la imagen al backend:', error);
 
@@ -197,7 +196,8 @@ function OfferFormMedia({ route, navigation }) {
                         <Box alignItems="center">
                             <Button
                                 _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
-                                _text={{ fontSize: 14, fontWeight: '600' }}
+                                _text={{ fontSize: 14, fontWeight: '600' }}                            
+                                bg={"#DA673A"}
                                 isLoading={loading}
                                 onPress={() => uploadImage()}
                                 w="90%"

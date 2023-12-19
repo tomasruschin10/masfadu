@@ -12,8 +12,8 @@ export default function SectionsV2({ title, icon, navigation, setMenu }) {
         <TouchableOpacity
             style={{
                 borderWidth: 1,
-                borderColor: isHovered ? '#7faaff' : 'transparent',
-                borderRadius: moderateScale(14),
+                borderColor: 'transparent',
+                borderRadius: moderateScale(8),
                 flexDirection: 'row', // Place icon and text side by side
                 alignItems: 'center', // Center items vertically
                 backgroundColor: isHovered ? '#E18561' : 'transparent', // Change background color on hover
@@ -39,8 +39,8 @@ export default function SectionsV2({ title, icon, navigation, setMenu }) {
             </Box>
             <Box ml={6}>
                 <Text
-                    style={[fontStyles.poppins400, { color: "#DA673A" }]}
-                    fontSize={moderateScale(13)}
+                    style={[fontStyles.poppins600, { color: "#DA673A" }]}
+                    fontSize={moderateScale(16)}
                     textAlign="center"
                 >
                     {title}

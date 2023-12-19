@@ -73,10 +73,10 @@ export default function BottomTab({ route, navigation, setMenu }) {
             setEvent("opiniones");
             
             name !== "Subsections"
-              ? navigation.navigate("Subsections", {
+              ? navigation.navigate("CreateNewThread", {
                   title: "Opiniones de materias",
                 })
-              : navigation.navigate("Subsections", {
+              : navigation.navigate("CreateNewThread", {
                   title: "Opiniones de materias",
                 });
 

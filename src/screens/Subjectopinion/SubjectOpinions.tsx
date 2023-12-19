@@ -178,10 +178,8 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
             <Button display={"none"} />
           ) : (
             <HStack mb={3} space={2} justifyContent="center">
-              <Spinner accessibilityLabel="Loading posts" />
-              <Heading color="brand.primary" fontSize="md">
-                Cargando
-              </Heading>
+              <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
+              <Heading color="brand.primary" fontSize="md">Cargando</Heading>
             </HStack>
           )}
           {selectedButton === "Todo" ? (

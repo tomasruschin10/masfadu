@@ -1,12 +1,6 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Alert, PixelRatio, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { Entypo } from "@expo/vector-icons";
-import {
-  AntDesign,
-  MaterialCommunityIcons,
-  EvilIcons,
-} from "@expo/vector-icons";
+
 import {
   Box,
   Button,
@@ -18,7 +12,17 @@ import {
   Modal,
   Text,
   VStack,
+  Image,
+  Overlay,
 } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
+import { Entypo } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialCommunityIcons,
+  EvilIcons,
+} from "@expo/vector-icons";
+
 import {
   deleteNote,
   deletePartial,
@@ -916,8 +920,12 @@ export function SuccessModal({
   );
 }
 
-export function ModalDeleteOpinion({ showWarning, onPress, setShowWarning, loading }) {
-  
+export function ModalDeleteOpinion({
+  showWarning,
+  onPress,
+  setShowWarning,
+  loading,
+}) {
   function hideModal() {
     setShowWarning(false);
   }
@@ -982,6 +990,46 @@ export function ModalDeleteOpinion({ showWarning, onPress, setShowWarning, loadi
               </Button>
             </VStack>
           </Button.Group>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function ImageModal({
+  image,
+  showImage,
+  hideModal,
+}: {
+  image: string;
+  showImage: boolean;
+  hideModal: () => void;
+}) {
+  return (
+    <Modal
+      isOpen={showImage}
+      onClose={hideModal}
+      animationPreset={"fade"}
+      size="full"
+      _backdrop={{
+        bg: "rgba(0, 0, 0, 1)",
+      }}
+    >
+      <Modal.Content p={0} bg="rgba(0, 0, 0, 1)">
+        <Modal.CloseButton />
+        <Modal.Body alignItems={"center"} p={0} bg="rgba(0, 0, 0, 1)">
+          <Image
+            style={{
+              height: 500,
+              width: "100%",
+              borderRadius: 8,
+              objectFit: "scale-down",
+            }}
+            alt="LOGO"
+            source={{
+              uri: image,
+            }}
+          />
         </Modal.Body>
       </Modal.Content>
     </Modal>

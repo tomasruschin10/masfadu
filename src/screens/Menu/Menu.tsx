@@ -1,5 +1,5 @@
 import {
-  Box, Text
+  Box, Divider, Text
 } from "native-base";
 import * as React from "react";
 import { HeaderPerfil } from "../../components/Header";
@@ -46,7 +46,9 @@ const carriers = [
     iconType: "Entypo",
     comingSoon: false,
   },
+];
 
+const carriers2 = [
   {
     title: "Notificaciones",
     icon: require("../../../assets/menu/notificaciones.png"),
@@ -70,34 +72,61 @@ function Menu({ route, navigation, setMenu }) {
     <Box style={{ width: "100%", height: "100%", zIndex: 101, position: "absolute" }} flex={1} mt={0} pt={0} backgroundColor="transparent">
       <View style={styles.container}>
         <View style={styles.rightColumn}>
-          <TouchableOpacity onPress={() => navigation.navigate("Subsections", { title: "Cuenta" })} marginLeft={horizontalScale(5)} marginBottom={horizontalScale(10)}>
-            <HeaderPerfil
-              showICon={false}
-              statusBarColor="#e8eef3"
-              barStyle="dark-content"
-              navigation={navigation}
-            />
+          <Box>
+            <TouchableOpacity 
+            onPress={() => navigation.navigate("Subsections", { title: "Cuenta" })} 
+            marginLeft={horizontalScale(5)} 
+            >
+              <HeaderPerfil
+                showICon={false}
+                statusBarColor="#e8eef3"
+                barStyle="dark-content"
+                navigation={navigation}
+              />
 
-          </TouchableOpacity>
-          {carriers?.length ? carriers.map(item => {
-            return (
-              <Box justifyContent={"center"} my={verticalScale(7)} alignContent={"center"}>
-                <SectionsV2
-                  setMenu={setMenu}
-                  icon={item.icon}
-                  title={item.title}
-                  navigation={navigation}
-                />
-              </Box>
-            )
-          })
-            : ""}
+            </TouchableOpacity>
+            <Box
+            mt={6}
+            mb={6}
+            >
+              {carriers?.length ? carriers.map(item => {
+                return (
+                  <Box justifyContent={"center"} my={1} alignContent={"center"}>
+                    <SectionsV2
+                      setMenu={setMenu}
+                      icon={item.icon}
+                      title={item.title}
+                      navigation={navigation}
+                    />
+                  </Box>
+                )
+              })
+                : ""}
 
+            <Box px={5} my={6}>
+              <Divider bg="gray.200" />
+            </Box>
+
+              {carriers2?.length ? carriers2.map(item => {
+                return (
+                  <Box justifyContent={"center"} my={1} alignContent={"center"}>
+                    <SectionsV2
+                      setMenu={setMenu}
+                      icon={item.icon}
+                      title={item.title}
+                      navigation={navigation}
+                    />
+                  </Box>
+                )
+              })
+                : ""}
+            </Box>
+          </Box>
 
           <DefaultButton
             buttonStyle={{
               backgroundColor: "#DA673A",
-              borderRadius: moderateScale(14),
+              borderRadius: moderateScale(8),
               height: verticalScale(50),
               width: screenWidth - (screenWidth / 3),
               paddingTop: verticalScale(5.5)
@@ -117,7 +146,7 @@ function Menu({ route, navigation, setMenu }) {
           style={styles.leftColumn}
           onPress={() => setMenu(false)}
         >
-          <Text>Columna Izquierda</Text>
+          {/* <Text>Columna Izquierda</Text> */}
         </TouchableOpacity>
       </View>
     </Box>
@@ -131,12 +160,15 @@ const styles = StyleSheet.create({
   },
   leftColumn: {
     flex: 20, // Ocupa el 20% del ancho total
-    opacity: 0
+    opacity: 0,
   },
   rightColumn: {
     flex: 80, // Ocupa el 80% del ancho total
     backgroundColor: "#F5FAFE",
     padding: 10,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingBottom: 50
   },
 });
 

@@ -114,7 +114,7 @@ function EditProfile({route, navigation}) {
 
         <Box alignItems='center' mb={20}>
           <TouchableOpacity onPress={() => sendForm()}>
-            <Box h={42} flexDir={'row'} bg='blue.500' w={'40%'} alignItems={'center'} justifyContent={'space-around'} borderRadius='2xl' px='2'>
+            <Box h={42} flexDir={'row'} bg="brand.primary" w={'40%'} alignItems={'center'} justifyContent={'space-around'} borderRadius='2xl' px='2'>
               <Ionicons name="arrow-forward-circle" size={26} color="white" />
               <Text color='white' fontSize={14}>Guardar</Text>
             </Box>

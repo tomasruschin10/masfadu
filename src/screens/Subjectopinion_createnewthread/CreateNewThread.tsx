@@ -327,7 +327,7 @@ function CreateNewThread({ route, navigation }) {
                           <Text
                             key={i}
                             mr={2}
-                            bg={"primary.100"}
+                            bg={"brand.primary"}
                             color={"white"}
                             py={1}
                             px={3}
