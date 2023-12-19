@@ -127,57 +127,60 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
           </Box>
           <Box ml={4}>
             <Box ml={4}>
-              <Text style={[fontStyles.poppins600, {color: "#949494", fontSize: moderateScale(14)}]}>
+              <Text
+                style={[
+                  fontStyles.poppins600,
+                  { color: "#949494", fontSize: moderateScale(14) },
+                ]}
+              >
                 Promedio
               </Text>
-                {
-                  FontsLoaded 
-                ? 
-                <Box 
-                bg={"#F2F2F2"} 
-                rounded={"8"} 
-                mt={2} 
-                display={"flex"}
-                alignItems={"center"}
+              {FontsLoaded ? (
+                <Box
+                  bg={"#F2F2F2"}
+                  rounded={"8"}
+                  mt={2}
+                  display={"flex"}
+                  alignItems={"center"}
                 >
-                  <Text 
-                  style={[fontStyles.poppins600, 
-                    {
-                      color: "#646464", 
-                      fontSize: 25
-                    }
-                  ]}
-                  textAlign={"center"}
-                  mt={3}
-                  py={3}
+                  <Text
+                    style={[
+                      fontStyles.poppins600,
+                      {
+                        color: "#646464",
+                        fontSize: 25,
+                      },
+                    ]}
+                    textAlign={"center"}
+                    mt={3}
+                    py={3}
                   >
-                    {!subjCategory.prom ? "0" : subjCategory.prom.toFixed(1)}
-                  </Text> 
+                    {usePercentage(subjCategory.total, subjCategory.on)}
+                  </Text>
                 </Box>
-                : 
-                null
-                }
+              ) : null}
             </Box>
           </Box>
-          </HStack>  
-          <Box px={2} pb={2}>
-            <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
-              <LinearGradient
-                start={{ x: -1, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
-                  style={{
-                  height: "100%",
-                  width: `${subjCategory.total !== 0
-                      ? (100 / subjCategory.total) * subjCategory.on
-                      : (100 / 1) * subjCategory.on
-                    }%`,
-                  borderRadius: 8,
-                }}
-              />
-            </Box>
-          </Box>      
+        </HStack>
+        <Box px={2} pb={2}>
+          <Box bg={"#EBEEF2"} rounded={"full"} height={2}>
+            <LinearGradient
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
+              style={{
+                height: "100%",
+                width: `${
+                  subjCategory.total !== 0
+                    ? (100 / subjCategory.total) * subjCategory.on
+                    : (100 / 1) * subjCategory.on
+                }%`,
+                borderRadius: 8,
+              }}
+            />
+          </Box>
         </Box>
+      </Box>
 
       <Box px={4}>
         {subjCategory.data.map((item, index) => (
