@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,6 +10,10 @@ import {
   Select,
   CheckIcon,
 } from "native-base";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
+import * as ImagePicker from "expo-image-picker";
+import { useDispatch } from "react-redux";
+
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import {
@@ -17,10 +21,6 @@ import {
   getServices,
   updateOffer,
 } from "../../utils/hooks/services";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-
-import * as ImagePicker from "expo-image-picker";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 
 function OfferEditForm({ route, navigation }) {
@@ -49,11 +49,30 @@ function OfferEditForm({ route, navigation }) {
       const image = await ImagePicker.launchImageLibraryAsync();
       console.log("image <>", image);
       if (!image.canceled && image.assets.length > 0) {
-        setImagen(image.assets[0]);
+        const imageUri = image.assets[0].uri;
+        const compressedImage = await compressImage(imageUri);
+
+        setImagen(compressedImage);
+
         setPreviewImage(image.assets[0].uri);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const compressImage = async (imageUri: any) => {
+    try {
+      const compressedImage = await manipulateAsync(
+        imagen.uri,
+        [{ resize: { width: 800 } }],
+        { format: SaveFormat.JPEG, compress: 0.7 }
+      );
+
+      return compressedImage;
+    } catch (error) {
+      console.log("Error al comprimir la imagen:", error);
+      return { uri: imageUri };
     }
   };
 
@@ -144,6 +163,7 @@ function OfferEditForm({ route, navigation }) {
         title={`Editar mi publicación`}
       >
         <ScrollView
+          contentContainerStyle={{ paddingBottom: 110 }}
           nestedScrollEnabled={true}
           keyboardShouldPersistTaps={"handled"}
         >
@@ -327,9 +347,7 @@ function OfferEditForm({ route, navigation }) {
           setOpen={setErrorModalOpen}
         />
         <SuccessModal
-          message={
-            "Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"
-          }
+          message={"Todo listo"}
           isOpen={successModalOpen}
           setOpen={cleanSuccessModal}
         />

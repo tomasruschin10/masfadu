@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,6 +10,9 @@ import {
   Select,
   CheckIcon,
 } from "native-base";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
+import { useDispatch } from "react-redux";
+
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import {
@@ -17,8 +20,6 @@ import {
   getServices,
   publishOffer,
 } from "../../utils/hooks/services";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 
 import * as ImagePicker from "expo-image-picker";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
@@ -45,11 +46,30 @@ function OfferForm({ route, navigation }) {
       const image = await ImagePicker.launchImageLibraryAsync();
       console.log("image <>", image);
       if (!image.canceled && image.assets.length > 0) {
-        setImagen(image.assets[0]);
-        setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
+        const imageUri = image.assets[0].uri;
+        const compressedImage = await compressImage(imageUri);
+
+        setImagen(compressedImage);
+
+        setPreviewImage(image.assets[0].uri);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const compressImage = async (imageUri: any) => {
+    try {
+      const compressedImage = await manipulateAsync(
+        imagen.uri,
+        [{ resize: { width: 800 } }],
+        { format: SaveFormat.JPEG, compress: 0.7 }
+      );
+
+      return compressedImage;
+    } catch (error) {
+      console.log("Error al comprimir la imagen:", error);
+      return { uri: imageUri };
     }
   };
 
@@ -86,7 +106,7 @@ function OfferForm({ route, navigation }) {
       setErrorModalOpen(false);
     }, 30000);
   };
- 
+
   const cleanSuccessModal = () => {
     setSuccessModalOpen(false);
     navigation.navigate("Home");
@@ -104,7 +124,7 @@ function OfferForm({ route, navigation }) {
         image: imagen,
       });
 
-      if (response.status != 201) {
+      if (response.status !== 201) {
         throw new Error(JSON.stringify(response), {
           cause: "no se obtuvo el status 201",
         });
@@ -114,9 +134,8 @@ function OfferForm({ route, navigation }) {
       setLoading(false);
       setSuccessModalOpen(true);
       setTimeout(() => {
-        cleanSuccessModal()
+        cleanSuccessModal();
       }, 3000);
-
     } catch (error) {
       console.log("Error al enviar la imagen al backend:", error);
       setErrorModalOpen(true);
@@ -138,6 +157,7 @@ function OfferForm({ route, navigation }) {
         title={`Publicá en el Mercado de Fadu`}
       >
         <ScrollView
+          contentContainerStyle={{paddingBottom: 110}}
           nestedScrollEnabled={true}
           keyboardShouldPersistTaps={"handled"}
         >
@@ -297,8 +317,8 @@ function OfferForm({ route, navigation }) {
 
             <Box mt={-20} alignItems="center">
               <Button
-                _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
-                _text={{ fontSize: 14, fontWeight: '600' }}                
+                _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+                _text={{ fontSize: 14, fontWeight: "600" }}
                 bg={"#DA673A"}
                 isLoading={loading}
                 onPress={() => uploadImage()}

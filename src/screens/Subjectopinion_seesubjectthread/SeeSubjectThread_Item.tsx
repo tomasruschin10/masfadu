@@ -28,6 +28,7 @@ function SeeSubjectThread_Item({
           description: description,
           created_at: created_at,
           opinionTags: opinionTags,
+          answersCount: answersCount,
           idOpinion: idOpinion,
         })
       }

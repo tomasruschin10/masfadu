@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
 export default function Container({ children,  ...props }) {
   return (
     <Box style={styles.container} flex={1}>
-      
       {children}
     </Box>
   );
