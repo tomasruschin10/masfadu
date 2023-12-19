@@ -1,12 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Alert, PixelRatio, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { Entypo } from "@expo/vector-icons";
-import {
-  AntDesign,
-  MaterialCommunityIcons,
-  EvilIcons,
-} from "@expo/vector-icons";
+
 import {
   Box,
   Button,
@@ -19,8 +13,16 @@ import {
   Text,
   VStack,
   Image,
-  Overlay
+  Overlay,
 } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
+import { Entypo } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialCommunityIcons,
+  EvilIcons,
+} from "@expo/vector-icons";
+
 import {
   deleteNote,
   deletePartial,
@@ -31,8 +33,12 @@ import {
 import DefaultButton from "../../components/DefaultButton";
 import { REMEMBER_NOTICE, rememberNotice } from "../../redux/actions/notice";
 import { fontStyles } from "../../utils/colors/fontColors";
-import { moderateScale, verticalScale, screenWidth, horizontalScale } from "../../utils/media.screens";
-
+import {
+  moderateScale,
+  verticalScale,
+  screenWidth,
+  horizontalScale,
+} from "../../utils/media.screens";
 
 function RenderArrow() {
   return (
@@ -42,12 +48,12 @@ function RenderArrow() {
         borderRadius: 6,
         padding: 5,
         height: 25,
-      }}>
+      }}
+    >
       <Entypo name="arrow-right" size={13} color="white" />
     </View>
   );
 }
-
 
 const ExclamationComponent = () => {
   return (
@@ -60,14 +66,18 @@ const ExclamationComponent = () => {
         borderRadius: 100,
         borderColor: "#DA673A",
         borderWidth: 6,
-        margin: 'auto',
-        marginTop: 4
+        margin: "auto",
+        marginTop: 4,
       }}
     >
-      <AntDesign name="exclamation" style={{ fontWeight: "bold", fontSize: 50 }} color="#DA673A" />
+      <AntDesign
+        name="exclamation"
+        style={{ fontWeight: "bold", fontSize: 50 }}
+        color="#DA673A"
+      />
     </View>
   );
-}
+};
 
 export function ModalNotes({
   showNotes,
@@ -136,39 +146,39 @@ export function ModalNotes({
                 onPress={() =>
                   form.extra_score.length === 0
                     ? Alert.alert(
-                      "Importante",
-                      "¿Deseas eliminar la nota final?",
-                      [
-                        {
-                          text: "Cancelar",
-                          onPress: () => console.log(""),
-                          style: "cancel",
-                        },
-                        {
-                          text: "Aceptar",
-                          onPress: () =>
-                            deleteNote(
-                              setLoading,
-                              setUpdater,
-                              updater,
-                              setShowNotes,
-                              infoUserSubj,
-                              dispatch
-                            ),
-                        },
-                      ]
-                    )
+                        "Importante",
+                        "¿Deseas eliminar la nota final?",
+                        [
+                          {
+                            text: "Cancelar",
+                            onPress: () => console.log(""),
+                            style: "cancel",
+                          },
+                          {
+                            text: "Aceptar",
+                            onPress: () =>
+                              deleteNote(
+                                setLoading,
+                                setUpdater,
+                                updater,
+                                setShowNotes,
+                                infoUserSubj,
+                                dispatch
+                              ),
+                          },
+                        ]
+                      )
                     : Alert.alert(
-                      "Importante",
-                      "Primero debes eliminar las notas parciales para eliminar la nota final!",
-                      [
-                        {
-                          text: "Ok, genial!",
-                          onPress: () => console.log(""),
-                          style: "cancel",
-                        },
-                      ]
-                    )
+                        "Importante",
+                        "Primero debes eliminar las notas parciales para eliminar la nota final!",
+                        [
+                          {
+                            text: "Ok, genial!",
+                            onPress: () => console.log(""),
+                            style: "cancel",
+                          },
+                        ]
+                      )
                 }
               />
               <TouchableOpacity
@@ -320,27 +330,27 @@ export function ModalNotes({
                   onPress={() =>
                     showModal2?.placeholder
                       ? updateOrCreateScorePartial(
-                        showModal2?.extra_id,
-                        setLoading,
-                        showModal2,
-                        infoUserSubj,
-                        setUpdater,
-                        updater,
-                        setShowModal2,
-                        setShowNotes,
-                        dispatch
-                      )
+                          showModal2?.extra_id,
+                          setLoading,
+                          showModal2,
+                          infoUserSubj,
+                          setUpdater,
+                          updater,
+                          setShowModal2,
+                          setShowNotes,
+                          dispatch
+                        )
                       : updateOrCreateScorePartial(
-                        showModal2?.extra_id,
-                        setLoading,
-                        showModal2,
-                        infoUserSubj,
-                        setUpdater,
-                        updater,
-                        setShowModal2,
-                        setShowNotes,
-                        dispatch
-                      )
+                          showModal2?.extra_id,
+                          setLoading,
+                          showModal2,
+                          infoUserSubj,
+                          setUpdater,
+                          updater,
+                          setShowModal2,
+                          setShowNotes,
+                          dispatch
+                        )
                   }
                 >
                   <Text color={"white"}>Guardar</Text>
@@ -459,8 +469,8 @@ export function ModalWarning({
   }
 
   function hideModal() {
-    setShowWarning(false)
-  } 
+    setShowWarning(false);
+  }
 
   return (
     <Modal
@@ -472,8 +482,8 @@ export function ModalWarning({
     >
       <Modal.Content rounded={"2xl"}>
         <Modal.Body alignItems={"center"}>
-        <ExclamationComponent />
-        <Text
+          <ExclamationComponent />
+          <Text
             fontSize={20}
             mt={3}
             style={fontStyles.poppins500}
@@ -481,7 +491,6 @@ export function ModalWarning({
           >
             Advertencias
           </Text>
-
 
           <FormControl>
             {currentSubj?.available === false ? (
@@ -495,7 +504,12 @@ export function ModalWarning({
                 >
                   No podés anotarte a esta materia :(
                 </Text>
-                <Text marginTop={"5%"} marginLeft={"6.5%"} fontSize={12} textAlign={"center"}>
+                <Text
+                  marginTop={"5%"}
+                  marginLeft={"6.5%"}
+                  fontSize={12}
+                  textAlign={"center"}
+                >
                   Primero tenés que aprobar:
                 </Text>
                 <HStack
@@ -524,67 +538,70 @@ export function ModalWarning({
               </>
             ) : !currentSubj?.available ? (
               <Box
-              display={"flex"}
-              flexDirection={"row"}
-              alignItems={"center"}
-              marginY={5}
-              px={2}
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"center"}
+                marginY={5}
+                px={2}
               >
                 <Text>
-                  <Box height={moderateScale(8)} width={moderateScale(8)} borderRadius="full" background={"#DA673A"}></Box>
+                  <Box
+                    height={moderateScale(8)}
+                    width={moderateScale(8)}
+                    borderRadius="full"
+                    background={"#DA673A"}
+                  ></Box>
                 </Text>
-              <Text
-              ml={2}
-                style={
-                  [{ fontSize: moderateScale(12) }, fontStyles.poppins400]
-                }
-                w={"100%"}
-                numberOfLines={3}
+                <Text
+                  ml={2}
+                  style={[
+                    { fontSize: moderateScale(12) },
+                    fontStyles.poppins400,
+                  ]}
+                  w={"100%"}
+                  numberOfLines={3}
                 >
-                No podés anotarte a esta materia sin terminar el nivel anterior
-              </Text>
+                  No podés anotarte a esta materia sin terminar el nivel
+                  anterior
+                </Text>
               </Box>
             ) : (
               <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-              w={"100%"}
+                display={"flex"}
+                flexDirection={"row"}
+                justifyContent={"center"}
+                w={"100%"}
               >
                 <Text fontSize={15}>
                   ¿Querés agregar una nota en esta materia?
-                </Text>                
+                </Text>
               </Box>
             )}
           </FormControl>
           <Button.Group space={2} mt={2}>
             {!currentSubj?.available ? (
-            
-              <DefaultButton buttonStyle={{
-                backgroundColor: "#DA673A",
-                borderRadius: moderateScale(8),
-                height: verticalScale(45),
-                width: 500,
-                maxWidth: screenWidth - (screenWidth / 5),
-                // paddingTop: verticalScale(2)
-              }}
-                textStyle={
-                  {
-                    fontSize: moderateScale(14),
-                    fontWeight:"500",
-                    color: "white",
-                  }
-                }
-  
+              <DefaultButton
+                buttonStyle={{
+                  backgroundColor: "#DA673A",
+                  borderRadius: moderateScale(8),
+                  height: verticalScale(45),
+                  width: 500,
+                  maxWidth: screenWidth - screenWidth / 5,
+                  // paddingTop: verticalScale(2)
+                }}
+                textStyle={{
+                  fontSize: moderateScale(14),
+                  fontWeight: "500",
+                  color: "white",
+                }}
                 containerStyle={{
                   marginBottom: PixelRatio.roundToNearestPixel(15),
                 }}
-  
                 title="Entiendo"
-                callBack={hideModal} />
-  
+                callBack={hideModal}
+              />
             ) : (
-              <VStack space={3} w='full' px={6} mt={6}>
+              <VStack space={3} w="full" px={6} mt={6}>
                 <Button
                   borderRadius={8}
                   py={4}
@@ -592,8 +609,8 @@ export function ModalWarning({
                   w="100%"
                   isLoading={loading}
                   bg={"#DA673A"}
-                  _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
-                  _text={{ fontSize: 14, fontWeight: '600' }}
+                  _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+                  _text={{ fontSize: 14, fontWeight: "600" }}
                   onPress={() =>
                     createNote(
                       currentSubj?.id,
@@ -616,11 +633,11 @@ export function ModalWarning({
                   variant={"outline"}
                   colorScheme="gray"
                   isLoading={loading}
-                  _text={{ fontSize: 14, fontWeight: '600' }}
+                  _text={{ fontSize: 14, fontWeight: "600" }}
                   onPress={() => hideModal()}
                   borderRadius={8}
                   py={4}
-                  fontWeight='bold'
+                  fontWeight="bold"
                 >
                   No
                 </Button>
@@ -637,12 +654,12 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
   const dispatch = useDispatch();
 
   const blockNotice = () => {
-    dispatch(rememberNotice({ type: REMEMBER_NOTICE, value: true }))
-  }
+    dispatch(rememberNotice({ type: REMEMBER_NOTICE, value: true }));
+  };
 
   const closeModal = () => {
     blockNotice();
-    setShowWarning(false)
+    setShowWarning(false);
   };
 
   return (
@@ -652,7 +669,7 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
       size={"xl"}
       onClose={() => {
         blockNotice();
-        setShowWarning(false)
+        setShowWarning(false);
       }}
     >
       <Modal.Content rounded={"2xl"}>
@@ -669,135 +686,135 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
           </Text>
 
           {/* <FormControl maxWidth={"100%"} pl={"5%"} pr={"18%"}> */}
-            <HStack
-              maxWidth={"100%"} 
-              px={"5%"} 
-              justifyContent={"center"}
-              flexDirection={"column"}
-            >
-              <Box
+          <HStack
+            maxWidth={"100%"}
+            px={"5%"}
+            justifyContent={"center"}
+            flexDirection={"column"}
+          >
+            <Box
               display={"flex"}
               flexDirection={"row"}
               mb={1.5}
               alignItems={"center"}
-              >
-                <Box 
-                height={moderateScale(8)} 
-                width={moderateScale(8)} 
-                borderRadius="full" 
-                background={"#DA673A"} 
-                />
-                <Text textAlign={"left"} ml={2}>
-                  No se permiten las faltas de respeto de ningún tipo, insultos
-                  o agresiones.
-                </Text>
-              </Box>
+            >
               <Box
+                height={moderateScale(8)}
+                width={moderateScale(8)}
+                borderRadius="full"
+                background={"#DA673A"}
+              />
+              <Text textAlign={"left"} ml={2}>
+                No se permiten las faltas de respeto de ningún tipo, insultos o
+                agresiones.
+              </Text>
+            </Box>
+            <Box
               display={"flex"}
               flexDirection={"row"}
               // alignItems={"center"}
               mb={1.5}
               alignItems={"center"}
-              >
-                <Box 
-                height={moderateScale(8)} 
-                width={moderateScale(8)} 
-                borderRadius="full" 
-                background={"#DA673A"} 
-                />
-                <Text textAlign={"left"} ml={2}>
-                  Criticar sin motivo a nadie. ni nada.
-                </Text>
-              </Box>
+            >
               <Box
-              display={"flex"}
-              flexDirection={"row"}
-              mb={1.5}
-              alignItems={"center"}
-              >
-                <Box 
-                height={moderateScale(8)} 
-                width={moderateScale(8)} 
-                borderRadius="full" 
-                background={"#DA673A"} 
-                />
-                <Text textAlign={"left"} ml={2}>
-                  Spam.
-                </Text>
-              </Box>
-              <Box
-              display={"flex"}
-              flexDirection={"row"}
-              mb={1.5}
-              alignItems={"center"}>
-                <Box 
                 height={moderateScale(8)}
-                width={moderateScale(8)} 
-                borderRadius="full" 
-                background={"#DA673A"}/>
-                <Text textAlign={"left"} ml={2}>
-                  ser un troll, no molestes.
-                </Text>
-              </Box>
-              <Box
+                width={moderateScale(8)}
+                borderRadius="full"
+                background={"#DA673A"}
+              />
+              <Text textAlign={"left"} ml={2}>
+                Criticar sin motivo a nadie. ni nada.
+              </Text>
+            </Box>
+            <Box
               display={"flex"}
               flexDirection={"row"}
               mb={1.5}
               alignItems={"center"}
-              >
-                <Box 
-                height={moderateScale(8)} 
-                width={moderateScale(8)} 
-                borderRadius="full" 
+            >
+              <Box
+                height={moderateScale(8)}
+                width={moderateScale(8)}
+                borderRadius="full"
                 background={"#DA673A"}
-                />
-                <Text textAlign={"left"} ml={2}>
-                  Saltarse algunas de estas normas implicará:
-                </Text>
-              </Box>
+              />
+              <Text textAlign={"left"} ml={2}>
+                Spam.
+              </Text>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              mb={1.5}
+              alignItems={"center"}
+            >
               <Box
-                style={{ marginTop: "3%", display: "flex", flexDirection: "row" }}
-                px={2}
-                mb={1}
-              >
-                <Text>1</Text>
-                <Text px={"1.5"} textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
-                  Baneo temporal sin poder comentar duante un tiempo indefinido.
-                </Text>
-              </Box>
+                height={moderateScale(8)}
+                width={moderateScale(8)}
+                borderRadius="full"
+                background={"#DA673A"}
+              />
+              <Text textAlign={"left"} ml={2}>
+                ser un troll, no molestes.
+              </Text>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              mb={1.5}
+              alignItems={"center"}
+            >
               <Box
-                style={{ display: "flex", flexDirection: "row" }}
-                px={2}
-                pb={5}
-              >
-                <Text>2</Text>
-                <Text textAlign={"left"}>
-                  {" "}
-                  {/* Alinea el texto a la izquierda */}
-                  Baneo completo y expulsión de la app.
-                </Text>
-              </Box>
-            </HStack>
+                height={moderateScale(8)}
+                width={moderateScale(8)}
+                borderRadius="full"
+                background={"#DA673A"}
+              />
+              <Text textAlign={"left"} ml={2}>
+                Saltarse algunas de estas normas implicará:
+              </Text>
+            </Box>
+            <Box
+              style={{ marginTop: "3%", display: "flex", flexDirection: "row" }}
+              px={2}
+              mb={1}
+            >
+              <Text>1</Text>
+              <Text px={"1.5"} textAlign={"left"}>
+                {" "}
+                {/* Alinea el texto a la izquierda */}
+                Baneo temporal sin poder comentar duante un tiempo indefinido.
+              </Text>
+            </Box>
+            <Box
+              style={{ display: "flex", flexDirection: "row" }}
+              px={2}
+              pb={5}
+            >
+              <Text>2</Text>
+              <Text textAlign={"left"}>
+                {" "}
+                {/* Alinea el texto a la izquierda */}
+                Baneo completo y expulsión de la app.
+              </Text>
+            </Box>
+          </HStack>
           {/* </FormControl> */}
           <Button.Group space={2} my={"7%"}>
-            <DefaultButton 
-            buttonStyle={{ 
-              height: horizontalScale(40),
-              backgroundColor: "#DA673A", 
-              paddingHorizontal: horizontalScale(45),
-              width: 300,
-              alignItems: "center",
-              borderRadius: moderateScale(8),
-             }}   
-             textStyle={
-              {
+            <DefaultButton
+              buttonStyle={{
+                height: horizontalScale(40),
+                backgroundColor: "#DA673A",
+                paddingHorizontal: horizontalScale(45),
+                width: 300,
+                alignItems: "center",
+                borderRadius: moderateScale(8),
+              }}
+              textStyle={{
                 marginTop: verticalScale(10),
-              }
-            }         
-            title="Entiendo, voy a respetar" 
-            callBack={() => closeModal()} 
+              }}
+              title="Entiendo, voy a respetar"
+              callBack={() => closeModal()}
             />
           </Button.Group>
         </Modal.Body>
@@ -827,8 +844,15 @@ export function ModalIcon({ showIcon, setShowIcon }) {
   );
 }
 
-
-export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string }) {
+export function ErrorModal({
+  isOpen,
+  setOpen,
+  message,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  message?: string;
+}) {
   return (
     <Modal
       isOpen={isOpen}
@@ -836,10 +860,7 @@ export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setO
       onClose={() => setOpen(false)}
       animationPreset={"fade"}
     >
-      <Modal.Content
-        backgroundColor={'white'}
-        paddingTop={5}
-      >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
         <Center>
           <ExclamationComponent />
         </Center>
@@ -855,7 +876,15 @@ export function ErrorModal({ isOpen, setOpen, message }: { isOpen: boolean, setO
   );
 }
 
-export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, setOpen: Function, message?: string }) {
+export function SuccessModal({
+  isOpen,
+  setOpen,
+  message,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  message?: string;
+}) {
   return (
     <Modal
       isOpen={isOpen}
@@ -863,10 +892,7 @@ export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, se
       onClose={() => setOpen(false)}
       animationPreset={"fade"}
     >
-      <Modal.Content
-        backgroundColor={'white'}
-        paddingTop={5}
-      >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
         <View
           style={{
             alignItems: "center",
@@ -876,7 +902,7 @@ export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, se
             height: 50,
             borderRadius: 35,
             backgroundColor: "#4BB543",
-            margin: 'auto'
+            margin: "auto",
           }}
         >
           <AntDesign name="check" size={32} color="white" />
@@ -894,9 +920,91 @@ export function SuccessModal({ isOpen, setOpen, message }: { isOpen: boolean, se
   );
 }
 
-export function ImageModal({ image, showImage, hideModal }:{image: string
-  showImage: boolean
-  hideModal: () => void}) {
+export function ModalDeleteOpinion({
+  showWarning,
+  onPress,
+  setShowWarning,
+  loading,
+}) {
+  function hideModal() {
+    setShowWarning(false);
+  }
+
+  return (
+    <Modal
+      isOpen={showWarning}
+      animationPreset={"slide"}
+      size={"xl"}
+      onClose={() => setShowWarning(false)}
+      mt={5}
+    >
+      <Modal.Content rounded={"2xl"}>
+        <Modal.Body alignItems={"center"}>
+          <ExclamationComponent />
+          <Text
+            fontSize={20}
+            mt={3}
+            style={fontStyles.poppins500}
+            textAlign={"center"}
+          >
+            Advertencia
+          </Text>
+
+          <FormControl>
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"center"}
+              w={"100%"}
+            >
+              <Text fontSize={15}>¿Querés eliminar esta opinión?</Text>
+            </Box>
+          </FormControl>
+          <Button.Group space={2} mt={2}>
+            <VStack space={3} w="full" px={6} mt={6}>
+              <Button
+                borderRadius={8}
+                py={4}
+                px={6}
+                w="100%"
+                bg={"#DA673A"}
+                isLoading={loading}
+                _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+                _text={{ fontSize: 14, fontWeight: "600" }}
+                onPress={onPress}
+              >
+                Si
+              </Button>
+              <Button
+                px={5}
+                w="100%"
+                variant={"outline"}
+                colorScheme="gray"
+                _text={{ fontSize: 14, fontWeight: "600" }}
+                onPress={() => hideModal()}
+                borderRadius={8}
+                py={4}
+                fontWeight="bold"
+              >
+                No
+              </Button>
+            </VStack>
+          </Button.Group>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function ImageModal({
+  image,
+  showImage,
+  hideModal,
+}: {
+  image: string;
+  showImage: boolean;
+  hideModal: () => void;
+}) {
   return (
     <Modal
       isOpen={showImage}
@@ -904,10 +1012,10 @@ export function ImageModal({ image, showImage, hideModal }:{image: string
       animationPreset={"fade"}
       size="full"
       _backdrop={{
-        bg: "rgba(0, 0, 0, 1)"
+        bg: "rgba(0, 0, 0, 1)",
       }}
     >
-      <Modal.Content p={0} bg='rgba(0, 0, 0, 1)'>
+      <Modal.Content p={0} bg="rgba(0, 0, 0, 1)">
         <Modal.CloseButton />
         <Modal.Body alignItems={"center"} p={0} bg="rgba(0, 0, 0, 1)">
           <Image
@@ -915,7 +1023,7 @@ export function ImageModal({ image, showImage, hideModal }:{image: string
               height: 500,
               width: "100%",
               borderRadius: 8,
-              objectFit: "scale-down"
+              objectFit: "scale-down",
             }}
             alt="LOGO"
             source={{

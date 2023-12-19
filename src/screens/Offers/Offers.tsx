@@ -76,13 +76,16 @@ function Offers({ route, navigation }) {
     // console.log("item category: " + JSON.stringify(item, null, 2));
 
     return (
-      <TouchableOpacity onPress={() => handleFilter(item)}>
+      <TouchableOpacity
+        style={{ marginRight: 10 }}
+        onPress={() => handleFilter(item)}
+      >
         <Text
           numberOfLines={1}
           style={{
             backgroundColor: item.id == currentFilter ? "#EB5E29" : "#ffffff",
             color: item.id == currentFilter ? "#fff" : "#EB5E29",
-            width: '100%',
+            width: "100%",
             zIndex: 9999,
             borderRadius: 12,
             overflow: "hidden",
@@ -386,8 +389,8 @@ function Offers({ route, navigation }) {
         >
           <FlatList
             contentContainerStyle={{
-              justifyContent: "space-between",
-              width: filterWidth * offerCategory.length + 10,
+              justifyContent: "flex-start",
+              width: "100%",
             }}
             horizontal={true}
             keyExtractor={(item) => item.id}

@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 import { fontStyles } from "../utils/colors/fontColors";
 import { moderateScale } from "../utils/media.screens";
 
-
 export function HeaderBack({ ...props }) {
   const navigation: any = useNavigation();
   const route = useRoute();
@@ -28,9 +27,8 @@ export function HeaderBack({ ...props }) {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <Box safeAreaTop   />
-
-      <HStack py="3" w="100%" alignItems="center">
+      <Box safeAreaTop />
+      <HStack pb="3" w="100%" pr="3" alignItems="center" flexDir={props.headerWithIcon ? "row" : null} >
         {navigation.canGoBack() && (
           <IconButton
             rounded="xl"
@@ -39,9 +37,9 @@ export function HeaderBack({ ...props }) {
               <Icon
                 as={Ionicons}
                 name={
-                  route.name === 'ThreadSuggestions'
-                    ? 'close-sharp'
-                    : 'chevron-back'
+                  route.name === "ThreadSuggestions"
+                    ? "close-sharp"
+                    : "chevron-back"
                 }
                 size={moderateScale(25)}
                 color="black"
@@ -50,10 +48,20 @@ export function HeaderBack({ ...props }) {
           />
         )}
         <Box flex={12}>
-          <Text marginLeft={0} fontSize="18" style={fontStyles.poppins500} textAlign={"left"}>
-            {props.title ?? ''}
+          <Text
+            marginLeft={0}
+            fontSize="18"
+            style={fontStyles.poppins500}
+            textAlign={"left"}
+          >
+            {props.title ?? ""}
           </Text>
         </Box>
+        {props?.headerWithIcon && (
+          <TouchableOpacity onPress={props.onPressIcon}>
+            {props.headerWithIcon}
+          </TouchableOpacity>
+        )}
         {props?.addButtonUrl && (
           <Box mr={4}>
             <IconButton
@@ -62,16 +70,16 @@ export function HeaderBack({ ...props }) {
               onPress={() => {
                 if (typeof props.addButtonUrl === "string") {
                   navigation.navigate(props.addButtonUrl);
-                } else if (props.addButtonUrl && typeof props.addButtonUrl === "object") {
+                } else if (
+                  props.addButtonUrl &&
+                  typeof props.addButtonUrl === "object"
+                ) {
                   const { name, props: additionalProps } = props.addButtonUrl;
                   navigation.navigate(name, additionalProps);
                 }
-              }
-              }
+              }}
               size={"40px"}
-              icon={
-                <Entypo name="plus" size={27} color="#f4faff" />
-              }
+              icon={<Entypo name="plus" size={27} color="#f4faff" />}
             />
           </Box>
         )}
@@ -82,14 +90,19 @@ export function HeaderBack({ ...props }) {
 export function NoHeader({ ...props }) {
   return (
     <>
-      <StatusBar hidden={true} translucent={true} backgroundColor="#ffffff" barStyle="dark-content" />
+      <StatusBar
+        hidden={true}
+        translucent={true}
+        backgroundColor="#ffffff"
+        barStyle="dark-content"
+      />
       <Box bg="" />
     </>
   );
 }
 
 export function HeaderPerfil(props) {
-  const { showIcon } = props
+  const { showIcon } = props;
   const navigation: any = useNavigation();
   const { colors }: any = useTheme();
   const userdata = useSelector((state: any) => state.user.userdata);
@@ -99,7 +112,6 @@ export function HeaderPerfil(props) {
       <StatusBar
         backgroundColor={props.statusBarColor}
         barStyle={props.barStyle}
-
       />
       <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
       <Box justifyContent="space-between" px={4} flexDirection="row" pb={2}>

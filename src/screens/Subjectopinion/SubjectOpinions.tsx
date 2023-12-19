@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Box,
   Button,
@@ -11,6 +11,7 @@ import {
   Heading,
 } from "native-base";
 import { TouchableOpacity, View, ScrollView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -34,9 +35,11 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   const state: any = store.getState();
   const colores = ["#E85E29"];
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    }, [])
+  );
 
   const getData = async () => {
     const {

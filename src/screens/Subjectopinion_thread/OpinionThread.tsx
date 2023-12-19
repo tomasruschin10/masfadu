@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { TouchableHighlight, TouchableOpacity } from "react-native";
-import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
+import { TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Avatar, Box, Icon, IconButton, ScrollView, Text } from "native-base";
+
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import { HeaderBack } from "../../components/Header";
-import { getServices } from "../../utils/hooks/services";
+import { getServices, deleteServices } from "../../utils/hooks/services";
+import { ModalDeleteOpinion } from "../AboutSubject/Modals";
 
 const Resp = ({
   description,
@@ -79,29 +81,61 @@ function OpinionThread({ route, navigation }) {
     created_at,
     opinionTags,
     idOpinion,
+    answersCount,
     value,
   } = route.params;
-  const [answerOpiniones, setAnswerOpiniones] = useState([]);
+  const [answerOpinions, setAnswerOpinions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [reload, setReload] = useState(false);
   const [more, seeMore] = useState(null);
-  const [menuShow, setMenu] = useState(false)
+  const [menuShow, setMenu] = useState(false);
+
   useEffect(() => {
     getServices(`opinion-answer/all?opinion_id=${idOpinion}`)
       .then(({ data }: any) => {
-        setAnswerOpiniones(data.reverse());
+        setAnswerOpinions(data.reverse());
       })
       .catch((error) => {
         console.log(error);
       });
   }, [reload, value]);
 
+  const deleteOpinion = () => {
+    try {
+      setLoading(true);
+      deleteServices(`opinion/delete/${idOpinion}`)
+        .then(({ status }: any) => {
+          if (status === 200) {
+            navigation.goBack();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Container>
-      
-      <HeaderBack title="Opiniones" />
+      <HeaderBack
+        title="Opiniones"
+        headerWithIcon={
+          answersCount === 0 ? (
+            <Ionicons name="trash-outline" size={27} color={"black"} />
+          ) : undefined
+        }
+        onPressIcon={
+          answersCount === 0 ? () => setShowWarning(true) : undefined
+        }
+      />
       <ScrollView>
-        <Box mx="5" mt={6} >
-          <Box flexDir={"row"} bg={'#F4F6F9'} py="5" rounded={8} pr={4}>
+        <Box mx="5" mt={6}>
+          <Box flexDir={"row"} bg={"#F4F6F9"} py="5" rounded={8} pr={4}>
             <Box mx="4">
               {anonymous ? (
                 <FontAwesome name="user-secret" size={35} />
@@ -118,9 +152,7 @@ function OpinionThread({ route, navigation }) {
               <Text fontSize={16} fontWeight="bold" mb="1">
                 {title}
               </Text>
-              <Text fontSize={10}>
-                {description}
-              </Text>
+              <Text fontSize={10}>{description}</Text>
               <Text color="#A8A8A8" fontSize={12} my={3}>
                 {opinionTags.length > 0
                   ? opinionTags.map(
@@ -129,9 +161,7 @@ function OpinionThread({ route, navigation }) {
                   : ""}
               </Text>
               <Box flexDir={"row"} justifyContent={"space-between"}>
-                <Text fontSize={12}>
-                  {answerOpiniones.length} respuestas
-                </Text>
+                <Text fontSize={12}>{answerOpinions.length} respuestas</Text>
                 <Text fontSize={12} mr={5}>
                   {created_at.substring(0, 10)}
                 </Text>
@@ -158,8 +188,8 @@ function OpinionThread({ route, navigation }) {
             />
           </Box>
 
-          {answerOpiniones.length > 0 &&
-            answerOpiniones.map((item) => (
+          {answerOpinions.length > 0 &&
+            answerOpinions.map((item) => (
               <Resp
                 key={item.id}
                 id={item.id}
@@ -216,6 +246,12 @@ function OpinionThread({ route, navigation }) {
       </Box>
 
       <Box height={130}></Box>
+      <ModalDeleteOpinion
+        showWarning={showWarning}
+        loading={loading}
+        setShowWarning={setShowWarning}
+        onPress={deleteOpinion}
+      />
       <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
     </Container>
   );

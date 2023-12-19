@@ -1,6 +1,4 @@
-import { memo, useEffect, useState } from "react";
-import Carousel from "react-native-snap-carousel";
-import { Box, HStack, Icon, Image, ScrollView, Text } from "native-base";
+import React, { memo, useEffect, useState, useCallback } from "react";
 import {
   FlatList,
   Dimensions,
@@ -9,31 +7,35 @@ import {
   View,
   PixelRatio,
 } from "react-native";
+import { Box, HStack, Icon, Image, ScrollView, Text } from "native-base";
+import Carousel from "react-native-snap-carousel";
+import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import { FontAwesome } from "@expo/vector-icons";
+
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
-import TitleSliders from "../../components/TitleSliders";
-import { getServices, putServices } from "../../utils/hooks/services";
 import { HeaderPerfil } from "../../components/Header";
-import * as Notifications from "expo-notifications";
-import * as React from "react";
-import * as Device from "expo-device";
+import TitleSliders from "../../components/TitleSliders";
+import DefaultButton from "../../components/DefaultButton";
+import { getServices, putServices } from "../../utils/hooks/services";
+
 import { store } from "../../redux/store";
-import { useIsFocused } from "@react-navigation/native";
 import { useEventNavigation } from "../../context";
 import Menu from "../Menu/Menu";
-import { FontAwesome } from '@expo/vector-icons';
 import { fontStyles } from "../../utils/colors/fontColors";
-import DefaultButton from "../../components/DefaultButton";
-import { horizontalScale, moderateScale, verticalScale } from "../../utils/media.screens";
-
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../../utils/media.screens";
 
 const handleError = (error) => {
   if (__DEV__) {
     console.log("Error:", error);
   }
 };
-
-
 
 function HomeScreen({ route, navigation }) {
   const isFocused = useIsFocused();
@@ -59,8 +61,8 @@ function HomeScreen({ route, navigation }) {
   const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 
   const { width, height } = Dimensions.get("window");
-  const cardWidth = width * 0.41; // Ancho de cada tarjeta, ajustado al 35% del ancho total
-  const cardHeight = height * 0.25; // alto de cada tarjeta, ajustado al 25% del alto total
+  const cardWidth = width * 0.41;
+  const cardHeight = height * 0.25;
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -72,44 +74,45 @@ function HomeScreen({ route, navigation }) {
     });
   }, []);
 
-  useEffect(() => {
-    getServices("notice/all")
-      .then(({ data }: any) => {
-        setTextNews(data);
-      })
-      .catch(handleError);
+  useFocusEffect(
+    useCallback(() => {
+      getServices("notice/all")
+        .then(({ data }: any) => {
+          setTextNews(data);
+        })
+        .catch(handleError);
 
-    getServices("advertisement/all/active?key=home")
-      .then(({ data }: any) => {
-        setAdvertisement(data);
-      })
-      .catch(handleError);
+      getServices("advertisement/all/active?key=home")
+        .then(({ data }: any) => {
+          setAdvertisement(data);
+        })
+        .catch(handleError);
 
-    getServices("offer/all")
-      .then(({ data }: any) => {
-        setOffer(data);
-      })
-      .catch(handleError);
+      getServices("offer-category/all")
+        .then(({ data }: any) => {
+          setOffer(data.map((obj) => obj.offers).flat());
+        })
+        .catch(handleError);
 
       getServices("offer/all/work")
-      .then(({ data }: any) => {
-        setAllOffers(data);
-      })
-      .catch(handleError);
+        .then(({ data }: any) => {
+          setAllOffers(data);
+        })
+        .catch(handleError);
 
-    getServices("offer/all/course")
-      .then(({ data }: any) => {
-        setCourses(data);
-      })
-      .catch(handleError);
+      getServices("offer/all/course")
+        .then(({ data }: any) => {
+          setCourses(data);
+        })
+        .catch(handleError);
 
-    getServices("resource/all/first")
-      .then(({ data }: any) => {
-        setCareer(data);
-      })
-      .catch(handleError);
-
-  }, [setAdvertisement, setTextNews, setOffer, setCourses]);
+      getServices("resource/all/first")
+        .then(({ data }: any) => {
+          setCareer(data);
+        })
+        .catch(handleError);
+    }, [setAdvertisement, setTextNews, setOffer, setCourses])
+  );
 
   const renderTextNews = ({ item }) => (
     <Box
@@ -159,7 +162,7 @@ function HomeScreen({ route, navigation }) {
 
   const renderCareer = ({ item }) => {
     const { title, description, url, image, partner, name } = item;
-    item.subject.subjectId = item.subject.id
+    item.subject.subjectId = item.subject.id;
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("SubjectContent", item.subject)}
@@ -171,9 +174,8 @@ function HomeScreen({ route, navigation }) {
           maxHeight: cardHeight,
           marginRight: 2,
           marginLeft: 10,
-          marginTop: 10
+          marginTop: 10,
         }}
-
       >
         <Box
           shadow={"0"}
@@ -193,8 +195,8 @@ function HomeScreen({ route, navigation }) {
               image?.url.endsWith(".pdf")
                 ? "file-pdf-o"
                 : /\.(jpe?g|png|gif|bmp)$/i.test(image?.url)
-                  ? "file-image-o"
-                  : "file-o"
+                ? "file-image-o"
+                : "file-o"
             }
           />
           <Box pt={1} pb={3} px={4} pl={2}>
@@ -207,16 +209,46 @@ function HomeScreen({ route, navigation }) {
             </Text>
           </Box>
         </Box>
-      </TouchableOpacity>);
+      </TouchableOpacity>
+    );
   };
 
   const renderOffer = ({ item }) => {
-    const { title, description, url, image, partner, time, hours, id, name, phone, company  } = item;
+    const {
+      title,
+      description,
+      url,
+      image,
+      partner,
+      time,
+      hours,
+      id,
+      name,
+      phone,
+      company,
+    } = item;
     return (
       <TouchableOpacity
         // onPress={() => navigation.navigate("MarketDetail", item)}
-        onPress={() => navigation.navigate(
-          "Anoffer", { mainTitle: "Ofertas Laborales", image: image.url, title: title, buttonValue: "Ver más", url: url, description: description, time: time, hours: hours, method: "", subject_id: 0, id: id, partner: partner, name, phone, company })}
+        onPress={() =>
+          navigation.navigate("Anoffer", {
+            mainTitle: "Ofertas Laborales",
+            image: image.url,
+            title: title,
+            buttonValue: "Ver más",
+            url: url,
+            description: description,
+            time: time,
+            hours: hours,
+            method: "",
+            subject_id: 0,
+            id: id,
+            partner: partner,
+            name,
+            phone,
+            company,
+          })
+        }
         style={{
           width: cardWidth,
           marginRight: 5,
@@ -235,12 +267,11 @@ function HomeScreen({ route, navigation }) {
           height={cardHeight}
           mb={5}
         >
-          <Box borderRadius={15} overflow="hidden"
-          >
+          <Box borderRadius={15} overflow="hidden">
             <Image
               alt={"logo"}
               style={{
-                width: cardWidth
+                width: cardWidth,
               }}
               resizeMethod="scale"
               h={125}
@@ -260,13 +291,15 @@ function HomeScreen({ route, navigation }) {
               <Text
                 fontWeight={700}
                 fontFamily="Manrope"
-                style={[fontStyles.poppins400, { fontSize: 12, marginBottom: 4, color: "#bcbecc" }]}
+                style={[
+                  fontStyles.poppins400,
+                  { fontSize: 12, marginBottom: 4, color: "#bcbecc" },
+                ]}
                 numberOfLines={1}
                 mt={1}
               >
                 {partner?.name}
               </Text>
-
             </Box>
           </Box>
         </Box>
@@ -297,12 +330,11 @@ function HomeScreen({ route, navigation }) {
           height={cardHeight}
           mb={5}
         >
-          <Box borderRadius={15} overflow="hidden"
-          >
+          <Box borderRadius={15} overflow="hidden">
             <Image
               alt={"logo"}
               style={{
-                width: cardWidth
+                width: cardWidth,
               }}
               resizeMethod="scale"
               h={125}
@@ -322,13 +354,15 @@ function HomeScreen({ route, navigation }) {
               <Text
                 fontWeight={700}
                 fontFamily="Manrope"
-                style={[fontStyles.poppins400, { fontSize: 12, marginBottom: 4, color: "#bcbecc" }]}
+                style={[
+                  fontStyles.poppins400,
+                  { fontSize: 12, marginBottom: 4, color: "#bcbecc" },
+                ]}
                 numberOfLines={1}
                 mt={1}
               >
                 {partner?.name}
               </Text>
-
             </Box>
           </Box>
         </Box>
@@ -340,7 +374,17 @@ function HomeScreen({ route, navigation }) {
     const { title, description, url, image, partner } = item;
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("Anoffer", { mainTitle: "Cursos & Workshops", title: item.title, url: item.url, description: item.description, id: item.id, partner: item.partner, image: item.image.url })}
+        onPress={() =>
+          navigation.navigate("Anoffer", {
+            mainTitle: "Cursos & Workshops",
+            title: item.title,
+            url: item.url,
+            description: item.description,
+            id: item.id,
+            partner: item.partner,
+            image: item.image.url,
+          })
+        }
         style={{
           width: cardWidth,
           maxWidth: cardWidth,
@@ -349,9 +393,8 @@ function HomeScreen({ route, navigation }) {
           maxHeight: cardHeight,
           marginRight: 2,
           marginLeft: 10,
-          marginTop: 10
+          marginTop: 10,
         }}
-
       >
         <Box
           shadow={"0"}
@@ -361,15 +404,13 @@ function HomeScreen({ route, navigation }) {
           height={cardHeight}
           mb={5}
         >
-          <Box borderRadius={15} overflow="hidden"
-          >
+          <Box borderRadius={15} overflow="hidden">
             <Image
               alt={"logo"}
               style={{
                 width: cardWidth,
                 maxWidth: cardWidth,
               }}
-
               resizeMethod="scale"
               h={125}
               resizeMode="cover"
@@ -386,18 +427,19 @@ function HomeScreen({ route, navigation }) {
 
               <Text
                 fontWeight={700}
-                style={[fontStyles.poppins400,{ fontSize: 15, marginBottom: 4, color: "#bcbecc" }]}
+                style={[
+                  fontStyles.poppins400,
+                  { fontSize: 15, marginBottom: 4, color: "#bcbecc" },
+                ]}
                 numberOfLines={1}
                 mt={1}
                 fontSize={"sm"}
               >
                 {partner?.name || " "}
               </Text>
-
             </Box>
           </Box>
         </Box>
-
       </TouchableOpacity>
     );
   };
@@ -478,11 +520,9 @@ function HomeScreen({ route, navigation }) {
                   px={4}
                   fontWeight={"bold"}
                   color="white"
-                  style={
-                    {
-                      ...fontStyles.poppins400,
-                    }
-                  }
+                  style={{
+                    ...fontStyles.poppins400,
+                  }}
                 >
                   No hay publicidad para mostrar
                 </Text>
@@ -507,15 +547,18 @@ function HomeScreen({ route, navigation }) {
               <View>
                 <Text
                   fontWeight={"700"}
-                  style={[{
-                    flex: 1,
-                    // backgroundColor: "#b1b1b3",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: 2,
-                    marginTop: 4,
-                    fontSize: moderateScale(14)
-                  }, fontStyles.poppins700]}
+                  style={[
+                    {
+                      flex: 1,
+                      // backgroundColor: "#b1b1b3",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 2,
+                      marginTop: 4,
+                      fontSize: moderateScale(14),
+                    },
+                    fontStyles.poppins700,
+                  ]}
                 >
                   ¿En qué aula curso?
                 </Text>
@@ -530,7 +573,7 @@ function HomeScreen({ route, navigation }) {
                       padding: 2,
                       marginTop: 2,
                     },
-                    fontStyles.poppins400
+                    fontStyles.poppins400,
                   ]}
                 >
                   Encontrá dónde cursás
@@ -545,8 +588,6 @@ function HomeScreen({ route, navigation }) {
                   marginRight: verticalScale(-50),
                 }}
               >
-
-
                 <DefaultButton
                   callBack={() =>
                     navigation.navigate("SearchCourse", {
@@ -554,22 +595,21 @@ function HomeScreen({ route, navigation }) {
                       url: "https://aulas.fadu.uba.ar/aulas.php",
                     })
                   }
-                  textStyle={
-                    {
-                      ...fontStyles.poppins500,
-                      color: "#F5F5F5",
-                      marginTop: verticalScale(6),
-                      fontWeight: "500"
-                    }
-                  }
+                  textStyle={{
+                    ...fontStyles.poppins500,
+                    color: "#F5F5F5",
+                    marginTop: verticalScale(6),
+                    fontWeight: "500",
+                  }}
                   buttonStyle={{
                     height: horizontalScale(30),
                     width: "100%",
                     alignItems: "center",
                     borderRadius: moderateScale(8),
                     paddingHorizontal: horizontalScale(35),
-                   }}
-                  title="Buscar" />
+                  }}
+                  title="Buscar"
+                />
               </View>
             </View>
           </HStack>
@@ -585,7 +625,10 @@ function HomeScreen({ route, navigation }) {
           {offer.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
-              contentContainerStyle={{ justifyContent: "space-between", paddingBottom: 20 }}
+              contentContainerStyle={{
+                justifyContent: "space-between",
+                paddingBottom: 20,
+              }}
               showsHorizontalScrollIndicator={false}
               horizontal
               data={offer.slice(0, 3)}
@@ -611,7 +654,10 @@ function HomeScreen({ route, navigation }) {
           {courses.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
-              contentContainerStyle={{ justifyContent: "space-between", paddingBottom: 20 }}
+              contentContainerStyle={{
+                justifyContent: "space-between",
+                paddingBottom: 20,
+              }}
               showsHorizontalScrollIndicator={false}
               horizontal
               data={courses.slice(0, 3)}
@@ -629,12 +675,12 @@ function HomeScreen({ route, navigation }) {
           )}
 
           <TitleSliders
-            navigateTo={'Ofertas Laborales'}
+            navigateTo={"Ofertas Laborales"}
             isSubsection={true}
             title={"Ofertas Laborales"}
             to={null}
             navigation={navigation}
-          /> 
+          />
           {allOffers.length > 0 ? (
             <FlatList
               keyExtractor={(item) => item?.id}
@@ -708,8 +754,6 @@ async function registerForPushNotificationsAsync() {
     await putServices(`auth/update-device-token/${user.id}`, {
       token: token,
     });
-  } else {
-    // alert("Must use physical device for Push Notifications");
   }
 
   if (Platform.OS === "android") {
