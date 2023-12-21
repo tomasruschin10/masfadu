@@ -37,7 +37,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
 
   const [FontsLoaded, setFontsLoaded] = useState(false);
   useEffect(() => {
-    console.log("subjCategory", subjCategory);
     if (!FontsLoaded) {
       const loadAsync = async () => {
         await loadFonts();
