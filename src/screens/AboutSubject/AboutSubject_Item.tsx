@@ -37,10 +37,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
 
   const [FontsLoaded, setFontsLoaded] = useState(false);
   useEffect(() => {
-    /*     if (!FontsLoaded) {
-          loadFonts();
-          setFontsLoaded(true);
-        } */
     if (!FontsLoaded) {
       const loadAsync = async () => {
         await loadFonts();
@@ -62,17 +58,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   if (!FontsLoaded) {
     return null;
   }
-
-  const usePercentage = (total, current) => {
-    let percentage;
-    if (total > 0) {
-      percentage = (current / total) * 100;
-      percentage = (percentage / 10).toFixed(1);
-    } else {
-      percentage = 0;
-    }
-    return percentage;
-  };
 
   return (
     <>
@@ -122,7 +107,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               py={3}
             >
               {`${subjCategory.on}/${subjCategory.total}`}
-              {/* {`${subjCategory.on}/${subjCategory.total}`} */}
             </Text>
           </Box>
           <Box ml={4}>
@@ -155,7 +139,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                     mt={3}
                     py={3}
                   >
-                    {usePercentage(subjCategory.total, subjCategory.on)}
+                    {subjCategory.prom}
                   </Text>
                 </Box>
               ) : null}
