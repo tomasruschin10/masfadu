@@ -38,7 +38,9 @@ function CreateNewThread({ route, navigation }) {
   const [searchText, setSearchText] = useState("");
   const [selectedSubjectId, setSelectedSubjectId] = useState("");
   const state: any = store.getState();
-  const [selectedCareerId, setSelectedCareerId] = useState(state.user.userdata.career_id);
+  const [selectedCareerId, setSelectedCareerId] = useState(
+    state.user.userdata.career_id
+  );
   const [subjects, setSubjects] = useState([]);
 
   if (route.params && route.params?.career_id) {
@@ -266,11 +268,26 @@ function CreateNewThread({ route, navigation }) {
               placeholderTextColor={"#C4C4C4"}
             />
           </Box>
+          <Box
+            mx="5"
+            borderBottomWidth={1}
+            borderBottomColor={"#EBEEF2"}
+            mb={14}
+          >
+            <Input
+              backgroundColor={"#F7FAFC"}
+              placeholder="Agregá la cátedra"
+              placeholderTextColor={"#C4C4C4"}
+              onChangeText={(text) => setForm({ ...form, professor: text })}
+            />
+          </Box>
+
           <Box borderBottomWidth={1} borderBottomColor={"#EBEEF2"}>
             {allTags.length > 0 && (
               <>
                 <RecommendedTags
                   searchText={searchText}
+                  setSearchText={setSearchText}
                   FilterTags={FilterTags}
                   form={form}
                   Concat={Concat}
@@ -304,40 +321,27 @@ function CreateNewThread({ route, navigation }) {
                   />
                 </Box>
 
-                <Box
-                  mx="5"
-                  borderBottomWidth={1}
-                  borderBottomColor={"#EBEEF2"}
-                  mb={14}
-                >
-                  <Input
-                    backgroundColor={"#F7FAFC"}
-                    placeholder="Agregá la cátedra"
-                    placeholderTextColor={"#C4C4C4"}
-                    onChangeText={(text) =>
-                      setForm({ ...form, professor: text })
-                    }
-                  />
-                </Box>
-                <Box flexDir={"row"} mb={form.tags.length > 0 ? 6 : 0}>
-                  {form.tags.length > 0 &&
-                    form.tags.map((it, i) => (
-                      <Box key={i}>
-                        <TouchableOpacity onPress={() => deleteTag(it, i)}>
-                          <Text
-                            key={i}
-                            mr={2}
-                            bg={"brand.primary"}
-                            color={"white"}
-                            py={1}
-                            px={3}
-                          >
-                            {it.name}
-                          </Text>
-                        </TouchableOpacity>
-                      </Box>
-                    ))}
-                </Box>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <Box flexDir={"row"} mx="5" mb={form.tags.length > 0 ? 6 : 0}>
+                    {form.tags.length > 0 &&
+                      form.tags.map((it, i) => (
+                        <Box key={i}>
+                          <TouchableOpacity onPress={() => deleteTag(it, i)}>
+                            <Text
+                              key={i}
+                              mr={2}
+                              bg={"brand.primary"}
+                              color={"white"}
+                              py={1}
+                              px={3}
+                            >
+                              {it.name}
+                            </Text>
+                          </TouchableOpacity>
+                        </Box>
+                      ))}
+                  </Box>
+                </ScrollView>
               </>
             )}
           </Box>
