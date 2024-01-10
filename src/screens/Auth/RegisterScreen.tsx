@@ -73,43 +73,42 @@ function RegisterScreen({ route, navigation }) {
       );
       return false;
     }
-    setLoading(true);
-    postServices("auth/register", form)
-      .then(({ data }: any) => {
-        console.log("hola", data)
-        dispatch(
-          updateMessage({
-            body: "Registro exitoso, por favor ahora haga login.",
-            open: true,
-            type: "success",
-          })
+    try {
+      setLoading(true);
+      const { data } = await postServices("auth/register", form);
+      dispatch(
+        updateMessage({
+          body: "Registro exitoso, por favor ahora haga login.",
+          open: true,
+          type: "success",
+        })
+      );
+      navigation.navigate("Login");
+    } catch (error) {
+      __DEV__ &&
+        console.log(
+          "🚀 ~ file: LoginScreen.tsx ~ line 41 ~ register ~ error",
+          error
         );
-        navigation.navigate("Login");
-      })
-      .catch((error) => {
-        __DEV__ &&
-          console.log(
-            "🚀 ~ file: LoginScreen.tsx ~ line 41 ~ getLogin ~ e",
-            error
-          );
-        dispatch(
-          updateMessage({
-            body: "Error al intentar registrarse." + error.data.message,
-            open: true,
-            type: "danger",
-          })
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      dispatch(
+        updateMessage({
+          body:
+            (error.response.data ? error.response.data.message : "") +
+            ", por favor elegí otro",
+          open: true,
+          type: "danger",
+        })
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Container>
       <HeaderBack />
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <VStack px={5}>
+        <VStack px={5} pb={5}>
           <Box mt={5} alignItems="center">
             <Image
               w={120}
@@ -142,7 +141,7 @@ function RegisterScreen({ route, navigation }) {
               borderColor={"transparent"}
               focusOutlineColor={"transparent"}
             />
-               <Input
+            <Input
               onChangeText={(text) => setForm({ ...form, username: text })}
               mx="3"
               mb={4}
