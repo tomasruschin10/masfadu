@@ -41,7 +41,8 @@ function RegisterScreen({ route, navigation }) {
       form.email === "" ||
       form.password === "" ||
       form.name === "" ||
-      form.lastname === ""
+      form.lastname === "" ||
+      form.username === ""
     ) {
       dispatch(
         updateMessage({
@@ -75,6 +76,7 @@ function RegisterScreen({ route, navigation }) {
     setLoading(true);
     postServices("auth/register", form)
       .then(({ data }: any) => {
+        console.log("hola", data)
         dispatch(
           updateMessage({
             body: "Registro exitoso, por favor ahora haga login.",
@@ -117,16 +119,14 @@ function RegisterScreen({ route, navigation }) {
               source={require("../../../assets/logo.png")}
             />
             <Input
-              onChangeText={(text) =>
-                setForm({ ...form, name: text, username: text })
-              }
+              onChangeText={(text) => setForm({ ...form, name: text })}
               mx="3"
               mb={4}
               placeholder="Nombre"
               w="100%"
               h={verticalScale(55)}
               rounded={moderateScale(8)}
-              placeholderTextColor="#797979"               
+              placeholderTextColor="#797979"
               borderColor={"transparent"}
               focusOutlineColor={"transparent"}
             />
@@ -138,7 +138,19 @@ function RegisterScreen({ route, navigation }) {
               w="100%"
               h={verticalScale(55)}
               rounded={moderateScale(8)}
-              placeholderTextColor="#797979"               
+              placeholderTextColor="#797979"
+              borderColor={"transparent"}
+              focusOutlineColor={"transparent"}
+            />
+               <Input
+              onChangeText={(text) => setForm({ ...form, username: text })}
+              mx="3"
+              mb={4}
+              placeholder="Usuario"
+              w="100%"
+              h={verticalScale(55)}
+              rounded={moderateScale(8)}
+              placeholderTextColor="#797979"
               borderColor={"transparent"}
               focusOutlineColor={"transparent"}
             />
@@ -150,15 +162,16 @@ function RegisterScreen({ route, navigation }) {
               w="100%"
               h={verticalScale(55)}
               rounded={moderateScale(8)}
-              placeholderTextColor="#797979"               
+              placeholderTextColor="#797979"
               borderColor={"transparent"}
               focusOutlineColor={"transparent"}
             />
             <Input
               onChangeText={(text) => setForm({ ...form, password: text })}
-              w={{ base: "100%", md: "25%" }}h={verticalScale(55)}
+              w={{ base: "100%", md: "25%" }}
+              h={verticalScale(55)}
               rounded={moderateScale(8)}
-              placeholderTextColor="#797979"               
+              placeholderTextColor="#797979"
               borderColor={"transparent"}
               focusOutlineColor={"transparent"}
               mb={4}
@@ -182,8 +195,8 @@ function RegisterScreen({ route, navigation }) {
               w={{ base: "100%", md: "25%" }}
               h={verticalScale(55)}
               rounded={moderateScale(8)}
-              placeholderTextColor="#797979" 
-              focusOutlineColor={"transparent"}           
+              placeholderTextColor="#797979"
+              focusOutlineColor={"transparent"}
               borderColor={"transparent"}
               mb={4}
               type={showRePassword ? "text" : "password"}
@@ -210,7 +223,7 @@ function RegisterScreen({ route, navigation }) {
               w="100%"
               h={verticalScale(55)}
               rounded={moderateScale(8)}
-              isLoading={loading}              
+              isLoading={loading}
               bg="#DA673A"
             >
               Registrarse
