@@ -1,6 +1,7 @@
-import { Box, Text, HStack } from "native-base";
+import { Box, Text, HStack, Select, CheckIcon } from "native-base";
 import { Image, Platform, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import * as Font from "expo-font";
@@ -24,14 +25,39 @@ function AboutSubject_Logic({
     margginTop = 5;
   }
 
-  const { available, id, name, subjects, userSubject } = subject;
+  const {
+    available,
+    id,
+    name,
+    subjects,
+    userSubject,
+    selective,
+    selectiveSubjects,
+  } = subject;
   const [FontsLoaded, setFontsLoaded] = useState(false);
+  const [selectiveSubject, setSelectiveSubject] = useState();
+
+  const obtenerDatos = async () => {
+    try {
+      const selectedSubjectString = await AsyncStorage.getItem("selectiveSubject");
+      if (selectedSubjectString) {
+        const selectedSubject = JSON.parse(selectedSubjectString);
+        setSelectiveSubject(selectedSubject.id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    obtenerDatos();
+
     if (!FontsLoaded) {
-      loadFonts()
+      loadFonts();
       setFontsLoaded(true);
     }
   }, []);
+
   const loadFonts = async () => {
     await Font.loadAsync({
       sora: require("../../../assets/fonts/Sora-Bold.ttf"),
@@ -45,9 +71,23 @@ function AboutSubject_Logic({
     return null;
   }
 
+
+  const selectSelectiveSubject = async (item) => {
+    setSelectiveSubject(item.id);
+    const itemString = JSON.stringify(item); 
+    await AsyncStorage.setItem("selectiveSubject", itemString);
+  };
+
+  const selectiveSubjectsData =
+    selectiveSubjects &&
+    selectiveSubjects.map((subject, index) => ({
+      label: subject,
+      value: index.toString(),
+    }));
+
   return (
     // Materias y puntajes
-    
+
     <HStack
       mt={margginTop}
       justifyContent={"space-between"}
@@ -77,23 +117,56 @@ function AboutSubject_Logic({
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Text
-            pr={2}
-            flex={1}
-            bold={true}
-            numberOfLines={2}
-            style={[fontStyles.poppins400, {fontSize: 14}]}
-            // color={
-            //   !available
-            //     ? "#C4C4C4"
-            //     : !userSubject || userSubject?.score < 4
-            //     ? "brand.primary"
-            //     : "light.100"
-            // }
-            color={'#171717'}
-          >
-            {name}
-          </Text>
+          {selective && selectiveSubjects ? (
+            <Select
+              selectedValue={
+                selectiveSubject 
+              }
+              minWidth="200"
+              accessibilityLabel="Elegir selectiva"
+              placeholder="Elegir selectiva"
+              _selectedItem={{
+                bg: "teal.600",
+                endIcon: <CheckIcon size="5" />,
+              }}
+              onValueChange={(itemId) => {
+                const selectedItem = selectiveSubjects.find(
+                  (item, index) => index.toString() === itemId
+                );
+                if (selectedItem) {
+                  selectSelectiveSubject(selectedItem);
+                }
+              }}
+              textAlign={"left"}
+            >
+              {selectiveSubjectsData.map((item) => (
+                <Select.Item
+                  label={item.label}
+                  value={item.value}
+                  key={item.value}
+                />
+              ))}
+            </Select>
+          ) : (
+            <Text
+              pr={2}
+              flex={1}
+              bold={true}
+              numberOfLines={2}
+              style={[fontStyles.poppins400, { fontSize: 14 }]}
+              // color={
+              //   !available
+              //     ? "#C4C4C4"
+              //     : !userSubject || userSubject?.score < 4
+              //     ? "brand.primary"
+              //     : "light.100"
+              // }
+              color={"#171717"}
+            >
+              {name}
+            </Text>
+          )}
+
           {/* TODO: para que es todo esto ? */}
           {/* 
           {(available && !userSubject) || !available ? null : available &&
@@ -170,8 +243,8 @@ function AboutSubject_Logic({
             backgroundColor: "white",
             alignItems: "center",
             justifyContent: "center",
-            overflow:"visible",
-            height: 70
+            overflow: "visible",
+            height: 70,
           }}
         >
           {/* <Box style={{ backgroundColor: "cyan" }}> */}
@@ -180,14 +253,15 @@ function AboutSubject_Logic({
             // color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
             // fontWeight={"bold"}
             // textAlign={"center"}
-            style={[fontStyles.headingText, 
-            {
-              fontSize: (Platform.OS === "ios" ? 32: 28 ), 
-              paddingVertical: (Platform.OS === "ios" ? "7.2%": "6.2%" ) , 
-              marginTop:10, 
-              marginRight: 10
-            }
-          ]}
+            style={[
+              fontStyles.headingText,
+              {
+                fontSize: Platform.OS === "ios" ? 32 : 28,
+                paddingVertical: Platform.OS === "ios" ? "7.2%" : "6.2%",
+                marginTop: 10,
+                marginRight: 10,
+              },
+            ]}
           >
             {userSubject?.score}
           </Text>
