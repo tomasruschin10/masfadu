@@ -140,7 +140,7 @@ function LoginScreen({ route, navigation }) {
               value={email}
               variant="unstyled"
               fontSize={moderateScale(14)}
-              placeholder="Email"
+              placeholder="Email o Usuario"
               h={verticalScale(55)}
               onChangeText={(text) => setEmail(text)}
               mx="1"

@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Box,
+  Button,
   Center,
   CheckIcon,
   Input,
@@ -94,7 +95,7 @@ function ChangeCareer({ route, navigation }) {
           <Text
             fontSize={18}
             mb="2"
-            color={"#3A71E1"}
+            color="brand.primary"
             fontWeight={"600"}
             fontFamily={"Poppins"}
           >
@@ -115,7 +116,7 @@ function ChangeCareer({ route, navigation }) {
           <Text
             fontSize={18}
             mb="2"
-            color={"#3A71E1"}
+            color="brand.primary"
             fontWeight={"600"}
             textAlign={"left"}
             fontFamily={"Poppins"}
@@ -153,20 +154,20 @@ function ChangeCareer({ route, navigation }) {
           )}
         </Box>
         <Center>
-          <TouchableOpacity onPress={() => sendForm()}>
-            <Box
-              flexDir={"row"}
-              bg="brand.primary"
-              alignItems={"center"}
-              borderRadius="2xl"
-              p="2"
-            >
-              <Ionicons name="arrow-forward-circle" size={26} color="white" />
-              <Text color="white" fontSize={14}>
-                Cambiar carrera
-              </Text>
-            </Box>
-          </TouchableOpacity>
+        <Button
+          onPress={() => sendForm()}
+          isDisabled={!selectCareer.career_id}
+          _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+          _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }}                           
+          bg={"#DA673A"}
+          // w="90%"
+          py={5}
+          color={'white'}
+          px={'50px'}
+          rounded={8}
+        >
+          Cambiar carrera
+        </Button>
         </Center>
       </Stack>
     </ScrollView>

@@ -39,7 +39,7 @@ function SeeSubjectThread_Item({
           ) : (
             <Avatar
               bg="brand.primary"
-              source={{ uri: student.image?.url }}
+              source={{ uri: student?.image?.url }}
               size="md"
             ></Avatar>
           )}
@@ -75,14 +75,14 @@ function SeeSubjectThread_Item({
             {description}
           </Text>
           <Text mt={1} fontSize={10} color="#9A9A9A">
-            {answersCount} respuestas {!materia && created_at.substring(0, 10)}
+            {answersCount} respuestas {!materia && created_at?.substring(0, 10)}
           </Text>
 
           <HStack>
             {tags.length ? (
               tags.map((tag) => (
                 <Text mt={1} fontSize={10} color="#9A9A9A">
-                  #{tag.tag.name}{" "}
+                  #{tag?.tag.name}{" "}
                 </Text>
               ))
             ) : (

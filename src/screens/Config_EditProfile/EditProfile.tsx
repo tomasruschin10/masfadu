@@ -1,4 +1,4 @@
-import { Avatar, Box, Icon, IconButton, Input, ScrollView, Text } from 'native-base'
+import { Avatar, Box, Button, Icon, IconButton, Input, ScrollView, Text } from 'native-base'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { putServices } from '../../utils/hooks/services'
@@ -9,6 +9,7 @@ import { updateUserdata } from '../../redux/actions/user';
 import * as DocumentPicker from 'expo-document-picker';
 import { updateMessage } from '../../redux/actions/message';
 import { MaterialIcons } from "@expo/vector-icons";
+import RNFS from 'react-native-fs';
 import Alert from "../../components/alert/Alert";
 function EditProfile({route, navigation}) {
   const userdata = useSelector((state: any) => state.user.userdata)
@@ -39,8 +40,16 @@ function EditProfile({route, navigation}) {
   }
 
   const pickImg = async () => {
-    const img:any = await DocumentPicker.getDocumentAsync({type: 'image/*'})
-    setForm({...form, image: img.uri})
+    try {
+      const img:any = await DocumentPicker.getDocumentAsync({type: 'image/*'})
+      setForm({...form, image: img.assets[0]?.uri})
+      // await RNFS.readFile(img.assets[0]?.uri, 'base64').then(data => {
+      //   console.log('base64',data);
+      // })
+    } catch(err) {
+      console.log(err)
+    }
+
   }
 
   return (
@@ -62,8 +71,9 @@ function EditProfile({route, navigation}) {
 
       <Box mx={5} my={7}>
         <Box mb={'5'} alignItems={'left'} flexDir={'column'} justifyContent={'space-between'}>
-          <Text fontSize={17} color={'#3A71E1'} fontWeight={'600'}  fontFamily={'Poppins'}>Teléfono</Text>
-          <Input rightElement={<IconButton
+          <Text fontSize={17} color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Teléfono</Text>
+          <Input 
+          rightElement={<IconButton
 							icon={
 								<Icon
 									as={MaterialIcons}
@@ -75,11 +85,31 @@ function EditProfile({route, navigation}) {
 							bgColor={"#EBEEF2"}
 							rounded={"full"}
 							size={5}
-						/>} autoFocus={true} onChangeText={text => setForm({...form, phone: text})} isDisabled={false} value={form.phone} px={'2'} fontFamily={'Poppins'} placeholder={'+5491164619938'} />
+						/>} 
+          autoFocus={true} 
+          onChangeText={text => setForm({...form, phone: text})} 
+          isDisabled={false} 
+          value={form.phone}
+          fontFamily={'Poppins'} 
+          placeholder={'+5491164619938'} 
+          type={"text"}
+          px={3.5}
+          placeholderTextColor={"#d3d3d3"}
+          backgroundColor={"#F7FAFC"}
+          />
+          {/* <Input
+                onChangeText={text => setForm({...form, phone: text})} 
+                type={"text"}
+                px={3.5}
+                mb={5}
+                placeholder={"+5491164619938"}
+                placeholderTextColor={"#d3d3d3"}
+                backgroundColor={"#F7FAFC"}
+              /> */}
         </Box>
 
         <Box mb={'5'} alignItems={'left'} flexDir={'column'} justifyContent={'space-between'}>
-          <Text fontSize={17} color={'#3A71E1'} fontWeight={'600'}  fontFamily={'Poppins'}>Email</Text>
+          <Text fontSize={17} color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Email</Text>
           <Input rightElement={<IconButton
 							icon={
 								<Icon
@@ -96,7 +126,7 @@ function EditProfile({route, navigation}) {
         </Box>
 
         <Box mb={'5'} alignItems={'left'} flexDir={'column'} justifyContent={'space-between'}>
-          <Text fontSize={17} color={'#3A71E1'} fontWeight={'600'}  fontFamily={'Poppins'}>Usuario</Text>
+          <Text fontSize={17} color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Usuario</Text>
           <Input rightElement={<IconButton
 							icon={
 								<Icon
@@ -114,10 +144,29 @@ function EditProfile({route, navigation}) {
 
         <Box alignItems='center' mb={20}>
           <TouchableOpacity onPress={() => sendForm()}>
-            <Box h={42} flexDir={'row'} bg="brand.primary" w={'40%'} alignItems={'center'} justifyContent={'space-around'} borderRadius='2xl' px='2'>
+            <Button
+              _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+              _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }}                            
+              bg={"#DA673A"}
+              // w="90%"
+              py={5}
+              px={'50px'}
+              rounded={8}
+            >
+              Guardar
+            </Button>
+            {/* <Box 
+            h={42} 
+            flexDir={'row'} 
+            bg="brand.primary" 
+            w={'40%'} 
+            alignItems={'center'} 
+            justifyContent={'space-around'} 
+            borderRadius={8} 
+            px='2'>
               <Ionicons name="arrow-forward-circle" size={26} color="white" />
               <Text color='white' fontSize={14}>Guardar</Text>
-            </Box>
+            </Box> */}
           </TouchableOpacity>
         </Box>
       </Box>

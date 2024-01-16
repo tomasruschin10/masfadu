@@ -424,8 +424,17 @@ function SeeSubjectThread({ route, navigation }) {
                 mb={3}
                 justifyContent={"space-between"}
               >
-                <Text fontWeight={"500"} flex={1} fontSize={17.52}>
-                  Hilos sobre {title}
+                <Text 
+                fontWeight={"500"} 
+                flex={1} 
+                fontSize={17.52}
+                color='brand.primary'
+                bg={"#F4F6F9"} 
+                py="4" 
+                px="4"
+                rounded={8}
+                >
+                  Hilos sobress {title}
                 </Text>
               </Box>
 

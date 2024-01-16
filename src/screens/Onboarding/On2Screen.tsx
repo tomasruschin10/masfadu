@@ -47,7 +47,7 @@ function On2Screen({ route, navigation }) {
           .then(({ data }: any) => {
             dispatch(updatetoken(data.token));
             getUserDataWithToken(data.token);
-            navigation.navigate("Home");
+            navigation.navigate('Onboarding3')
           })
           .catch((error) => {
             if (__DEV__) {
