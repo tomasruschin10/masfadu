@@ -1,17 +1,36 @@
 import { Box, Button, ScrollView, TextArea } from "native-base";
 import React, { useState } from "react";
-import { Linking } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { updateMessage } from "../../redux/actions/message";
+import { postServices } from "../../utils/hooks/services";
 
 function Suggestions({ route, navigation }) {
   const [text, useText] = useState("");
+  const dispatch = useDispatch();
+
+  const submitSuggestion = () => {
+    const url = "suggestion/submit";
+    const body = { suggestion: text };
+
+    return postServices(url, body);
+  };
 
   const sendEmail = async () => {
     try {
-      await Linking.openURL(
-        encodeURI(`mailto:muyfadu@gmail.com?subject=Sugerencia&body=${text}`)
-      );
-    } catch (error) {
-      console.log(error)
+      const { status } = await submitSuggestion();
+      if (status === 201) {
+        dispatch(
+          updateMessage({
+            body: "Sugerencia enviada exitosamente",
+            open: true,
+            type: "success",
+          })
+        );
+        navigation.goBack();
+      }
+    } catch (err) {
+      console.error("Error al enviar la sugerencia:", err);
     }
   };
 

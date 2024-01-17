@@ -22,7 +22,7 @@ const On3Screen = ({ route, navigation }) => {
 
     putServices(`auth/update/${userdata.id}`, formData).then(({data}:any) => {
       store.dispatch(updateUserdata(data))
-      navigation.navigate('Home')
+      navigation.navigate('Onboarding4')
       dispatch(updateMessage({body: 'Guardado con Exito!', open: true, type: 'success'}))
     }).catch(err => /* showAlert('error', 'Hubo un Error al Guardar')  */dispatch(updateMessage({body: 'Hubo un Error al Guardar', open: true, type: 'danger'})))
   }
@@ -37,7 +37,7 @@ const On3Screen = ({ route, navigation }) => {
     
       }
   return (
-    <Container>{console.log(userdata)}
+    <Container>
 		<NoHeader />
 			<Box flex={1} mt={-5} justifyContent={'center'} alignItems="center">
             <Box mt={'10'} alignItems='center'>
@@ -71,7 +71,7 @@ const On3Screen = ({ route, navigation }) => {
 				py={5}
 				rounded={8}
 				>
-					Ir al inicio
+					Siguiente
 				</Button>
 			</Box>
 	</Container>

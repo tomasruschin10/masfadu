@@ -419,22 +419,31 @@ function SeeSubjectThread({ route, navigation }) {
           {allOpinions.length > 0 && (
             <>
               <Box
-                flexDir={"row"}
+                // flexDir={"row"}
                 mt={4}
                 mb={3}
-                justifyContent={"space-between"}
+                bg={"#F4F6F9"} 
+                // justifyContent={"space-between"}
+                py="3" 
+                rounded={8}
               >
                 <Text 
                 fontWeight={"500"} 
                 flex={1} 
                 fontSize={17.52}
-                color='brand.primary'
-                bg={"#F4F6F9"} 
-                py="4" 
+                color='black'
                 px="4"
-                rounded={8}
-                >
-                  Hilos sobre {title}
+                >              
+                  Hilos sobre:
+                </Text>
+                <Text 
+                fontWeight={"500"} 
+                flex={1} 
+                fontSize={14}
+                color='brand.primary'
+                px="4"
+                >              
+                  {title}
                 </Text>
               </Box>
 

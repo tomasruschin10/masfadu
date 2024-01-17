@@ -38,6 +38,9 @@ import JobOfferForm from "../screens/JobOffers/JobOfferForm";
 import JobOfferFormMedia from "../screens/JobOffers/JobOfferFormMedia";
 import ResourceForm from "../screens/Resourcesandtools/ResourceForm";
 import On3Screen from "../screens/Onboarding/On3Screen";
+import On4Screen from "../screens/Onboarding/On4Screen";
+import On5Screen from "../screens/Onboarding/On5Screen";
+import On6Screen from "../screens/Onboarding/On6Screen";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +82,9 @@ export function NavStack() {
           <Stack.Screen name="Onboarding1" component={On1Screen} />
           <Stack.Screen name="Onboarding2" component={On2Screen} />
           <Stack.Screen name="Onboarding3" component={On3Screen} />
+          <Stack.Screen name="Onboarding4" component={On4Screen} />
+          <Stack.Screen name="Onboarding5" component={On5Screen} />
+          <Stack.Screen name="Onboarding6" component={On6Screen} />
 
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="News" component={News} />

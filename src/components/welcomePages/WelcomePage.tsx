@@ -4,11 +4,12 @@ import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
 
 interface WelcomeProps {
-    hidde: any,
+    redirect: () => void,
     title: string
+    buttonText: string
 }
 
-const WelcomePage = ({hidde, title}) => {
+const WelcomePage:React.FC<WelcomeProps> = ({redirect, title, buttonText}) => {
   return (
     <Container>
 		<NoHeader />
@@ -50,9 +51,9 @@ const WelcomePage = ({hidde, title}) => {
 				w="90%"
 				py={5}
 				rounded={8}
-                onPress={() => hidde(true)}
+                onPress={redirect}
 				>
-					Ver
+					{buttonText}
 				</Button>
 			</Box>
 	</Container>

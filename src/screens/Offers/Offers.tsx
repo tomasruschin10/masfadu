@@ -20,13 +20,11 @@ import { fontStyles } from "../../utils/colors/fontColors";
 import Container from "../../components/Container";
 
 import { store } from "../../redux/store";
-import WelcomePage from "../../components/welcomePages/WelcomePage";
 
 const { width: screenWidth } = Dimensions.get("window");
 const filterWidth = screenWidth * 0.29;
 
 function Offers({ route, navigation }) {  
-  const [viewMarket, setViewMarket] = useState(false);
   const [offerCategory, setOfferCategory] = useState([]);
   const [items, setItems] = useState([]);
   const [myItems, setMyItems] = useState([]);
@@ -261,176 +259,166 @@ function Offers({ route, navigation }) {
   };
 
   return (
-    <>
-    {
-      viewMarket
-      ? (
-        <Layout
-          route={route}
-          navigation={navigation}
-          title="El Mercado de Fadu"
-          addButtonUrl={"OfferForm"}
+    <Layout
+      route={route}
+      navigation={navigation}
+      title="El Mercado de Fadu"
+      addButtonUrl={"OfferForm"}
+    >
+      <HStack mt={0} mb={3} alignItems={"center"} justifyContent="center">
+        <MaterialIcons
+          name={"search"}
+          size={17}
+          color="gray"
+          style={{ position: "absolute", left: "8.8%", zIndex: 1 }}
+        />
+
+    <Input
+      style={{ marginLeft: "10%" }}
+      onChangeText={(text) => setSearch(text)}
+      value={search}
+      w={{ base: "80%", md: "25%" }}
+      pb="1"
+      type={"text"}
+      placeholder="Buscar"
+      placeholderTextColor="#666666"
+      rounded={8}
+    />
+    <IconButton
+      onPress={() => {
+        setSearch("");
+      }}
+      ml="3"
+      rounded={8}
+      backgroundColor={"#fff"}
+      icon={
+        <Icon as={AntDesign} name="close" size="md" color={"muted.400"} />
+      }
+    />
+  </HStack>
+  <View
+    style={{
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      marginLeft: 35,
+      marginBottom: 20,
+    }}
+  >
+    <TouchableOpacity
+      onPress={() => setSelectedButton("Todo")}
+      style={{
+        borderRadius: 0,
+        height: 40,
+        borderBottomLeftRadius: 2,
+        borderBottomStartRadius: 2,
+        marginRight: 20,
+        borderBottomWidth: selectedButton === "Todo" ? 1 : 0,
+        borderBottomColor: "#EB5E29",
+      }}
+    >
+      <Text
+        style={{
+          paddingVertical: 10,
+          textAlign: "center",
+          color: selectedButton === "Todo" ? "#EB5E29" : "#797979",
+        }}
+      >
+        Todo
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => setSelectedButton("Mis Publicaciones")}
+      style={{
+        borderRadius: 0,
+        borderBottomLeftRadius: 2,
+        height: 40,
+        borderBottomStartRadius: 2,
+        borderBottomWidth: selectedButton === "Mis Publicaciones" ? 1 : 0,
+        borderBottomColor: "#EB5E29",
+      }}
+    >
+      <Text
+        style={{
+              paddingVertical: 10,
+              borderRadius: 99,
+              textAlign: "center",
+              color:
+                selectedButton === "Mis Publicaciones" ? "#EB5E29" : "#797979",
+            }}
+          >
+            Mis Publicaciones
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          height: 2,
+          backgroundColor: "#DEE8EE",
+          marginBottom: 20,
+          marginLeft: 17,
+          marginRight: 17,
+        }}
+      />
+      <Box alignContent={"center"} mt={3} mb={1}>
+        <FlatList
+          alignSelf={"center"}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(_, index) => index.toString()}
+          horizontal
+          data={advertisement}
+          renderItem={renderNews}
+        />
+      </Box>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          height: 50,
+          marginTop: -20,
+          marginBottom: 10,
+          paddingHorizontal: "3%",
+        }}
+      >
+        <ScrollView
+          contentContainerStyle={{
+            alignSelf: "flex-start",
+          }}
+          paddingTop={"10%"}
+          paddingBottom={"20%"}
+          showsVerticalScrollIndicator={false}
         >
-          <HStack mt={0} mb={3} alignItems={"center"} justifyContent="center">
-            <MaterialIcons
-              name={"search"}
-              size={17}
-              color="gray"
-              style={{ position: "absolute", left: "8.8%", zIndex: 1 }}
-            />
-    
-            <Input
-              style={{ marginLeft: "10%" }}
-              onChangeText={(text) => setSearch(text)}
-              value={search}
-              w={{ base: "80%", md: "25%" }}
-              pb="1"
-              type={"text"}
-              placeholder="Buscar"
-              placeholderTextColor="#666666"
-              rounded={8}
-            />
-            <IconButton
-              onPress={() => {
-                setSearch("");
-              }}
-              ml="3"
-              rounded={8}
-              backgroundColor={"#fff"}
-              icon={
-                <Icon as={AntDesign} name="close" size="md" color={"muted.400"} />
-              }
-            />
-          </HStack>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              marginLeft: 35,
-              marginBottom: 20,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => setSelectedButton("Todo")}
-              style={{
-                borderRadius: 0,
-                height: 40,
-                borderBottomLeftRadius: 2,
-                borderBottomStartRadius: 2,
-                marginRight: 20,
-                borderBottomWidth: selectedButton === "Todo" ? 1 : 0,
-                borderBottomColor: "#EB5E29",
-              }}
-            >
-              <Text
-                style={{
-                  paddingVertical: 10,
-                  textAlign: "center",
-                  color: selectedButton === "Todo" ? "#EB5E29" : "#797979",
-                }}
-              >
-                Todo
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setSelectedButton("Mis Publicaciones")}
-              style={{
-                borderRadius: 0,
-                borderBottomLeftRadius: 2,
-                height: 40,
-                borderBottomStartRadius: 2,
-                borderBottomWidth: selectedButton === "Mis Publicaciones" ? 1 : 0,
-                borderBottomColor: "#EB5E29",
-              }}
-            >
-              <Text
-                style={{
-                  paddingVertical: 10,
-                  borderRadius: 99,
-                  textAlign: "center",
-                  color:
-                    selectedButton === "Mis Publicaciones" ? "#EB5E29" : "#797979",
-                }}
-              >
-                Mis Publicaciones
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              height: 2,
-              backgroundColor: "#DEE8EE",
-              marginBottom: 20,
-              marginLeft: 17,
-              marginRight: 17,
-            }}
-          />
-          <Box alignContent={"center"} mt={3} mb={1}>
-            <FlatList
-              alignSelf={"center"}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(_, index) => index.toString()}
-              horizontal
-              data={advertisement}
-              renderItem={renderNews}
-            />
-          </Box>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              height: 50,
-              marginTop: -20,
-              marginBottom: 10,
-              paddingHorizontal: "3%",
-            }}
-          >
-            <ScrollView
-              contentContainerStyle={{
-                alignSelf: "flex-start",
-              }}
-              paddingTop={"10%"}
-              paddingBottom={"20%"}
-              showsVerticalScrollIndicator={false}
-            >
-              <FlatList
-                contentContainerStyle={{
-                  justifyContent: "flex-start",
-                  width: "100%",
-                }}
-                horizontal={true}
-                keyExtractor={(item) => item.id}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={offerCategory}
-                renderItem={HeaderFilters}
-              />
-            </ScrollView>
-          </View>
-    
           <FlatList
-            style={{
+            contentContainerStyle={{
+              justifyContent: "flex-start",
               width: "100%",
             }}
-            data={selectedButton === "Mis Publicaciones" ? myItems : items}
-            renderItem={renderItem}
+            horizontal={true}
             keyExtractor={(item) => item.id}
-            numColumns={2}
-            contentContainerStyle={{
-              alignItems: "center",
-              paddingBottom: 50,
-            }}
-            columnWrapperStyle={{
-              columnGap: 20,
-            }}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            data={offerCategory}
+            renderItem={HeaderFilters}
           />
-        </Layout>
-      )
-      : (
-        <WelcomePage hidde={setViewMarket} title="El Mercado de Fadu" />
-      )
-    }
-    </>
+        </ScrollView>
+      </View>
+
+      <FlatList
+        style={{
+          width: "100%",
+        }}
+        data={selectedButton === "Mis Publicaciones" ? myItems : items}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={{
+          alignItems: "center",
+          paddingBottom: 50,
+        }}
+        columnWrapperStyle={{
+          columnGap: 20,
+        }}
+      />
+    </Layout>
   );
 }
 
