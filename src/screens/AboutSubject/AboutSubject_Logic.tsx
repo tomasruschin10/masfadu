@@ -1,4 +1,4 @@
-import { Box, Text, HStack, Select, CheckIcon } from "native-base";
+import { Box, Text, HStack, Select, CheckIcon, VStack } from "native-base";
 import { Image, Platform, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -39,7 +39,9 @@ function AboutSubject_Logic({
 
   const obtenerDatos = async () => {
     try {
-      const selectedSubjectString = await AsyncStorage.getItem("selectiveSubject");
+      const selectedSubjectString = await AsyncStorage.getItem(
+        "selectiveSubject"
+      );
       if (selectedSubjectString) {
         const selectedSubject = JSON.parse(selectedSubjectString);
         setSelectiveSubject(selectedSubject.id);
@@ -71,10 +73,9 @@ function AboutSubject_Logic({
     return null;
   }
 
-
   const selectSelectiveSubject = async (item) => {
     setSelectiveSubject(item.id);
-    const itemString = JSON.stringify(item); 
+    const itemString = JSON.stringify(item);
     await AsyncStorage.setItem("selectiveSubject", itemString);
   };
 
@@ -117,56 +118,47 @@ function AboutSubject_Logic({
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          {selective && selectiveSubjects ? (
-            <Select
-              selectedValue={
-                selectiveSubject 
-              }
-              minWidth="200"
-              accessibilityLabel="Elegir selectiva"
-              placeholder="Elegir selectiva"
-              _selectedItem={{
-                bg: "teal.600",
-                endIcon: <CheckIcon size="5" />,
-              }}
-              onValueChange={(itemId) => {
-                const selectedItem = selectiveSubjects.find(
-                  (item, index) => index.toString() === itemId
-                );
-                if (selectedItem) {
-                  selectSelectiveSubject(selectedItem);
-                }
-              }}
-              textAlign={"left"}
-            >
-              {selectiveSubjectsData.map((item) => (
-                <Select.Item
-                  label={item.label}
-                  value={item.value}
-                  key={item.value}
-                />
-              ))}
-            </Select>
-          ) : (
+          <VStack space={2} alignItems="flex-start">
             <Text
               pr={2}
-              flex={1}
               bold={true}
               numberOfLines={2}
               style={[fontStyles.poppins400, { fontSize: 14 }]}
-              // color={
-              //   !available
-              //     ? "#C4C4C4"
-              //     : !userSubject || userSubject?.score < 4
-              //     ? "brand.primary"
-              //     : "light.100"
-              // }
               color={"#171717"}
             >
               {name}
             </Text>
-          )}
-
+            {selective && selectiveSubjects ? (
+              <Select
+                selectedValue={selectiveSubject}
+                minWidth="200"
+                marginTop={-3} // Ajusta este valor según tu preferencia
+                accessibilityLabel="Elegir selectiva"
+                placeholder="Elegir selectiva"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                onValueChange={(itemId) => {
+                  const selectedItem = selectiveSubjects.find(
+                    (item, index) => index.toString() === itemId
+                  );
+                  if (selectedItem) {
+                    selectSelectiveSubject(selectedItem);
+                  }
+                }}
+                textAlign={"left"}
+              >
+                {selectiveSubjectsData.map((item) => (
+                  <Select.Item
+                    label={item.label}
+                    value={item.value}
+                    key={item.value}
+                  />
+                ))}
+              </Select>
+            ) : null}
+          </VStack>
           {/* TODO: para que es todo esto ? */}
           {/* 
           {(available && !userSubject) || !available ? null : available &&

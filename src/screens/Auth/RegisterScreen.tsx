@@ -76,6 +76,7 @@ function RegisterScreen({ route, navigation }) {
     try {
       setLoading(true);
       const { data } = await postServices("auth/register", form);
+      console.log("holaa", data)
       dispatch(
         updateMessage({
           body: "Registro exitoso, por favor ahora haga login.",
