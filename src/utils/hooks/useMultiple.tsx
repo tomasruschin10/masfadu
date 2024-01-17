@@ -80,7 +80,7 @@ export const RenderOpinion = ({ color, title, text, time, hours, method, subject
                 marginX={"auto"} 
                 rounded={5} 
                 _text={{ 
-                  fontSize: (30 / firstLetter?.length) + (firstLetter?.length * 1.5), 
+                  fontSize: (30 / (firstLetter?.length || 1)) + ((firstLetter?.length * 1.5) || 1), 
                   color:"#DA673A"
                 }} 
                 bg={"#FBF0EB"} 
