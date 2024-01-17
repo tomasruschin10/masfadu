@@ -175,7 +175,7 @@ function AboutSubject_Logic({
               </Text>
             </Box>
           ) : null} */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() =>
               nav.navigate("SeeSubjectThread", {
                 rating: 14,
@@ -194,7 +194,7 @@ function AboutSubject_Logic({
               source={require("../../../assets/icons/smile.png")}
               style={{ width: 26, height: 26, marginLeft: 20, marginRight: -5 }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </HStack>
       </Box>
 
@@ -289,7 +289,7 @@ function AboutSubject_Logic({
             h={"56px"}
           > */}
           <Text
-            color={"#3a71e1"}
+            color={"brand.primary"}
             // fontWeight={"bold"}
             textAlign={"center"}
             fontSize={38}

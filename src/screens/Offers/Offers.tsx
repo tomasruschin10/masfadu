@@ -24,7 +24,7 @@ import { store } from "../../redux/store";
 const { width: screenWidth } = Dimensions.get("window");
 const filterWidth = screenWidth * 0.29;
 
-function Offers({ route, navigation }) {
+function Offers({ route, navigation }) {  
   const [offerCategory, setOfferCategory] = useState([]);
   const [items, setItems] = useState([]);
   const [myItems, setMyItems] = useState([]);
@@ -273,72 +273,72 @@ function Offers({ route, navigation }) {
           style={{ position: "absolute", left: "8.8%", zIndex: 1 }}
         />
 
-        <Input
-          style={{ marginLeft: "10%" }}
-          onChangeText={(text) => setSearch(text)}
-          value={search}
-          w={{ base: "80%", md: "25%" }}
-          pb="1"
-          type={"text"}
-          placeholder="Buscar"
-          placeholderTextColor="#666666"
-          rounded={8}
-        />
-        <IconButton
-          onPress={() => {
-            setSearch("");
-          }}
-          ml="3"
-          rounded={8}
-          backgroundColor={"#fff"}
-          icon={
-            <Icon as={AntDesign} name="close" size="md" color={"muted.400"} />
-          }
-        />
-      </HStack>
-      <View
+    <Input
+      style={{ marginLeft: "10%" }}
+      onChangeText={(text) => setSearch(text)}
+      value={search}
+      w={{ base: "80%", md: "25%" }}
+      pb="1"
+      type={"text"}
+      placeholder="Buscar"
+      placeholderTextColor="#666666"
+      rounded={8}
+    />
+    <IconButton
+      onPress={() => {
+        setSearch("");
+      }}
+      ml="3"
+      rounded={8}
+      backgroundColor={"#fff"}
+      icon={
+        <Icon as={AntDesign} name="close" size="md" color={"muted.400"} />
+      }
+    />
+  </HStack>
+  <View
+    style={{
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      marginLeft: 35,
+      marginBottom: 20,
+    }}
+  >
+    <TouchableOpacity
+      onPress={() => setSelectedButton("Todo")}
+      style={{
+        borderRadius: 0,
+        height: 40,
+        borderBottomLeftRadius: 2,
+        borderBottomStartRadius: 2,
+        marginRight: 20,
+        borderBottomWidth: selectedButton === "Todo" ? 1 : 0,
+        borderBottomColor: "#EB5E29",
+      }}
+    >
+      <Text
         style={{
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          marginLeft: 35,
-          marginBottom: 20,
+          paddingVertical: 10,
+          textAlign: "center",
+          color: selectedButton === "Todo" ? "#EB5E29" : "#797979",
         }}
       >
-        <TouchableOpacity
-          onPress={() => setSelectedButton("Todo")}
-          style={{
-            borderRadius: 0,
-            height: 40,
-            borderBottomLeftRadius: 2,
-            borderBottomStartRadius: 2,
-            marginRight: 20,
-            borderBottomWidth: selectedButton === "Todo" ? 1 : 0,
-            borderBottomColor: "#EB5E29",
-          }}
-        >
-          <Text
-            style={{
-              paddingVertical: 10,
-              textAlign: "center",
-              color: selectedButton === "Todo" ? "#EB5E29" : "#797979",
-            }}
-          >
-            Todo
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setSelectedButton("Mis Publicaciones")}
-          style={{
-            borderRadius: 0,
-            borderBottomLeftRadius: 2,
-            height: 40,
-            borderBottomStartRadius: 2,
-            borderBottomWidth: selectedButton === "Mis Publicaciones" ? 1 : 0,
-            borderBottomColor: "#EB5E29",
-          }}
-        >
-          <Text
-            style={{
+        Todo
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => setSelectedButton("Mis Publicaciones")}
+      style={{
+        borderRadius: 0,
+        borderBottomLeftRadius: 2,
+        height: 40,
+        borderBottomStartRadius: 2,
+        borderBottomWidth: selectedButton === "Mis Publicaciones" ? 1 : 0,
+        borderBottomColor: "#EB5E29",
+      }}
+    >
+      <Text
+        style={{
               paddingVertical: 10,
               borderRadius: 99,
               textAlign: "center",

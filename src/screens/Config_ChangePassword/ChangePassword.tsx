@@ -1,4 +1,4 @@
-import { Box, Icon, IconButton, Input, ScrollView, Text } from 'native-base'
+import { Box, Button, Icon, IconButton, Input, ScrollView, Text } from 'native-base'
 import React, { useState } from 'react'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
@@ -43,10 +43,10 @@ function ChangePassword({route, navigation}) {
                   {alert && (
         <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
       )}
-      <Box alignItems={'center'}>
-        <Box   mx={6} my={7}>
+      <Box mx={6}>
+        <Box my={7}>
           <Box w={'100%'} mb={'7'} alignItems={'left'}>
-            <Text fontSize={18} mb='2' color={'#C0C0C0'} fontWeight={'600'} fontFamily={'Poppins'}>Contraseña anterior</Text>
+            <Text fontSize={18} mb='2' color="brand.primary" fontWeight={'600'} fontFamily={'Poppins'}>Contraseña anterior</Text>
             <Input value={form.password} onChangeText={(text) => setForm({...form, password: text})} fontSize={'18'} bg={'#c4c4c41a'}  px={'2'} fontFamily={'Poppins'} rightElement={<IconButton
 							icon={
 								<Icon
@@ -57,13 +57,13 @@ function ChangePassword({route, navigation}) {
 								/>
 							}
 							bgColor={"#EBEEF2"}
-							rounded={"full"}
+							rounded={8}
 							size={5}
-						/>} placeholder={'+5491164619938'} />
+						/>} placeholder={'Contraseña'} />
           </Box>
 
           <Box mb={'7'} alignItems={'left'}>
-            <Text fontSize={18} mb='2' color={'#3A71E1'} fontWeight={'600'}  fontFamily={'Poppins'}>Contraseña nueva</Text>
+            <Text fontSize={18} mb='2' color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Contraseña nueva</Text>
             <Input rightElement={<IconButton
 							icon={
 								<Icon
@@ -74,13 +74,13 @@ function ChangePassword({route, navigation}) {
 								/>
 							}
 							bgColor={"#EBEEF2"}
-							rounded={"full"}
+							rounded={8}
 							size={5}
-						/>}  value={form.newpassword} onChangeText={(text) => setForm({...form, newpassword: text})} fontSize={'18'} bg={'#c4c4c41a'} px={'2'} fontFamily={'Poppins'} placeholder={'hola123'} />
+						/>}  value={form.newpassword} onChangeText={(text) => setForm({...form, newpassword: text})} fontSize={'18'} bg={'#c4c4c41a'} px={'2'} fontFamily={'Poppins'} placeholder={'Nueva contraseña'} />
           </Box>
 
           <Box mb={'7'} alignItems={'left'}>
-            <Text fontSize={18} mb='2' color={'#3A71E1'} fontWeight={'600'}  fontFamily={'Poppins'}>Confirmar contraseña</Text>
+            <Text fontSize={18} mb='2' color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Confirmar contraseña</Text>
             <Input rightElement={<IconButton
 							icon={
 								<Icon
@@ -91,29 +91,30 @@ function ChangePassword({route, navigation}) {
 								/>
 							}
 							bgColor={"#EBEEF2"}
-							rounded={"full"}
+							rounded={8}
 							size={5}
-						/>}  value={repeatPassword} onChangeText={(text) => setRepeatPassword(text)}  fontSize={'18'} bg={'#c4c4c41a'} px={'2'} fontFamily={'Poppins'} placeholder={'hola123'} />
+						/>}  value={repeatPassword} onChangeText={(text) => setRepeatPassword(text)}  fontSize={'18'} bg={'#c4c4c41a'} px={'2'} fontFamily={'Poppins'} placeholder={'Nueva contraseña'} />
           </Box>
         </Box>
 
-        { form.newpassword.length > 0 && form.password.length > 0 ?
-          <TouchableOpacity onPress={() => sendForm()}>
-            <Box h={42} flexDir={'row'} bg='blue.500' alignItems={'center'} borderRadius='2xl' px='2'>
-              <Ionicons name="arrow-forward-circle" size={26} color="white" />
-              <Text color='white' fontSize={14}>Cambiar contraseña</Text>
-            </Box>
-          </TouchableOpacity>
-          :
-          <Box h={42} flexDir={'row'} bg='blue.200' alignItems={'center'} borderRadius='2xl' px='2'>
-            <Ionicons name="arrow-forward-circle" size={26} color="white" />
-            <Text color='white' fontSize={14}>Cambiar contraseña</Text>
-          </Box>
-        }
+            <Button
+              onPress={() => sendForm()}
+              _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+              _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }} 
+              isDisabled={!(form.newpassword.length > 0 && form.password.length > 0)}                          
+              bg={"#DA673A"}
+              // w="90%"
+              py={5}
+              color={'white'}
+              px={'50px'}
+              rounded={8}
+            >
+              Guardar
+            </Button>
         
-        <Box mt='6' mb={24}>
+        <Box mt='6' mb={24} marginX='auto'>
           <TouchableOpacity onPress={() => navigation.navigate('RecoveryPassword')}>
-            <Text color='blue.500' fontWeight={'500'}>Uy, no me acuerdo la contraseña</Text>
+            <Text color="brand.primary" fontWeight={'500'}>Uy, no me acuerdo la contraseña</Text>
           </TouchableOpacity>
         </Box>
       </Box>
