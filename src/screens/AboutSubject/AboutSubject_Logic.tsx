@@ -131,10 +131,10 @@ function AboutSubject_Logic({
             {selective && selectiveSubjects ? (
               <Select
                 selectedValue={selectiveSubject}
-                minWidth="200"
+                minWidth="160"
                 marginTop={-3} // Ajusta este valor según tu preferencia
-                accessibilityLabel="Elegir selectiva"
-                placeholder="Elegir selectiva"
+                accessibilityLabel="Elegir Materia"
+                placeholder="Elegir Materia"
                 _selectedItem={{
                   bg: "teal.600",
                   endIcon: <CheckIcon size="5" />,
@@ -148,6 +148,13 @@ function AboutSubject_Logic({
                   }
                 }}
                 textAlign={"left"}
+                style={{
+                  marginLeft: -10,
+                  marginBottom: -5,
+                }}
+                _item={{
+                  fontSize: 14,
+                }}
               >
                 {selectiveSubjectsData.map((item) => (
                   <Select.Item
