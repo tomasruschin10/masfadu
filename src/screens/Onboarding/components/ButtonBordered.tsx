@@ -14,19 +14,19 @@ export default function ButtonBordered({
   return (
     <TouchableOpacity onPress={() => setCarrier(id)} style={{ width: "48%" }}>
       <HStack
-        pt={5}
+        // pt={4}
         px={3}
-        mb={5}
-        shadow={4}
+        mb={2.5}
         borderWidth={1}
         borderRadius={8}
+        alignItems='center'
         backgroundColor={"white"}
         justifyContent={"center"}
         alignContent={"center"}
         borderColor={carrier === id ? "brand.primary" : "light.200"}
         style={styles.shadow}
-        w={163.38}
-        h={126.97}
+        w={170.38}
+        h={136.97}
       >
         <Box alignItems={"center"}>
           <Box>
@@ -39,7 +39,7 @@ export default function ButtonBordered({
             />
           </Box>
           <Box mt={3} mb={2}>
-            <Text numberOfLines={1} textAlign={"center"}>
+            <Text fontSize={13} noOfLines={2} textAlign={"center"}>
               {name}
             </Text>
           </Box>

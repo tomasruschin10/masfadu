@@ -7,16 +7,26 @@ function On1Screen({ route, navigation }) {
 	return (
 		<Container>
 			<NoHeader />
-					<Box flex={1} mt={-5} justifyContent={'center'} alignItems="center">
+					<Box 
+					flex={1} 
+					mt={-5} 
+					justifyContent={'center'} 
+					alignItems="center"
+					>
 						<Image
 							w={150}
-							mb={5}
+							mb={7}
 							h={150}
 							alt="Logo de Fadu"
 							source={require("../../../assets/logo.png")}
 						/>
-						<Text fontSize={'4xl'} fontWeight={500}>¡Qué lindo verte!</Text>
-						<Text mb={10} fontSize={'xl'} color={'text.400'}>Elegí tu carrera</Text>
+						<Text 
+						fontSize={'4xl'} 
+						fontWeight={500}
+						mb={7}
+						>
+							¡Qué lindo verte!
+						</Text>						
 						<Button 
 						_pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
 						_text={{ fontSize: 14, fontWeight: '600' }}                            
@@ -27,7 +37,7 @@ function On1Screen({ route, navigation }) {
 						py={5}
 						rounded={8}
 						>
-							¡Empecemos!
+							Elegí tu carrera
 						</Button>
 					</Box>
 		</Container>

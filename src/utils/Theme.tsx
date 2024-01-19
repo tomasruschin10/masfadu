@@ -36,7 +36,8 @@ export const Theme = {
 		brand: {
 			primary: "#DA673A",
 			secondary: "#0082CD",
-            principal: "#0170F5"
+            principal: "#0170F5",
+            darkText: "#171717"
 		},
 		neutral: {
 			gray: {
