@@ -8,6 +8,8 @@ import { updateUserdata } from '../../redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMessage } from '../../redux/actions/message';
 import Alert from "../../components/alert/Alert";
+import Container from '../../components/Container';
+import { Octicons } from '@expo/vector-icons';
 
 function ChangePassword({route, navigation}) {
   const userdata = useSelector((state: any) => state.user.userdata)
@@ -39,86 +41,106 @@ function ChangePassword({route, navigation}) {
   }
 
   return (
-    <ScrollView>
-                  {alert && (
+    <Container>
+      {alert && (
         <Alert type={alert.type} message={alert.message} closeAlert={closeAlert} />
       )}
-      <Box mx={6}>
+      <Box       
+      px={4}
+      flex={1}
+      justifyContent={'space-between'}
+      pb={70}
+      >
         <Box my={7}>
           <Box w={'100%'} mb={'7'} alignItems={'left'}>
-            <Text fontSize={18} mb='2' color="brand.primary" fontWeight={'600'} fontFamily={'Poppins'}>Contraseña anterior</Text>
-            <Input value={form.password} onChangeText={(text) => setForm({...form, password: text})} fontSize={'18'} bg={'#c4c4c41a'}  px={'2'} fontFamily={'Poppins'} rightElement={<IconButton
+            <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'} fontFamily={'Poppins'}>Contraseña anterior</Text>
+            <Input 
+            value={form.password} 
+            rounded={8}
+            onChangeText={(text) => setForm({...form, password: text})} 
+            fontSize={16} 
+            bg={'#c4c4c41a'}  
+            px={5}
+            py={3}
+            fontFamily={'Poppins'} 
+            rightElement={
+            <IconButton
+            mr={2}
 							icon={
-								<Icon
-									as={MaterialIcons}
-									size={3}
-									color="#9A9A9A"
-									name="edit"
-								/>
+								<Octicons name="pencil" size={16} color="#DA673A" />
 							}
-							bgColor={"#EBEEF2"}
-							rounded={8}
-							size={5}
+							bgColor={"#FBF0EB"}
+							rounded='full'
+							size={8}
 						/>} placeholder={'Contraseña'} />
           </Box>
 
           <Box mb={'7'} alignItems={'left'}>
-            <Text fontSize={18} mb='2' color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Contraseña nueva</Text>
-            <Input rightElement={<IconButton
-							icon={
-								<Icon
-									as={MaterialIcons}
-									size={3}
-									color="#9A9A9A"
-									name="edit"
-								/>
-							}
-							bgColor={"#EBEEF2"}
-							rounded={8}
-							size={5}
-						/>}  value={form.newpassword} onChangeText={(text) => setForm({...form, newpassword: text})} fontSize={'18'} bg={'#c4c4c41a'} px={'2'} fontFamily={'Poppins'} placeholder={'Nueva contraseña'} />
+            <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'}  fontFamily={'Poppins'}>Contraseña nueva</Text>
+            <Input 
+            rightElement={<IconButton
+            mr={2}
+							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+							bgColor={"#FBF0EB"}
+							rounded='full'
+							size={8}
+						/>}  
+            value={form.newpassword} 
+            onChangeText={(text) => setForm({...form, newpassword: text})} 
+            fontSize={16} 
+            bg={'#c4c4c41a'} 
+            px={5}
+            py={3}
+            fontFamily={'Poppins'} 
+            placeholder={'Nueva contraseña'}
+            rounded={8}
+             />
           </Box>
 
           <Box mb={'7'} alignItems={'left'}>
-            <Text fontSize={18} mb='2' color="brand.primary" fontWeight={'600'}  fontFamily={'Poppins'}>Confirmar contraseña</Text>
-            <Input rightElement={<IconButton
-							icon={
-								<Icon
-									as={MaterialIcons}
-									size={3}
-									color="#9A9A9A"
-									name="edit"
-								/>
-							}
-							bgColor={"#EBEEF2"}
-							rounded={8}
-							size={5}
-						/>}  value={repeatPassword} onChangeText={(text) => setRepeatPassword(text)}  fontSize={'18'} bg={'#c4c4c41a'} px={'2'} fontFamily={'Poppins'} placeholder={'Nueva contraseña'} />
+            <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'}  fontFamily={'Poppins'}>Confirmar contraseña</Text>
+            <Input 
+            rightElement={<IconButton
+            mr={2}
+							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+							bgColor={"#FBF0EB"}
+							rounded='full'
+							size={8}
+						/>}  
+            value={repeatPassword} 
+            onChangeText={(text) => setRepeatPassword(text)}  
+            fontSize={16} 
+            bg={'#c4c4c41a'} 
+            px={5}
+            py={3}
+            fontFamily={'Poppins'} 
+            placeholder={'Nueva contraseña'}
+            rounded={8} 
+            />
           </Box>
-        </Box>
-
-            <Button
-              onPress={() => sendForm()}
-              _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
-              _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }} 
-              isDisabled={!(form.newpassword.length > 0 && form.password.length > 0)}                          
-              bg={"#DA673A"}
-              // w="90%"
-              py={5}
-              color={'white'}
-              px={'50px'}
-              rounded={8}
-            >
-              Guardar
-            </Button>
+        </Box>        
         
         <Box mt='6' mb={24} marginX='auto'>
           <TouchableOpacity onPress={() => navigation.navigate('RecoveryPassword')}>
             <Text color="brand.primary" fontWeight={'500'}>Uy, no me acuerdo la contraseña</Text>
           </TouchableOpacity>
         </Box>
+
+        <Button
+          mb={10}
+          onPress={() => sendForm()}
+          _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+          _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }} 
+          isDisabled={!(form.newpassword.length > 0 && form.password.length > 0)}                          
+          bg={"#DA673A"}
+          py={5}
+          color={'white'}
+          rounded={8}
+        >
+          Guardar
+        </Button>
       </Box>
-    </ScrollView>
+    </Container>
   )
 }
 

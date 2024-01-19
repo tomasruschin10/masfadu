@@ -8,7 +8,7 @@ const On6Screen = ({navigation}) => {
   return (
     <>
       <WelcomePage 
-      title='El mercado de Fadu' 
+      title='Materias' 
       redirect={redirect} 
       buttonText='Ir al inico'
       />

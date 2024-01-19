@@ -8,7 +8,7 @@ const On5Screen = ({navigation}) => {
   return (
     <>
       <WelcomePage 
-      title='El mercado de Fadu' 
+      title='Opiniones de materias' 
       redirect={redirect} 
       buttonText='Siguiente'
       />

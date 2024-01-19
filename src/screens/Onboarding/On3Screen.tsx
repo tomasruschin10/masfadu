@@ -1,8 +1,7 @@
-import { Avatar, Box, Button, Image, Text } from "native-base";
+import { Box, Button, Image, Text } from "native-base";
 import * as React from "react";
 import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
-import * as DocumentPicker from 'expo-document-picker';
 import { TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import { putServices } from "../../utils/hooks/services";
@@ -10,10 +9,16 @@ import { store } from "../../redux/store";
 import { updateUserdata } from "../../redux/actions/user";
 import { updateMessage } from "../../redux/actions/message";
 
-const On3Screen = ({ route, navigation }) => {    
+import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
+import { SimpleLineIcons } from '@expo/vector-icons';
+
+const On3Screen = ({ navigation }) => {    
     const userdata = useSelector((state: any) => state.user.userdata)
     const [form, setForm] = React.useState({image: null})
     const dispatch = useDispatch()
+    const [previewImage, setPreviewImage] = React.useState(null);  
+    const [imagen, setImagen] = React.useState(null);
   
   const sendForm = () => {
     const img:any = { uri: form.image, name:'userProfile.jpg', type:'image/jpg' }
@@ -27,38 +32,99 @@ const On3Screen = ({ route, navigation }) => {
     }).catch(err => /* showAlert('error', 'Hubo un Error al Guardar')  */dispatch(updateMessage({body: 'Hubo un Error al Guardar', open: true, type: 'danger'})))
   }
 
-    const pickImg = async () => {
+      const selectImage = async () => {
         try {
-          const img:any = await DocumentPicker.getDocumentAsync({type: 'image/*'})
-          setForm({...form, image: img.assets[0]?.uri})
-        } catch(err) {
-          console.log(err)
-        }
+          const image = await ImagePicker.launchImageLibraryAsync();
+          console.log("image <>", image);
+          if (!image.canceled && image.assets.length > 0) {
+            const imageUri = image.assets[0].uri;
+            const compressedImage = await compressImage(imageUri);
     
-      }
+            setImagen(compressedImage);
+    
+            setPreviewImage(image.assets[0].uri);
+            setForm({...form, image: image.assets[0]?.uri})
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
+      const compressImage = async (imageUri: any) => {
+        try {
+          const compressedImage = await manipulateAsync(
+            imagen.uri,
+            [{ resize: { width: 800 } }],
+            { format: SaveFormat.JPEG, compress: 0.7 }
+          );
+    
+          return compressedImage;
+        } catch (error) {
+          console.log("Error al comprimir la imagen:", error);
+          return { uri: imageUri };
+        }
+      };
   return (
     <Container>
-		<NoHeader />
-			<Box flex={1} mt={-5} justifyContent={'center'} alignItems="center">
+			<Box 
+      flex={1} 
+      mt={-5} 
+      justifyContent={'space-between'} 
+      alignItems="center"
+      pb={14}
+      >
             <Box mt={'10'} alignItems='center'>
-            </Box>              
-                <Avatar
-                bg="brand.primary"
-                source={{ uri: form.image }}
-                size={'60px'}
-                >
-                </Avatar>
-                <TouchableOpacity onPress={pickImg}>
-                <Text 
-                mt='2'
-                mb={8} 
-                fontSize={'2xl'} 
-                fontWeight={500}
-                color={'#9A9A9A'} 
-                textAlign='center'
-                >
-                    ¡Agrega una foto de perfil!
-                </Text>
+            </Box>
+                <TouchableOpacity onPress={selectImage}>
+                  {previewImage
+                  ? (
+                    <Image
+                      alt="imagen"
+                      source={{ uri: previewImage }}
+                      w={200}
+                      h={200}
+                      rounded={200}                      
+                      mb={6}
+                    />
+                  )
+                  : (
+                    <Button
+                      fontSize={12}
+                      w={200}
+                      h={200}
+                      rounded={200}
+                      mb={6}
+                      style={{
+                        backgroundColor: "#d3d3d3",
+                      }}
+                      onPress={selectImage}
+                      textAlign='center'
+                      alignItems='center'
+                    >
+                      <SimpleLineIcons 
+                      name="camera" 
+                      size={24} 
+                      color="white" 
+                      style={{
+                        marginLeft:'auto',
+                        marginRight:'auto',
+                        marginBottom:4
+                      }}
+                      />
+                      <Text
+                      color="white" 
+                      textAlign='center'
+                      >
+                        AGREGAR IMAGEN DE
+                      </Text>
+                      <Text
+                      color="white" 
+                      textAlign='center'
+                      >
+                        PERFIL
+                      </Text>
+                    </Button>                    
+                  )}
                 </TouchableOpacity>
 				<Button 
 				_pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
@@ -66,7 +132,7 @@ const On3Screen = ({ route, navigation }) => {
 				bg="brand.primary" 
 				onPress={sendForm} 
                 isDisabled={!form.image}
-				mb={3} 
+				mb={12} 
 				w="90%"
 				py={5}
 				rounded={8}
