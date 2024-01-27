@@ -136,7 +136,7 @@ function EditProfile({route, navigation}) {
               isDisabled={false} 
               value={form.phone}
               fontFamily={'Poppins'} 
-              placeholder={'+5491164619938'} 
+              placeholder={'Ejemplo: +5491164619938'} 
               rounded={8}
               type={"text"}
               px={5}

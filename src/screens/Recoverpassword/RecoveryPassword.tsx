@@ -81,7 +81,7 @@ function RecoveryPassword({ route, navigation }) {
           isLoading={loading}
           py={4}
           onPress={() => sendRecoveryPassword()}
-          mb={3}
+          mb={10}
           w="100%"
           isDisabled={form.email.length > 0 ? false : true}
           alignSelf="flex-end"

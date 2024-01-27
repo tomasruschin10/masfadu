@@ -63,7 +63,7 @@ export function HeaderBack({ ...props }) {
           </TouchableOpacity>
         )}
         {props?.addButtonUrl && (
-          <Box mr={4}>
+          <Box mr={2}>
             <IconButton
               rounded="full"
               backgroundColor="#E85E29"

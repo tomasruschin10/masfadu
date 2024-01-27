@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Hr from "../../components/Hr";
 import { Platform, ScrollView, TouchableWithoutFeedback } from "react-native";
 import { updateMessage } from "../../redux/actions/message";
+import { getUserDataWithToken } from "../../utils/storage";
 import { postServices } from "../../utils/hooks/services";
 import { useDispatch } from "react-redux";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -75,16 +76,24 @@ function RegisterScreen({ route, navigation }) {
     }
     try {
       setLoading(true);
-      const { data } = await postServices("auth/register", form);
-      console.log("holaa", data)
-      dispatch(
-        updateMessage({
-          body: "Registro exitoso, por favor ahora haga login.",
-          open: true,
-          type: "success",
-        })
-      );
-      navigation.navigate("Login");
+      const { data, status } = await postServices("auth/register", form);
+      if (status === 200) {
+        dispatch(updatetoken(data.token));
+        getUserDataWithToken(data.token);
+        let userData: any = jwtDecode(data.token);
+        if (userData.userData.career) {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Onboarding1");
+        }
+        dispatch(
+          updateMessage({
+            body: "Registro completado con exito",
+            open: true,
+            type: "success",
+          })
+        );
+      }
     } catch (error) {
       __DEV__ &&
         console.log(
@@ -112,9 +121,9 @@ function RegisterScreen({ route, navigation }) {
         <VStack px={5} pb={5}>
           <Box mt={5} alignItems="center">
             <Image
-              w={120}
+              w={100}
               mb={5}
-              h={120}
+              h={100}
               alt="Logo de Fadu"
               source={require("../../../assets/logo.png")}
             />
@@ -183,7 +192,7 @@ function RegisterScreen({ route, navigation }) {
                       name={showPassword ? "visibility" : "visibility-off"}
                     />
                   }
-                  size={5}
+                  size={6}
                   mr="2"
                   color="muted.400"
                   onPress={() => setShowPassword(!showPassword)}
@@ -207,7 +216,7 @@ function RegisterScreen({ route, navigation }) {
                       name={showRePassword ? "visibility" : "visibility-off"}
                     />
                   }
-                  size={5}
+                  size={6}
                   mr="2"
                   color="muted.400"
                   onPress={() => setShowRePassword(!showRePassword)}
@@ -237,6 +246,7 @@ function RegisterScreen({ route, navigation }) {
               mb={5}
               onPress={() => navigation.navigate("GoogleRegister")}
               w="100%"
+              backgroundColor={"#FFFFFF"}
               h={verticalScale(55)}
               rounded={moderateScale(8)}
               leftIcon={

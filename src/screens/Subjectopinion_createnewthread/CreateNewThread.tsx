@@ -41,7 +41,13 @@ function CreateNewThread({ route, navigation }) {
   const [selectedCareerId, setSelectedCareerId] = useState(
     state.user.userdata.career_id
   );
+  const [descriptionHeight, SetDescriptionHeight] = useState(67); // Altura inicial del Box
+
   const [subjects, setSubjects] = useState([]);
+
+  const updateDescriptionHeight = (contentHeight) => {
+    SetDescriptionHeight(contentHeight + 20);
+  };
 
   if (route.params && route.params?.career_id) {
     setSelectedCareerId(route.params.career_id);
@@ -258,11 +264,16 @@ function CreateNewThread({ route, navigation }) {
             mb={5}
           >
             <TextArea
-              onChangeText={(text) => setForm({ ...form, description: text })}
+              onChangeText={(text) => {
+                setForm({ ...form, description: text });
+              }}
+              onContentSizeChange={(e) =>
+                updateDescriptionHeight(e.nativeEvent.contentSize.height)
+              }
               placeholder="Descripción"
               autoCompleteType={"off"}
               fontSize={15}
-              h={67}
+              h={descriptionHeight}
               backgroundColor={"#F7FAFC"}
               borderWidth={0}
               placeholderTextColor={"#C4C4C4"}
@@ -313,9 +324,9 @@ function CreateNewThread({ route, navigation }) {
                         as={
                           <Ionicons onPress={addNewTag} name={"add-circle"} />
                         }
-                        size={6}
-                        mr="3"
-                        color="muted.300"
+                        size={8}
+                        mr="2"
+                        color={searchText ? "#DA673A" : "muted.300"}
                       />
                     }
                   />

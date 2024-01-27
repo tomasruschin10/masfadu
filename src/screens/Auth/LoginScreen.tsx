@@ -1,6 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from '@expo/vector-icons';
-import { Box, Button, Icon, Image, Input, Text, View, VStack } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
+import {
+  Box,
+  Button,
+  Icon,
+  Image,
+  Input,
+  Text,
+  View,
+  VStack,
+} from "native-base";
 import * as React from "react";
 import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
@@ -67,11 +76,9 @@ function LoginScreen({ route, navigation }) {
     setAlert({ type, message });
   };
 
-
   const closeAlert = () => {
     setAlert(null);
   };
-
 
   const getLogin = async () => {
     if (email === "" || password === "") {
@@ -91,12 +98,11 @@ function LoginScreen({ route, navigation }) {
       password: password,
     })
       .then((res: any) => {
-        showAlert('success', 'Inicio correcto!')
+        showAlert("success", "Inicio correcto!");
         dispatch(updatetoken(res.data.token));
         getUserDataWithToken(res.data.token);
         let data: any = jwtDecode(res.data.token);
         if (data.userData.career) {
-
           navigation.navigate("Home");
         } else {
           navigation.navigate("Onboarding1");
@@ -112,8 +118,7 @@ function LoginScreen({ route, navigation }) {
             open: true,
             type: "danger",
           })
-        )
-
+        );
       })
       .finally(() => {
         setLoading(false);
@@ -151,7 +156,7 @@ function LoginScreen({ route, navigation }) {
               focusOutlineColor="#FFFFFF"
               shadow="none"
               style={styles.inputField}
-              />
+            />
             <Input
               value={password}
               variant="unstyled"
@@ -165,21 +170,21 @@ function LoginScreen({ route, navigation }) {
               rounded={8}
               InputRightElement={
                 <Icon
-                as={
-                  <MaterialIcons
-                  name={showPassword ? "visibility" : "visibility-off"}
-                  />
-                }
-                borderColor="#FFFFFF"
-                shadow="none"
-                size={5}
-                mr="3"
-                color="#797979"
-                onPress={() => setShowPassword(!showPassword)}
+                  as={
+                    <MaterialIcons
+                      name={showPassword ? "visibility" : "visibility-off"}
+                    />
+                  }
+                  borderColor="#FFFFFF"
+                  shadow="none"
+                  size={5}
+                  mr="3"
+                  color="#797979"
+                  onPress={() => setShowPassword(!showPassword)}
                 />
               }
               placeholder="Contraseña"
-              placeholderTextColor="#797979" 
+              placeholderTextColor="#797979"
               fontSize={moderateScale(14)}
               bg="#FFFFFF"
               borderColor="#FFFFFF"
@@ -188,69 +193,72 @@ function LoginScreen({ route, navigation }) {
               shadow="none"
               style={styles.inputField}
             />
-            <DefaultButton buttonStyle={{
-              backgroundColor: "#DA673A",
-              borderRadius: moderateScale(8),
-              height: verticalScale(55),
-              width: 500,
-              maxWidth: contentWidth,
-              paddingTop: verticalScale(6)
-            }}
-              textStyle={
-                {
-                  fontSize: moderateScale(14),
-                  fontWeight:"600",
-                  color: "white",
-
-                }
-              }
-
-              containerStyle={{
-                marginBottom: PixelRatio.roundToNearestPixel(15),
-              }}
-
-              title="Iniciar Sesión"
-              callBack={getLogin} />
 
             <Button
-              onPress={() => navigation.navigate("RecoveryPassword")}
+              width={500}
+              maxWidth={contentWidth}
+              borderRadius={moderateScale(8)}
+              height={verticalScale(55)}
+              onPress={() => getLogin()}
               isLoading={loading}
+              backgroundColor={"#DA673A"}
+            >
+              <Text
+                style={[
+                  fontStyles.poppins400,
+                  {
+                    color: "white",
+                    fontWeight: "600",
+                    fontSize: moderateScale(14),
+                  },
+                ]}
+              >
+                Iniciar Sesión
+              </Text>
+            </Button>
+            <Button
+              onPress={() => navigation.navigate("RecoveryPassword")}
               variant="link"
             >
-              <Text style={[fontStyles.poppins400, {
-                color: "#797979",
-                fontSize: moderateScale(14),
-              }]} >
+              <Text
+                style={[
+                  fontStyles.poppins400,
+                  {
+                    color: "#797979",
+                    fontSize: moderateScale(14),
+                  },
+                ]}
+              >
                 ¿Te olvidaste la contraseña?
               </Text>
             </Button>
           </Box>
-          {/*           <Box py={2} px={5}>
-            <Hr text={"ó"} />
-          </Box> */}
 
           <Box pt={PixelRatio.roundToNearestPixel(50)}>
             <Button
               mb={5}
               w="100%"
               h={verticalScale(55)}
-              rounded={ moderateScale(8)}
+              rounded={moderateScale(8)}
               backgroundColor={"#FFFFFF"}
               onPress={() => navigation.navigate("GoogleLogin")}
               _spinner={{ color: "black" }}
-              isLoading={loading}
-              _text={{ color: "#797979", fontSize: moderateScale(14), fontWeight: "400" }}
+              _text={{
+                color: "#797979",
+                fontSize: moderateScale(14),
+                fontWeight: "400",
+              }}
               colorScheme={"ligth"}
               color={"darkText"}
               leftIcon={
-              <TouchableWithoutFeedback>
-                <Image
-                  source={require("../../../assets/icons/google.png")}
-                  size={5}
-                  mr="2"
-                  alt={"logo de google"}
-                />
-              </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback>
+                  <Image
+                    source={require("../../../assets/icons/google.png")}
+                    size={5}
+                    mr="2"
+                    alt={"logo de google"}
+                  />
+                </TouchableWithoutFeedback>
               }
             >
               Iniciar Sesión con Google
@@ -262,7 +270,6 @@ function LoginScreen({ route, navigation }) {
               </Box>
               <Button
                 px={1.5}
-                isLoading={loading}
                 onPress={() => navigation.navigate("Registro")}
                 variant="link"
                 _text={{ fontWeight: "bold", color: "#797979" }}
@@ -283,8 +290,8 @@ const styles = StyleSheet.create({
     color: "#797979",
     borderRadius: 8,
     borderBottomColor: "#FFFFFF",
-    borderColor: "#FFFFFF"
-  }
-})
+    borderColor: "#FFFFFF",
+  },
+});
 
 export default React.memo(LoginScreen);

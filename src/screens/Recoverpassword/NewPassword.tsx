@@ -137,7 +137,7 @@ function NewPassword({ route, navigation }) {
           isLoading={loading}
           py={4}
           onPress={() => updatePassword()}
-          mb={3}
+          mb={10}
           w="100%"
         >
           Actualizar

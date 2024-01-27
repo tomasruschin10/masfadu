@@ -59,20 +59,15 @@ function ChooseAnOption({ route, navigation }) {
         <Text fontSize={22.78} mb={5} fontWeight={"600"} textAlign="center">
           Recupera tu contraseña
         </Text>
-        <Text mb={5} fontSize={13} textAlign="center">
-          Ingresa el código de verificación que enviamos a tu correo electrónico
-        </Text>
-
         <Text fontSize={13} textAlign="center">
-          Introduce el código enviado a <Text fontWeight={"bold"}>{email}</Text>
+          Ingresá el código enviado a <Text fontWeight={"bold"}>{email}</Text>
         </Text>
 
         <Text fontSize={13} mb={3} textAlign="center">
-          para completar el proceso de recuperación de contraseña de tu cuenta
-          en muyfadu!
+          para recuperar la contraseña de tu cuenta en Muyfadu
         </Text>
         <Text mb={20} textAlign="center">
-          PD: ¡No olvides revisar la carpeta de spam!
+          PD: No te olvides de revisar la carpeta se spam!
         </Text>
 
         <Input
@@ -85,7 +80,7 @@ function ChooseAnOption({ route, navigation }) {
         />
       </Box>
 
-      <Box flex={1} justifyContent="flex-end" mx={4} mb={3}>
+      <Box flex={1} justifyContent="flex-end" mx={4} mb={10}>
         <Button
           backgroundColor="#DA673A"
           isLoading={loading}
