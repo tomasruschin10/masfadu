@@ -60,7 +60,7 @@ function ChangeCareer({ route, navigation }) {
           store.dispatch(updateUserdata(data));
           dispatch(
             updateMessage({
-              body: "Guardado con Exito!",
+              body: "Guardado con éxito!",
               open: true,
               type: "success",
             })

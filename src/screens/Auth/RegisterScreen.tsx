@@ -57,7 +57,7 @@ function RegisterScreen({ route, navigation }) {
     if (!/^(?=.*\d)(?=.*[A-Z]).{8,}$/.test(form.password)) {
       dispatch(
         updateMessage({
-          body: "La contraseña debe tener al menos 8 caracteres, una mayuscula y un numero!",
+          body: "La contraseña debe tener al menos 8 caracteres, una mayuscula y un número!",
           open: true,
           type: "danger",
         })
@@ -88,7 +88,7 @@ function RegisterScreen({ route, navigation }) {
         }
         dispatch(
           updateMessage({
-            body: "Registro completado con exito",
+            body: "Registro completado con éxito",
             open: true,
             type: "success",
           })
@@ -119,7 +119,7 @@ function RegisterScreen({ route, navigation }) {
       <HeaderBack />
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <VStack px={5} pb={5}>
-          <Box mt={5} alignItems="center">
+          <Box alignItems="center">
             <Image
               w={100}
               mb={5}

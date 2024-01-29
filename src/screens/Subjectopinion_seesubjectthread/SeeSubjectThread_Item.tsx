@@ -54,7 +54,7 @@ function SeeSubjectThread_Item({
               alignItems: "center",
             }}
           >
-            <Text fontWeight={"700"} fontSize={13} numberOfLines={3}>
+            <Text fontWeight={"700"} maxWidth={200} fontSize={13} numberOfLines={3}>
               {title}
             </Text>
             <Box ml="3" mr="5">

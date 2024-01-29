@@ -64,7 +64,7 @@ function OfferEditForm({ route, navigation }) {
   const compressImage = async (imageUri: any) => {
     try {
       const compressedImage = await manipulateAsync(
-        imagen.uri,
+        imageUri,
         [{ resize: { width: 800 } }],
         { format: SaveFormat.JPEG, compress: 0.7 }
       );

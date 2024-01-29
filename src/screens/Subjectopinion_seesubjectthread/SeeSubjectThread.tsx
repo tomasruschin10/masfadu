@@ -39,7 +39,7 @@ function SeeSubjectThread({ route, navigation }) {
     color,
     firstLetter,
   } = route.params;
-  const [menuShow, setMenu] = useState(false)
+  const [menuShow, setMenu] = useState(false);
   const [allOpinions, setAllOpinions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
@@ -52,13 +52,41 @@ function SeeSubjectThread({ route, navigation }) {
   const [form, setForm] = useState<any>({ tags: [] });
   const dispatch = useDispatch();
 
+  const [filteredOpinions, setFilteredOpinions] = useState(allOpinions);
+
+  const handleSearch = (text) => {
+    setSearchText(text);
+
+    if (text.trim() === "") {
+      setFilteredOpinions(allOpinions);
+    } else {
+      const filtered = allOpinions.filter(
+        (opinion) =>
+          (opinion.title &&
+            opinion.title.toLowerCase().includes(text.toLowerCase())) ||
+          (opinion.description &&
+            opinion.description.toLowerCase().includes(text.toLowerCase())) ||
+          (opinion.professor &&
+            opinion.professor.toLowerCase().includes(text.toLowerCase())) ||
+          (opinion.tags &&
+            opinion.tags.some(
+              (tag) => tag && tag.toLowerCase().includes(text.toLowerCase())
+            ))
+      );
+      setFilteredOpinions(filtered);
+    }
+  };
   useEffect(() => {
-    console.log( "filtro actual", changeFilt)
-  }, [changeFilt])
+    setFilteredOpinions(allOpinions);
+  }, []);
+
+  useEffect(() => {
+    console.log("filtro actual", changeFilt);
+  }, [changeFilt]);
+
   useEffect(() => {
     changeFilt === false && byWords();
-  }, [searchText])
-
+  }, [searchText]);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeIn = () =>
@@ -73,16 +101,6 @@ function SeeSubjectThread({ route, navigation }) {
       duration: 300,
       useNativeDriver: false,
     }).start();
-
-  const [alert, setAlert] = React.useState(null);
-
-  const showAlert = (type, message) => {
-    setAlert({ type, message });
-  };
-
-  const closeAlert = () => {
-    setAlert(null);
-  };
 
   // USEEFFECT
   useEffect(() => {
@@ -238,158 +256,70 @@ function SeeSubjectThread({ route, navigation }) {
     }
   };
 
-
   const search = () => {
-    changeFilt ? byTags():  byWords();
-  }
+    changeFilt ? byTags() : byWords();
+  };
 
   //JSX
   return (
     <Container>
-{ menuShow ? <Menu navigation={navigation} route={route} setMenu={setMenu}/> : null  }
+      {menuShow ? (
+        <Menu navigation={navigation} route={route} setMenu={setMenu} />
+      ) : null}
 
-      <HeaderBack title="Opiniones de materias"/>
+      <HeaderBack title="Opiniones de materias" />
 
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-        {/* <Box>
-          <SeeSubjectThread_Top
-            fadeAnim={fadeAnim}
-            title={title}
-            text={description}
-            time={time}
-            hours={hours}
-            method={method}
-            navigation={navigation}
-            setToggle={setToggle}
-            toggle={toggle}
-            color={color}
-            firstLetter={firstLetter}
-            rating={rating}
-          />
-        </Box> */}
-
-        <Box mx={1}>
-          {allTags.length > 0 && (
+        <Box mx={0}>
+          {allOpinions.length > 0 && (
             <>
-              {changeFilt && searchText.length > 0 && (
-                <RecommendedTags
-                  searchText={searchText}
-                  FilterTags={FilterTags}
-                  form={form}
-                  Concat={Concat}
-                />
-              )}
-
-              <Box
-                mb={searchText !== "" ? 2 : 0}
+              <HStack
+                mt={0}
+                pr={3}
                 alignItems={"center"}
                 justifyContent="center"
-                flexDir={"row"}
-                rounded={8}
               >
                 <MaterialIcons
                   name={"search"}
                   size={17}
                   color="gray"
-                  style={{ position: "absolute", left: "6%", zIndex: 1 }}
+                  style={{
+                    position: "absolute",
+                    left: "8.8%",
+                    zIndex: 1,
+                    marginRight: 4,
+                  }}
                 />
                 <Input
-                  rounded={8}
+                  style={{ marginLeft: "8%", borderRadius: 8 }}
+                  onChangeText={(text) => handleSearch(text)}
                   value={searchText}
-                  style={{ marginLeft: "8%" }}
-                  onChangeText={(text) => setSearchText(text)}
-                  fontSize={12.27}
-                  w={{ base: "55%", md: "25%" }}
+                  rounded={8}
+                  w={{ base: "80%", md: "25%" }}
                   pb="1"
-                  mr="1"
                   type={"text"}
-                  placeholder={
-                    changeFilt ? "Buscar por etiquetas" : "Buscar por palabra"
-                  }
-                  onFocus={FilterTags}
-                  onBlur={() => setSearchText("")}
+                  ml={4}
+                  placeholder="Buscar "
+                  placeholderTextColor="#666666"
                 />
 
-                <HStack alignItems={"flex-start"}>
-                  <IconButton
-                    onPress={() =>{ search()}}
-                    rounded={8}
-                    ml={1}
-                    backgroundColor={"#FFFFFF"}
-                    icon={
-                      <Icon
-                        as={AntDesign}
-                        name="close"
-                        size="md"
-                        color={"muted.400"}
-                      />
-                    }
-                  />
-                  <IconButton
-                    onPress={() => setChangeFilt(!changeFilt)}
-                    rounded={8}
-                    backgroundColor={"#FFFFFF"}
-                    mx={2}
-                    icon={
-                      <Icon
-                        as={Ionicons}
-                        name={
-                          changeFilt ? "pricetag" : "chatbubble-ellipses-sharp"
-                        }
-                        size="md"
-                        color={"muted.400"}
-                      />
-                    }
-                  />
-                  <IconButton
-                    onPress={() => {
-                      setReload(!reload);
-                      setForm({ ...form, tags: [] });
-                      setLength(rating);
-                      setLimit(0);
-                    }}
-                    rounded={8}
-                    backgroundColor={"#FFFFFF"}
-                    icon={
-                      <Icon
-                        as={AntDesign}
-                        name="reload1"
-                        size="md"
-                        color="muted.400"
-                      />
-                    }
-                  />
-                </HStack>
-              </Box>
-
-              {changeFilt && (
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  <Box
-                    flexDir={"row"}
-                    mb={form.tags.length > 0 ? 8 : 0}
-                    mt={form.tags.length > 0 ? 4 : 0}
-                  >
-                    {form.tags.length > 0 &&
-                      form.tags.map((it, i) => (
-                        <Box key={i}>
-                          <TouchableOpacity onPress={() => deleteTag(it, i)}>
-                            <Text
-                              mr={2}
-                              bg={"brand.primary"}
-                              color={"white"}
-                              py={1}
-                              px={3}
-                              rounded={"full"}
-                            >
-                              {" "}
-                              {it.name}{" "}
-                            </Text>
-                          </TouchableOpacity>
-                        </Box>
-                      ))}
-                  </Box>
-                </ScrollView>
-              )}
+                <IconButton
+                  onPress={() => {
+                    handleSearch("");
+                  }}
+                  rounded={8}
+                  ml={1}
+                  backgroundColor={"#FFFFFF"}
+                  icon={
+                    <Icon
+                      as={AntDesign}
+                      name="close"
+                      size="md"
+                      color={"muted.400"}
+                    />
+                  }
+                />
+              </HStack>
             </>
           )}
         </Box>
@@ -418,51 +348,60 @@ function SeeSubjectThread({ route, navigation }) {
         <Box mx={5} mb={32}>
           {allOpinions.length > 0 && (
             <>
-              <Box
-                // flexDir={"row"}
-                mt={4}
-                mb={3}
-                bg={"#F4F6F9"} 
-                // justifyContent={"space-between"}
-                py="3" 
-                rounded={8}
-              >
-                <Text 
-                fontWeight={"500"} 
-                flex={1} 
-                fontSize={17.52}
-                color='black'
-                px="4"
-                >              
+              <Box mt={4} mb={3} bg={"#F4F6F9"} py="3" rounded={8}>
+                <Text
+                  fontWeight={"500"}
+                  flex={1}
+                  fontSize={17.52}
+                  color="black"
+                  px="4"
+                >
                   Hilos sobre:
                 </Text>
-                <Text 
-                fontWeight={"500"} 
-                flex={1} 
-                fontSize={14}
-                color='brand.primary'
-                px="4"
-                >              
+                <Text
+                  fontWeight={"500"}
+                  flex={1}
+                  fontSize={14}
+                  color="brand.primary"
+                  px="4"
+                >
                   {title}
                 </Text>
               </Box>
 
-              {allOpinions.map((item) => (
-                <SeeSubjectThread_Item
-                  key={item.id}
-                  idOpinion={item.id}
-                  navigation={navigation}
-                  title={item.title}
-                  description={item.description}
-                  created_at={item.created_at}
-                  opinionTags={item.opinionTags}
-                  anonymous={item.anonymous}
-                  student={item.student}
-                  answersCount={item.answersCount}
-                  tags={item.opinionTags}
-                  professor={item.professor}
-                />
-              ))}
+              {filteredOpinions.length > 0
+                ? filteredOpinions.map((item) => (
+                    <SeeSubjectThread_Item
+                      key={item.id}
+                      idOpinion={item.id}
+                      navigation={navigation}
+                      title={item.title}
+                      description={item.description}
+                      created_at={item.created_at}
+                      opinionTags={item.opinionTags}
+                      anonymous={item.anonymous}
+                      student={item.student}
+                      answersCount={item.answersCount}
+                      tags={item.opinionTags}
+                      professor={item.professor}
+                    />
+                  ))
+                : allOpinions.map((item) => (
+                    <SeeSubjectThread_Item
+                      key={item.id}
+                      idOpinion={item.id}
+                      navigation={navigation}
+                      title={item.title}
+                      description={item.description}
+                      created_at={item.created_at}
+                      opinionTags={item.opinionTags}
+                      anonymous={item.anonymous}
+                      student={item.student}
+                      answersCount={item.answersCount}
+                      tags={item.opinionTags}
+                      professor={item.professor}
+                    />
+                  ))}
             </>
           )}
 
@@ -479,49 +418,6 @@ function SeeSubjectThread({ route, navigation }) {
           )}
         </Box>
       </ScrollView>
-
-
-     {/*  <Box
-        bg="#E85E29"
-        shadow={"3"}
-        borderRadius="lg"
-        position={"absolute"}
-        right={5}
-        bottom={"32"}
-        zIndex={100}
-      >
-        
-        <TouchableHighlight
-          underlayColor={""}
-          onPress={() => {
-            navigation.navigate("CreateNewThread", {
-              subject_id: subject_id,
-              title: title,
-              description: description,
-              time: time,
-              hours: hours,
-              method: method,
-              id: id,
-              rating: rating,
-              value: value,
-            });
-          }}
-        >
-          <Box
-            h={"10"}
-            w={"140"}
-            flexDir={"row"}
-            alignItems={"center"}
-            // px="2"
-            justifyContent={"center"}
-          >
-            <Entypo name="plus" size={28} color="white" />
-            <Text color="white" fontSize={13} mx={"3%"}>
-              Crear hilo
-            </Text>
-          </Box>
-        </TouchableHighlight>
-      </Box> */}
 
       <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
     </Container>

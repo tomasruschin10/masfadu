@@ -1,11 +1,4 @@
-import {
-  Box,
-  Center,
-  Input,
-  Slide,
-  Text,
-  View,
-} from "native-base";
+import { Box, Center, Input, Slide, Text, View } from "native-base";
 import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -17,7 +10,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 const { height } = Dimensions.get("window");
 const messageOffset = height * 0.07;
 
-
 function Message() {
   const message = useSelector((state: any) => state.message);
   const dispatch = useDispatch();
@@ -26,7 +18,7 @@ function Message() {
     setTimeout(() => {
       dispatch(updateMessage({ body: "", open: false, type: "" }));
     }, 10000);
-  } 
+  }
 
   //uncomment for manually activation
   /*   useEffect(() => {
@@ -43,9 +35,8 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-
               name={"check"}
-              size={15}
+              size={PixelRatio.roundToNearestPixel(12)}
               color="black"
             />
           );
@@ -59,9 +50,8 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-
               name={"info"}
-              size={15}
+              size={PixelRatio.roundToNearestPixel(12)}
               color="black"
             />
           );
@@ -75,9 +65,8 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-
               name={"warning"}
-              size={15}
+              size={PixelRatio.roundToNearestPixel(12)}
               color="black"
             />
           );
@@ -90,9 +79,8 @@ function Message() {
         if (resource === "icon") {
           return (
             <MaterialIcons
-
               name={"warning"}
-              size={15}
+              size={PixelRatio.roundToNearestPixel(12)}
               color="black"
             />
           );
@@ -103,27 +91,24 @@ function Message() {
   return (
     <Center>
       <Box>
-        <Slide 
-        in={message.open} 
-        placement="top"
-        >
+        <Slide in={message.open} placement="top">
           <Box
-          w={"95%"}
-          position={"absolute"}
-          left={"auto"}
-          right={"auto"}
-          top={messageOffset}
-          display={"flex"}
-          flexDirection={"row"}
-          alignItems={"center"}
-          justifyContent={"space-around"}
-          alignSelf={"center"}
-          pr={"2.607%"}
-          pl={"2.669%"}
-          py={"3%"}
-          borderRadius={8}
-          flex={1}
-          flexWrap="wrap"
+            w={"95%"}
+            position={"absolute"}
+            left={"auto"}
+            right={"auto"}
+            top={messageOffset}
+            display={"flex"}
+            flexDirection={"row"}
+            alignItems={"center"}
+            justifyContent={"space-around"}
+            alignSelf={"center"}
+            pr={"2.607%"}
+            pl={"2.669%"}
+            py={"3%"}
+            borderRadius={8}
+            flex={1}
+            flexWrap="wrap"
             // style={{
             //   borderWidth: 1,
             //   borderColor: "#d6e9c6",
@@ -146,23 +131,19 @@ function Message() {
               }
             >
               <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"space-between"} 
-              alignItems={"center"}
-              gap={4}
-              >
-                <Box 
                 display={"flex"}
                 flexDirection={"row"}
+                justifyContent={"space-between"}
                 alignItems={"center"}
+                gap={4}
+              >
+                <Box
+                  display={"flex"}
+                  flexDirection={"row"}
+                  alignItems={"center"}
                 >
-                  <Text
-                    color="black"
-                    textAlign="left"
-                    fontWeight="normal"
-                  >
-                    {getColors(message.type, "icon")} {" "}
+                  <Text color="black" textAlign="left" fontWeight="normal">
+                    {getColors(message.type, "icon")}{" "}
                   </Text>
                   <Text
                     // numberOfLines={1}
@@ -181,15 +162,9 @@ function Message() {
                   </Text>
                 </Box>
                 <Box>
-                  <MaterialIcons
-                    name={"close"}
-                    size={20}
-                    color="black"
-                    />
+                  <MaterialIcons name={"close"} size={20} color="black" />
                 </Box>
               </Box>
-
-
             </TouchableOpacity>
           </Box>
         </Slide>
