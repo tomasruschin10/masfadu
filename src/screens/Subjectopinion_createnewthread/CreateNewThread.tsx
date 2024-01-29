@@ -25,13 +25,11 @@ import { useEffect } from "react";
 import RecommendedTags from "../../utils/RecommendedTags";
 import { baseApi } from "../../utils/api";
 import { store } from "../../redux/store";
-import DefaultButton from "../../components/DefaultButton";
 
 function CreateNewThread({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [showModalIcon, setShowModalIcon] = useState(false);
-  /* const [menuShow, setMenu] = useState(false) */
   const [allTags, setAllTags] = useState([{}]);
   const [careers, setCareers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -162,7 +160,6 @@ function CreateNewThread({ route, navigation }) {
           type: "warning",
         })
       );
-      /*  showAlert('warning', 'Asegurate de no tener espacios en blanco') */
       return false;
     }
     const state: any = store.getState();
@@ -320,14 +317,16 @@ function CreateNewThread({ route, navigation }) {
                     placeholderTextColor={"#C4C4C4"}
                     backgroundColor={"#F7FAFC"}
                     InputRightElement={
-                      <Icon
-                        as={
-                          <Ionicons onPress={addNewTag} name={"add-circle"} />
-                        }
-                        size={8}
-                        mr="2"
-                        color={searchText ? "#DA673A" : "muted.300"}
-                      />
+                      <TouchableOpacity
+                        style={{ marginRight: 3 }}
+                        onPress={addNewTag}
+                      >
+                        <Ionicons
+                          name={"add-circle"}
+                          size={28}
+                          color={searchText ? "#DA673A" : "#797979"}
+                        />
+                      </TouchableOpacity>
                     }
                   />
                 </Box>
@@ -392,9 +391,7 @@ function CreateNewThread({ route, navigation }) {
             </Button>
           </Box>
 
-          {/* MODALS */}
           <Modal
-            // isOpen={true}
             isOpen={showModal}
             size={"xl"}
             onClose={() => setShowModal(false)}

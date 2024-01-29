@@ -1,5 +1,4 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import {
   Box,
   Button,
@@ -13,41 +12,26 @@ import {
 import * as React from "react";
 import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
-/* import Hr from "../../components/Hr"; */
 import { postServices } from "../../utils/hooks/services";
 import { getUserDataWithToken } from "../../utils/storage";
 import { useDispatch } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
 
-/* import * as Google from "expo-auth-session/providers/google";*/
 import {
   ScrollView,
   TouchableWithoutFeedback,
-  Platform,
   Dimensions,
   PixelRatio,
+  TouchableOpacity,
   StyleSheet,
 } from "react-native";
 import jwtDecode from "jwt-decode";
-import * as AppleAuthentication from "expo-apple-authentication";
 
-import {
-  getAuth,
-  OAuthProvider,
-  signInWithCredential,
-  /*   FacebookAuthProvider,
-    GoogleAuthProvider, */
-} from "firebase/auth";
-import { updateUserdata } from "../../redux/actions/user";
-import { baseApi } from "../../utils/api";
 import { fontStyles } from "../../utils/colors/fontColors";
-import DefaultButton from "../../components/DefaultButton";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
 
 const { height, width } = Dimensions.get("window");
-/* const bodyOffset = height * 0.15;
-const contentWidth = width / 1.2; */
 
 const bodyOffset = height * 0.15;
 const contentWidth = width / 1.08;
@@ -59,9 +43,6 @@ function LoginScreen({ route, navigation }) {
   const [loading, setLoading] = React.useState(false);
 
   const dispatch = useDispatch();
-  /*   const [isLoading, setIsLoading] = React.useState(false);
-    const { uid } = useSelector((state: any) => state.user);
-   */
 
   React.useEffect(() => {
     if (__DEV__) {
@@ -76,10 +57,6 @@ function LoginScreen({ route, navigation }) {
     setAlert({ type, message });
   };
 
-  const closeAlert = () => {
-    setAlert(null);
-  };
-
   const getLogin = async () => {
     if (email === "" || password === "") {
       dispatch(
@@ -89,7 +66,6 @@ function LoginScreen({ route, navigation }) {
           type: "danger",
         })
       );
-      /*  showAlert("error", "Por favor, llená todos los campos para iniciar sesión.") */
       return false;
     }
     setLoading(true);
@@ -109,9 +85,6 @@ function LoginScreen({ route, navigation }) {
         }
       })
       .catch((e) => {
-        if (__DEV__) {
-          console.log("🚀 ~ file: LoginScreen.tsx ~ line 41 ~ getLogin ~ e", e);
-        }
         dispatch(
           updateMessage({
             body: "Las credenciales no coinciden.",
@@ -169,19 +142,16 @@ function LoginScreen({ route, navigation }) {
               h={verticalScale(55)}
               rounded={8}
               InputRightElement={
-                <Icon
-                  as={
-                    <MaterialIcons
-                      name={showPassword ? "visibility" : "visibility-off"}
-                    />
-                  }
-                  borderColor="#FFFFFF"
-                  shadow="none"
-                  size={5}
-                  mr="3"
-                  color="#797979"
+                <TouchableOpacity
+                  style={{ marginRight: 6 }}
                   onPress={() => setShowPassword(!showPassword)}
-                />
+                >
+                  <MaterialIcons
+                    size={25}
+                    name={showPassword ? "visibility" : "visibility-off"}
+                    color={"#797979"}
+                  />
+                </TouchableOpacity>
               }
               placeholder="Contraseña"
               placeholderTextColor="#797979"

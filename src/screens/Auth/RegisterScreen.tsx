@@ -1,34 +1,32 @@
-import { Box, Button, Icon, Image, Input, VStack } from "native-base";
 import * as React from "react";
+import { Box, Button, Icon, Image, Input, VStack } from "native-base";
+import { ScrollView, TouchableWithoutFeedback } from "react-native";
+import jwtDecode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { MaterialIcons } from "@expo/vector-icons";
+
 import Container from "../../components/Container";
 import { HeaderBack } from "../../components/Header";
-import { MaterialIcons } from "@expo/vector-icons";
 import Hr from "../../components/Hr";
-import { Platform, ScrollView, TouchableWithoutFeedback } from "react-native";
+
 import { updateMessage } from "../../redux/actions/message";
+import { updatetoken } from "../../redux/actions/token";
+
 import { getUserDataWithToken } from "../../utils/storage";
 import { postServices } from "../../utils/hooks/services";
-import { useDispatch } from "react-redux";
-import * as AppleAuthentication from "expo-apple-authentication";
-import {
-  getAuth,
-  OAuthProvider,
-  signInWithCredential,
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-} from "firebase/auth";
-import { baseApi } from "../../utils/api";
-import { updatetoken } from "../../redux/actions/token";
-import jwtDecode from "jwt-decode";
-import { updateUserdata } from "../../redux/actions/user";
+import { isValidEmail, isValidPassword } from "../../utils/validators";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 function RegisterScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showRePassword, setShowRePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [form, setForm] = React.useState({
     email: "",
+    emailError: null,
     password: "",
+    passwordError: null,
     name: "",
     lastname: "",
     role_id: 2,
@@ -36,6 +34,22 @@ function RegisterScreen({ route, navigation }) {
   });
   const [repeatPass, setRepeatPass] = React.useState("");
   const dispatch = useDispatch();
+
+  const setEmail = (val: string) => {
+    setForm({
+      ...form,
+      email: val,
+      emailError: !isValidEmail(val),
+    });
+  };
+
+  const setPassword = (val: string) => {
+    setForm({
+      ...form,
+      password: val,
+      passwordError: !isValidPassword(val),
+    });
+  };
 
   const getRegister = async () => {
     if (
@@ -54,10 +68,20 @@ function RegisterScreen({ route, navigation }) {
       );
       return false;
     }
-    if (!/^(?=.*\d)(?=.*[A-Z]).{8,}$/.test(form.password)) {
+    if (form.passwordError) {
       dispatch(
         updateMessage({
           body: "La contraseña debe tener al menos 8 caracteres, una mayuscula y un número!",
+          open: true,
+          type: "danger",
+        })
+      );
+      return false;
+    }
+    if (form.emailError) {
+      dispatch(
+        updateMessage({
+          body: "Asegurate de ingresar un email válido",
           open: true,
           type: "danger",
         })
@@ -95,11 +119,6 @@ function RegisterScreen({ route, navigation }) {
         );
       }
     } catch (error) {
-      __DEV__ &&
-        console.log(
-          "🚀 ~ file: LoginScreen.tsx ~ line 41 ~ register ~ error",
-          error
-        );
       dispatch(
         updateMessage({
           body:
@@ -164,42 +183,65 @@ function RegisterScreen({ route, navigation }) {
               focusOutlineColor={"transparent"}
             />
             <Input
-              onChangeText={(text) => setForm({ ...form, email: text })}
-              mx="3"
+              onChangeText={(text) => setEmail(text)}
               mb={4}
               placeholder="Email"
               w="100%"
               h={verticalScale(55)}
-              rounded={moderateScale(8)}
               placeholderTextColor="#797979"
-              borderColor={"transparent"}
+              style={{
+                borderColor:
+                  form.emailError === true
+                    ? "red"
+                    : form.email
+                    ? "green"
+                    : "transparent",
+                borderWidth: 1,
+                borderRadius: moderateScale(8),
+                paddingHorizontal: 4,
+              }}
               focusOutlineColor={"transparent"}
             />
-            <Input
-              onChangeText={(text) => setForm({ ...form, password: text })}
-              w={{ base: "100%", md: "25%" }}
-              h={verticalScale(55)}
-              rounded={moderateScale(8)}
-              placeholderTextColor="#797979"
-              borderColor={"transparent"}
-              focusOutlineColor={"transparent"}
+            <Box
               mb={4}
-              type={showPassword ? "text" : "password"}
-              InputRightElement={
-                <Icon
-                  as={
+              style={{
+                borderColor:
+                  form.passwordError === true
+                    ? "red"
+                    : form.password
+                    ? "green"
+                    : "transparent",
+                borderWidth: 1,
+                borderRadius: moderateScale(8),
+                flexDirection: "row",
+                alignItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Input
+                onChangeText={(text) => setPassword(text)}
+                w={{ base: "100%", md: "75%" }}
+                h={verticalScale(55)}
+                px={3}
+                placeholderTextColor="#797979"
+                focusOutlineColor={"transparent"}
+                type={showPassword ? "text" : "password"}
+                InputRightElement={
+                  <TouchableOpacity
+                    style={{ marginRight: 6 }}
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
                     <MaterialIcons
+                      size={25}
                       name={showPassword ? "visibility" : "visibility-off"}
+                      color={"#797979"}
                     />
-                  }
-                  size={6}
-                  mr="2"
-                  color="muted.400"
-                  onPress={() => setShowPassword(!showPassword)}
-                />
-              }
-              placeholder="Contraseña"
-            />
+                  </TouchableOpacity>
+                }
+                placeholder="Contraseña"
+              />
+            </Box>
+
             <Input
               w={{ base: "100%", md: "25%" }}
               h={verticalScale(55)}
@@ -210,17 +252,16 @@ function RegisterScreen({ route, navigation }) {
               mb={4}
               type={showRePassword ? "text" : "password"}
               InputRightElement={
-                <Icon
-                  as={
-                    <MaterialIcons
-                      name={showRePassword ? "visibility" : "visibility-off"}
-                    />
-                  }
-                  size={6}
-                  mr="2"
-                  color="muted.400"
+                <TouchableOpacity
+                  style={{ marginRight: 6 }}
                   onPress={() => setShowRePassword(!showRePassword)}
-                />
+                >
+                  <MaterialIcons
+                    size={25}
+                    name={showRePassword ? "visibility" : "visibility-off"}
+                    color={"#797979"}
+                  />
+                </TouchableOpacity>
               }
               placeholder="Repetir contraseña"
               onChangeText={(text) => setRepeatPass(text)}
@@ -265,128 +306,6 @@ function RegisterScreen({ route, navigation }) {
             >
               Registrate con Google
             </Button>
-            {/* {Platform.OS === "ios" ? (
-              <AppleAuthentication.AppleAuthenticationButton
-                buttonType={
-                  AppleAuthentication.AppleAuthenticationButtonType.CONTINUE
-                }
-                buttonStyle={
-                  AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-                }
-                cornerRadius={5}
-                style={{ width: 200, height: 44 }}
-                onPress={async () => {
-                  try {
-                    const credential = await AppleAuthentication.signInAsync({
-                      requestedScopes: [
-                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                      ],
-                    });
-                    const identuityToken = credential.identityToken;
-                    if (identuityToken) {
-                      const provider = new OAuthProvider("apple.com");
-                      provider.addScope("email");
-                      provider.addScope("fullName");
-                      const credential = provider.credential({
-                        idToken: identuityToken,
-                      });
-                      const auth = getAuth();
-
-                      await signInWithCredential(auth, credential)
-                        .then(async (res) => {
-                          // console.log('user',user)
-                          let user = res.user;
-
-                          const newUser = {
-                            username: user?.email,
-                            email: user?.email,
-                            password: user?.uid,
-                            name: user?.displayName,
-                            lastname: "",
-                            uid: user?.uid,
-                            image: user?.photoURL,
-                            role_id: 2,
-                          };
-                          await baseApi
-                            .post(`/auth/register`, newUser, {})
-                            .then((us) => {
-                              console.log(
-                                "🚀 ~ file: GoogleScreen.tsx ~ line 51 ~ signInWithCredential ~ us",
-                                us
-                              );
-
-                              dispatch(updatetoken(us.data.token));
-                              dispatch(
-                                updateMessage({
-                                  body: "Inicio correcto. ",
-                                  open: true,
-                                  type: "success",
-                                })
-                              );
-                              setLoading(false);
-                              const dataa = jwtDecode(us.data.token);
-                              dispatch(updateUserdata(dataa));
-                              navigation.reset({
-                                routes: [{ name: "SplashScreen" }],
-                                index: 0,
-                              });
-                            })
-                            .catch((err) => {
-                              if (err.response.status === 401) {
-                                setLoading(false);
-                                dispatch(
-                                  updateMessage({
-                                    body: "Usuario no se guardo, o ya esta registrado, intente iniciar sesion. ",
-                                    open: true,
-                                    type: "danger",
-                                  })
-                                );
-                              } else {
-                                setLoading(false);
-                                dispatch(
-                                  updateMessage({
-                                    body: "Usuario no se guardo, o ya esta registrado, intente iniciar sesion. ",
-                                    open: true,
-                                    type: "danger",
-                                  })
-                                );
-                              }
-                            })
-                            .finally(() => {
-                              setLoading(false);
-                            });
-                        })
-                        .catch((err) => {
-                          console.log(
-                            "🚀 ~ file: LoginScreen.tsx ~ line 193 ~ signInWithCredential ~ err",
-                            err
-                          );
-                          setLoading(false);
-                          dispatch(
-                            updateMessage({
-                              body: "Ups Algo salio mal, porfavor vuelva a intentar. ",
-                              open: true,
-                              type: "danger",
-                            })
-                          );
-                        });
-                      // signed in
-                    }
-                  } catch (e) {
-                    console.log(
-                      "🚀 ~ file: LoginScreen.tsx ~ line 173 ~ onPress={ ~ e",
-                      e
-                    );
-                    if (e.code === "ERR_CANCELED") {
-                      // handle that the user canceled the sign-in flow
-                    } else {
-                      // handle other errors
-                    }
-                  }
-                }}
-              />
-            ) : null} */}
           </Box>
         </VStack>
       </ScrollView>
