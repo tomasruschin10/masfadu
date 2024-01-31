@@ -182,13 +182,8 @@ function RegisterScreen({ route, navigation }) {
               borderColor={"transparent"}
               focusOutlineColor={"transparent"}
             />
-            <Input
-              onChangeText={(text) => setEmail(text)}
+            <Box
               mb={4}
-              placeholder="Email"
-              w="100%"
-              h={verticalScale(55)}
-              placeholderTextColor="#797979"
               style={{
                 borderColor:
                   form.emailError === true
@@ -198,10 +193,21 @@ function RegisterScreen({ route, navigation }) {
                     : "transparent",
                 borderWidth: 1,
                 borderRadius: moderateScale(8),
-                paddingHorizontal: 4,
+                flexDirection: "row",
+                height: verticalScale(55),
+                alignItems: "center",
+                overflow: "hidden",
               }}
-              focusOutlineColor={"transparent"}
-            />
+            >
+              <Input
+                onChangeText={(text) => setEmail(text)}
+                placeholder="Email"
+                w="100%"
+                h={verticalScale(55)}
+                placeholderTextColor="#797979"
+                focusOutlineColor={"transparent"}
+              />
+            </Box>
             <Box
               mb={4}
               style={{
@@ -212,6 +218,7 @@ function RegisterScreen({ route, navigation }) {
                     ? "green"
                     : "transparent",
                 borderWidth: 1,
+                height: verticalScale(55),
                 borderRadius: moderateScale(8),
                 flexDirection: "row",
                 alignItems: "center",
@@ -228,7 +235,7 @@ function RegisterScreen({ route, navigation }) {
                 type={showPassword ? "text" : "password"}
                 InputRightElement={
                   <TouchableOpacity
-                    style={{ marginRight: 6 }}
+                    style={{ marginRight: 9 }}
                     onPress={() => setShowPassword(!showPassword)}
                   >
                     <MaterialIcons
@@ -253,7 +260,7 @@ function RegisterScreen({ route, navigation }) {
               type={showRePassword ? "text" : "password"}
               InputRightElement={
                 <TouchableOpacity
-                  style={{ marginRight: 6 }}
+                  style={{ marginRight: 9 }}
                   onPress={() => setShowRePassword(!showRePassword)}
                 >
                   <MaterialIcons

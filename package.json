@@ -82,6 +82,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "rn-fetch-blob": "^0.12.0",
+    "rn-swipeable-panel": "^1.2.7",
     "updates": "^13.1.0"
   },
   "devDependencies": {

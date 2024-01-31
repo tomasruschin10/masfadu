@@ -10049,6 +10049,13 @@
     "base-64" "0.1.0"
     "glob" "7.0.6"
 
+"rn-swipeable-panel@^1.2.5", "rn-swipeable-panel@^1.2.7":
+  "integrity" "sha512-ibaU2+4J/VliCud8neQLzuLLNv3DP3t3+ySeG6Nn4mibhLQp/lvU47lCzvPiz4WhO6FTzre2k7Q5LqsuH5ThXQ=="
+  "resolved" "https://registry.npmjs.org/rn-swipeable-panel/-/rn-swipeable-panel-1.2.7.tgz"
+  "version" "1.2.7"
+  dependencies:
+    "rn-swipeable-panel" "^1.2.5"
+
 "run-parallel@^1.1.9":
   "integrity" "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA=="
   "resolved" "https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz"

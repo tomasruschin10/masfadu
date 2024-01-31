@@ -30,14 +30,12 @@ function EditProfile({ route, navigation }) {
   const [form, setForm] = useState({
     image: userdata.image.url,
     phone: userdata.phone,
+    email: userdata.email,
+    username: userdata.username,
   });
   const dispatch = useDispatch();
 
   const [alert, setAlert] = React.useState(null);
-
-  const showAlert = (type, message) => {
-    setAlert({ type, message });
-  };
 
   const closeAlert = () => {
     setAlert(null);
@@ -52,6 +50,8 @@ function EditProfile({ route, navigation }) {
     const formData = new FormData();
     formData.append("phone", form.phone);
     formData.append("image", img);
+    formData.append("email", form.email);
+    formData.append("username", form.username);
 
     putServices(`auth/update/${userdata.id}`, formData)
       .then(({ data }: any) => {
@@ -63,10 +63,9 @@ function EditProfile({ route, navigation }) {
             type: "success",
           })
         );
-        /* showAlert('success', 'Guardado con Exito!') */
       })
       .catch((err) =>
-        /* showAlert('error', 'Hubo un Error al Guardar')  */ dispatch(
+        dispatch(
           updateMessage({
             body: "Hubo un Error al Guardar",
             open: true,
@@ -198,9 +197,9 @@ function EditProfile({ route, navigation }) {
                     size={8}
                   />
                 }
-                isDisabled={true}
+                onChangeText={(text) => setForm({ ...form, email: text })}
                 rounded={8}
-                value={userdata.email}
+                value={form.email}
                 px={5}
                 py={3}
                 fontFamily={"Poppins"}
@@ -234,9 +233,9 @@ function EditProfile({ route, navigation }) {
                     size={8}
                   />
                 }
+                onChangeText={(text) => setForm({ ...form, username: text })}
                 rounded={8}
-                isDisabled={true}
-                value={userdata.username}
+                value={form.username}
                 px={5}
                 py={3}
                 fontFamily={"Poppins"}

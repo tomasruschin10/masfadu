@@ -143,7 +143,7 @@ function LoginScreen({ route, navigation }) {
               rounded={8}
               InputRightElement={
                 <TouchableOpacity
-                  style={{ marginRight: 6 }}
+                  style={{ marginRight: 9 }}
                   onPress={() => setShowPassword(!showPassword)}
                 >
                   <MaterialIcons

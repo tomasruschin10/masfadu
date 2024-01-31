@@ -1,10 +1,19 @@
+import { useEffect, useState } from "react";
 import { Box, Text, HStack, Select, CheckIcon, VStack } from "native-base";
-import { Image, Platform, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Platform,
+  TouchableOpacity,
+  Modal,
+  View,
+  ScrollView,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { SwipeablePanel } from "rn-swipeable-panel";
 import * as Font from "expo-font";
+
 import { useEventNavigation } from "../../context";
 import { fontStyles } from "../../utils/colors/fontColors";
 
@@ -35,16 +44,24 @@ function AboutSubject_Logic({
     selectiveSubjects,
   } = subject;
   const [FontsLoaded, setFontsLoaded] = useState(false);
+  const [showSelectiveSubject, setShowSelectiveSubject] = useState(false);
   const [selectiveSubject, setSelectiveSubject] = useState();
 
-  const obtenerDatos = async () => {
+  const getSelectiveSubject = async () => {
     try {
       const selectedSubjectString = await AsyncStorage.getItem(
         "selectiveSubject"
       );
       if (selectedSubjectString) {
-        const selectedSubject = JSON.parse(selectedSubjectString);
-        setSelectiveSubject(selectedSubject.id);
+        const selectedSubjectsArray = JSON.parse(selectedSubjectString);
+
+        const matchingSubject = selectedSubjectsArray.find(
+          (subject) => subject.selectedId === id
+        );
+
+        if (matchingSubject) {
+          setSelectiveSubject(matchingSubject.label);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -52,7 +69,7 @@ function AboutSubject_Logic({
   };
 
   useEffect(() => {
-    obtenerDatos();
+    getSelectiveSubject();
 
     if (!FontsLoaded) {
       loadFonts();
@@ -66,7 +83,6 @@ function AboutSubject_Logic({
       soraRegular: require("../../../assets/fonts/Sora-Regular.ttf"),
       soraSemiBold: require("../../../assets/fonts/Sora-SemiBold.ttf"),
     });
-    console.log("Fuente cargada");
   };
 
   if (!FontsLoaded) {
@@ -74,9 +90,30 @@ function AboutSubject_Logic({
   }
 
   const selectSelectiveSubject = async (item) => {
-    setSelectiveSubject(item.id);
-    const itemString = JSON.stringify(item);
-    await AsyncStorage.setItem("selectiveSubject", itemString);
+    try {
+      const existingString = await AsyncStorage.getItem("selectiveSubject");
+
+      const existingValue = existingString ? JSON.parse(existingString) : [];
+
+      const index = existingValue.findIndex(
+        (subject) => subject.selectedId === id
+      );
+
+      if (index !== -1) {
+        existingValue[index] = { ...item, selectedId: id };
+      } else {
+        existingValue.push({ ...item, selectedId: id });
+      }
+
+      await AsyncStorage.setItem(
+        "selectiveSubject",
+        JSON.stringify(existingValue)
+      );
+
+      setSelectiveSubject(item.label);
+    } catch (error) {
+      console.error("Error al seleccionar la materia:", error);
+    }
   };
 
   const selectiveSubjectsData =
@@ -87,8 +124,6 @@ function AboutSubject_Logic({
     }));
 
   return (
-    // Materias y puntajes
-
     <HStack
       mt={margginTop}
       justifyContent={"space-between"}
@@ -101,24 +136,44 @@ function AboutSubject_Logic({
         height: 80,
       }}
     >
-      <Box
-        justifyContent={"center"}
-        flex={1}
-        // bg={
-        //   !available || !userSubject || userSubject?.score < 4
-        //     ? "white"
-        //     : "primary.600"
-        // }
-
-        rounded={"xl"}
-      >
+      <Box justifyContent={"center"} flex={1} rounded={"xl"}>
         <HStack
           pl={2}
           pr={3}
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <VStack space={2} alignItems="flex-start">
+          {selective && selectiveSubjects ? (
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={() => setShowSelectiveSubject(true)}
+            >
+              <Entypo name="chevron-down" size={25} color="#797979" />
+              {selectiveSubject ? (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#171717"}
+                >
+                  {selectiveSubject}
+                </Text>
+              ) : (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#171717"}
+                >
+                  {`${name} (${selectiveSubjects.length})`}
+                </Text>
+              )}
+            </TouchableOpacity>
+          ) : (
             <Text
               pr={2}
               bold={true}
@@ -128,86 +183,62 @@ function AboutSubject_Logic({
             >
               {name}
             </Text>
-            {selective && selectiveSubjects ? (
-              <Select
-                selectedValue={selectiveSubject}
-                minWidth="160"
-                marginTop={-3} // Ajusta este valor según tu preferencia
-                accessibilityLabel="Elegir Materia"
-                placeholder="Elegir Materia"
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                onValueChange={(itemId) => {
-                  const selectedItem = selectiveSubjects.find(
-                    (item, index) => index.toString() === itemId
-                  );
-                  if (selectedItem) {
-                    selectSelectiveSubject(selectedItem);
-                  }
-                }}
-                textAlign={"left"}
-                style={{
-                  marginLeft: -10,
-                  marginBottom: -5,
-                }}
-                _item={{
-                  fontSize: 14,
-                }}
-              >
-                {selectiveSubjectsData.map((item) => (
-                  <Select.Item
-                    label={item.label}
-                    value={item.value}
-                    key={item.value}
-                  />
-                ))}
-              </Select>
-            ) : null}
+          )}
+          <VStack space={2} alignItems="flex-start">
+            <Modal
+              visible={!!showSelectiveSubject}
+              transparent
+              children={
+                <SwipeablePanel
+                  style={{ height: 480 }}
+                  closeOnTouchOutside
+                  onClose={() => setShowSelectiveSubject(null)}
+                  fullWidth
+                  onlyLarge
+                  isActive={!!showSelectiveSubject}
+                >
+                  <ScrollView>
+                    <View
+                      style={{
+                        paddingRight: 27,
+                        paddingLeft: 30,
+                        paddingVertical: 27,
+                        paddingBottom: 54,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      {selectiveSubjectsData &&
+                        selectiveSubjectsData.map((item) => (
+                          <TouchableOpacity
+                            key={item.value}
+                            onPress={() => {
+                              selectSelectiveSubject(item);
+                              setShowSelectiveSubject(null);
+                            }}
+                            style={{
+                              paddingVertical: 10,
+                            }}
+                          >
+                            <Text
+                              style={[fontStyles.poppins400, { fontSize: 16 }]}
+                            >
+                              {item.label}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                    </View>
+                  </ScrollView>
+                </SwipeablePanel>
+              }
+            />
           </VStack>
-          {/* TODO: para que es todo esto ? */}
-          {/* 
-          {(available && !userSubject) || !available ? null : available &&
-            userSubject.finish ? (
-            <AntDesign
-              name={userSubject?.score < 4 ? "closecircleo" : "checkcircleo"}
-              color={userSubject?.score < 4 ? "#FAA72A" : "white"}
-              size={20}
-            />
-          ) : available && !userSubject.finish ? (
-            <Box borderWidth={"1"} borderColor={"#3A71E1"} px={1} py={"0.5"}>
-              <Text color={"#3A71E1"} fontSize={10}>
-                En curso
-              </Text>
-            </Box>
-          ) : null} */}
-          {/* <TouchableOpacity
-            onPress={() =>
-              nav.navigate("SeeSubjectThread", {
-                rating: 14,
-                title: name,
-                description: "",
-                time: "",
-                hours: "",
-                method: "",
-                subject_id: id,
-                id: id,
-                firstLetter: subject.prefix,
-              })
-            }
-          >
-            <Image
-              source={require("../../../assets/icons/smile.png")}
-              style={{ width: 26, height: 26, marginLeft: 20, marginRight: -5 }}
-            />
-          </TouchableOpacity> */}
         </HStack>
       </Box>
 
       <TouchableOpacity
         style={{
-          //   backgroundColor: "white",
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -224,11 +255,6 @@ function AboutSubject_Logic({
           setShowNotes(true);
         }}
       >
-        {/* <MaterialCommunityIcons
-            name="message-text-outline"
-            size={25}
-            color="#CCCED1"
-          /> */}
         <Entypo
           name="dots-three-vertical"
           size={22}
@@ -246,12 +272,8 @@ function AboutSubject_Logic({
             height: 70,
           }}
         >
-          {/* <Box style={{ backgroundColor: "cyan" }}> */}
           <Text
             color={userSubject?.score < 11 ? "#eb5e29" : "#3a71e1"}
-            // color={userSubject?.score < 4 ? "#eb5e29" : "#3a71e1"}
-            // fontWeight={"bold"}
-            // textAlign={"center"}
             style={[
               fontStyles.headingText,
               {
@@ -264,19 +286,6 @@ function AboutSubject_Logic({
           >
             {userSubject?.score}
           </Text>
-          {/* <Text
-              position={"absolute"}
-              bottom={-2}
-              left={0}
-              right={0}
-              color={"white"}
-              textAlign={"center"}
-              fontSize={10}
-              pb={1}
-            >
-              Info
-            </Text> */}
-          {/* </Box> */}
         </TouchableOpacity>
       ) : available && !userSubject ? (
         <TouchableOpacity
@@ -285,32 +294,18 @@ function AboutSubject_Logic({
             setCurrentSubj({ ...subject, dis: 1 });
           }}
         >
-          {/* <Box
-            borderColor={"#D7D7D7"}
-            borderWidth={1}
-            alignItems={"center"}
-            justifyContent={"center"}
-            w={"53"}
-            bg={"white"}
-            rounded={"xl"}
-            h={"56px"}
-          > */}
           <Text
             color={"brand.primary"}
-            // fontWeight={"bold"}
             textAlign={"center"}
             fontSize={38}
-            // fontFamily={""}
             style={{ marginRight: 10 }}
           >
             +
           </Text>
-          {/* </Box> */}
         </TouchableOpacity>
       ) : !available ? (
         <TouchableOpacity
           style={{
-            // backgroundColor: "white",
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -319,20 +314,12 @@ function AboutSubject_Logic({
             setCurrentSubj({ ...subject, dis: 0 });
           }}
         >
-          {/* <Box
-            alignItems={"center"}
-            justifyContent={"center"}
-            w={"50"}
-            rounded={"xl"}
-            h={"56px"}
-          > */}
           <AntDesign
             name="warning"
             size={24}
             style={{ marginRight: 10 }}
             color="#C4C4C4"
           />
-          {/* </Box> */}
         </TouchableOpacity>
       ) : null}
     </HStack>

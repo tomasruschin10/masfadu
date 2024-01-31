@@ -9,7 +9,6 @@ import { moderateScale, verticalScale } from "../../utils/media.screens";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
-  // const [materias, setMaterias] = useState([]);
   const materias = [];
   subjCategory.data.forEach((item) => {
     const dataAvailable = item.subject.filter(
@@ -86,7 +85,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         borderWidth={1}
         rounded={"xl"}
         mt={1}
-        // mb={4}
         mx={5}
       >
         <HStack p={4} pb={1} justifyContent="space-between">
@@ -197,7 +195,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
             viewInside={item.subject.map((it, index) => (
               <AboutSubject_Logic
                 index={index}
-                // lastItem={item.subject.length}
                 nav={nav}
                 key={it.id}
                 subject={it}
