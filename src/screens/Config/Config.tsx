@@ -39,7 +39,7 @@ function Config({ route, navigation, value }) {
   const version = Constants?.manifest?.version || "1.0.0";
 
   const logout = async () => {
-    await AsyncStorage.getItem("selectiveSubject");
+    await AsyncStorage.removeItem("selectiveSubject");
     store.dispatch(
       updateMessage({
         body: "Sesión finalizada con éxito",
