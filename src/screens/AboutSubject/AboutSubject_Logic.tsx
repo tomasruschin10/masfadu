@@ -54,7 +54,7 @@ function AboutSubject_Logic({
       );
       if (selectedSubjectString) {
         const selectedSubjectsArray = JSON.parse(selectedSubjectString);
-
+        console.log('hola', selectedSubjectsArray);
         const matchingSubject = selectedSubjectsArray.find(
           (subject) => subject.selectedId === id
         );
