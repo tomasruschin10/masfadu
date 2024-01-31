@@ -975,7 +975,7 @@ export function DiscardDraftModal({
             textStyle={{
               marginTop: verticalScale(10),
             }}
-            title="Confirmar"
+            title="Confirmar y Perder Borrador"
             callBack={() => onConfirm()}
           />
         </Modal.Footer>

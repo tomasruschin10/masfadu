@@ -523,7 +523,7 @@ function CreateNewThread({ route, navigation }) {
           </Modal>
         </ScrollView>
         <DiscardDraftModal
-          message={"¿Estás seguro de volver? todo tu progreso se perderá"}
+          message={"¿Descartar Borrador? Vas a perder lo que escribiste"}
           isOpen={modalOpen}
           onConfirm={() => navigation.goBack()}
           onCancel={() => setModalOpen(false)}
