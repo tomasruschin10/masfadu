@@ -11,28 +11,24 @@ import {
 } from "native-base";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
-import {
-  publishDoc,
-  getServices
-} from "../../utils/hooks/services";
+import { publishDoc, getServices } from "../../utils/hooks/services";
 import { useEffect } from "react";
 
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 import { StyleSheet } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { AxiosError } from "axios";
-
 
 function ResourceForm({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [resourceCategories, setResourceCategory] = React.useState([]);
 
   const [previewImage, setPreviewImage] = useState(null);
-  const [imagen, setImagen] = useState(null)
-  const [name, setName] = useState(null)
+  const [imagen, setImagen] = useState(null);
+  const [name, setName] = useState(null);
   const [subjectName, setSubjectName] = useState("");
-  const [selectedCategoryId, setCategory] = useState("")
+  const [selectedCategoryId, setCategory] = useState("");
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [selectedSubjectId, setSelectedSubjectId] = useState("");
@@ -41,12 +37,12 @@ function ResourceForm({ route, navigation }) {
   const [subjects, setSubjects] = useState([]);
 
   if (route.params && route.params?.career_id) {
-    setSelectedCareerId(route.params.career_id)
+    setSelectedCareerId(route.params.career_id);
   }
 
   const handleSubjectChange = (itemValue) => {
     setSelectedSubjectId(itemValue);
-    setSubjectName(subjects.find(el => el.id === itemValue).name)
+    setSubjectName(subjects.find((el) => el.id === itemValue).name);
   };
 
   const handleCareerChange = (itemValue) => {
@@ -55,58 +51,57 @@ function ResourceForm({ route, navigation }) {
   };
 
   const handleCategoryChange = (itemValue) => {
-    setCategory(itemValue)
+    setCategory(itemValue);
   };
 
-
   useEffect(() => {
-    getServices('career/all').then((res: any) => {
-      setCareers(res.data)
-    }).catch(() => { });
-  }, [])
+    getServices("career/all")
+      .then((res: any) => {
+        setCareers(res.data);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     getServices("subject/career/" + selectedCareerId)
       .then(({ data }: any) => {
         setSubjects(data);
       })
-      .catch(() => { });
-  }, [selectedCareerId])
-
-
+      .catch(() => {});
+  }, [selectedCareerId]);
 
   useEffect(() => {
-    setLoading(true)
-    getServices('resource-category/all').then(({ data }: any) => {
-      setResourceCategory(data)
-    }).catch(error => {
-      if (__DEV__) {
-        console.log("🚀 ~ file: ResourceForm.tsx ~ getServices ~ error", error)
-      }
-    }).finally(() => setLoading(false))
-
-  }, [])
-
-
-  useEffect(() => {
+    setLoading(true);
     getServices("resource-category/all")
       .then(({ data }: any) => {
-
-        const category = data.map((data) => {
-          return { label: data.name, value: data.id }
-        })
-
-        setResourceCategory(category)
+        setResourceCategory(data);
       })
+      .catch((error) => {
+        if (__DEV__) {
+          console.log(error);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
-  }, [])
+  useEffect(() => {
+    getServices("resource-category/all").then(({ data }: any) => {
+      const category = data.map((data) => {
+        return { label: data.name, value: data.id };
+      });
+
+      setResourceCategory(category);
+    });
+  }, []);
 
   const selectImage = async () => {
     try {
-      const image = await ImagePicker.launchImageLibraryAsync({ base64: false });
+      const image = await ImagePicker.launchImageLibraryAsync({
+        base64: false,
+      });
 
       if (!image.canceled && image.assets.length > 0) {
-        setImagen(image.assets[0])
+        setImagen(image.assets[0]);
         setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
       }
     } catch (error) {
@@ -119,42 +114,48 @@ function ResourceForm({ route, navigation }) {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
     }, 30000);
-  }
-  
+  };
+
   const cleanSuccessModal = () => {
     setSuccessModalOpen(false);
-    navigation.navigate('Home');
-  }
-  
-  
-  const categorysEmpty = [{
-    label: "No existen partners",
-    value: "1"
-  }]
+    navigation.navigate("Home");
+  };
+
+  const categorysEmpty = [
+    {
+      label: "No existen partners",
+      value: "1",
+    },
+  ];
 
   const uploadImage = async () => {
     try {
       setLoading(true);
-      
+
       const response = await publishDoc({
         subject_id: selectedSubjectId,
         resource_category_id: selectedCategoryId,
         image: imagen,
-        name
-      })
+        name,
+      });
 
       if (response.status != 201) {
-        throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
+        throw new Error(JSON.stringify(response), {
+          cause: "no se obtuvo el status 201",
+        });
       }
-      console.log('RESPONSE', response.body);
-      
+      console.log("RESPONSE", response.body);
+
       setLoading(false);
       setSuccessModalOpen(true);
       setTimeout(() => {
-        cleanSuccessModal()
+        cleanSuccessModal();
       }, 30000);
     } catch (error) {
-      console.log('Error al enviar la imagen al backend:', (error as AxiosError).request);
+      console.log(
+        "Error al enviar la imagen al backend:",
+        (error as AxiosError).request
+      );
       setErrorModalOpen(true);
       setLoading(false);
 
@@ -184,11 +185,11 @@ function ResourceForm({ route, navigation }) {
             <Text fontSize={15}>
               Publicá un documento {subjectName && "en"}
             </Text>
-            {subjectName && <Text style={[fontStyles.headingText]}>{subjectName}</Text>}
+            {subjectName && (
+              <Text style={[fontStyles.headingText]}>{subjectName}</Text>
+            )}
           </Box>
           <Box>
-
-
             <Box
               mx="5"
               mb={5}
@@ -213,7 +214,11 @@ function ResourceForm({ route, navigation }) {
                   textAlign={"left"}
                 >
                   {careers.map((item) => (
-                    <Select.Item label={item.name} value={item.id} key={item.id} />
+                    <Select.Item
+                      label={item.name}
+                      value={item.id}
+                      key={item.id}
+                    />
                   ))}
                 </Select>
               ) : (
@@ -250,7 +255,11 @@ function ResourceForm({ route, navigation }) {
                   textAlign={"left"}
                 >
                   {subjects.map((item) => (
-                    <Select.Item label={item.name} value={item.id} key={item.id} />
+                    <Select.Item
+                      label={item.name}
+                      value={item.id}
+                      key={item.id}
+                    />
                   ))}
                 </Select>
               ) : (
@@ -269,10 +278,8 @@ function ResourceForm({ route, navigation }) {
               mx="5"
               borderBottomWidth={1}
               borderBottomColor={"#EBEEF2"}
-
               pb={"24"}
             >
-
               <Box
                 alignItems={"center"}
                 justifyContent="center"
@@ -286,7 +293,6 @@ function ResourceForm({ route, navigation }) {
                   placeholder={"Nombre de archivo"}
                   placeholderTextColor={"#d3d3d3"}
                   backgroundColor={"#F7FAFC"}
-
                 />
               </Box>
 
@@ -302,14 +308,18 @@ function ResourceForm({ route, navigation }) {
                     _selectedItem={{
                       bg: "teal.600",
                       endIcon: <CheckIcon size="5" />,
-                    }}  
+                    }}
                     mt={1}
                     onValueChange={(e) => handleCategoryChange(e)}
                     textAlign={"left"}
                   >
                     {resourceCategories.map((item) => (
-                      <Select.Item label={item.name} value={item.id} key={item.id} />
-                      ))}
+                      <Select.Item
+                        label={item.name}
+                        value={item.id}
+                        key={item.id}
+                      />
+                    ))}
                   </Select>
                 ) : (
                   <Select
@@ -324,9 +334,34 @@ function ResourceForm({ route, navigation }) {
                 )}
               </Box>
 
-              <Box mb={5} mt={1} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
-                {previewImage && <Image alt="Imagen" source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Button fontSize={1} zIndex={99} style={{ backgroundColor: "#d3d3d3", width: "30%", borderRadius: 50, marginLeft: "30%", marginTop: "13%", position: "absolute", height: "20%" }} onPress={selectImage}>Subir Archivo</Button>
+              <Box
+                mb={5}
+                mt={1}
+                style={{ backgroundColor: "#F7FAFC", height: 150 }}
+              >
+                {previewImage && (
+                  <Image
+                    alt="Imagen"
+                    source={{ uri: previewImage }}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                )}
+                <Button
+                  fontSize={1}
+                  zIndex={99}
+                  style={{
+                    backgroundColor: "#d3d3d3",
+                    width: "30%",
+                    borderRadius: 50,
+                    marginLeft: "30%",
+                    marginTop: "13%",
+                    position: "absolute",
+                    height: "20%",
+                  }}
+                  onPress={selectImage}
+                >
+                  Subir Archivo
+                </Button>
               </Box>
             </Box>
 
@@ -345,8 +380,18 @@ function ResourceForm({ route, navigation }) {
             </Box>
           </Box>
         </ScrollView>
-        <ErrorModal message={"Error al publicar"} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={cleanSuccessModal} />
+        <ErrorModal
+          message={"Error al publicar"}
+          isOpen={errorModalOpen}
+          setOpen={setErrorModalOpen}
+        />
+        <SuccessModal
+          message={
+            "Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"
+          }
+          isOpen={successModalOpen}
+          setOpen={cleanSuccessModal}
+        />
       </Layout>
     </Container>
   );

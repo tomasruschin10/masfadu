@@ -14,12 +14,8 @@ import ResourcesAndTools from "../screens/Resourcesandtools/ResourcesAndTools";
 import SubjectOpinions from "../screens/Subjectopinion/SubjectOpinions";
 import Offer from "../screens/Offers/Offers";
 
-
 export default function SwitchComponents({ component, route, navigation }) {
-  console.log(
-    "🚀 ~ file: SwitchComponents.tsx:17 ~ SwitchComponents ~ component:",
-    component
-  );
+  console.log(component);
   switch (component) {
     case "Escribinos tu sugerencia":
       return <Suggestions route={route} navigation={navigation} />;
@@ -55,14 +51,14 @@ export default function SwitchComponents({ component, route, navigation }) {
           mainTitle={component}
         />
       );
-      case "Publicar":
-        return (
-          <SubjectOpinions
-            route={route}
-            navigation={navigation}
-            mainTitle={component}
-          />
-        );
+    case "Publicar":
+      return (
+        <SubjectOpinions
+          route={route}
+          navigation={navigation}
+          mainTitle={component}
+        />
+      );
     case "Cursos & Workshops":
       return (
         <CoursesAndWorkshops
@@ -71,13 +67,8 @@ export default function SwitchComponents({ component, route, navigation }) {
           mainTitle={component}
         />
       );
-      case "Mercado de Fadu":
-        return (
-          <Offer
-            route={route}
-            navigation={navigation}
-          />
-        );
+    case "Mercado de Fadu":
+      return <Offer route={route} navigation={navigation} />;
     case "Materias":
       return <AboutSubject value={"5"} route={route} navigation={navigation} />;
     case "Objetos perdidos":

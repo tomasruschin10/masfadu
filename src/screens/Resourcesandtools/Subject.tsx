@@ -10,12 +10,12 @@ import {
   Text,
 } from "native-base";
 import React, { useEffect } from "react";
-import { TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { SimpleAccordion } from "../../components/SimpleAccordion";
 import Container from "../../components/Container";
 import { getServices } from "../../utils/hooks/services";
 import Layout from "../../utils/LayoutHeader&BottomTab";
-import { Feather, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useEventNavigation } from "../../context";
 import { fontStyles } from "../../utils/colors/fontColors";
 function Subjects({ route, navigation }) {
@@ -31,24 +31,20 @@ function Subjects({ route, navigation }) {
         setSubjectCategory(data.data.filter((it) => it.career_id == id));
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   }, [setSubjectCategory]);
 
   const Communication = ({ item, index, length }) => {
-    console.log("🚀 ~ file: Subject.tsx:44 ~ Communication ~ index:", index);
+    console.log(index);
     const { id, name } = item;
 
     let margginTop = -10;
     if (navigationEvent == "menu" && index == 0) {
       margginTop = 0;
     }
-    console.log("🚀 ~ file: Subject.tsx:52 ~ Communication ~ length:", length);
+    console.log(length);
 
     let marginBottom = 0;
     if (length == index) {
@@ -64,7 +60,6 @@ function Subjects({ route, navigation }) {
           marginHorizontal: 6,
           marginTop: margginTop,
           marginBottom: marginBottom,
-          // backgroundColor: "red",
         }}
       >
         <Box
@@ -78,21 +73,23 @@ function Subjects({ route, navigation }) {
             borderRadius: 8,
             height: 80,
           }}
-          //   borderBottomWidth={1}
-          //   borderBottomColor={"#5c5353"}
         >
           <Box justifyContent={"center"} pl={4} width={"72%"}>
-            <Text style={[fontStyles.poppins400, {fontSize: 14}]} numberOfLines={4} mr={4}>
+            <Text
+              style={[fontStyles.poppins400, { fontSize: 14 }]}
+              numberOfLines={4}
+              mr={4}
+            >
               {name}
             </Text>
           </Box>
           <TouchableOpacity
-            onPress={() => 
-            navigation.navigate("SubjectContent", {
+            onPress={() =>
+              navigation.navigate("SubjectContent", {
                 viewName: viewName,
                 name: name,
                 subjectId: id,
-              }) 
+              })
             }
           >
             <Box
@@ -146,21 +143,16 @@ function Subjects({ route, navigation }) {
             <Button display={"none"} />
           ) : (
             <HStack mb={3} mt={10} space={2} justifyContent="center">
-              <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
+              <Spinner
+                color="brand.primary"
+                accessibilityLabel="Loading posts"
+              />
               <Heading color="brand.primary" fontSize="md">
                 Cargando
               </Heading>
             </HStack>
           )}
-          <Box
-            mt={4}
-            mb={20}
-            // borderColor={"#D5D5D5"}
-            borderRadius={10}
-            // borderWidth={1}
-            mx={5}
-            style={{}}
-          >
+          <Box mt={4} mb={20} borderRadius={10} mx={5} style={{}}>
             {subjectCategory.length > 0 &&
               subjectCategory.map((it, index) => (
                 <SimpleAccordion
@@ -170,7 +162,6 @@ function Subjects({ route, navigation }) {
                   viewInside={
                     <Box
                       key={it.id}
-                      // mx="2"
                       mt="2"
                       flexDir={"row"}
                       flexWrap={"wrap"}
@@ -179,7 +170,6 @@ function Subjects({ route, navigation }) {
                       <Box mt={1.5}></Box>
                       {it.subject.map((item, index) => (
                         <Communication
-                        
                           key={item.id}
                           item={item}
                           index={index}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -6,7 +6,6 @@ import {
   Checkbox,
   FormControl,
   HStack,
-  Icon,
   Input,
   Modal,
   ScrollView,
@@ -14,17 +13,19 @@ import {
   Text,
   TextArea,
 } from "native-base";
-import Container from "../../components/Container";
-import Layout from "../../utils/LayoutHeader&BottomTab";
 import { FontAwesome5, Ionicons, AntDesign } from "@expo/vector-icons";
-import { getServices, postServices } from "../../utils/hooks/services";
 import { TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
+
+import Container from "../../components/Container";
 import { updateMessage } from "../../redux/actions/message";
-import { useEffect } from "react";
-import RecommendedTags from "../../utils/RecommendedTags";
-import { baseApi } from "../../utils/api";
 import { store } from "../../redux/store";
+
+import Layout from "../../utils/LayoutHeader&BottomTab";
+import RecommendedTags from "../../utils/RecommendedTags";
+import { getServices, postServices } from "../../utils/hooks/services";
+import { baseApi } from "../../utils/api";
+import { DiscardDraftModal } from "../AboutSubject/Modals";
 
 function CreateNewThread({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
@@ -34,12 +35,14 @@ function CreateNewThread({ route, navigation }) {
   const [careers, setCareers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [selectedSubjectId, setSelectedSubjectId] = useState("");
   const state: any = store.getState();
   const [selectedCareerId, setSelectedCareerId] = useState(
     state.user.userdata.career_id
   );
-  const [descriptionHeight, SetDescriptionHeight] = useState(67); // Altura inicial del Box
+  const [descriptionHeight, SetDescriptionHeight] = useState(67);
 
   const [subjects, setSubjects] = useState([]);
 
@@ -191,7 +194,12 @@ function CreateNewThread({ route, navigation }) {
 
   return (
     <Container>
-      <Layout route={route} navigation={navigation} title={`Crear Hilo`}>
+      <Layout
+        route={route}
+        navigation={navigation}
+        title={`Crear Hilo`}
+        goBackFunction={() => setModalOpen(true)}
+      >
         <ScrollView
           nestedScrollEnabled={true}
           keyboardShouldPersistTaps={"handled"}
@@ -514,6 +522,13 @@ function CreateNewThread({ route, navigation }) {
             </Modal.Content>
           </Modal>
         </ScrollView>
+        <DiscardDraftModal
+          message={"¿Estás seguro de volver? todo tu progreso se perderá"}
+          isOpen={modalOpen}
+          onConfirm={() => navigation.goBack()}
+          onCancel={() => setModalOpen(false)}
+          setOpen={setModalOpen}
+        />
       </Layout>
     </Container>
   );

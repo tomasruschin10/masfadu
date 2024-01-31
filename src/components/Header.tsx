@@ -28,11 +28,17 @@ export function HeaderBack({ ...props }) {
     <>
       <StatusBar barStyle="dark-content" />
       <Box safeAreaTop />
-      <HStack pb="3" w="100%" pr="3" alignItems="center" flexDir={props.headerWithIcon ? "row" : null} >
+      <HStack
+        pb="3"
+        w="100%"
+        pr="3"
+        alignItems="center"
+        flexDir={props.headerWithIcon ? "row" : null}
+      >
         {navigation.canGoBack() && (
           <IconButton
             rounded="xl"
-            onPress={handleGoBack}
+            onPress={props.goBackFunction ? props.goBackFunction : handleGoBack}
             icon={
               <Icon
                 as={Ionicons}

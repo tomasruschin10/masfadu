@@ -21,10 +21,7 @@ function On2Screen({ route, navigation }) {
       })
       .catch((error) => {
         if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+          console.log(error);
         }
       });
   }, [setCareer]);
@@ -36,10 +33,7 @@ function On2Screen({ route, navigation }) {
       })
       .catch((error) => {
         if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+          console.log(error);
         }
       })
       .finally(() => {
@@ -47,14 +41,11 @@ function On2Screen({ route, navigation }) {
           .then(({ data }: any) => {
             dispatch(updatetoken(data.token));
             getUserDataWithToken(data.token);
-            navigation.navigate('Onboarding3')
+            navigation.navigate("Onboarding3");
           })
           .catch((error) => {
             if (__DEV__) {
-              console.log(
-                "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-                error
-              );
+              console.log(error);
             }
           });
       });
@@ -99,8 +90,8 @@ function On2Screen({ route, navigation }) {
       </ScrollView>
 
       <Button
-        _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
-        _text={{ fontSize: 14, fontWeight: '600' }}                            
+        _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+        _text={{ fontSize: 14, fontWeight: "600" }}
         bg="brand.primary"
         py={5}
         rounded={8}

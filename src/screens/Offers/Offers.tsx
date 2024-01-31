@@ -17,14 +17,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 import { fontStyles } from "../../utils/colors/fontColors";
-import Container from "../../components/Container";
 
 import { store } from "../../redux/store";
 
 const { width: screenWidth } = Dimensions.get("window");
-const filterWidth = screenWidth * 0.29;
 
-function Offers({ route, navigation }) {  
+function Offers({ route, navigation }) {
   const [offerCategory, setOfferCategory] = useState([]);
   const [items, setItems] = useState([]);
   const [myItems, setMyItems] = useState([]);
@@ -59,22 +57,12 @@ function Offers({ route, navigation }) {
               image: item.image.url,
             })
           }
-        >
-          {/* <Image
-            borderRadius={"2xl"}
-            resizeMode={"cover"}
-            h={"100%"}
-            alt="news1"
-            source={{ uri: item.image.url }}
-          /> */}
-        </TouchableOpacity>
+        ></TouchableOpacity>
       </Box>
     );
   };
 
   const HeaderFilters = ({ item }) => {
-    // console.log("item category: " + JSON.stringify(item, null, 2));
-
     return (
       <TouchableOpacity
         style={{ marginRight: 10 }}
@@ -140,10 +128,7 @@ function Offers({ route, navigation }) {
       })
       .catch((error) => {
         if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+          console.log(error);
         }
       })
       .finally(() => setLoading(false));
@@ -163,17 +148,13 @@ function Offers({ route, navigation }) {
         setSearchText("");
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
 
   const renderItem = ({ item }) => {
-    console.log(
-      "🚀 ~ file: Offers.tsx:219 ~ renderItem ~ item:",
-      JSON.stringify(item, null, 2)
-    );
+    console.log(JSON.stringify(item, null, 2));
 
     const {
       userdata: { id },
@@ -273,72 +254,72 @@ function Offers({ route, navigation }) {
           style={{ position: "absolute", left: "8.8%", zIndex: 1 }}
         />
 
-    <Input
-      style={{ marginLeft: "10%" }}
-      onChangeText={(text) => setSearch(text)}
-      value={search}
-      w={{ base: "80%", md: "25%" }}
-      pb="1"
-      type={"text"}
-      placeholder="Buscar"
-      placeholderTextColor="#666666"
-      rounded={8}
-    />
-    <IconButton
-      onPress={() => {
-        setSearch("");
-      }}
-      ml="3"
-      rounded={8}
-      backgroundColor={"#fff"}
-      icon={
-        <Icon as={AntDesign} name="close" size="md" color={"muted.400"} />
-      }
-    />
-  </HStack>
-  <View
-    style={{
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      marginLeft: 35,
-      marginBottom: 20,
-    }}
-  >
-    <TouchableOpacity
-      onPress={() => setSelectedButton("Todo")}
-      style={{
-        borderRadius: 0,
-        height: 40,
-        borderBottomLeftRadius: 2,
-        borderBottomStartRadius: 2,
-        marginRight: 20,
-        borderBottomWidth: selectedButton === "Todo" ? 1 : 0,
-        borderBottomColor: "#EB5E29",
-      }}
-    >
-      <Text
+        <Input
+          style={{ marginLeft: "10%" }}
+          onChangeText={(text) => setSearch(text)}
+          value={search}
+          w={{ base: "80%", md: "25%" }}
+          pb="1"
+          type={"text"}
+          placeholder="Buscar"
+          placeholderTextColor="#666666"
+          rounded={8}
+        />
+        <IconButton
+          onPress={() => {
+            setSearch("");
+          }}
+          ml="3"
+          rounded={8}
+          backgroundColor={"#fff"}
+          icon={
+            <Icon as={AntDesign} name="close" size="md" color={"muted.400"} />
+          }
+        />
+      </HStack>
+      <View
         style={{
-          paddingVertical: 10,
-          textAlign: "center",
-          color: selectedButton === "Todo" ? "#EB5E29" : "#797979",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          marginLeft: 35,
+          marginBottom: 20,
         }}
       >
-        Todo
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={() => setSelectedButton("Mis Publicaciones")}
-      style={{
-        borderRadius: 0,
-        borderBottomLeftRadius: 2,
-        height: 40,
-        borderBottomStartRadius: 2,
-        borderBottomWidth: selectedButton === "Mis Publicaciones" ? 1 : 0,
-        borderBottomColor: "#EB5E29",
-      }}
-    >
-      <Text
-        style={{
+        <TouchableOpacity
+          onPress={() => setSelectedButton("Todo")}
+          style={{
+            borderRadius: 0,
+            height: 40,
+            borderBottomLeftRadius: 2,
+            borderBottomStartRadius: 2,
+            marginRight: 20,
+            borderBottomWidth: selectedButton === "Todo" ? 1 : 0,
+            borderBottomColor: "#EB5E29",
+          }}
+        >
+          <Text
+            style={{
+              paddingVertical: 10,
+              textAlign: "center",
+              color: selectedButton === "Todo" ? "#EB5E29" : "#797979",
+            }}
+          >
+            Todo
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setSelectedButton("Mis Publicaciones")}
+          style={{
+            borderRadius: 0,
+            borderBottomLeftRadius: 2,
+            height: 40,
+            borderBottomStartRadius: 2,
+            borderBottomWidth: selectedButton === "Mis Publicaciones" ? 1 : 0,
+            borderBottomColor: "#EB5E29",
+          }}
+        >
+          <Text
+            style={{
               paddingVertical: 10,
               borderRadius: 99,
               textAlign: "center",

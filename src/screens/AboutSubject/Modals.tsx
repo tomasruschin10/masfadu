@@ -16,8 +16,8 @@ import {
   Overlay,
 } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
-import { Entypo } from "@expo/vector-icons";
 import {
+  Entypo,
   AntDesign,
   MaterialCommunityIcons,
   EvilIcons,
@@ -144,7 +144,7 @@ export function ModalNotes({
                 size={24}
                 color="#EC5F5F"
                 onPress={() =>
-                  form.extra_score.length === 0
+                  form.extra_score && form.extra_score.length === 0
                     ? Alert.alert(
                         "Importante",
                         "¿Deseas eliminar la nota final?",
@@ -299,7 +299,7 @@ export function ModalNotes({
           <Modal.Footer bg={"#3A71E1"} borderTopWidth={0}></Modal.Footer>
         </Modal.Content>
       </Modal>
-      {/* SUBMODAL */}
+
       <Modal
         isOpen={showModal2?.state}
         animationPreset={"slide"}
@@ -685,7 +685,6 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             Advertencias
           </Text>
 
-          {/* <FormControl maxWidth={"100%"} pl={"5%"} pr={"18%"}> */}
           <HStack
             maxWidth={"100%"}
             px={"5%"}
@@ -712,7 +711,6 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
             <Box
               display={"flex"}
               flexDirection={"row"}
-              // alignItems={"center"}
               mb={1.5}
               alignItems={"center"}
             >
@@ -782,7 +780,6 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               <Text>1</Text>
               <Text px={"1.5"} textAlign={"left"}>
                 {" "}
-                {/* Alinea el texto a la izquierda */}
                 Baneo temporal sin poder comentar duante un tiempo indefinido.
               </Text>
             </Box>
@@ -794,12 +791,10 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
               <Text>2</Text>
               <Text textAlign={"left"}>
                 {" "}
-                {/* Alinea el texto a la izquierda */}
                 Baneo completo y expulsión de la app.
               </Text>
             </Box>
           </HStack>
-          {/* </FormControl> */}
           <Button.Group space={2} my={"7%"}>
             <DefaultButton
               buttonStyle={{
@@ -915,6 +910,75 @@ export function SuccessModal({
             </Text>
           </FormControl>
         </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function DiscardDraftModal({
+  isOpen,
+  setOpen,
+  onConfirm,
+  onCancel,
+  message,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  onConfirm: Function;
+  onCancel: Function;
+  message?: string;
+}) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xl"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
+        <Center>
+          <ExclamationComponent />
+        </Center>
+        <Modal.Body alignItems={"center"}>
+          <FormControl>
+            <Text fontSize={14} textAlign={"center"}>
+              {message}
+            </Text>
+          </FormControl>
+        </Modal.Body>
+        <Modal.Footer justifyContent="center">
+          <DefaultButton
+            buttonStyle={{
+              height: horizontalScale(40),
+              backgroundColor: "#797979",
+              marginBottom: 20,
+              paddingHorizontal: horizontalScale(45),
+              width: 300,
+              alignItems: "center",
+              borderRadius: moderateScale(8),
+            }}
+            textStyle={{
+              marginTop: verticalScale(10),
+            }}
+            title="Cancelar"
+            callBack={() => onCancel()}
+          />
+          <DefaultButton
+            buttonStyle={{
+              height: horizontalScale(40),
+              backgroundColor: "#DA673A",
+              paddingHorizontal: horizontalScale(45),
+              width: 300,
+              alignItems: "center",
+              borderRadius: moderateScale(8),
+            }}
+            textStyle={{
+              marginTop: verticalScale(10),
+            }}
+            title="Confirmar"
+            callBack={() => onConfirm()}
+          />
+        </Modal.Footer>
       </Modal.Content>
     </Modal>
   );

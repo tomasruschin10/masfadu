@@ -1,19 +1,15 @@
-import { Box, IconButton, Text, View, useTheme, Image } from "native-base";
+import { useState } from "react";
+import { Box, IconButton, Text, View, Image } from "native-base";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
-import { TouchableOpacity, Platform, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { TouchableOpacity, StyleSheet } from "react-native";
+
 import { useEventNavigation } from "../context";
-import Svg, { Use } from "react-native-svg";
 import {
   InicioMenu,
   InicioMateria,
   InicioOpiniones,
   MenuInicio,
 } from "././iconsMenu/inicio-menu";
-import { useDispatch } from "react-redux";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,12 +19,8 @@ const styles = StyleSheet.create({
 });
 
 export default function BottomTab({ route, navigation, setMenu }) {
-  const dispatch = useDispatch();
-
   const [menuView, setMenuView] = useState(false);
-  const { colors }: any = useTheme();
   const { name } = route;
-  console.log("🚀 ~ file: BottomTab.tsx:20 ~ BottomTab ~ name:", name);
 
   const MenuPublica = () => {
     return (
@@ -71,7 +63,7 @@ export default function BottomTab({ route, navigation, setMenu }) {
         <TouchableOpacity
           onPress={() => {
             setEvent("opiniones");
-            
+
             name !== "Subsections"
               ? navigation.navigate("CreateNewThread", {
                   title: "Opiniones de materias",
@@ -80,12 +72,8 @@ export default function BottomTab({ route, navigation, setMenu }) {
                   title: "Opiniones de materias",
                 });
 
-
-            setMenuView(false)    
+            setMenuView(false);
           }}
-
-
-
           style={{
             marginTop: 20,
             marginRight: 35,
@@ -164,9 +152,8 @@ export default function BottomTab({ route, navigation, setMenu }) {
             alignItems: "center",
           }}
           onPress={() => {
-             navigation.navigate("OfferForm")
+            navigation.navigate("OfferForm");
           }}
-
         >
           <IconButton
             marginRight={35}
@@ -183,8 +170,8 @@ export default function BottomTab({ route, navigation, setMenu }) {
                 <Image
                   alt="imagen"
                   source={require("../../assets/icons/menuArrow.png")}
-                  resizeMode="contain" // Ajustar imagen al contenedor
-                  style={{ width: "100%", height: "100%" }} // Reducir el tamaño de la imagen
+                  resizeMode="contain"
+                  style={{ width: "100%", height: "100%" }}
                 />
               </Box>
             }
@@ -214,8 +201,8 @@ export default function BottomTab({ route, navigation, setMenu }) {
                 <Image
                   alt="imagen"
                   source={require("../../assets/icons/menuMercado.png")}
-                  resizeMode="contain" // Ajustar imagen al contenedor
-                  style={{ width: "100%", height: "100%" }} // Reducir el tamaño de la imagen
+                  resizeMode="contain"
+                  style={{ width: "100%", height: "100%" }}
                 />
               </Box>
             }
@@ -266,17 +253,9 @@ export default function BottomTab({ route, navigation, setMenu }) {
               marginBottom: "4%",
             }}
           >
-            {/*         <MaterialIcons
-          name="home"
-          size={36}
-          style={{ marginTop: 0 }}
-          color={event == "inicio" ? "#E85E29" : "#A8ACAD"}
-        /> */}
-
             <InicioMenu color={event == "inicio" ? "#E85E29" : "#A8ACAD"} />
 
             <Text
-              /* fontFamily={"Sans"} */
               style={{ fontWeight: "400" }}
               fontSize={12}
               color={event == "inicio" ? "#E85E29" : "#A8ACAD"}
@@ -299,19 +278,11 @@ export default function BottomTab({ route, navigation, setMenu }) {
               marginBottom: "4%",
             }}
           >
-            {/* <FontAwesome5
-              name="book-open"
-              style={{ marginTop: 6 }}
-              size={26}
-              color={event == "materias" ? "#E85E29" : "#A8ACAD"}
-            /> */}
-
             <InicioMateria
               color={event == "materias" ? "#E85E29" : "#A8ACAD"}
             />
 
             <Text
-              /* fontFamily={"Sans"} */
               style={{ marginTop: -2, fontWeight: "400" }}
               fontSize={12}
               color={event == "materias" ? "#E85E29" : "#A8ACAD"}
@@ -393,7 +364,6 @@ export default function BottomTab({ route, navigation, setMenu }) {
               color={event == "opiniones" ? "#E85E29" : "#A8ACAD"}
             />
             <Text
-              /* fontFamily={"Sans"} */
               style={{ marginTop: -2, fontWeight: "400" }}
               fontSize={12}
               color={event == "opiniones" ? "#E85E29" : "#A8ACAD"}
@@ -405,7 +375,6 @@ export default function BottomTab({ route, navigation, setMenu }) {
           <TouchableOpacity
             onPress={() => {
               setEvent("menu");
-              /*  navigation.navigate("Menu"); */
 
               setMenu(true);
             }}
@@ -418,16 +387,8 @@ export default function BottomTab({ route, navigation, setMenu }) {
               marginBottom: "4%",
             }}
           >
-            {/*             <MaterialIcons
-              name="star"
-              size={36}
-              
-              color={event == "menu" ? "#E85E29" : "#A8ACAD"}
-            /> */}
-
             <MenuInicio color={event == "menu" ? "#E85E29" : "#A8ACAD"} />
             <Text
-              /* fontFamily={"Sans"} */
               style={{ marginTop: -2, fontWeight: "400" }}
               fontSize={12}
               color={event == "menu" ? "#E85E29" : "#A8ACAD"}

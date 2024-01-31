@@ -33,15 +33,12 @@ function JobOffers({ route, navigation, mainTitle }) {
     setLoading(true);
     getServices("offer/all/work")
       .then(({ data }: any) => {
-        console.log(data)
+        console.log(data);
         setAllOffers(data);
       })
       .catch((error) => {
         if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+          console.log(error);
         }
       });
 
@@ -51,10 +48,7 @@ function JobOffers({ route, navigation, mainTitle }) {
       })
       .catch((error) => {
         if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+          console.log(error);
         }
       })
       .finally(() => setLoading(false));
@@ -68,8 +62,7 @@ function JobOffers({ route, navigation, mainTitle }) {
         setSearchText("");
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
@@ -113,8 +106,6 @@ function JobOffers({ route, navigation, mainTitle }) {
         title={`Ofertas Laborales`}
         addButtonUrl={"JobOfferForm"}
       >
-
-
         <ScrollView keyboardShouldPersistTaps={"handled"}>
           <Box>
             <Box>
@@ -136,13 +127,13 @@ function JobOffers({ route, navigation, mainTitle }) {
             alignItems={"center"}
             justifyContent="center"
             flexDir={"row"}
-            >
+          >
             <MaterialIcons
               name={"search"}
               size={17}
               color="gray"
               style={{ position: "absolute", left: "3%", zIndex: 1 }}
-              />
+            />
             <Input
               style={{ marginLeft: "8%" }}
               fontSize={12.27}
@@ -177,7 +168,10 @@ function JobOffers({ route, navigation, mainTitle }) {
             <Button display={"none"} />
           ) : (
             <HStack mt={2} space={2} justifyContent="center">
-              <Spinner color="brand.primary" accessibilityLabel="Loading posts" />
+              <Spinner
+                color="brand.primary"
+                accessibilityLabel="Loading posts"
+              />
               <Heading color="brand.primary" fontSize="md">
                 Cargando
               </Heading>

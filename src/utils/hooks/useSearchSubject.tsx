@@ -15,10 +15,7 @@ function useSearchSubject() {
       })
       .catch((error) => {
         if (__DEV__) {
-          console.log(
-            "🚀 ~ file: On2Screen.tsx ~ line 21 ~ getServices ~ error",
-            error
-          );
+          console.log(error);
         }
         setLoading(false);
       });
@@ -28,18 +25,17 @@ function useSearchSubject() {
     if (allSubjects.length > 0) {
       setLoading(true);
       const delayDebounceFn = setTimeout(() => {
-        const result = allSubjects.filter(
-          (subj) =>
-            subj.name
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .includes(
-                search
-                  .toLowerCase()
-                  .normalize("NFD")
-                  .replace(/[\u0300-\u036f]/g, "")
-              )
+        const result = allSubjects.filter((subj) =>
+          subj.name
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(
+              search
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+            )
         );
         setFilteredSubjects(result);
         setLoading(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 
-import { Animated, TouchableHighlight, TouchableOpacity } from "react-native";
+import { Animated } from "react-native";
 import {
   Box,
   Button,
@@ -17,8 +17,7 @@ import {
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import SeeSubjectThread_Item from "./SeeSubjectThread_Item";
-import SeeSubjectThread_Top from "./SeeSubjectThread_Top";
-import RecommendedTags from "../../utils/RecommendedTags";
+
 import { HeaderBack } from "../../components/Header";
 import { getServices } from "../../utils/hooks/services";
 import { updateMessage } from "../../redux/actions/message";
@@ -119,8 +118,7 @@ function SeeSubjectThread({ route, navigation }) {
         setAllOpinions(data);
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       });
 
     getServices("tag/all")
@@ -128,8 +126,7 @@ function SeeSubjectThread({ route, navigation }) {
         setAllTags(data);
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
@@ -147,8 +144,7 @@ function SeeSubjectThread({ route, navigation }) {
         setAllOpinions(data);
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
@@ -163,8 +159,7 @@ function SeeSubjectThread({ route, navigation }) {
         setLimit(limit + 10);
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
@@ -187,7 +182,6 @@ function SeeSubjectThread({ route, navigation }) {
           type: "danger",
         })
       );
-      /* showAlert('error', 'Asegurate de haber elegido una etiqueta por favor.') */
       return false;
     }
     setLoading(true);
@@ -204,8 +198,7 @@ function SeeSubjectThread({ route, navigation }) {
         setAllOpinions(data);
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
@@ -222,8 +215,7 @@ function SeeSubjectThread({ route, navigation }) {
         setLength(-100000);
       })
       .catch((error) => {
-        __DEV__ &&
-          console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+        __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
   };
@@ -248,19 +240,13 @@ function SeeSubjectThread({ route, navigation }) {
           setAllOpinions(data);
         })
         .catch((error) => {
-          __DEV__ &&
-            console.log("🚀 ~ file: SeeSubjectThread getServices:", error);
+          __DEV__ && console.log(error);
         })
         .finally(() => setLoading(false));
       setLength(rating);
     }
   };
 
-  const search = () => {
-    changeFilt ? byTags() : byWords();
-  };
-
-  //JSX
   return (
     <Container>
       {menuShow ? (

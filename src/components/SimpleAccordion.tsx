@@ -1,4 +1,4 @@
-import { Box, Icon, Text } from "native-base";
+import { Box, Text } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -10,8 +10,7 @@ import {
   ViewStyle,
 } from "react-native";
 import Collapsible from "react-native-collapsible";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+
 import { useEventNavigation } from "../context";
 import { moderateScale } from "../utils/media.screens";
 
@@ -44,15 +43,9 @@ const SimpleAccordion = ({
   if (navigationEvent === "materias") {
     marginBotom = -20;
   }
-  console.log(
-    "🚀 ~ file: SimpleAccordion.tsx:42 ~ navigationEvent:",
-    navigationEvent
-  );
 
   return (
-    // ITEM PADRE
     <View>
-      {/* items  */}
       <TouchableOpacity
         activeOpacity={10}
         onPress={() => setIsCollapsed(!isCollapsed)}
@@ -65,7 +58,6 @@ const SimpleAccordion = ({
               alignItems: "center",
             }}
           >
-            {/* {navigationEvent === "materias" && ( */}
             <Image
               source={require("../../assets/icons/star2.png")}
               style={{
@@ -75,7 +67,6 @@ const SimpleAccordion = ({
                 marginLeft: -5,
               }}
             />
-            {/* )} */}
 
             <View>
               <Text
@@ -91,18 +82,21 @@ const SimpleAccordion = ({
                 {title}
               </Text>
               {description && (
-                <Text style={{ color: "#646464", fontSize: moderateScale(12), marginTop: 2 }}>
+                <Text
+                  style={{
+                    color: "#646464",
+                    fontSize: moderateScale(12),
+                    marginTop: 2,
+                  }}
+                >
                   {description}
                 </Text>
               )}
             </View>
           </View>
-          {/* Button ver mas */}
 
           <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
-            {/* {navigationEvent === "materias" ? ( */}
             <Box
-              // backgroundColor={"#ffffff"}
               style={{
                 borderRadius: 2,
                 padding: 2,
@@ -164,30 +158,15 @@ const styles = StyleSheet.create({
     height: 95,
     marginHorizontal: 5,
     borderRadius: 8,
-    // marginBottom: 10,
+
     marginTop: 12,
-    // marginBottom: -10,
-    // backgroundColor: "#294871",
+
     flexDirection: "row",
     backgroundColor: "#fff",
     padding: 16,
     alignItems: "center",
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.24,
-    // shadowRadius: 6.27,
-    // elevation: 3,
   },
-  defaultViewContainer: {
-    // padding: 8,
-    // backgroundColor: "#eff6ff",
-    // marginHorizontal: 5,
-    // borderRadius: 8,
-    // marginBottom: 4,
-  },
+  defaultViewContainer: {},
   card: {
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
