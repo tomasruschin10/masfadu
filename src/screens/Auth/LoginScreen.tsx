@@ -56,6 +56,8 @@ function LoginScreen({ route, navigation }) {
   const [loading, setLoading] = React.useState(false);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId:
+      "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
     androidClientId:
       "1044573282337-clqfcumlk8g4ih4hplta6v88lcn72cks.apps.googleusercontent.com",
     iosClientId:

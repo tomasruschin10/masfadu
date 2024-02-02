@@ -43,6 +43,8 @@ function RegisterScreen({ route, navigation }) {
   const dispatch = useDispatch();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId:
+      "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
     androidClientId:
       "1044573282337-clqfcumlk8g4ih4hplta6v88lcn72cks.apps.googleusercontent.com",
     iosClientId:
@@ -58,7 +60,7 @@ function RegisterScreen({ route, navigation }) {
   const generateUsername = (firstName, lastName) => {
     const combinedName = `${firstName}${lastName}`.toLowerCase();
     const cleanedName = combinedName.replace(/[^a-zA-Z0-9]/g, "");
-    const randomNumber = Math.floor(Math.random() * 1000); 
+    const randomNumber = Math.floor(Math.random() * 1000);
     return `${cleanedName}${randomNumber}`;
   };
 
