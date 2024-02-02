@@ -18,15 +18,22 @@ import { isValidEmail, isValidPassword } from "../../utils/validators";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+
+WebBrowser.maybeCompleteAuthSession();
+
 function RegisterScreen({ route, navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showRePassword, setShowRePassword] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [form, setForm] = React.useState({
     email: "",
     emailError: null,
     password: "",
     passwordError: null,
+    google_user: false,
     name: "",
     lastname: "",
     role_id: 2,
@@ -34,6 +41,94 @@ function RegisterScreen({ route, navigation }) {
   });
   const [repeatPass, setRepeatPass] = React.useState("");
   const dispatch = useDispatch();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId:
+      "1044573282337-clqfcumlk8g4ih4hplta6v88lcn72cks.apps.googleusercontent.com",
+    iosClientId:
+      "1044573282337-l2n519m10p7bp6aka5eusa0gomh9u720.apps.googleusercontent.com",
+    expoClientId:
+      "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
+  });
+
+  React.useEffect(() => {
+    handleRegisterWithGoogle();
+  }, [response]);
+
+  const generateUsername = (firstName, lastName) => {
+    const combinedName = `${firstName}${lastName}`.toLowerCase();
+    const cleanedName = combinedName.replace(/[^a-zA-Z0-9]/g, "");
+    const randomNumber = Math.floor(Math.random() * 1000); 
+    return `${cleanedName}${randomNumber}`;
+  };
+
+  const handleRegisterWithGoogle = async () => {
+    if (response?.type === "success") {
+      try {
+        const userData = await getGoogleUserInfo(
+          response.authentication.accessToken
+        );
+
+        setIsLoading(true);
+        const { data, status } = await postServices("auth/register", {
+          email: userData.email,
+          emailError: null,
+          password: userData.id,
+          passwordError: null,
+          name: userData.given_name,
+          lastname: userData.family_name,
+          google_user: true,
+          role_id: 2,
+          username: generateUsername(userData.given_name, userData.family_name),
+        });
+        if (status === 200) {
+          dispatch(updatetoken(data.token));
+          getUserDataWithToken(data.token);
+          let userData: any = jwtDecode(data.token);
+          if (userData.userData.career) {
+            navigation.navigate("Home");
+          } else {
+            navigation.navigate("Onboarding1");
+          }
+          dispatch(
+            updateMessage({
+              body: "Registro completado con éxito",
+              open: true,
+              type: "success",
+            })
+          );
+        }
+      } catch (error) {
+        dispatch(
+          updateMessage({
+            body:
+              (error.response.data ? error.response.data.message : "") +
+              ", por favor elegí otro",
+            open: true,
+            type: "danger",
+          })
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getGoogleUserInfo = async (token) => {
+    if (!token) return;
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const user = await response.json();
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const setEmail = (val: string) => {
     setForm({
@@ -292,9 +387,10 @@ function RegisterScreen({ route, navigation }) {
           <Box alignItems="center">
             <Button
               mb={5}
-              onPress={() => navigation.navigate("GoogleRegister")}
+              onPress={() => promptAsync()}
               w="100%"
               backgroundColor={"#FFFFFF"}
+              isLoading={isLoading}
               h={verticalScale(55)}
               rounded={moderateScale(8)}
               leftIcon={

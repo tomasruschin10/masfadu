@@ -5,7 +5,7 @@
     "version": "1.0.19",
     "orientation": "portrait",
     "privacy": "unlisted",
-    "scheme": "faduapp",
+    "scheme": "muyfaduapp",
     "icon": "./assets/icon.png",
     "owner": "masfadu-updates",
     "splash": {

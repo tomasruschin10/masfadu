@@ -31,6 +31,19 @@ import jwtDecode from "jwt-decode";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
 
+import {
+  getAuth,
+  signInWithCredential,
+  GoogleAuthProvider,
+} from "firebase/auth";
+
+import { baseApi } from "../../utils/api";
+import { updateUserdata } from "../../redux/actions/user";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+
+WebBrowser.maybeCompleteAuthSession();
+
 const { height, width } = Dimensions.get("window");
 
 const bodyOffset = height * 0.15;
@@ -41,6 +54,62 @@ function LoginScreen({ route, navigation }) {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId:
+      "1044573282337-clqfcumlk8g4ih4hplta6v88lcn72cks.apps.googleusercontent.com",
+    iosClientId:
+      "1044573282337-l2n519m10p7bp6aka5eusa0gomh9u720.apps.googleusercontent.com",
+    expoClientId:
+      "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
+  });
+
+  React.useEffect(() => {
+    handleSignInWithGoogle();
+  }, [response]);
+
+  const handleSignInWithGoogle = async () => {
+    if (response?.type === "success") {
+      try {
+        const userData = await getGoogleUserInfo(
+          response.authentication.accessToken
+        );
+        setLoading(true);
+        postServices("auth/login", {
+          userOrEmail: userData.email,
+          password: userData.id,
+        }).then((res: any) => {
+          showAlert("success", "Inicio correcto!");
+          dispatch(updatetoken(res.data.token));
+          getUserDataWithToken(res.data.token);
+          let data: any = jwtDecode(res.data.token);
+          if (data.userData.career) {
+            navigation.navigate("Home");
+          } else {
+            navigation.navigate("Onboarding1");
+          }
+        });
+      } catch (error) {
+        console.error("Error al autenticar con Google:", error);
+      }
+    }
+  };
+
+  const getGoogleUserInfo = async (token) => {
+    if (!token) return;
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const user = await response.json();
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const dispatch = useDispatch();
 
@@ -211,7 +280,7 @@ function LoginScreen({ route, navigation }) {
               h={verticalScale(55)}
               rounded={moderateScale(8)}
               backgroundColor={"#FFFFFF"}
-              onPress={() => navigation.navigate("GoogleLogin")}
+              onPress={() => promptAsync()}
               _spinner={{ color: "black" }}
               _text={{
                 color: "#797979",

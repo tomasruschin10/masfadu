@@ -8,7 +8,6 @@ import {
   PixelRatio,
 } from "react-native";
 import { Box, HStack, Icon, Image, ScrollView, Text } from "native-base";
-import Carousel from "react-native-snap-carousel";
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";

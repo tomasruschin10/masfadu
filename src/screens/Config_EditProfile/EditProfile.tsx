@@ -197,6 +197,7 @@ function EditProfile({ route, navigation }) {
                     size={8}
                   />
                 }
+                isDisabled={userdata.google_user}
                 onChangeText={(text) => setForm({ ...form, email: text })}
                 rounded={8}
                 value={form.email}
