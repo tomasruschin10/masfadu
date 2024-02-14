@@ -67,8 +67,11 @@ function ChangePassword({route, navigation}) {
             px={5}
             py={3}
             fontFamily={'Poppins'} 
-            rightElement={
+            placeholder={'Contraseña'} />
             <IconButton
+                  position={'absolute'}
+                  right={0}
+                  top={'50%'}
             onPress={() => setOldPasswordDisabled(!oldPasswordDisabled)}
             mr={2}
 							icon={
@@ -77,21 +80,13 @@ function ChangePassword({route, navigation}) {
 							bgColor={"#FBF0EB"}
 							rounded='full'
 							size={8}
-						/>} placeholder={'Contraseña'} />
+						/>
           </Box>
 
           <Box mb={'7'} alignItems={'left'}>
             <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'}  fontFamily={'Poppins'}>Contraseña nueva</Text>
             <Input 
-            isDisabled={newPasswordDisabled}
-            rightElement={<IconButton
-            onPress={() => setNewPasswordDisabled(!newPasswordDisabled)}
-            mr={2}
-							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-							bgColor={"#FBF0EB"}
-							rounded='full'
-							size={8}
-						/>}  
+            isDisabled={newPasswordDisabled}  
             value={form.newpassword} 
             onChangeText={(text) => setForm({...form, newpassword: text})} 
             fontSize={16} 
@@ -102,21 +97,23 @@ function ChangePassword({route, navigation}) {
             placeholder={'Nueva contraseña'}
             rounded={8}
              />
+             <IconButton
+              position={'absolute'}
+              right={0}
+              top={'50%'}
+             onPress={() => setNewPasswordDisabled(!newPasswordDisabled)}
+             mr={2}
+               icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+               bgColor={"#FBF0EB"}
+               rounded='full'
+               size={8}
+             />
           </Box>
 
           <Box mb={'7'} alignItems={'left'}>
             <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'}  fontFamily={'Poppins'}>Confirmar contraseña</Text>
             <Input
-            isDisabled={confirmdDisabled}
-            rightElement={<IconButton
-            onPress={() => setConfirmDisabled(!confirmdDisabled)}
-            on
-            mr={2}
-							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-							bgColor={"#FBF0EB"}
-							rounded='full'
-							size={8}
-						/>}  
+            isDisabled={confirmdDisabled} 
             value={repeatPassword} 
             onChangeText={(text) => setRepeatPassword(text)}  
             fontSize={16} 
@@ -127,6 +124,18 @@ function ChangePassword({route, navigation}) {
             placeholder={'Nueva contraseña'}
             rounded={8} 
             />
+            <IconButton
+            position={'absolute'}
+            right={0}
+            top={'50%'}
+            onPress={() => setConfirmDisabled(!confirmdDisabled)}
+            on
+            mr={2}
+							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+							bgColor={"#FBF0EB"}
+							rounded='full'
+							size={8}
+						/>
           </Box>
         </Box>        
         
