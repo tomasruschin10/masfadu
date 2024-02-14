@@ -26,6 +26,9 @@ import { Octicons } from "@expo/vector-icons";
 import Container from "../../components/Container";
 
 function EditProfile({ route, navigation }) {
+  const [phoneDisabled, setPhoneDisabled] = useState<boolean>(true)
+  const [emailDisabled, setEmailDisabled] = useState<boolean>(true)
+  const [userDisabled, setUserDisabled] = useState<boolean>(true)
   const userdata = useSelector((state: any) => state.user.userdata);
   const [form, setForm] = useState({
     image: userdata.image.url,
@@ -150,6 +153,7 @@ function EditProfile({ route, navigation }) {
               <Input
                 rightElement={
                   <IconButton
+                  onPress={() => setPhoneDisabled(!phoneDisabled)}
                     mr={2}
                     icon={<Octicons name="pencil" size={16} color="#DA673A" />}
                     bgColor={"#FBF0EB"}
@@ -158,7 +162,7 @@ function EditProfile({ route, navigation }) {
                   />
                 }
                 onChangeText={(text) => setForm({ ...form, phone: text })}
-                isDisabled={false}
+                isDisabled={phoneDisabled}
                 value={form.phone}
                 fontFamily={"Poppins"}
                 placeholder={"Ejemplo: +549116461* * * *"}
@@ -188,8 +192,10 @@ function EditProfile({ route, navigation }) {
                 Email
               </Text>
               <Input
+              isDisabled={emailDisabled}
                 rightElement={
                   <IconButton
+                  onPress={() => setEmailDisabled(!emailDisabled)}
                     mr={2}
                     icon={<Octicons name="pencil" size={16} color="#DA673A" />}
                     bgColor={"#FBF0EB"}
@@ -197,7 +203,6 @@ function EditProfile({ route, navigation }) {
                     size={8}
                   />
                 }
-                isDisabled={userdata.google_user}
                 onChangeText={(text) => setForm({ ...form, email: text })}
                 rounded={8}
                 value={form.email}
@@ -225,8 +230,10 @@ function EditProfile({ route, navigation }) {
                 Usuario
               </Text>
               <Input
+              isDisabled={userDisabled}
                 rightElement={
                   <IconButton
+                  onPress={() => setUserDisabled(!userDisabled)}
                     mr={2}
                     icon={<Octicons name="pencil" size={16} color="#DA673A" />}
                     bgColor={"#FBF0EB"}

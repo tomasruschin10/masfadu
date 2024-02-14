@@ -52,11 +52,16 @@ function Suggestions({ route, navigation }) {
 
         <Box my={8} alignItems="center">
           <Button
-            w="90%"
-            isDisabled={text ? false : true}
-            py={5}
-            backgroundColor="blue.500"
+            w={'90%'}
+            isDisabled={!text}
+            mb={10}
             onPress={() => sendEmail()}
+            _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
+            _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }}                        
+            bg={"#DA673A"}
+            py={5}
+            color={'white'}
+            rounded={8}
           >
             Enviar
           </Button>

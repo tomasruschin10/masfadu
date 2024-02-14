@@ -4,16 +4,19 @@ import Container from "../../components/Container";
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import { moderateScale } from "../../utils/media.screens";
+import { MaterialIcons } from '@expo/vector-icons';
+import { fontStyles } from "../../utils/colors/fontColors";
 
 const On4Screen = ({navigation}) => {
   const [step, setStep] = React.useState<number>(0)
+  const [pageWidth, setPageWidth] = React.useState<number>(0)
     const redirect = () => {
         navigation.navigate('Home')
     }
 
     const screens = [
       {
-        title:'Materias',
+        title:'MATERIAS',
         text: 'Agregá tus notas, confirmá qué materias cursar según correlativas y calculá tu promedio.',
         image:<Image
         w={100}
@@ -27,7 +30,7 @@ const On4Screen = ({navigation}) => {
         action: () => setStep(1)
       },
       {
-        title:'Opiniones',
+        title:'OPINIONES',
         text: 'Hablemos de las cátedras, materias, profesores y lo que querramos. Sin faltar el respeto :)',
         image:<Image
         w={100}
@@ -41,7 +44,7 @@ const On4Screen = ({navigation}) => {
         action: () => setStep(2)
       },
       {
-        title:'Mercado de Fadu',
+        title:'MERCADO',
         text: 'Si te olvidaste, encontraste algo en Fadu, querés donar resumenes, libros o apuntes, es por acá!',
         image:<Image
         w={100}
@@ -52,12 +55,28 @@ const On4Screen = ({navigation}) => {
         />,
         showBg: false,
         buttonText:'Finalizar',
-        action: redirect
+        action: () => redirect()
       },
     ]
+
+    const handleOnboarding = (positionX: number) => {
+      if((positionX) > (pageWidth/2)) {
+        screens[step].action()
+      } else {
+        if(step > 0){
+          setStep(step - 1)
+        }
+      }
+    }
+  
+    const handleWidth = (position: {width: number}) => {
+      setPageWidth(position.width)
+    }
   return (
     <Container>
 			<Box 
+      onLayout={(e) => handleWidth(e.nativeEvent.layout)}
+      onTouchStart={(e) => handleOnboarding(e.nativeEvent.pageX)}
       flex={1} 
       mt={-5} 
       justifyContent={'space-between'}
@@ -65,22 +84,21 @@ const On4Screen = ({navigation}) => {
       mx={6}
       >
         {
-          step > 0 &&
+          step < screens.length &&
             <Box 
             position={'absolute'} 
-            // left={2} 
-            top={10}
+            right={-10} 
+            top={7}
             zIndex={999}
             >
               <IconButton
-              onPress={() =>setStep(step - 1)}
                 rounded="xl"
                 icon={
                   <Icon
-                    as={Ionicons}
-                    name="chevron-back"
-                    size={moderateScale(25)}
-                    color="black"
+                    as={MaterialIcons}
+                    name="navigate-next"
+                    size={moderateScale(30)}
+                    color='#CCC'
                   />
                 }
               />
@@ -90,7 +108,7 @@ const On4Screen = ({navigation}) => {
         w={600}
         h={600}
         borderRadius={600}
-        bgColor={screens[step].showBg ? '#D7FF00' : '#ECF2FE'}
+        // bgColor={screens[step].showBg ? '#D7FF00' : '#ECF2FE'}
         position='absolute'
         top={-300}
         left={-100}
@@ -105,13 +123,14 @@ const On4Screen = ({navigation}) => {
           <Box 
           alignItems='center'
           justifyContent='center'
-          borderColor={screens[step].showBg ? '#D7FF00' : '#ECF2FE'}
+          // borderColor={screens[step].showBg ? '#D7FF00' : '#ECF2FE'}
           borderWidth={4}
           bgColor='#1E1E23'
           mt={6}
           h={140}
           w={140}
           borderRadius={140}
+          mb={6}
           >
             {
               step === 0 &&
@@ -138,28 +157,61 @@ const On4Screen = ({navigation}) => {
                 />
             }
           </Box>
+        <Box
+        display='flex'
+        justifyContent='center'
+        >
+          <Text 
+            fontSize={44} 
+            fontWeight={600}
+            color={'#333030'} 
+            textAlign='center'
+            mb={1}
+            >
+              {screens[step].title}
+          </Text>
+          <Box>
+            <Text  
+            textAlign='center'
+            fontSize={20} 
+            lineHeight={28}
+            fontWeight={600}
+            color={'#797979'} 
+            w={'40%'}
+            marginX='auto'
+            style={[
+              fontStyles.poppins400
+            ]}
+            >
+                {screens[step].text}
+            </Text>
+          </Box>
+        </Box>
         </Box>
         <Box 
         mb={9}
         >
           <Box 
           display='flex' 
+          justifyContent='space-between'
           flexDirection='row'
           mb={2}
+          marginX={'auto'}
+          w={'18%'}
           >
             {
               screens.map((screen, index) => (
                 <Box 
-                h={2}
-                w={2}
+                h={3}
+                w={3}
                 bg={step === index ? 'brand.primary' : '#D9D9D9'}
                 borderRadius={10}
-                mr={2}
+                // ml={2}
                 />
               ))
             }
           </Box>
-          <Text 
+          {/* <Text 
             fontSize={34} 
             fontWeight={600}
             color={'#333030'} 
@@ -174,9 +226,9 @@ const On4Screen = ({navigation}) => {
             w={'80%'}
             >
               {screens[step].text}
-          </Text>
+          </Text> */}
         </Box>
-				<Button 
+				{/* <Button 
         marginX='auto'
 				_pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
 				_text={{ fontSize: 16, fontWeight: '500' }}                            
@@ -188,7 +240,7 @@ const On4Screen = ({navigation}) => {
         onPress={screens[step].action}
 				>
 					{'Continuar'}
-				</Button>
+				</Button> */}
 			</Box>
 	  </Container>
   )
