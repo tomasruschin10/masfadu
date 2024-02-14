@@ -6,7 +6,7 @@ import Menu from "../screens/Menu/Menu";
 const styles = StyleSheet.create({
 	container: {
 	  flex: 1,
-	  backgroundColor: '#e8eef3',
+	  backgroundColor: '#e9eef2',
 	},
   });
   

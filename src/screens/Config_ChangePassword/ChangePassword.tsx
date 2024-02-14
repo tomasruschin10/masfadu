@@ -18,6 +18,9 @@ function ChangePassword({route, navigation}) {
   const dispatch = useDispatch()
 
   const [alert, setAlert] = React.useState(null);
+  const [oldPasswordDisabled, setOldPasswordDisabled] = useState<boolean>(true)
+  const [newPasswordDisabled, setNewPasswordDisabled] = useState<boolean>(true)
+  const [confirmdDisabled, setConfirmDisabled] = useState<boolean>(true)
 
   const showAlert = (type, message) => {
     setAlert({ type, message });
@@ -55,6 +58,7 @@ function ChangePassword({route, navigation}) {
           <Box w={'100%'} mb={'7'} alignItems={'left'}>
             <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'} fontFamily={'Poppins'}>Contraseña anterior</Text>
             <Input 
+            isDisabled={oldPasswordDisabled}
             value={form.password} 
             rounded={8}
             onChangeText={(text) => setForm({...form, password: text})} 
@@ -65,6 +69,7 @@ function ChangePassword({route, navigation}) {
             fontFamily={'Poppins'} 
             rightElement={
             <IconButton
+            onPress={() => setOldPasswordDisabled(!oldPasswordDisabled)}
             mr={2}
 							icon={
 								<Octicons name="pencil" size={16} color="#DA673A" />
@@ -78,7 +83,9 @@ function ChangePassword({route, navigation}) {
           <Box mb={'7'} alignItems={'left'}>
             <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'}  fontFamily={'Poppins'}>Contraseña nueva</Text>
             <Input 
+            isDisabled={newPasswordDisabled}
             rightElement={<IconButton
+            onPress={() => setNewPasswordDisabled(!newPasswordDisabled)}
             mr={2}
 							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
 							bgColor={"#FBF0EB"}
@@ -99,8 +106,11 @@ function ChangePassword({route, navigation}) {
 
           <Box mb={'7'} alignItems={'left'}>
             <Text fontSize={18} mb='2' color="brand.darkText" fontWeight={'600'}  fontFamily={'Poppins'}>Confirmar contraseña</Text>
-            <Input 
+            <Input
+            isDisabled={confirmdDisabled}
             rightElement={<IconButton
+            onPress={() => setConfirmDisabled(!confirmdDisabled)}
+            on
             mr={2}
 							icon={<Octicons name="pencil" size={16} color="#DA673A" />}
 							bgColor={"#FBF0EB"}
