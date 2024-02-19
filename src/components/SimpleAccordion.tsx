@@ -59,7 +59,7 @@ const SimpleAccordion = ({
             }}
           >
             <Image
-              source={require("../../assets/icons/star2.png")}
+              source={require("../../assets/icons/star.png")}
               style={{
                 width: 30,
                 height: 30,
