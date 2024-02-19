@@ -23,7 +23,7 @@ const On4Screen = ({navigation}) => {
         mb={5}
         h={100}
         alt="Logo de Fadu"
-        source={require('../../../assets/onboarding/materias.jpg')}
+        source={require('../../../assets/onboarding/materias.png')}
         />,
         showBg: false,
         buttonText:'Continuar',
@@ -37,7 +37,7 @@ const On4Screen = ({navigation}) => {
         mb={5}
         h={100}
         alt="Logo de Fadu"
-        source={require('../../../assets/onboarding/opiniones.jpg')}
+        source={require('../../../assets/onboarding/opiniones.png')}
         />,
         showBg: true,
         buttonText:'Continuar',
@@ -51,7 +51,7 @@ const On4Screen = ({navigation}) => {
         mb={5}
         h={100}
         alt="Logo de Fadu"
-        source={require('../../../assets/onboarding/mercado.jpg')}
+        source={require('../../../assets/onboarding/mercado.png')}
         />,
         showBg: false,
         buttonText:'Finalizar',
