@@ -150,7 +150,8 @@ function LoginScreen({ route, navigation }) {
         getUserDataWithToken(res.data.token);
         let data: any = jwtDecode(res.data.token);
         if (data.userData.career) {
-          navigation.navigate("Home");
+          // navigation.navigate("Home");
+          navigation.navigate("Onboarding4");
         } else {
           navigation.navigate("Onboarding1");
         }

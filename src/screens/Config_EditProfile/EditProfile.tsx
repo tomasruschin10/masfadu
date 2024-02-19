@@ -26,6 +26,9 @@ import { Octicons } from "@expo/vector-icons";
 import Container from "../../components/Container";
 
 function EditProfile({ route, navigation }) {
+  const [phoneDisabled, setPhoneDisabled] = useState<boolean>(true)
+  const [emailDisabled, setEmailDisabled] = useState<boolean>(true)
+  const [userDisabled, setUserDisabled] = useState<boolean>(true)
   const userdata = useSelector((state: any) => state.user.userdata);
   const [form, setForm] = useState({
     image: userdata.image.url,
@@ -148,17 +151,8 @@ function EditProfile({ route, navigation }) {
                 Teléfono
               </Text>
               <Input
-                rightElement={
-                  <IconButton
-                    mr={2}
-                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-                    bgColor={"#FBF0EB"}
-                    rounded={"full"}
-                    size={8}
-                  />
-                }
                 onChangeText={(text) => setForm({ ...form, phone: text })}
-                isDisabled={false}
+                isDisabled={phoneDisabled}
                 value={form.phone}
                 fontFamily={"Poppins"}
                 placeholder={"Ejemplo: +549116461* * * *"}
@@ -170,6 +164,17 @@ function EditProfile({ route, navigation }) {
                 placeholderTextColor={"#d3d3d3"}
                 backgroundColor={"#F7FAFC"}
               />
+              <IconButton
+                  position={'absolute'}
+                  right={0}
+                  top={'50%'}
+                  onPress={() => setPhoneDisabled(!phoneDisabled)}
+                    mr={2}
+                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+                    bgColor={"#FBF0EB"}
+                    rounded={"full"}
+                    size={8}
+                  />
             </Box>
 
             <Box
@@ -188,16 +193,7 @@ function EditProfile({ route, navigation }) {
                 Email
               </Text>
               <Input
-                rightElement={
-                  <IconButton
-                    mr={2}
-                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-                    bgColor={"#FBF0EB"}
-                    rounded={"full"}
-                    size={8}
-                  />
-                }
-                isDisabled={userdata.google_user}
+              isDisabled={emailDisabled}
                 onChangeText={(text) => setForm({ ...form, email: text })}
                 rounded={8}
                 value={form.email}
@@ -207,6 +203,17 @@ function EditProfile({ route, navigation }) {
                 fontSize={16}
                 placeholder={"correo@gmail.com"}
               />
+              <IconButton
+                  position={'absolute'}
+                  right={0}
+                  top={'50%'}
+                  onPress={() => setEmailDisabled(!emailDisabled)}
+                    mr={2}
+                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+                    bgColor={"#FBF0EB"}
+                    rounded={"full"}
+                    size={8}
+                  />
             </Box>
 
             <Box
@@ -225,15 +232,7 @@ function EditProfile({ route, navigation }) {
                 Usuario
               </Text>
               <Input
-                rightElement={
-                  <IconButton
-                    mr={2}
-                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-                    bgColor={"#FBF0EB"}
-                    rounded={"full"}
-                    size={8}
-                  />
-                }
+              isDisabled={userDisabled}
                 onChangeText={(text) => setForm({ ...form, username: text })}
                 rounded={8}
                 value={form.username}
@@ -242,6 +241,17 @@ function EditProfile({ route, navigation }) {
                 fontFamily={"Poppins"}
                 fontSize={16}
                 placeholder={"tomasruschin"}
+              />
+              <IconButton
+                  position={'absolute'}
+                  right={0}
+                  top={'50%'}
+              onPress={() => setUserDisabled(!userDisabled)}
+                mr={2}
+                icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+                bgColor={"#FBF0EB"}
+                rounded={"full"}
+                size={8}
               />
             </Box>
           </Box>
