@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, ScrollView, Text } from "native-base";
 import { Alert, Linking, TouchableHighlight } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Container from "../../components/Container";
 import { updateMessage } from "../../redux/actions/message";
@@ -39,7 +38,6 @@ function Config({ route, navigation, value }) {
   const version = Constants?.manifest?.version || "1.0.0";
 
   const logout = async () => {
-    await AsyncStorage.removeItem("selectiveSubject");
     store.dispatch(
       updateMessage({
         body: "Sesión finalizada con éxito",
