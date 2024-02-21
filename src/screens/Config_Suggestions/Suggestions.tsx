@@ -2,7 +2,7 @@ import { Box, Button, ScrollView, TextArea } from "native-base";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { KeyboardAvoidingView } from 'react-native';
-import { KeyboardAccessoryView, KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
+import {  KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 
 import { updateMessage } from "../../redux/actions/message";
 import { postServices } from "../../utils/hooks/services";

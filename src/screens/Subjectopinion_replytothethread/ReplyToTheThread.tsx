@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Box, Button, ScrollView, Text, TextArea } from "native-base";
+import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { postServices } from "../../utils/hooks/services";
 import { useDispatch } from "react-redux";
 import { updateMessage } from "../../redux/actions/message";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Alert from "../../components/alert/Alert";
 function ReplyToTheThread({ route, navigation }) {
   const dispatch = useDispatch();
@@ -89,70 +92,79 @@ function ReplyToTheThread({ route, navigation }) {
   };
 
   return (
-    <Container>
-      {alert && (
-        <Alert
-          type={alert.type}
-          message={alert.message}
-          closeAlert={closeAlert}
-        />
-      )}
-      <Layout route={route} navigation={navigation} title={"Responder al hilo"}>
-        <ScrollView keyboardShouldPersistTaps={"handled"}>
-          <Box mx={5} mt={5} borderTopWidth={1} borderTopColor={"#EBEEF2"}>
-            <Text></Text>
-            {anonymous ? (
-              <Text fontSize={15}>
-                Vas a responder a un hilo{" "}
-                <MaterialCommunityIcons
-                  name="incognito"
-                  size={24}
-                  color="black"
-                />
-              </Text>
-            ) : (
-              <Text fontSize={15}>
-                Vas a responderle a {student?.name} {student?.lastname}
-              </Text>
-            )}
-          </Box>
-
-          <Box>
-            <Box
-              mx="5"
-              borderBottomWidth={1}
-              borderBottomColor={"#EBEEF2"}
-              pt={6}
-              pb={"12"}
-            >
-              <TextArea
-                placeholder="Respondele a tu compañer@ en este tópico"
-                autoCompleteType={"off"}
-                h={290}
-                fontSize={15}
-                backgroundColor={"#F7FAFC"}
-                borderWidth={0}
-                placeholderTextColor={"#C4C4C4"}
-                onChangeText={(text) => setForm({ ...form, description: text })}
-              />
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <Container>
+        {alert && (
+          <Alert
+            type={alert.type}
+            message={alert.message}
+            closeAlert={closeAlert}
+          />
+        )}
+        <Layout route={route} navigation={navigation} title={"Responder al hilo"}>
+          <ScrollView keyboardShouldPersistTaps={"handled"} showsVerticalScrollIndicator={false}>
+            <Box mx={5} mt={3} borderTopWidth={1} borderTopColor={"#EBEEF2"}>
+              <Text></Text>
+              {anonymous ? (
+                <Text fontSize={15}>
+                  Vas a responder a un hilo{" "}
+                  <MaterialCommunityIcons
+                    name="incognito"
+                    size={24}
+                    color="black"
+                  />
+                </Text>
+              ) : (
+                <Text fontSize={15}>
+                  Vas a responderle a {student?.name} {student?.lastname}
+                </Text>
+              )}
             </Box>
 
-            <Box mb={24} my={8} alignItems="center">
-              <Button
-                isDisabled={form.description ? false : true}
-                isLoading={loading}
-                onPress={postAnswer}
-                w="90%"
-                py={5}
-                backgroundColor="brand.primary"
+            <Box>
+              <Box
+                mx="5"
+                borderBottomWidth={1}
+                borderBottomColor={"#EBEEF2"}
+                pt={6}
+                pb={"12"}
               >
-                Enviar
-              </Button>
+                <TextArea
+                  placeholder="Respondele a tu compañer@ en este tópico"
+                  autoCompleteType={"off"}
+                  h={290}
+                  fontSize={15}
+                  backgroundColor={"#F7FAFC"}
+                  borderWidth={0}
+                  placeholderTextColor={"#C4C4C4"}
+                  onChangeText={(text) => setForm({ ...form, description: text })}
+                />
+              </Box>
+
+              <Box mb={24} my={8} alignItems="center">
+                <Button
+                  isDisabled={form.description ? false : true}
+                  isLoading={loading}
+                  onPress={postAnswer}
+                  w="90%"
+                  py={5}
+                  backgroundColor="brand.primary"
+                >
+                  Enviar
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </ScrollView>
-      </Layout>
-    </Container>
+          </ScrollView>
+
+        </Layout>
+      </Container>
+      <KeyboardAccessoryNavigation
+        nextHidden
+        previousHidden
+        doneButtonStyle={{ marginBottom: 5 }}
+      />
+
+    </KeyboardAvoidingView>
   );
 }
 

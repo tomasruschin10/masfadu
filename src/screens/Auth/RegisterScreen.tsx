@@ -4,6 +4,7 @@ import { ScrollView, TouchableWithoutFeedback } from "react-native";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import Container from "../../components/Container";
 import { HeaderBack } from "../../components/Header";
@@ -233,7 +234,9 @@ function RegisterScreen({ route, navigation }) {
   return (
     <Container>
       <HeaderBack />
-      <ScrollView keyboardShouldPersistTaps={"handled"}>
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+        extraScrollHeight={30}
+      >
         <VStack px={5} pb={5}>
           <Box alignItems="center">
             <Image
@@ -286,8 +289,8 @@ function RegisterScreen({ route, navigation }) {
                   form.emailError === true
                     ? "red"
                     : form.email
-                    ? "green"
-                    : "transparent",
+                      ? "green"
+                      : "transparent",
                 borderWidth: 1,
                 borderRadius: moderateScale(8),
                 flexDirection: "row",
@@ -312,8 +315,8 @@ function RegisterScreen({ route, navigation }) {
                   form.passwordError === true
                     ? "red"
                     : form.password
-                    ? "green"
-                    : "transparent",
+                      ? "green"
+                      : "transparent",
                 borderWidth: 1,
                 height: verticalScale(55),
                 borderRadius: moderateScale(8),
@@ -413,7 +416,7 @@ function RegisterScreen({ route, navigation }) {
             </Button>
           </Box>
         </VStack>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </Container>
   );
 }
