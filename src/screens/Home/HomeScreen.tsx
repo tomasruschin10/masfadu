@@ -61,7 +61,7 @@ function HomeScreen({ route, navigation }) {
 
   const { width, height } = Dimensions.get("window");
   const cardWidth = width * 0.41;
-  const cardHeight = height * 0.25;
+  const cardHeight = height * 0.32;
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -96,6 +96,7 @@ function HomeScreen({ route, navigation }) {
       getServices("offer/all/work")
         .then(({ data }: any) => {
           setAllOffers(data);
+          console.log(data)
         })
         .catch(handleError);
 
@@ -160,7 +161,7 @@ function HomeScreen({ route, navigation }) {
   );
 
   const renderCareer = ({ item }) => {
-    const { title, description, url, image, partner, name } = item;
+    const { image, name } = item;
     item.subject.subjectId = item.subject.id;
     return (
       <TouchableOpacity
@@ -194,8 +195,8 @@ function HomeScreen({ route, navigation }) {
               image?.url.endsWith(".pdf")
                 ? "file-pdf-o"
                 : /\.(jpe?g|png|gif|bmp)$/i.test(image?.url)
-                ? "file-image-o"
-                : "file-o"
+                  ? "file-image-o"
+                  : "file-o"
             }
           />
           <Box pt={1} pb={3} px={4} pl={2}>
@@ -228,7 +229,6 @@ function HomeScreen({ route, navigation }) {
     } = item;
     return (
       <TouchableOpacity
-        // onPress={() => navigation.navigate("MarketDetail", item)}
         onPress={() =>
           navigation.navigate("Anoffer", {
             mainTitle: "Ofertas Laborales",
@@ -272,7 +272,7 @@ function HomeScreen({ route, navigation }) {
               style={{
                 width: cardWidth,
               }}
-              resizeMethod="scale"
+              resizeMethod="auto"
               h={125}
               resizeMode="cover"
               source={{ uri: image.url }}
@@ -297,7 +297,7 @@ function HomeScreen({ route, navigation }) {
                 numberOfLines={1}
                 mt={1}
               >
-                {partner?.name}
+                {company}
               </Text>
             </Box>
           </Box>
@@ -307,7 +307,7 @@ function HomeScreen({ route, navigation }) {
   };
 
   const renderShop = ({ item }) => {
-    const { title, description, url, image, partner } = item;
+    const { title, description, image } = item;
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketDetail", item)}
@@ -349,18 +349,17 @@ function HomeScreen({ route, navigation }) {
               >
                 {title}
               </Text>
-
               <Text
                 fontWeight={700}
-                fontFamily="Manrope"
                 style={[
                   fontStyles.poppins400,
-                  { fontSize: 12, marginBottom: 4, color: "#bcbecc" },
+                  { fontSize: 15, marginBottom: 4, color: "#bcbecc" },
                 ]}
                 numberOfLines={1}
                 mt={1}
+                fontSize={"sm"}
               >
-                {partner?.name}
+                {description || " "}
               </Text>
             </Box>
           </Box>
@@ -370,7 +369,7 @@ function HomeScreen({ route, navigation }) {
   };
 
   const renderWorkShop = ({ item }) => {
-    const { title, description, url, image, partner } = item;
+    const { title, description, image } = item;
     return (
       <TouchableOpacity
         onPress={() =>
@@ -410,7 +409,7 @@ function HomeScreen({ route, navigation }) {
                 width: cardWidth,
                 maxWidth: cardWidth,
               }}
-              resizeMethod="scale"
+              resizeMethod="auto"
               h={125}
               resizeMode="cover"
               source={{ uri: image.url }}
@@ -434,7 +433,7 @@ function HomeScreen({ route, navigation }) {
                 mt={1}
                 fontSize={"sm"}
               >
-                {partner?.name || " "}
+                {description || " "}
               </Text>
             </Box>
           </Box>
@@ -461,38 +460,6 @@ function HomeScreen({ route, navigation }) {
         backgroundColor={"#e8eef3"}
         showsVerticalScrollIndicator={false}
       >
-        {/* <Box>
-          {textNews.length > 0 ? (
-            <Carousel
-              autoplay={true}
-              containerCustomStyle={{ marginTop: 10 }}
-              data={textNews}
-              itemWidth={ITEM_WIDTH}
-              lockScrollWhileSnapping={true}
-              loop={true}
-              renderItem={renderTextNews}
-              sliderWidth={SLIDER_WIDTH}
-            />
-          ) : (
-            <Box
-              alignSelf={"center"}
-              w="94%"
-              rounded={"md"}
-              py={10}
-              mt={4}
-              backgroundColor={"primary.200"}
-            >
-              <Text style={
-                {
-                  ...fontStyles.poppins400,
-                }
-              } bold textAlign={"center"} color={"white"}>
-                No hay noticias para ver!
-              </Text>
-            </Box>
-          )}
-        </Box> */}
-
         <Box>
           {advertisement.length > 0 ? (
             <View>

@@ -14,7 +14,8 @@ import {
   TextArea,
 } from "native-base";
 import { FontAwesome5, Ionicons, AntDesign } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { TouchableOpacity, Keyboard } from "react-native";
 import { useDispatch } from "react-redux";
 
 import Container from "../../components/Container";
@@ -74,6 +75,11 @@ function CreateNewThread({ route, navigation }) {
   });
   const dispatch = useDispatch();
 
+  const goBack = () => {
+    Keyboard.dismiss()
+    setModalOpen(true)
+  }
+
   const sendForm = () => {
     console.log("created opinion", form);
 
@@ -121,7 +127,7 @@ function CreateNewThread({ route, navigation }) {
       .then((res: any) => {
         setCareers(res.data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -129,7 +135,7 @@ function CreateNewThread({ route, navigation }) {
       .then(({ data }: any) => {
         setSubjects(data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, [selectedCareerId]);
 
   useEffect(() => {
@@ -137,16 +143,16 @@ function CreateNewThread({ route, navigation }) {
       .then(({ data }: any) => {
         setAllTags(data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   let FilterTags = () =>
     allTags.length > 0
       ? allTags.filter((it: any) =>
-          it.name
-            .toLowerCase()
-            .includes(searchText.toLowerCase().replace("#", ""))
-        )
+        it.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase().replace("#", ""))
+      )
       : [];
 
   const Concat = (it) => {
@@ -198,11 +204,10 @@ function CreateNewThread({ route, navigation }) {
         route={route}
         navigation={navigation}
         title={`Crear Hilo`}
-        goBackFunction={() => setModalOpen(true)}
+        goBackFunction={() => goBack()}
       >
-        <ScrollView
-          nestedScrollEnabled={true}
-          keyboardShouldPersistTaps={"handled"}
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+          extraScrollHeight={30}
         >
           <Box mx={5} mt={3} borderTopWidth={1} borderTopColor={"#EBEEF2"}>
             <Text fontSize={15}>Información</Text>
@@ -521,7 +526,9 @@ function CreateNewThread({ route, navigation }) {
               </Modal.Body>
             </Modal.Content>
           </Modal>
-        </ScrollView>
+
+        </KeyboardAwareScrollView>
+
         <DiscardDraftModal
           message={"¿Descartar Borrador? Vas a perder lo que escribiste"}
           isOpen={modalOpen}

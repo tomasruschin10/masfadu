@@ -29,7 +29,7 @@ export default function SectionsV2({ title, icon, navigation, setMenu }) {
                 setMenu(false);
             }}
         >
-            <Box marginLeft={horizontalScale(20)}>
+            <Box marginLeft={horizontalScale(5)}>
                 <Image
                     alt="imagen"
                     source={icon}

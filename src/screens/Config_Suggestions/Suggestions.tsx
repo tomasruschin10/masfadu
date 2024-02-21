@@ -1,6 +1,8 @@
 import { Box, Button, ScrollView, TextArea } from "native-base";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAccessoryView, KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 
 import { updateMessage } from "../../redux/actions/message";
 import { postServices } from "../../utils/hooks/services";
@@ -35,39 +37,49 @@ function Suggestions({ route, navigation }) {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps={"handled"}>
-      <Box mt={5} mb={20}>
-        <Box mx="5">
-          <TextArea
-            placeholder="Dejanos cualquier tipo de sugerencia/idea para ayudarnos a seguir mejorando la app."
-            autoCompleteType={"off"}
-            h={290}
-            fontSize={15}
-            backgroundColor={"#F7FAFC"}
-            borderWidth={0}
-            placeholderTextColor={"#C4C4C4"}
-            onChangeText={(text) => useText(text)}
-          />
+    <KeyboardAvoidingView>
+      <ScrollView keyboardShouldPersistTaps={"handled"}>
+        <Box mt={3} mb={20}>
+          <Box mx="5">
+            <TextArea
+              placeholder="Dejanos cualquier tipo de sugerencia/idea para ayudarnos a seguir mejorando la app."
+              autoCompleteType={"off"}
+              h={290}
+              fontSize={15}
+              backgroundColor={"#F7FAFC"}
+              borderWidth={0}
+              placeholderTextColor={"#C4C4C4"}
+              onChangeText={(text) => useText(text)}
+            />
+          </Box>
+
+          <Box my={8} alignItems="center">
+
+            <Button
+              w={'90%'}
+              isDisabled={!text}
+              mb={10}
+              onPress={() => sendEmail()}
+              _pressed={{ bgColor: 'rgba(218, 103, 58, .5)' }}
+              _text={{ fontSize: 14, fontWeight: '600', textAlign: 'center' }}
+              bg={"#DA673A"}
+              py={5}
+              color={'white'}
+              rounded={8}
+            >
+              Enviar
+            </Button>
+
+          </Box>
         </Box>
 
-        <Box my={8} alignItems="center">
-          <Button
-            w={'90%'}
-            isDisabled={!text}
-            mb={10}
-            onPress={() => sendEmail()}
-            _pressed={{bgColor:'rgba(218, 103, 58, .5)'}}
-            _text={{ fontSize: 14, fontWeight: '600', textAlign:'center' }}                        
-            bg={"#DA673A"}
-            py={5}
-            color={'white'}
-            rounded={8}
-          >
-            Enviar
-          </Button>
-        </Box>
-      </Box>
-    </ScrollView>
+      </ScrollView>
+      <KeyboardAccessoryNavigation
+        nextHidden
+        previousHidden
+        doneButtonStyle={{ marginBottom: 5 }}
+      />
+    </KeyboardAvoidingView>
   );
 }
 

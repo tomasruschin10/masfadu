@@ -3,7 +3,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import { HeaderPerfil } from "../../components/Header";
-import {StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import SectionsV2 from "./SectionsV2";
 import { horizontalScale, moderateScale, screenWidth, verticalScale } from "../../utils/media.screens";
 import DefaultButton from "../../components/DefaultButton";
@@ -28,12 +28,6 @@ const carriers = [
     iconType: "MaterialCommunityIcons",
     comingSoon: false,
   },
-  // {
-  //   title: "Recursos y herramientas",
-  //   icon: require("../../../assets/menu/recursos.png"),
-  //   iconType: "Entypo",
-  //   comingSoon: false,
-  // },
   {
     title: "Ofertas Laborales",
     icon: require("../../../assets/menu/ofertas.png"),
@@ -73,9 +67,10 @@ function Menu({ route, navigation, setMenu }) {
       <View style={styles.container}>
         <View style={styles.rightColumn}>
           <Box>
-            <TouchableOpacity 
-            onPress={() => navigation.navigate("Subsections", { title: "Cuenta" })} 
-            marginLeft={horizontalScale(5)} 
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Subsections", { title: "Cuenta" })}
+              style={{ marginLeft: horizontalScale(5) }}
+
             >
               <HeaderPerfil
                 showICon={false}
@@ -86,8 +81,8 @@ function Menu({ route, navigation, setMenu }) {
 
             </TouchableOpacity>
             <Box
-            mt={6}
-            mb={6}
+              mt={6}
+              mb={6}
             >
               {carriers?.length ? carriers.map(item => {
                 return (
@@ -103,9 +98,9 @@ function Menu({ route, navigation, setMenu }) {
               })
                 : ""}
 
-            <Box px={5} my={6}>
-              <Divider bg="gray.200" />
-            </Box>
+              <Box px={5} my={6}>
+                <Divider bg="gray.200" />
+              </Box>
 
               {carriers2?.length ? carriers2.map(item => {
                 return (
@@ -129,24 +124,19 @@ function Menu({ route, navigation, setMenu }) {
               borderRadius: moderateScale(8),
               height: verticalScale(50),
               width: screenWidth - (screenWidth / 3),
-              paddingTop: verticalScale(5.5)
             }}
             textStyle={
               {
                 fontSize: moderateScale(14),
-                color: "white"
+                color: "white",
               }
             }
-            containerStyle={{
-              marginTop: verticalScale(75)
-            }}
             callBack={() => setMenu(false)} title="Cerrar" />
         </View>
         <TouchableOpacity
           style={styles.leftColumn}
           onPress={() => setMenu(false)}
         >
-          {/* <Text>Columna Izquierda</Text> */}
         </TouchableOpacity>
       </View>
     </Box>
