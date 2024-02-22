@@ -246,42 +246,73 @@ function RegisterScreen({ route, navigation }) {
               alt="Logo de Fadu"
               source={require("../../../assets/logo.png")}
             />
-            <Input
-              onChangeText={(text) => setForm({ ...form, name: text })}
-              mx="3"
+
+            <Box
               mb={4}
-              placeholder="Nombre"
-              w="100%"
-              h={verticalScale(55)}
-              rounded={moderateScale(8)}
-              placeholderTextColor="#797979"
-              borderColor={"transparent"}
-              focusOutlineColor={"transparent"}
-            />
-            <Input
-              onChangeText={(text) => setForm({ ...form, lastname: text })}
-              mx="3"
+              style={{
+                borderColor: 'transparent',
+                borderWidth: 1,
+                borderRadius: moderateScale(8),
+                flexDirection: "row",
+                height: verticalScale(55),
+                alignItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Input
+                onChangeText={(text) => setForm({ ...form, name: text })}
+                placeholder="Nombre"
+                w="100%"
+                h={verticalScale(55)}
+                placeholderTextColor="#797979"
+                focusOutlineColor={"transparent"}
+              />
+            </Box>
+
+
+            <Box
               mb={4}
-              placeholder="Apellido"
-              w="100%"
-              h={verticalScale(55)}
-              rounded={moderateScale(8)}
-              placeholderTextColor="#797979"
-              borderColor={"transparent"}
-              focusOutlineColor={"transparent"}
-            />
-            <Input
-              onChangeText={(text) => setForm({ ...form, username: text })}
-              mx="3"
+              style={{
+                borderColor: 'transparent',
+                borderWidth: 1,
+                borderRadius: moderateScale(8),
+                flexDirection: "row",
+                height: verticalScale(55),
+                alignItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Input
+                onChangeText={(text) => setForm({ ...form, lastname: text })}
+                placeholder="Apellido"
+                w="100%"
+                h={verticalScale(55)}
+                placeholderTextColor="#797979"
+                focusOutlineColor={"transparent"}
+              />
+            </Box>
+
+            <Box
               mb={4}
-              placeholder="Usuario"
-              w="100%"
-              h={verticalScale(55)}
-              rounded={moderateScale(8)}
-              placeholderTextColor="#797979"
-              borderColor={"transparent"}
-              focusOutlineColor={"transparent"}
-            />
+              style={{
+                borderColor: 'transparent',
+                borderWidth: 1,
+                borderRadius: moderateScale(8),
+                flexDirection: "row",
+                height: verticalScale(55),
+                alignItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Input
+                onChangeText={(text) => setForm({ ...form, username: text })}
+                placeholder="Usuario"
+                w="100%"
+                h={verticalScale(55)}
+                placeholderTextColor="#797979"
+                focusOutlineColor={"transparent"}
+              />
+            </Box>
             <Box
               mb={4}
               style={{
@@ -349,30 +380,41 @@ function RegisterScreen({ route, navigation }) {
               />
             </Box>
 
-            <Input
-              w={{ base: "100%", md: "25%" }}
-              h={verticalScale(55)}
-              rounded={moderateScale(8)}
-              placeholderTextColor="#797979"
-              focusOutlineColor={"transparent"}
-              borderColor={"transparent"}
+            <Box
               mb={4}
-              type={showRePassword ? "text" : "password"}
-              InputRightElement={
-                <TouchableOpacity
-                  style={{ marginRight: 9 }}
-                  onPress={() => setShowRePassword(!showRePassword)}
-                >
-                  <MaterialIcons
-                    size={25}
-                    name={showRePassword ? "visibility" : "visibility-off"}
-                    color={"#797979"}
-                  />
-                </TouchableOpacity>
-              }
-              placeholder="Repetir contraseña"
-              onChangeText={(text) => setRepeatPass(text)}
-            />
+              style={{
+                borderColor: 'transparent',
+                borderWidth: 1,
+                height: verticalScale(55),
+                borderRadius: moderateScale(8),
+                flexDirection: "row",
+                alignItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Input
+                w={{ base: "100%", md: "75%" }}
+                h={verticalScale(55)}
+                px={3}
+                placeholderTextColor="#797979"
+                focusOutlineColor={"transparent"}
+                type={showPassword ? "text" : "password"}
+                InputRightElement={
+                  <TouchableOpacity
+                    style={{ marginRight: 9 }}
+                    onPress={() => setShowRePassword(!showRePassword)}
+                  >
+                    <MaterialIcons
+                      size={25}
+                      name={showRePassword ? "visibility" : "visibility-off"}
+                      color={"#797979"}
+                    />
+                  </TouchableOpacity>
+                }
+                placeholder="Repetir contraseña"
+                onChangeText={(text) => setRepeatPass(text)}
+              />
+            </Box>
 
             <Button
               onPress={() => getRegister()}

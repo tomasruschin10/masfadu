@@ -31,6 +31,7 @@ export function HeaderBack({ ...props }) {
       <HStack
         pb="3"
         w="100%"
+        pt="3"
         pr="3"
         alignItems="center"
         flexDir={props.headerWithIcon ? "row" : null}

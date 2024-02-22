@@ -1,17 +1,16 @@
-import { Box, Button, Image, Text } from "native-base";
 import * as React from "react";
-import Container from "../../components/Container";
-import { NoHeader } from "../../components/Header";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import { Box, Button, Image, Text } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
+
+import Container from "../../components/Container";
 import { putServices } from "../../utils/hooks/services";
 import { store } from "../../redux/store";
 import { updateUserdata } from "../../redux/actions/user";
 import { updateMessage } from "../../redux/actions/message";
-
-import * as ImagePicker from "expo-image-picker";
-import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
-import { SimpleLineIcons } from "@expo/vector-icons";
 
 const On3Screen = ({ navigation }) => {
   const userdata = useSelector((state: any) => state.user.userdata);
@@ -43,7 +42,7 @@ const On3Screen = ({ navigation }) => {
         );
       })
       .catch((err) =>
-        /* showAlert('error', 'Hubo un Error al Guardar')  */ dispatch(
+        dispatch(
           updateMessage({
             body: "Hubo un Error al Guardar",
             open: true,
@@ -140,20 +139,25 @@ const On3Screen = ({ navigation }) => {
             </Button>
           )}
         </TouchableOpacity>
-        <Button
-          _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
-          _text={{ fontSize: 14, fontWeight: "600" }}
-          bg="brand.primary"
-          onPress={sendForm}
-          isDisabled={!image}
-          isLoading={loading}
-          mb={12}
-          w="90%"
-          py={5}
-          rounded={8}
-        >
-          Siguiente
-        </Button>
+        <View style={{ width: '100%', alignItems: 'center' }}>
+          <Button
+            _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+            _text={{ fontSize: 14, fontWeight: "600" }}
+            bg="brand.primary"
+            onPress={sendForm}
+            isDisabled={!image}
+            isLoading={loading}
+            mb={5}
+            w="90%"
+            py={5}
+            rounded={8}
+          >
+            Siguiente
+          </Button>
+          <TouchableOpacity style={{ marginBottom: 30 }} onPress={() => navigation.navigate("Onboarding4")}>
+            <Text style={{ fontSize: 14, color: "black" }}>Omitir</Text>
+          </TouchableOpacity>
+        </View>
       </Box>
     </Container>
   );
