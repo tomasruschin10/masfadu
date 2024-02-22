@@ -47,7 +47,7 @@ const On4Screen = ({navigation}) => {
         title:'MERCADO',
         text: 'Si te olvidaste, encontraste algo en Fadu, querés donar resumenes, libros o apuntes, es por acá!',
         image:<Image
-        w={100}
+        w={50}
         mb={5}
         h={100}
         alt="Logo de Fadu"
@@ -177,7 +177,6 @@ const On4Screen = ({navigation}) => {
             lineHeight={28}
             fontWeight={600}
             color={'#797979'} 
-            w={'40%'}
             marginX='auto'
             style={[
               fontStyles.poppins400

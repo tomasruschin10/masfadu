@@ -61,7 +61,8 @@ function HomeScreen({ route, navigation }) {
 
   const { width, height } = Dimensions.get("window");
   const cardWidth = width * 0.41;
-  const cardHeight = height * 0.32;
+  const cardHeight = height * 0.27;
+  const imageHeight = height * 0.14
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -273,7 +274,7 @@ function HomeScreen({ route, navigation }) {
                 width: cardWidth,
               }}
               resizeMethod="auto"
-              h={125}
+              h={imageHeight}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
@@ -336,7 +337,7 @@ function HomeScreen({ route, navigation }) {
                 width: cardWidth,
               }}
               resizeMethod="scale"
-              h={125}
+              h={imageHeight}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
@@ -410,7 +411,7 @@ function HomeScreen({ route, navigation }) {
                 maxWidth: cardWidth,
               }}
               resizeMethod="auto"
-              h={125}
+              h={imageHeight}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
