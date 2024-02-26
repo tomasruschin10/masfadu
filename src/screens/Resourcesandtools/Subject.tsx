@@ -48,8 +48,6 @@ function Subjects({ route, navigation }) {
 
     let marginBottom = 0;
     if (length == index) {
-      console.log("sii");
-
       marginBottom = -14;
     }
     return (

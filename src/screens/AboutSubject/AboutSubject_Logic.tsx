@@ -39,6 +39,7 @@ function AboutSubject_Logic({
     id,
     name,
     subjects,
+    chairs,
     userSubject,
     selective,
     selectiveSubjects,

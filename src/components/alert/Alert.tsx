@@ -54,45 +54,10 @@ const Alert = ({ type, message, closeAlert }) => {
   }, []);
 
   const handleAlertClose = () => {
-    setShow(false);
-
-   console.log('sojhnd')
-   
+    setShow(false);   
   };
 
   return (
-    /*     <CSSTransition
-
-      in={show}
-      nodeRef={nodeRef}
-      timeout={300}
-     
-      classNames="alert"
-      unmountOnExit
-    >
-      <Alerts
-        ref={nodeRef}
-        variant="primary"
-      >
-       <div
-        style={{
-          ...alertStyle,
-          position: 'fixed',
-          zIndex: 100,
-          opacity: show ? 1 : 0,
-          transition: 'opacity 0.5s',
-        }}
-        role="alert"
-      >
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-          <MaterialIcons name={icon} size={20} color="black" />
-          <span className="text-type" style={{ marginLeft: 25, color: 'black', flexGrow: 1 }}>{message}</span>
-        </div>
-        <MaterialIcons variant="primary" name="close" size={20} color="black" onPress={handleAlertClose} />
-      </div>
-      </Alerts>
-    </CSSTransition> */
-
     <CSSTransition
       in={show}
       nodeRef={nodeRef}

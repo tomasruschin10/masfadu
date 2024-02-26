@@ -73,7 +73,6 @@ function OfferFormMedia({ route, navigation }) {
                 !descripcion ||
                 !url ||
                 !imagen) {
-                console.log("f1")
                 throw new Error("Rellene todos los campos");
 
             }

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { Box, Text, HStack } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
+
 import { SimpleAccordion } from "../../components/SimpleAccordion";
-import { ModalIcon, ModalNotes, ModalWarning } from "./Modals";
+import { ModalIcon, ModalNotes, ModalWarning, AddChairModal, AddScore, AddStarsModal, ModalSummary } from "./Modals";
 import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
-import { moderateScale, verticalScale } from "../../utils/media.screens";
+import { moderateScale } from "../../utils/media.screens";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
+  const [showChairModal, setShowChairModal] = useState(false)
+  const [showSummaryModal, setShowSummayModal] = useState(false)
+  const [showStarsModal, setShowStarsModal] = useState(false)
+  const [showScoreModal, setShowScoreModal] = useState(false)
+  const userdata = useSelector((state: any) => state.user.userdata);
   const materias = [];
   subjCategory.data.forEach((item) => {
     const dataAvailable = item.subject.filter(
@@ -26,9 +33,13 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   const [showWarning, setShowWarning] = useState(false);
   const [currentSubj, setCurrentSubj] = useState({});
   const [infoUserSubj, setInfoUserSubj] = useState({
-    user_id: 0,
-    subject_id: 0,
-    score: 0,
+    user_id: userdata.id,
+    score: 1,
+    chair: "",
+    qualityOfTeachers: 0,
+    practicalJobs: 0,
+    requirement: 0,
+    cost: 0,
     finish: 0,
     extra_score: [],
     USERSUBJECT: 0,
@@ -64,10 +75,47 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
       <ModalWarning
         updater={updater}
         setUpdater={setUpdater}
+        showModal={setShowChairModal}
         currentSubj={currentSubj}
         showWarning={showWarning}
         setShowNotes={setShowNotes}
         setShowWarning={setShowWarning}
+        infoUserSubj={infoUserSubj}
+        setInfoUserSubj={setInfoUserSubj}
+      />
+      <AddChairModal
+        isOpen={showChairModal}
+        setOpen={setShowChairModal}
+        onConfirm={setShowScoreModal}
+        onCancel={setShowChairModal}
+        infoUserSubj={infoUserSubj}
+        setInfoUserSubj={setInfoUserSubj}
+        chairs={currentSubj?.chairs}
+      />
+      <AddScore
+        isOpen={showScoreModal}
+        setOpen={setShowScoreModal}
+        onConfirm={setShowStarsModal}
+        onCancel={setShowChairModal}
+        infoUserSubj={infoUserSubj}
+        setInfoUserSubj={setInfoUserSubj}
+      />
+      <AddStarsModal
+        isOpen={showStarsModal}
+        setOpen={setShowStarsModal}
+        onConfirm={setShowSummayModal}
+        onCancel={setShowScoreModal}
+        infoUserSubj={infoUserSubj}
+        setInfoUserSubj={setInfoUserSubj}
+      />
+      <ModalSummary
+        isOpen={showSummaryModal}
+        setOpen={setShowSummayModal}
+        onConfirm={setShowStarsModal}
+        setUpdater={setUpdater}
+        updater={updater}
+        onCancel={setShowStarsModal}
+        currentSubj={currentSubj}
         infoUserSubj={infoUserSubj}
         setInfoUserSubj={setInfoUserSubj}
       />
@@ -152,11 +200,10 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
               style={{
                 height: "100%",
-                width: `${
-                  subjCategory.total !== 0
-                    ? (100 / subjCategory.total) * subjCategory.on
-                    : (100 / 1) * subjCategory.on
-                }%`,
+                width: `${subjCategory.total !== 0
+                  ? (100 / subjCategory.total) * subjCategory.on
+                  : (100 / 1) * subjCategory.on
+                  }%`,
                 borderRadius: 8,
               }}
             />

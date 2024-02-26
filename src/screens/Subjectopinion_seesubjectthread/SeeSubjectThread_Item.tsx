@@ -7,6 +7,7 @@ function SeeSubjectThread_Item({
   navigation,
   title,
   description,
+  currentSchoolYear,
   created_at,
   opinionTags,
   idOpinion,
@@ -90,6 +91,12 @@ function SeeSubjectThread_Item({
               <Text display={"none"}></Text>
             )}
           </HStack>
+
+          {currentSchoolYear ? (
+            <Text fontSize={10}>{"Año de cursada: " + currentSchoolYear}</Text>
+          ) : (
+            <Text display={"none"}></Text>
+          )}
 
           {professor ? (
             <Text fontSize={10}>{"Cátedra: " + professor}</Text>

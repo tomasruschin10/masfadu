@@ -8,12 +8,15 @@ import {
   FormControl,
   HStack,
   Input,
+  Select,
+  CheckIcon,
   KeyboardAvoidingView,
   Modal,
   Text,
   VStack,
   Image,
   Overlay,
+  Flex,
 } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -39,6 +42,7 @@ import {
   screenWidth,
   horizontalScale,
 } from "../../utils/media.screens";
+import { AirbnbRating } from 'react-native-ratings';
 
 function RenderArrow() {
   return (
@@ -146,39 +150,39 @@ export function ModalNotes({
                 onPress={() =>
                   form.extra_score && form.extra_score.length === 0
                     ? Alert.alert(
-                        "Importante",
-                        "¿Deseas eliminar la nota final?",
-                        [
-                          {
-                            text: "Cancelar",
-                            onPress: () => console.log(""),
-                            style: "cancel",
-                          },
-                          {
-                            text: "Aceptar",
-                            onPress: () =>
-                              deleteNote(
-                                setLoading,
-                                setUpdater,
-                                updater,
-                                setShowNotes,
-                                infoUserSubj,
-                                dispatch
-                              ),
-                          },
-                        ]
-                      )
+                      "Importante",
+                      "¿Deseas eliminar la nota final?",
+                      [
+                        {
+                          text: "Cancelar",
+                          onPress: () => console.log(""),
+                          style: "cancel",
+                        },
+                        {
+                          text: "Aceptar",
+                          onPress: () =>
+                            deleteNote(
+                              setLoading,
+                              setUpdater,
+                              updater,
+                              setShowNotes,
+                              infoUserSubj,
+                              dispatch
+                            ),
+                        },
+                      ]
+                    )
                     : Alert.alert(
-                        "Importante",
-                        "Primero debes eliminar las notas parciales para eliminar la nota final!",
-                        [
-                          {
-                            text: "Ok, genial!",
-                            onPress: () => console.log(""),
-                            style: "cancel",
-                          },
-                        ]
-                      )
+                      "Importante",
+                      "Primero debes eliminar las notas parciales para eliminar la nota final!",
+                      [
+                        {
+                          text: "Ok, genial!",
+                          onPress: () => console.log(""),
+                          style: "cancel",
+                        },
+                      ]
+                    )
                 }
               />
               <TouchableOpacity
@@ -330,27 +334,27 @@ export function ModalNotes({
                   onPress={() =>
                     showModal2?.placeholder
                       ? updateOrCreateScorePartial(
-                          showModal2?.extra_id,
-                          setLoading,
-                          showModal2,
-                          infoUserSubj,
-                          setUpdater,
-                          updater,
-                          setShowModal2,
-                          setShowNotes,
-                          dispatch
-                        )
+                        showModal2?.extra_id,
+                        setLoading,
+                        showModal2,
+                        infoUserSubj,
+                        setUpdater,
+                        updater,
+                        setShowModal2,
+                        setShowNotes,
+                        dispatch
+                      )
                       : updateOrCreateScorePartial(
-                          showModal2?.extra_id,
-                          setLoading,
-                          showModal2,
-                          infoUserSubj,
-                          setUpdater,
-                          updater,
-                          setShowModal2,
-                          setShowNotes,
-                          dispatch
-                        )
+                        showModal2?.extra_id,
+                        setLoading,
+                        showModal2,
+                        infoUserSubj,
+                        setUpdater,
+                        updater,
+                        setShowModal2,
+                        setShowNotes,
+                        dispatch
+                      )
                   }
                 >
                   <Text color={"white"}>Guardar</Text>
@@ -447,6 +451,7 @@ export function ModalNotes({
 export function ModalWarning({
   showWarning,
   setShowWarning,
+  showModal,
   currentSubj,
   setInfoUserSubj,
   infoUserSubj,
@@ -457,15 +462,12 @@ export function ModalWarning({
   const [loading, setLoading] = useState(false);
   const userdata = useSelector((state: any) => state.user.userdata);
   let dataItems: string[] = currentSubj?.subjectParents;
-  console.log("dataItems typw", typeof dataItems);
 
   let arrSinDuplicaciones = [];
 
   if (dataItems && dataItems.length > 0) {
     let set = new Set(dataItems.map(JSON.stringify));
     arrSinDuplicaciones = Array.from(set).map(JSON.parse);
-
-    console.log("arrSinDuplicaciones ", arrSinDuplicaciones);
   }
 
   function hideModal() {
@@ -611,18 +613,10 @@ export function ModalWarning({
                   bg={"#DA673A"}
                   _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
                   _text={{ fontSize: 14, fontWeight: "600" }}
-                  onPress={() =>
-                    createNote(
-                      currentSubj?.id,
-                      setLoading,
-                      setInfoUserSubj,
-                      infoUserSubj,
-                      setShowNotes,
-                      setShowWarning,
-                      setUpdater,
-                      updater,
-                      userdata
-                    )
+                  onPress={() => {
+                    showModal(true)
+                    setShowWarning(false)
+                  }
                   }
                 >
                   Si
@@ -646,7 +640,7 @@ export function ModalWarning({
           </Button.Group>
         </Modal.Body>
       </Modal.Content>
-    </Modal>
+    </Modal >
   );
 }
 
@@ -983,6 +977,407 @@ export function DiscardDraftModal({
     </Modal>
   );
 }
+
+export function AddChairModal({
+  isOpen,
+  setOpen,
+  onConfirm,
+  onCancel,
+  setInfoUserSubj,
+  infoUserSubj,
+  chairs,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  onConfirm: Function;
+  infoUserSubj: any,
+  setInfoUserSubj: Function,
+  chairs: any;
+  onCancel: Function;
+}) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xl"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
+        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
+          <TouchableOpacity style={{ marginLeft: 20, marginRight: 25, }} onPress={() => onCancel(false)}>
+            <Entypo name="chevron-left" size={24} color="gray" />
+          </TouchableOpacity>
+          <Text fontSize={18} ml={2}>
+            Qué cátedra cursaste?
+          </Text>
+        </Flex>
+        <Modal.Body alignItems={"flex-start"}>
+          <FormControl>
+            <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              mt={5}
+              mb={10}
+            >
+              <Select
+                backgroundColor={"#F7FAFC"}
+                placeholderTextColor={"#C4C4C4"}
+                textAlign={"left"}
+                selectedValue={infoUserSubj?.chair}
+                minWidth="200"
+                accessibilityLabel="Elegir cátedra"
+                placeholder="Elegir cátedra"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                  borderRadius: 10,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setInfoUserSubj({ ...infoUserSubj, chair: itemValue })}
+              >
+                {chairs?.map((chair, index) => (
+                  <Select.Item
+                    label={chair}
+                    value={chair}
+                    key={index}
+                  />
+                ))}
+              </Select>
+            </Box>
+
+          </FormControl>
+        </Modal.Body>
+        <HStack pr={5} pl={5} mb={5}>
+          <Button
+            w="100%"
+            isDisabled={infoUserSubj?.chair.length === 0}
+            backgroundColor={'#DA673A'}
+            _text={{ fontSize: 14, fontWeight: "600", color: 'white' }}
+            onPress={() => { onConfirm(true), setOpen(false) }}
+            borderRadius={moderateScale(8)}
+            py={4}
+            fontWeight="bold"
+          >
+            Siguiente
+          </Button>
+        </HStack>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function AddScore({
+  isOpen,
+  setOpen,
+  onConfirm,
+  onCancel,
+  setInfoUserSubj,
+  infoUserSubj,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  onConfirm: Function;
+  infoUserSubj: any;
+  setInfoUserSubj: Function;
+  onCancel: Function;
+}) {
+  const [score, setScore] = useState(1)
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xl"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
+        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
+          <TouchableOpacity style={{ marginLeft: 20, marginRight: 50, }} onPress={() => { setOpen(false), onCancel(true) }}>
+            <Entypo name="chevron-left" size={24} color="gray" />
+          </TouchableOpacity>
+          <Text fontSize={18} ml={2}>
+            Nota de cursada
+          </Text>
+        </Flex>
+        <Modal.Body alignItems={"flex-start"}>
+          <FormControl>
+
+            <HStack alignItems={"center"} justifyContent={'center'} mb={10}>
+              <TouchableOpacity
+                onPress={() =>
+                  setScore(Math.max(1, score - 1))
+                }
+              >
+                <AntDesign name="minuscircleo" size={40} color="#DA673A" />
+              </TouchableOpacity>
+              <Text color="#DA673A" mx={20} fontSize={45} fontWeight={"600"}>
+                {score || 1}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  setScore(Math.min(10, score + 1))
+                }
+              >
+                <AntDesign name="pluscircleo" size={40} color="#DA673A" />
+              </TouchableOpacity>
+            </HStack>
+          </FormControl>
+        </Modal.Body>
+        <DefaultButton
+          buttonStyle={{
+            height: horizontalScale(40),
+            backgroundColor: "#DA673A",
+            paddingHorizontal: horizontalScale(45),
+            width: 300,
+            marginBottom: 20,
+            alignItems: "center",
+            borderRadius: moderateScale(8),
+          }}
+          textStyle={{
+            marginTop: verticalScale(10),
+          }}
+          title="Siguiente"
+          callBack={() => { onConfirm(true), setOpen(false), setInfoUserSubj({ ...infoUserSubj, score: score }) }} />
+      </Modal.Content >
+    </Modal >
+  );
+}
+
+export function AddStarsModal({
+  isOpen,
+  setOpen,
+  onConfirm,
+  onCancel,
+  setInfoUserSubj,
+  infoUserSubj,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  onConfirm: Function;
+  infoUserSubj: any;
+  setInfoUserSubj: Function;
+  onCancel: Function;
+}) {
+
+  const [starsForm, setStarsForm] = useState({
+    qualityOfTeachers: 0,
+    practicalJobs: 0,
+    requirement: 0,
+    cost: 0,
+  })
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xl"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
+        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
+          <TouchableOpacity style={{ marginLeft: 20, marginRight: 80, }} onPress={() => { setOpen(false), onCancel(true) }}>
+            <Entypo name="chevron-left" size={24} color="gray" />
+          </TouchableOpacity>
+          <Text fontSize={18} ml={2}>
+            Cursada
+          </Text>
+        </Flex>
+        <Modal.Body alignItems={"flex-start"}>
+          <FormControl>
+            <HStack alignItems={"center"} flexDirection={'column'} justifyContent={'center'} mb={10}>
+              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Calidad de profesores</Text>
+              <AirbnbRating
+                showRating={false}
+                size={25}
+                selectedColor={'#DA673A'}
+                onFinishRating={(rating) => setStarsForm({ ...starsForm, qualityOfTeachers: rating })}
+                starContainerStyle={{ marginHorizontal: 7 }}
+                defaultRating={starsForm?.qualityOfTeachers}
+              />
+              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Trabajos prácticos</Text>
+              <AirbnbRating
+                showRating={false}
+                size={25}
+                selectedColor={'#DA673A'}
+                onFinishRating={(rating) => setStarsForm({ ...starsForm, practicalJobs: rating })}
+                starContainerStyle={{ marginHorizontal: 7 }}
+                defaultRating={starsForm?.practicalJobs}
+              />
+              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Que tan exigente es?</Text>
+              <AirbnbRating
+                showRating={false}
+                size={25}
+                selectedColor={'#DA673A'}
+                onFinishRating={(rating) => setStarsForm({ ...starsForm, requirement: rating })}
+                starContainerStyle={{ marginHorizontal: 7 }}
+                defaultRating={starsForm?.requirement}
+              />
+              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Que tan cara es?</Text>
+              <AirbnbRating
+                showRating={false}
+                size={25}
+                selectedColor={'#DA673A'}
+                onFinishRating={(rating) => setStarsForm({ ...starsForm, cost: rating })}
+                starContainerStyle={{ marginHorizontal: 7 }}
+                defaultRating={starsForm?.cost}
+              />
+            </HStack>
+          </FormControl>
+        </Modal.Body>
+        <DefaultButton
+          buttonStyle={{
+            height: horizontalScale(40),
+            backgroundColor: "#DA673A",
+            paddingHorizontal: horizontalScale(45),
+            width: 300,
+            marginBottom: 20,
+            alignItems: "center",
+            borderRadius: moderateScale(8),
+          }}
+          textStyle={{
+            marginTop: verticalScale(10),
+          }}
+          title="Siguiente"
+          callBack={() => {
+            onConfirm(true),
+              setOpen(false),
+              setInfoUserSubj({ ...infoUserSubj, qualityOfTeachers: starsForm.qualityOfTeachers, practicalJobs: starsForm.practicalJobs, requirement: starsForm.requirement, cost: starsForm.cost })
+          }} />
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function ModalSummary({
+  isOpen,
+  setOpen,
+  onConfirm,
+  onCancel,
+  setInfoUserSubj,
+  infoUserSubj,
+  setUpdater,
+  updater,
+  currentSubj,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  onConfirm: Function;
+  infoUserSubj: any,
+  setInfoUserSubj: Function;
+  setUpdater: Function;
+  updater: any;
+  currentSubj: any;
+  onCancel: Function;
+}) {
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xl"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
+        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
+          <TouchableOpacity style={{ marginLeft: 20, marginRight: 80, }} onPress={() => { setOpen(false), onCancel(true) }}>
+            <Entypo name="chevron-left" size={24} color="gray" />
+          </TouchableOpacity>
+          <Text fontSize={18} ml={2}>
+            Cursada
+          </Text>
+        </Flex>
+        <Modal.Body alignItems={"flex-start"}>
+          <FormControl>
+            <HStack flexDirection={'column'} justifyContent={'space-between'} mb={10}>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Materia</Text>
+                <Text style={{ fontSize: 20, color: '#DA673A' }} >{currentSubj?.prefix}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Nota</Text>
+                <Text style={{ fontSize: 20, color: '#DA673A', textAlign: 'center' }} >{infoUserSubj?.score}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Cátedra</Text>
+                <Text style={{ fontSize: 20, color: '#DA673A' }} >{infoUserSubj?.chair}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Profesores</Text>
+                <AirbnbRating
+                  isDisabled
+                  showRating={false}
+                  size={15}
+                  selectedColor={'#DA673A'}
+                  defaultRating={infoUserSubj?.qualityOfTeachers}
+                />
+              </View>
+
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>TPS</Text>
+                <AirbnbRating
+                  isDisabled
+                  showRating={false}
+                  size={15}
+                  selectedColor={'#DA673A'}
+                  defaultRating={infoUserSubj?.practicalJobs}
+                />
+              </View>
+
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Exigencia</Text>
+                <AirbnbRating
+                  isDisabled
+                  showRating={false}
+                  size={15}
+                  selectedColor={'#DA673A'}
+                  defaultRating={infoUserSubj?.requirement}
+                />
+              </View>
+
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Costo</Text>
+                <AirbnbRating
+                  isDisabled
+                  showRating={false}
+                  size={15}
+                  selectedColor={'#DA673A'}
+                  defaultRating={infoUserSubj?.cost}
+                />
+              </View>
+            </HStack>
+          </FormControl>
+        </Modal.Body>
+        <HStack pr={5} pl={5} mb={5}>
+          <Button
+            w="100%"
+            backgroundColor={'#DA673A'}
+            isLoading={loading}
+            _text={{ fontSize: 14, fontWeight: "600", color: 'white' }}
+            onPress={() => {
+              createNote(
+                setLoading,
+                setInfoUserSubj,
+                infoUserSubj,
+                currentSubj,
+                updater,
+                setUpdater,
+              );
+              setOpen(false);
+            }}
+
+            borderRadius={moderateScale(8)}
+            py={4}
+            fontWeight="bold"
+          >
+            Guardar
+          </Button>
+        </HStack>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
 
 export function ModalDeleteOpinion({
   showWarning,

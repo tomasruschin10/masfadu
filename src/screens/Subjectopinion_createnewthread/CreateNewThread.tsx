@@ -13,7 +13,7 @@ import {
   Text,
   TextArea,
 } from "native-base";
-import { FontAwesome5, Ionicons, AntDesign } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { TouchableOpacity, Keyboard } from "react-native";
 import { useDispatch } from "react-redux";
@@ -43,12 +43,12 @@ function CreateNewThread({ route, navigation }) {
   const [selectedCareerId, setSelectedCareerId] = useState(
     state.user.userdata.career_id
   );
-  const [descriptionHeight, SetDescriptionHeight] = useState(67);
+  const [descriptionHeight, setDescriptionHeight] = useState(67);
 
   const [subjects, setSubjects] = useState([]);
 
   const updateDescriptionHeight = (contentHeight) => {
-    SetDescriptionHeight(contentHeight + 20);
+    setDescriptionHeight(contentHeight);
   };
 
   if (route.params && route.params?.career_id) {
@@ -60,15 +60,11 @@ function CreateNewThread({ route, navigation }) {
     setForm({ ...form, subject_id: itemValue });
   };
 
-  const handleCareerChange = (itemValue) => {
-    setSelectedCareerId(itemValue);
-    setSelectedSubjectId(null);
-  };
-
   const [form, setForm] = useState<any>({
     title: "",
     anonymous: 0,
     description: "",
+    currentSchoolYear: "",
     subject_id: selectedSubjectId,
     tags: [],
     professor: "",
@@ -81,7 +77,6 @@ function CreateNewThread({ route, navigation }) {
   }
 
   const sendForm = () => {
-    console.log("created opinion", form);
 
     setLoading(true);
     postServices(`opinion/create`, form)
@@ -94,13 +89,13 @@ function CreateNewThread({ route, navigation }) {
           })
         );
         setShowModal(false);
-        console.log("created opinion 0", data);
 
         navigation.navigate("SeeSubjectThread", {
           value: data?.value ? false : true,
           subject_id: data.subject.id,
           title: data.subject.name,
           description: data.description,
+          currentSchoolYear: data.currentSchoolYear,
           time: data.subject.info,
           hours: "",
           method: "",
@@ -198,6 +193,16 @@ function CreateNewThread({ route, navigation }) {
     setForm({ ...form, tags: form.tags });
   };
 
+  const calculateContainerHeight = (text: any) => {
+    const baseHeight = 56;
+    const lineHeight = 16;
+    const charactersPerLine = 34;
+
+    const numberOfLines = Math.ceil(text.length / charactersPerLine);
+    return baseHeight + numberOfLines * lineHeight;
+  };
+
+
   return (
     <Container>
       <Layout
@@ -249,7 +254,7 @@ function CreateNewThread({ route, navigation }) {
                 textAlign={"left"}
                 isDisabled
                 accessibilityLabel="Elegir Materia"
-                placeholder="No hay más materias"
+                placeholder="Elegir Materia"
               ></Select>
             )}
           </Box>
@@ -277,13 +282,10 @@ function CreateNewThread({ route, navigation }) {
               onChangeText={(text) => {
                 setForm({ ...form, description: text });
               }}
-              onContentSizeChange={(e) =>
-                updateDescriptionHeight(e.nativeEvent.contentSize.height)
-              }
               placeholder="Descripción"
               autoCompleteType={"off"}
               fontSize={15}
-              h={descriptionHeight}
+              h={120}
               backgroundColor={"#F7FAFC"}
               borderWidth={0}
               placeholderTextColor={"#C4C4C4"}
@@ -293,15 +295,64 @@ function CreateNewThread({ route, navigation }) {
             mx="5"
             borderBottomWidth={1}
             borderBottomColor={"#EBEEF2"}
-            mb={14}
+            mb={5}
           >
             <Input
               backgroundColor={"#F7FAFC"}
-              placeholder="Agregá la cátedra"
+              onChangeText={(text) => setForm({ ...form, currentSchoolYear: text })}
+              placeholder="Qué año estas cursando?"
               placeholderTextColor={"#C4C4C4"}
-              onChangeText={(text) => setForm({ ...form, professor: text })}
             />
           </Box>
+          {selectedSubjectId && subjects.length > 0 ? (
+            <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              mb={5}
+            >
+              <Select
+                backgroundColor={"#F7FAFC"}
+                placeholderTextColor={"#C4C4C4"}
+                textAlign={"left"}
+                selectedValue={form.professor}
+                minWidth="335"
+                accessibilityLabel="Elegir cátedra"
+                placeholder="Elegir cátedra"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                  borderRadius: 10,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setForm({ ...form, professor: itemValue })}
+              >
+                {subjects.find(subject => subject.id === selectedSubjectId)?.chairs?.map((chair, index) => (
+                  <Select.Item
+                    label={chair}
+                    value={chair}
+                    key={index}
+                  />
+                ))}
+              </Select>
+            </Box>
+          ) : (
+            <Box
+              mx="5"
+              borderBottomWidth={1}
+              borderBottomColor={"#EBEEF2"}
+              mb={5}
+            >
+              <Select
+                backgroundColor={"#F7FAFC"}
+                placeholderTextColor={"#C4C4C4"}
+                textAlign={"left"}
+                isDisabled
+                accessibilityLabel="Debes elegir una materia"
+                placeholder="Debes elegir una materia"
+              ></Select>
+            </Box>
+          )}
 
           <Box borderBottomWidth={1} borderBottomColor={"#EBEEF2"}>
             {allTags.length > 0 && (
@@ -368,15 +419,18 @@ function CreateNewThread({ route, navigation }) {
               </>
             )}
           </Box>
-
           <HStack space={3} mx={6} my={5} alignItems={"center"}>
-            <Checkbox
-              onChange={(boolean) =>
-                setForm({ ...form, anonymous: boolean ? 1 : 0 })
-              }
-              value="test"
-              accessibilityLabel="checkbox"
-            />
+            {form.anonymous === 0 ? (
+              <TouchableOpacity onPress={() => setForm({ ...form, anonymous: 1 })
+              }>
+                <MaterialCommunityIcons name="checkbox-blank" size={24} color="white" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => setForm({ ...form, anonymous: 0 })
+              }>
+                <MaterialCommunityIcons name="checkbox-marked" size={24} color="blue" />
+              </TouchableOpacity>
+            )}
             <Text>Publicarlo de forma anónima</Text>
             <TouchableOpacity
               onPressIn={() => setShowModalIcon(true)}
@@ -394,7 +448,7 @@ function CreateNewThread({ route, navigation }) {
               borderRadius={8}
               py={5}
               px={6}
-              isDisabled={form.title && form.description ? false : true}
+              isDisabled={form.title.length === 0 || form.description.length === 0 || !selectedSubjectId}
               isLoading={loading}
               onPress={() => setShowModal(true)}
               w="90%"

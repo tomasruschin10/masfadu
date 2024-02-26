@@ -49,7 +49,6 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
     getServices(`opinion/all?offset=0&student_id=${id}`)
       .then(({ data }: any) => {
         setAllOpinions(data);
-        console.log(data);
       })
       .catch((error) => {
         __DEV__ && console.log(error);

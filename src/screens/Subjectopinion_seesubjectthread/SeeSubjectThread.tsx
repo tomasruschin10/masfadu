@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-
-import { Animated } from "react-native";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import { Animated, Modal, TouchableOpacity, ScrollView, View } from "react-native";
 import {
   Box,
   Button,
@@ -9,11 +9,16 @@ import {
   HStack,
   Icon,
   IconButton,
+  VStack,
   Input,
-  ScrollView,
   Spinner,
   Text,
 } from "native-base";
+import { SwipeablePanel } from "rn-swipeable-panel";
+import { Entypo } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { AirbnbRating } from 'react-native-ratings';
+
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import SeeSubjectThread_Item from "./SeeSubjectThread_Item";
@@ -21,7 +26,8 @@ import SeeSubjectThread_Item from "./SeeSubjectThread_Item";
 import { HeaderBack } from "../../components/Header";
 import { getServices } from "../../utils/hooks/services";
 import { updateMessage } from "../../redux/actions/message";
-import { useDispatch } from "react-redux";
+import { fontStyles } from "../../utils/colors/fontColors";
+
 import Menu from "../Menu/Menu";
 
 function SeeSubjectThread({ route, navigation }) {
@@ -47,11 +53,34 @@ function SeeSubjectThread({ route, navigation }) {
   const [allTags, setAllTags] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [limit, setLimit] = useState(0);
+  const [chairs, setChairs] = useState(null);
+  const [showChairsFilters, setShowChairsFilters] = useState(false)
+  const [showRatings, setShowRatings] = useState(false)
+  const [selectedChair, setSelectedChair] = useState()
   const [changeFilt, setChangeFilt] = useState(true);
   const [form, setForm] = useState<any>({ tags: [] });
   const dispatch = useDispatch();
+  const [ratings, setRatings] = useState({
+    averagePracticalJobs: 0,
+    averageQualityOfTeachers: 0,
+    averageRequirement: 0,
+    averageCost: 0,
+  });
 
   const [filteredOpinions, setFilteredOpinions] = useState(allOpinions);
+
+  useFocusEffect(
+    useCallback(() => {
+      try {
+        const chairs = [...new Set(allOpinions.map(opinion => opinion.professor))];
+        if (chairs.length > 0 && chairs[0] !== "") {
+          setChairs(chairs);
+        }
+      } catch (error) {
+        console.error('Error al obtener cátedras', error);
+      }
+    }, [allOpinions])
+  );
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -75,6 +104,23 @@ function SeeSubjectThread({ route, navigation }) {
       setFilteredOpinions(filtered);
     }
   };
+
+  const handleFilterByProfessor = (text) => {
+    setSelectedChair(text);
+    setShowChairsFilters(false);
+
+    if (text.trim() === "") {
+      setFilteredOpinions(allOpinions);
+    } else {
+      const filtered = allOpinions.filter(
+        (opinion) =>
+        (opinion.professor &&
+          opinion.professor.toLowerCase().includes(text.toLowerCase()))
+      );
+      setFilteredOpinions(filtered);
+    }
+  }
+
   useEffect(() => {
     setFilteredOpinions(allOpinions);
   }, []);
@@ -112,7 +158,6 @@ function SeeSubjectThread({ route, navigation }) {
   const getData = async () => {
     setLoading(true);
     setLimit(0);
-    console.log(subject_id);
     getServices(`opinion/all?offset=0&limit=10&subject_id=${subject_id}`)
       .then(({ data }: any) => {
         setAllOpinions(data);
@@ -129,9 +174,45 @@ function SeeSubjectThread({ route, navigation }) {
         __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
+
+    getServices(`subject/${id}`)
+      .then(({ data }: any) => {
+        calculateAverages(data.userSubject)
+      })
+      .catch((error) => {
+        __DEV__ && console.log(error);
+      })
+      .finally(() => setLoading(false));
+
   };
 
-  // FUNCTIONS
+  const calculateAverages = (subjectRatings) => {
+    const filteredRatings = subjectRatings.filter(rating => (
+      rating.practicalJobs !== null &&
+      rating.qualityOfTeachers !== null &&
+      rating.requirement !== null &&
+      rating.cost !== null
+    ));
+
+    const sumPracticalJobs = filteredRatings.reduce((sum, rating) => sum + rating.practicalJobs, 0);
+    const sumQualityOfTeachers = filteredRatings.reduce((sum, rating) => sum + rating.qualityOfTeachers, 0);
+    const sumRequirement = filteredRatings.reduce((sum, rating) => sum + rating.requirement, 0);
+    const sumCost = filteredRatings.reduce((sum, rating) => sum + rating.cost, 0);
+
+    const averagePracticalJobs = Math.round(sumPracticalJobs / filteredRatings.length) || 0;
+    const averageQualityOfTeachers = Math.round(sumQualityOfTeachers / filteredRatings.length) || 0;
+    const averageRequirement = Math.round(sumRequirement / filteredRatings.length) || 0;
+    const averageCost = Math.round(sumCost / filteredRatings.length) || 0;
+
+    setRatings({
+      averagePracticalJobs,
+      averageQualityOfTeachers,
+      averageRequirement,
+      averageCost,
+    });
+  };
+
+
   const CallBackByTags = (arr) => {
     getServices(
       `opinion/all?subject_id=${subject_id}&${arr
@@ -167,10 +248,10 @@ function SeeSubjectThread({ route, navigation }) {
   const FilterTags = () =>
     allTags.length > 0
       ? allTags.filter((it) =>
-          it.name
-            .toLowerCase()
-            .includes(searchText.toLowerCase().replace("#", ""))
-        )
+        it.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase().replace("#", ""))
+      )
       : [];
 
   const byTags = () => {
@@ -234,7 +315,6 @@ function SeeSubjectThread({ route, navigation }) {
     if (form.tags.length > 0) CallBackByTags(form.tags);
     else {
       setLimit(0);
-      console.log(subject_id);
       getServices(`opinion/all?offset=0&limit=10&subject_id=${subject_id}`)
         .then(({ data }: any) => {
           setAllOpinions(data);
@@ -354,40 +434,197 @@ function SeeSubjectThread({ route, navigation }) {
                   {title}
                 </Text>
               </Box>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
+                <TouchableOpacity
+                  disabled={!chairs}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: '#F4F6F9',
+                    width: '77%',
+                    paddingHorizontal: 10,
+                    marginBottom: 10,
+                    height: 60,
+                    borderRadius: 8,
+                  }}
+                  onPress={() => setShowChairsFilters(true)}
+                >
+                  {selectedChair ? (
+                    <>
+                      <Text
+                        bold={true}
+                        numberOfLines={2}
+                        style={[fontStyles.poppins400, { fontSize: 16 }]}
+                        color={"brand.primary"}
+                      >
+                        {selectedChair}
+                      </Text>
+                      <TouchableOpacity onPress={() => handleFilterByProfessor('')}>
+                        <Ionicons name="close" size={24} color="#9A9A9A" />
+                      </TouchableOpacity>
+                    </>
+                  ) : (
+                    <>
+                      <Text
+                        bold={true}
+                        numberOfLines={2}
+                        style={[fontStyles.poppins400, { fontSize: 14 }]}
+                        color={"#9A9A9A"}
+                      >
+                        Elegir cátedra
+                      </Text>
+                      < Entypo name="chevron-down" size={25} color="#9A9A9A" />
+                    </>
+                  )
+                  }
+                </TouchableOpacity>
+                <TouchableOpacity disabled={
+                  ratings.averagePracticalJobs === 0 &&
+                  ratings.averageQualityOfTeachers === 0 &&
+                  ratings.averageRequirement === 0 &&
+                  ratings.averageCost === 0
+                } onPress={() => setShowRatings(!showRatings)} style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: showRatings ? "#E85E29" : '#F4F6F9', width: '20%', height: 60, borderRadius: 4 }}>
+                  {showRatings ? <AntDesign name="star" size={24} color="white" /> : <AntDesign name="staro" size={24} color="#9A9A9A" />
+                  }
+                </TouchableOpacity>
+              </View>
+
+              {showRatings && (
+                <View style={{ width: '100%', backgroundColor: '#F4F6F9', marginBottom: 20, padding: 15, borderRadius: 4, }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}
+                    >Profesores</Text>
+                    <AirbnbRating
+                      showRating={false}
+                      isDisabled
+                      size={25}
+                      selectedColor={'#DA673A'}
+                      defaultRating={ratings?.averageQualityOfTeachers}
+                    />
+                  </View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>
+                      TPS</Text>
+                    <AirbnbRating
+                      showRating={false}
+                      isDisabled
+                      size={25}
+                      selectedColor={'#DA673A'}
+                      defaultRating={ratings?.averagePracticalJobs}
+                    />
+                  </View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}
+                    >Exigencia</Text>
+                    <AirbnbRating
+                      showRating={false}
+                      isDisabled
+                      size={25}
+                      selectedColor={'#DA673A'}
+                      defaultRating={ratings?.averageRequirement}
+                    />
+                  </View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}
+                    >Costo</Text>
+                    <AirbnbRating
+                      showRating={false}
+                      isDisabled
+                      size={25}
+                      selectedColor={'#DA673A'}
+                      defaultRating={ratings.averageCost}
+                    />
+                  </View>
+                </View>
+
+              )}
+
+              <VStack space={2} alignItems="flex-start">
+                <Modal
+                  visible={!!showChairsFilters}
+                  transparent
+                  children={
+                    <SwipeablePanel
+                      style={{ height: 480 }}
+                      closeOnTouchOutside
+                      onClose={() => setShowChairsFilters(false)}
+                      fullWidth
+                      onlyLarge
+                      isActive={!!showChairsFilters}
+                    >
+                      <ScrollView>
+                        <View
+                          style={{
+                            paddingRight: 27,
+                            paddingLeft: 30,
+                            paddingVertical: 27,
+                            paddingBottom: 54,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                          }}
+                        >
+                          {chairs &&
+                            chairs.map((item, index) => (
+                              <TouchableOpacity
+                                key={index}
+                                onPress={() =>
+                                  handleFilterByProfessor(item)
+                                }
+                                style={{
+                                  paddingVertical: 10,
+                                }}
+                              >
+                                <Text
+                                  style={[fontStyles.poppins400, { fontSize: 16 }]}
+                                >
+                                  {item}
+                                </Text>
+                              </TouchableOpacity>
+                            ))}
+                        </View>
+                      </ScrollView>
+                    </SwipeablePanel>
+                  }
+                />
+              </VStack>
               {filteredOpinions.length > 0
                 ? filteredOpinions.map((item) => (
-                    <SeeSubjectThread_Item
-                      key={item.id}
-                      idOpinion={item.id}
-                      navigation={navigation}
-                      title={item.title}
-                      description={item.description}
-                      created_at={item.created_at}
-                      opinionTags={item.opinionTags}
-                      anonymous={item.anonymous}
-                      student={item.student}
-                      answersCount={item.answersCount}
-                      tags={item.opinionTags}
-                      professor={item.professor}
-                    />
-                  ))
+                  <SeeSubjectThread_Item
+                    key={item.id}
+                    idOpinion={item.id}
+                    navigation={navigation}
+                    title={item.title}
+                    description={item.description}
+                    currentSchoolYear={item.currentSchoolYear}
+                    created_at={item.created_at}
+                    opinionTags={item.opinionTags}
+                    anonymous={item.anonymous}
+                    student={item.student}
+                    answersCount={item.answersCount}
+                    tags={item.opinionTags}
+                    professor={item.professor}
+                  />
+                ))
                 : allOpinions.map((item) => (
-                    <SeeSubjectThread_Item
-                      key={item.id}
-                      idOpinion={item.id}
-                      navigation={navigation}
-                      title={item.title}
-                      description={item.description}
-                      created_at={item.created_at}
-                      opinionTags={item.opinionTags}
-                      anonymous={item.anonymous}
-                      student={item.student}
-                      answersCount={item.answersCount}
-                      tags={item.opinionTags}
-                      professor={item.professor}
-                    />
-                  ))}
+                  <SeeSubjectThread_Item
+                    key={item.id}
+                    idOpinion={item.id}
+                    navigation={navigation}
+                    title={item.title}
+                    description={item.description}
+                    currentSchoolYear={item.currentSchoolYear}
+                    created_at={item.created_at}
+                    opinionTags={item.opinionTags}
+                    anonymous={item.anonymous}
+                    student={item.student}
+                    answersCount={item.answersCount}
+                    tags={item.opinionTags}
+                    professor={item.professor}
+                  />
+                ))}
             </>
           )}
 
@@ -406,7 +643,7 @@ function SeeSubjectThread({ route, navigation }) {
       </ScrollView>
 
       <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
-    </Container>
+    </Container >
   );
 }
 

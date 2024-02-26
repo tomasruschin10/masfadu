@@ -7,7 +7,6 @@ const template = (setVal, setShowNotes, dispatch, val) => {
     dispatch(updateMessage({ body: 'Realizado con éxito', open: true, type: 'success' }))
 }
 
-// notes
 export const updateNote = (setLoading, setVal, val, setShowNotes, infoUserSubj, form, dispatch) => {
     setLoading(true)
     putServices(`user-subject/update/${infoUserSubj.USERSUBJECT}`, form, 'application/json').then(() => {
@@ -18,17 +17,39 @@ export const updateNote = (setLoading, setVal, val, setShowNotes, infoUserSubj, 
         setLoading(false)
     })
 }
-export const createNote = (id, setLoading, setInfoUserSubj, infoUserSubj, setShowNotes, setShowWarning, setUpdater, updater, userdata) => {
+
+export const createNote = (setLoading, setInfoUserSubj, infoUserSubj, currentSubj, updater, setUpdater) => {
     setLoading(true)
-    postServices('user-subject/create', { user_id: userdata.id, subject_id: id, score: 1 }).then(({ data }: any) => {
+    postServices('user-subject/create', {
+        USERSUBJECT: infoUserSubj.USERSUBJECT,
+        chair: infoUserSubj.chair,
+        cost: infoUserSubj.cost,
+        extra_score: infoUserSubj.extra_score,
+        finish: infoUserSubj.finish,
+        practicalJobs: infoUserSubj.practicalJobs,
+        qualityOfTeachers: infoUserSubj.qualityOfTeachers,
+        requirement: infoUserSubj.requirement,
+        score: infoUserSubj.score,
+        user_id: infoUserSubj.user_id,
+        subject_id: currentSubj.id
+    }).then(({ data }: any) => {
         setInfoUserSubj({
-            ...infoUserSubj, finish: 0, extra_score: [], score: data.score, USERSUBJECT: data.id, user_id: data.user_id, subject_id: data.subject_id,
+            ...infoUserSubj,
+            finish: 0,
+            extra_score: [],
+            USERSUBJECT: data.id,
+            user_id: data.user_id,
+            subject_id: data.subject_id,
+            chair: "",
+            practicalJobs: 0,
+            qualityOfTeachers: 0,
+            requirement: 0,
+            cost: 0,
+            score: 1,
         })
-        setShowNotes(true);
     }).finally(() => {
-        setLoading(false)
-        setShowWarning(false)
         setUpdater(!updater)
+        setLoading(false)
     })
 }
 export const deleteNote = (setLoading, setVal, val, setShowNotes, infoUserSubj, dispatch) => {
@@ -54,11 +75,12 @@ export const deletePartial = (id, setLoading, setVal, val, setShowNotes, setShow
         setLoading(false)
     })
 }
+
 export const updateOrCreateScorePartial = (id, setLoading, showModal2, infoUserSubj, setVal, val, setShowModal2, setShowNotes, dispatch) => {
     setLoading(true)
     let method, data
     data = { name: showModal2.name, score: showModal2.score, user_subject_id: infoUserSubj.USERSUBJECT }
-    id ? method = putServices(`extra-score/update/${id}`, data, 'application/json'): method = postServices(`extra-score/create`, data, 'application/json')
+    id ? method = putServices(`extra-score/update/${id}`, data, 'application/json') : method = postServices(`extra-score/create`, data, 'application/json')
     method.then(() => {
         setShowModal2({ ...showModal2, state: false });
         template(setVal, setShowNotes, dispatch, val)
