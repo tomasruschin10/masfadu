@@ -300,7 +300,7 @@ function CreateNewThread({ route, navigation }) {
             <Input
               backgroundColor={"#F7FAFC"}
               onChangeText={(text) => setForm({ ...form, currentSchoolYear: text })}
-              placeholder="Qué año estas cursando?"
+              placeholder="Año de cursada"
               placeholderTextColor={"#C4C4C4"}
             />
           </Box>

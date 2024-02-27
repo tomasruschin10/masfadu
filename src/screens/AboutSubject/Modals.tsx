@@ -1224,25 +1224,24 @@ export function AddStarsModal({
             </HStack>
           </FormControl>
         </Modal.Body>
-        <DefaultButton
-          buttonStyle={{
-            height: horizontalScale(40),
-            backgroundColor: "#DA673A",
-            paddingHorizontal: horizontalScale(45),
-            width: 300,
-            marginBottom: 20,
-            alignItems: "center",
-            borderRadius: moderateScale(8),
-          }}
-          textStyle={{
-            marginTop: verticalScale(10),
-          }}
-          title="Siguiente"
-          callBack={() => {
-            onConfirm(true),
-              setOpen(false),
-              setInfoUserSubj({ ...infoUserSubj, qualityOfTeachers: starsForm.qualityOfTeachers, practicalJobs: starsForm.practicalJobs, requirement: starsForm.requirement, cost: starsForm.cost })
-          }} />
+        <HStack pr={6} pl={6} mb={5}>
+          <Button
+            w="100%"
+            isDisabled={starsForm.qualityOfTeachers === 0 || starsForm.practicalJobs === 0 || starsForm.requirement === 0 || starsForm.cost === 0}
+            backgroundColor={'#DA673A'}
+            _text={{ fontSize: 14, fontWeight: "600", color: 'white' }}
+            onPress={() => {
+              onConfirm(true),
+                setOpen(false),
+                setInfoUserSubj({ ...infoUserSubj, qualityOfTeachers: starsForm.qualityOfTeachers, practicalJobs: starsForm.practicalJobs, requirement: starsForm.requirement, cost: starsForm.cost })
+            }}
+            borderRadius={moderateScale(8)}
+            py={3}
+            fontWeight="bold"
+          >
+            Siguiente
+          </Button>
+        </HStack>
       </Modal.Content>
     </Modal>
   );
@@ -1290,20 +1289,20 @@ export function ModalSummary({
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
             <HStack flexDirection={'column'} justifyContent={'space-between'} mb={10}>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Materia</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
+                <Text style={{ fontSize: 15, color: 'gray' }}>Materia</Text>
                 <Text style={{ fontSize: 20, color: '#DA673A' }} >{currentSubj?.prefix}</Text>
               </View>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Nota</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
+                <Text style={{ fontSize: 15, color: 'gray', }}>Nota</Text>
                 <Text style={{ fontSize: 20, color: '#DA673A', textAlign: 'center' }} >{infoUserSubj?.score}</Text>
               </View>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Cátedra</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
+                <Text style={{ fontSize: 15, color: 'gray' }}>Cátedra</Text>
                 <Text style={{ fontSize: 20, color: '#DA673A' }} >{infoUserSubj?.chair}</Text>
               </View>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Profesores</Text>
+              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
+                <Text style={{ fontSize: 15, color: 'gray' }}>Profesores</Text>
                 <AirbnbRating
                   isDisabled
                   showRating={false}

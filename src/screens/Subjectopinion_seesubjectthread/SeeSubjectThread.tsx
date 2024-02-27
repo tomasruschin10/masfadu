@@ -57,6 +57,7 @@ function SeeSubjectThread({ route, navigation }) {
   const [showChairsFilters, setShowChairsFilters] = useState(false)
   const [showRatings, setShowRatings] = useState(false)
   const [selectedChair, setSelectedChair] = useState()
+  const [subjects, setSubjects] = useState([])
   const [changeFilt, setChangeFilt] = useState(true);
   const [form, setForm] = useState<any>({ tags: [] });
   const dispatch = useDispatch();
@@ -177,7 +178,7 @@ function SeeSubjectThread({ route, navigation }) {
 
     getServices(`subject/${id}`)
       .then(({ data }: any) => {
-        calculateAverages(data.userSubject)
+        setSubjects(data.userSubject)
       })
       .catch((error) => {
         __DEV__ && console.log(error);
@@ -186,12 +187,13 @@ function SeeSubjectThread({ route, navigation }) {
 
   };
 
-  const calculateAverages = (subjectRatings) => {
+  const calculateAverages = (subjectRatings, selectedChair) => {
     const filteredRatings = subjectRatings.filter(rating => (
       rating.practicalJobs !== null &&
       rating.qualityOfTeachers !== null &&
       rating.requirement !== null &&
-      rating.cost !== null
+      rating.cost !== null &&
+      rating.chair === selectedChair
     ));
 
     const sumPracticalJobs = filteredRatings.reduce((sum, rating) => sum + rating.practicalJobs, 0);
@@ -211,6 +213,10 @@ function SeeSubjectThread({ route, navigation }) {
       averageCost,
     });
   };
+
+  useEffect(() => {
+    calculateAverages(subjects, selectedChair);
+  }, [subjects, selectedChair]);
 
 
   const CallBackByTags = (arr) => {
@@ -434,7 +440,7 @@ function SeeSubjectThread({ route, navigation }) {
                   {title}
                 </Text>
               </Box>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, }}>
 
                 <TouchableOpacity
                   disabled={!chairs}
@@ -480,66 +486,72 @@ function SeeSubjectThread({ route, navigation }) {
                   )
                   }
                 </TouchableOpacity>
-                <TouchableOpacity disabled={
-                  ratings.averagePracticalJobs === 0 &&
-                  ratings.averageQualityOfTeachers === 0 &&
-                  ratings.averageRequirement === 0 &&
-                  ratings.averageCost === 0
-                } onPress={() => setShowRatings(!showRatings)} style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: showRatings ? "#E85E29" : '#F4F6F9', width: '20%', height: 60, borderRadius: 4 }}>
+                <TouchableOpacity disabled={!chairs} onPress={() => setShowRatings(!showRatings)} style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: showRatings ? "#E85E29" : '#F4F6F9', width: '20%', height: 60, borderRadius: 4 }}>
                   {showRatings ? <AntDesign name="star" size={24} color="white" /> : <AntDesign name="staro" size={24} color="#9A9A9A" />
                   }
                 </TouchableOpacity>
               </View>
 
               {showRatings && (
-                <View style={{ width: '100%', backgroundColor: '#F4F6F9', marginBottom: 20, padding: 15, borderRadius: 4, }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}
-                    >Profesores</Text>
-                    <AirbnbRating
-                      showRating={false}
-                      isDisabled
-                      size={25}
-                      selectedColor={'#DA673A'}
-                      defaultRating={ratings?.averageQualityOfTeachers}
-                    />
+                selectedChair ? (
+                  (ratings.averagePracticalJobs !== 0 &&
+                    ratings.averageQualityOfTeachers !== 0 &&
+                    ratings.averageRequirement !== 0 &&
+                    ratings.averageCost !== 0) ? (
+                    <View style={{ width: '100%', backgroundColor: '#F4F6F9', marginBottom: 20, padding: 15, borderRadius: 4 }}>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Profesores</Text>
+                        <AirbnbRating
+                          showRating={false}
+                          isDisabled
+                          size={25}
+                          selectedColor={'#E85E29'}
+                          defaultRating={ratings?.averageQualityOfTeachers}
+                        />
+                      </View>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>TPS</Text>
+                        <AirbnbRating
+                          showRating={false}
+                          isDisabled
+                          size={25}
+                          selectedColor={'#E85E29'}
+                          defaultRating={ratings?.averagePracticalJobs}
+                        />
+                      </View>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Exigencia</Text>
+                        <AirbnbRating
+                          showRating={false}
+                          isDisabled
+                          size={25}
+                          selectedColor={'#E85E29'}
+                          defaultRating={ratings?.averageRequirement}
+                        />
+                      </View>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Costo</Text>
+                        <AirbnbRating
+                          showRating={false}
+                          isDisabled
+                          size={25}
+                          selectedColor={'#E85E29'}
+                          defaultRating={ratings.averageCost}
+                        />
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={{ width: '100%', backgroundColor: '#F4F6F9', alignItems: 'center', marginBottom: 20, padding: 15, borderRadius: 4 }}>
+                      <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Datos insuficientes</Text>
+                    </View>
+                  )
+                ) : (
+                  <View style={{ width: '100%', backgroundColor: '#F4F6F9', alignItems: 'center', marginBottom: 20, padding: 15, borderRadius: 4 }}>
+                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Elige una cátedra primero</Text>
                   </View>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>
-                      TPS</Text>
-                    <AirbnbRating
-                      showRating={false}
-                      isDisabled
-                      size={25}
-                      selectedColor={'#DA673A'}
-                      defaultRating={ratings?.averagePracticalJobs}
-                    />
-                  </View>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}
-                    >Exigencia</Text>
-                    <AirbnbRating
-                      showRating={false}
-                      isDisabled
-                      size={25}
-                      selectedColor={'#DA673A'}
-                      defaultRating={ratings?.averageRequirement}
-                    />
-                  </View>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}
-                    >Costo</Text>
-                    <AirbnbRating
-                      showRating={false}
-                      isDisabled
-                      size={25}
-                      selectedColor={'#DA673A'}
-                      defaultRating={ratings.averageCost}
-                    />
-                  </View>
-                </View>
-
+                )
               )}
+
 
               <VStack space={2} alignItems="flex-start">
                 <Modal
