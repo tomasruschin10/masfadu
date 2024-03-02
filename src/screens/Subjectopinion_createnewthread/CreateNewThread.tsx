@@ -6,17 +6,30 @@ import {
   Checkbox,
   FormControl,
   HStack,
-  Input,
   Modal,
+  Input,
   ScrollView,
   Select,
   Text,
   TextArea,
+  VStack,
 } from "native-base";
-import { FontAwesome5, Ionicons, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { TouchableOpacity, Keyboard } from "react-native";
+import {
+  FontAwesome5,
+  Ionicons,
+  AntDesign,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {
+  TouchableOpacity,
+  Keyboard,
+  View,
+  Modal as RNModal,
+} from "react-native";
 import { useDispatch } from "react-redux";
+import { Entypo } from "@expo/vector-icons";
+import { SwipeablePanel } from "rn-swipeable-panel";
 
 import Container from "../../components/Container";
 import { updateMessage } from "../../redux/actions/message";
@@ -27,6 +40,7 @@ import RecommendedTags from "../../utils/RecommendedTags";
 import { getServices, postServices } from "../../utils/hooks/services";
 import { baseApi } from "../../utils/api";
 import { DiscardDraftModal } from "../AboutSubject/Modals";
+import { fontStyles } from "../../utils/colors/fontColors";
 
 function CreateNewThread({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
@@ -37,26 +51,23 @@ function CreateNewThread({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const [selectedSubjectId, setSelectedSubjectId] = useState("");
+  const [showSelectSubject, setShowSelectSubject] = useState(false);
+  const [showSelectProfessor, setShowSelectProfessor] = useState(false);
+  const [selectedProfessor, setSelectedProfessor] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const state: any = store.getState();
   const [selectedCareerId, setSelectedCareerId] = useState(
     state.user.userdata.career_id
   );
-  const [descriptionHeight, setDescriptionHeight] = useState(67);
 
   const [subjects, setSubjects] = useState([]);
-
-  const updateDescriptionHeight = (contentHeight) => {
-    setDescriptionHeight(contentHeight);
-  };
 
   if (route.params && route.params?.career_id) {
     setSelectedCareerId(route.params.career_id);
   }
 
   const handleSubjectChange = (itemValue) => {
-    setSelectedSubjectId(itemValue);
+    setSelectedSubject(itemValue);
     setForm({ ...form, subject_id: itemValue });
   };
 
@@ -65,19 +76,19 @@ function CreateNewThread({ route, navigation }) {
     anonymous: 0,
     description: "",
     currentSchoolYear: "",
-    subject_id: selectedSubjectId,
+    subject_id: selectedSubject.id,
     tags: [],
     professor: "",
   });
+
   const dispatch = useDispatch();
 
   const goBack = () => {
-    Keyboard.dismiss()
-    setModalOpen(true)
-  }
+    Keyboard.dismiss();
+    setModalOpen(true);
+  };
 
   const sendForm = () => {
-
     setLoading(true);
     postServices(`opinion/create`, form)
       .then(({ data }: any) => {
@@ -122,7 +133,7 @@ function CreateNewThread({ route, navigation }) {
       .then((res: any) => {
         setCareers(res.data);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -130,7 +141,7 @@ function CreateNewThread({ route, navigation }) {
       .then(({ data }: any) => {
         setSubjects(data);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, [selectedCareerId]);
 
   useEffect(() => {
@@ -138,16 +149,16 @@ function CreateNewThread({ route, navigation }) {
       .then(({ data }: any) => {
         setAllTags(data);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, []);
 
   let FilterTags = () =>
     allTags.length > 0
       ? allTags.filter((it: any) =>
-        it.name
-          .toLowerCase()
-          .includes(searchText.toLowerCase().replace("#", ""))
-      )
+          it.name
+            .toLowerCase()
+            .includes(searchText.toLowerCase().replace("#", ""))
+        )
       : [];
 
   const Concat = (it) => {
@@ -202,7 +213,6 @@ function CreateNewThread({ route, navigation }) {
     return baseHeight + numberOfLines * lineHeight;
   };
 
-
   return (
     <Container>
       <Layout
@@ -211,53 +221,122 @@ function CreateNewThread({ route, navigation }) {
         title={`Crear Hilo`}
         goBackFunction={() => goBack()}
       >
-        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+        <KeyboardAwareScrollView
+          showsVerticalScrollIndicator={false}
           extraScrollHeight={30}
         >
           <Box mx={5} mt={3} borderTopWidth={1} borderTopColor={"#EBEEF2"}>
             <Text fontSize={15}>Información</Text>
           </Box>
+
           <Box
             mx="5"
+            mt={2}
             borderBottomWidth={1}
             borderBottomColor={"#EBEEF2"}
             mb={5}
           >
-            {subjects.length > 0 ? (
-              <Select
-                backgroundColor={"#F7FAFC"}
-                placeholderTextColor={"#C4C4C4"}
-                selectedValue={selectedSubjectId}
-                minWidth="335"
-                accessibilityLabel="Elegir Materia"
-                placeholder="Elegir Materia"
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                onValueChange={handleSubjectChange}
-                textAlign={"left"}
-              >
-                {subjects.map((item) => (
-                  <Select.Item
-                    label={item.name}
-                    value={item.id}
-                    key={item.id}
-                  />
-                ))}
-              </Select>
-            ) : (
-              <Select
-                backgroundColor={"#F7FAFC"}
-                placeholderTextColor={"#C4C4C4"}
-                textAlign={"left"}
-                isDisabled
-                accessibilityLabel="Elegir Materia"
-                placeholder="Elegir Materia"
-              ></Select>
-            )}
+            <TouchableOpacity
+              disabled={subjects.length === 0}
+              style={{
+                width: "100%",
+                backgroundColor: "#F7FAFC",
+                paddingHorizontal: 10,
+                height: 50,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              onPress={() => setShowSelectSubject(true)}
+            >
+              {selectedSubject ? (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#171717"}
+                >
+                  {selectedSubject.name}
+                </Text>
+              ) : (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#C4C4C4"}
+                >
+                  Elegir Materia
+                </Text>
+              )}
+              <Entypo name="chevron-down" size={25} color="#797979" />
+            </TouchableOpacity>
           </Box>
+
+          <VStack space={2} alignItems="flex-start">
+            <RNModal
+              visible={!!showSelectSubject}
+              transparent
+              children={
+                <SwipeablePanel
+                  style={{ height: 480 }}
+                  closeOnTouchOutside
+                  onClose={() => setShowSelectSubject(null)}
+                  fullWidth
+                  onlyLarge
+                  isActive={!!showSelectSubject}
+                >
+                  <ScrollView>
+                    <View
+                      style={{
+                        paddingVertical: 27,
+                        paddingBottom: 54,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      {subjects
+                        .slice()
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((subject) => (
+                          <TouchableOpacity
+                            key={subject.id}
+                            onPress={() => {
+                              handleSubjectChange(subject);
+                              setShowSelectSubject(false);
+                            }}
+                            style={{
+                              paddingVertical: 10,
+                              paddingRight: 27,
+                              paddingLeft: 30,
+                              backgroundColor:
+                                subject === selectedSubject
+                                  ? "#DA673A"
+                                  : "transparent",
+                            }}
+                          >
+                            <Text
+                              style={[
+                                fontStyles.poppins400,
+                                {
+                                  fontSize: 16,
+                                  color:
+                                    subject === selectedSubject
+                                      ? "white"
+                                      : "black",
+                                },
+                              ]}
+                            >
+                              {subject.name}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                    </View>
+                  </ScrollView>
+                </SwipeablePanel>
+              }
+            />
+          </VStack>
 
           <Box
             mx="5"
@@ -299,62 +378,131 @@ function CreateNewThread({ route, navigation }) {
           >
             <Input
               backgroundColor={"#F7FAFC"}
-              onChangeText={(text) => setForm({ ...form, currentSchoolYear: text })}
+              onChangeText={(text) =>
+                setForm({ ...form, currentSchoolYear: text })
+              }
               placeholder="Año de cursada"
               placeholderTextColor={"#C4C4C4"}
             />
           </Box>
-          {selectedSubjectId && subjects.length > 0 ? (
-            <Box
-              mx="5"
-              borderBottomWidth={1}
-              borderBottomColor={"#EBEEF2"}
-              mb={5}
-            >
-              <Select
-                backgroundColor={"#F7FAFC"}
-                placeholderTextColor={"#C4C4C4"}
-                textAlign={"left"}
-                selectedValue={form.professor}
-                minWidth="335"
-                accessibilityLabel="Elegir cátedra"
-                placeholder="Elegir cátedra"
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                  borderRadius: 10,
-                }}
-                mt={1}
-                onValueChange={(itemValue) => setForm({ ...form, professor: itemValue })}
-              >
-                {subjects.find(subject => subject.id === selectedSubjectId)?.chairs?.map((chair, index) => (
-                  <Select.Item
-                    label={chair}
-                    value={chair}
-                    key={index}
-                  />
-                ))}
-              </Select>
-            </Box>
-          ) : (
-            <Box
-              mx="5"
-              borderBottomWidth={1}
-              borderBottomColor={"#EBEEF2"}
-              mb={5}
-            >
-              <Select
-                backgroundColor={"#F7FAFC"}
-                placeholderTextColor={"#C4C4C4"}
-                textAlign={"left"}
-                isDisabled
-                accessibilityLabel="Debes elegir una materia"
-                placeholder="Debes elegir una materia"
-              ></Select>
-            </Box>
-          )}
 
-          <Box borderBottomWidth={1} borderBottomColor={"#EBEEF2"}>
+          <Box
+            mx="5"
+            borderBottomWidth={1}
+            borderBottomColor={"#EBEEF2"}
+            mb={5}
+          >
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                backgroundColor: "#F7FAFC",
+                paddingHorizontal: 10,
+                height: 50,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              disabled={!selectedSubject}
+              onPress={() => setShowSelectProfessor(true)}
+            >
+              {!selectedSubject ? (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#C4C4C4"}
+                >
+                  Debes elegir una materia primero
+                </Text>
+              ) : selectedProfessor ? (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#171717"}
+                >
+                  {selectedProfessor}
+                </Text>
+              ) : (
+                <Text
+                  bold={true}
+                  numberOfLines={2}
+                  style={[fontStyles.poppins400, { fontSize: 14 }]}
+                  color={"#C4C4C4"}
+                >
+                  Elegir Cátedra
+                </Text>
+              )}
+              <Entypo name="chevron-down" size={25} color="#797979" />
+            </TouchableOpacity>
+          </Box>
+          <VStack space={2} alignItems="flex-start">
+            <RNModal
+              visible={!!showSelectProfessor}
+              transparent
+              children={
+                <SwipeablePanel
+                  style={{ height: 480 }}
+                  closeOnTouchOutside
+                  onClose={() => setShowSelectProfessor(null)}
+                  fullWidth
+                  onlyLarge
+                  isActive={!!showSelectProfessor}
+                >
+                  <ScrollView>
+                    <View
+                      style={{
+                        paddingVertical: 27,
+                        paddingBottom: 54,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      {subjects
+                        .find((subject) => subject.id === selectedSubject?.id)
+                        ?.chairs?.slice()
+                        .sort((a, b) => a.localeCompare(b))
+                        .map((chair, index) => (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              setSelectedProfessor(chair);
+                              setShowSelectProfessor(null);
+                            }}
+                            style={{
+                              paddingVertical: 10,
+                              paddingRight: 27,
+                              paddingLeft: 30,
+                              backgroundColor:
+                                chair === selectedProfessor
+                                  ? "#DA673A"
+                                  : "transparent",
+                            }}
+                          >
+                            <Text
+                              style={[
+                                fontStyles.poppins400,
+                                {
+                                  fontSize: 16,
+                                  color:
+                                    chair === selectedProfessor
+                                      ? "white"
+                                      : "black",
+                                },
+                              ]}
+                            >
+                              {chair}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                    </View>
+                  </ScrollView>
+                </SwipeablePanel>
+              }
+            />
+          </VStack>
+          {/* <Box borderBottomWidth={1} borderBottomColor={"#EBEEF2"}>
             {allTags.length > 0 && (
               <>
                 <RecommendedTags
@@ -418,17 +566,27 @@ function CreateNewThread({ route, navigation }) {
                 </ScrollView>
               </>
             )}
-          </Box>
+          </Box> */}
           <HStack space={3} mx={6} my={5} alignItems={"center"}>
             {form.anonymous === 0 ? (
-              <TouchableOpacity onPress={() => setForm({ ...form, anonymous: 1 })
-              }>
-                <MaterialCommunityIcons name="checkbox-blank" size={24} color="white" />
+              <TouchableOpacity
+                onPress={() => setForm({ ...form, anonymous: 1 })}
+              >
+                <MaterialCommunityIcons
+                  name="checkbox-blank"
+                  size={24}
+                  color="white"
+                />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => setForm({ ...form, anonymous: 0 })
-              }>
-                <MaterialCommunityIcons name="checkbox-marked" size={24} color="blue" />
+              <TouchableOpacity
+                onPress={() => setForm({ ...form, anonymous: 0 })}
+              >
+                <MaterialCommunityIcons
+                  name="checkbox-marked"
+                  size={24}
+                  color="blue"
+                />
               </TouchableOpacity>
             )}
             <Text>Publicarlo de forma anónima</Text>
@@ -448,7 +606,11 @@ function CreateNewThread({ route, navigation }) {
               borderRadius={8}
               py={5}
               px={6}
-              isDisabled={form.title.length === 0 || form.description.length === 0 || !selectedSubjectId}
+              isDisabled={
+                form.title.length === 0 ||
+                form.description.length === 0 ||
+                !selectedSubject
+              }
               isLoading={loading}
               onPress={() => setShowModal(true)}
               w="90%"
@@ -580,7 +742,6 @@ function CreateNewThread({ route, navigation }) {
               </Modal.Body>
             </Modal.Content>
           </Modal>
-
         </KeyboardAwareScrollView>
 
         <DiscardDraftModal

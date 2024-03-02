@@ -21,6 +21,7 @@ const MarketDetail = ({ navigation }) => {
   const [openModal, setOpeModal] = useState<boolean>(false);
   const route = useRoute<MarketDetailRouteProp>();
   const data = route.params?.data ? route.params.data : route.params;
+  console.log(data, 'hola')
 
   console.log(data?.url, JSON.stringify(data, null, 2));
 
@@ -57,7 +58,6 @@ const MarketDetail = ({ navigation }) => {
                   style={{
                     height: 140,
                     width: "100%",
-                    // marginLeft: "25%",
                     borderRadius: 8,
                     marginBottom: "10%",
                   }}
@@ -71,10 +71,9 @@ const MarketDetail = ({ navigation }) => {
                 flexDir="row"
                 justifyContent="space-around"
                 alignItems={"center"}
-                px={3}
               >
                 <Text
-                  w="88%"
+                  w="100%"
                   fontWeight={700}
                   fontFamily="Manrope"
                   fontSize={24}
@@ -102,21 +101,6 @@ const MarketDetail = ({ navigation }) => {
                   {data?.description}
                 </Text>
               </Box>
-              {data?.company && (
-                <Box mt={3} rounded={"lg"} backgroundColor={"white"}>
-                  <Text fontSize={16} fontWeight="bold" mb="3">
-                    Compañía
-                  </Text>
-                  <Text fontWeight={14} mb="4">
-                    <Text style={{ marginBottom: 10 }}>
-                      <Text style={[fontStyles.headingText, { fontSize: 16 }]}>
-                        Empresa:
-                      </Text>{" "}
-                      {data?.company}
-                    </Text>
-                  </Text>
-                </Box>
-              )}
             </View>
           </Box>
         </ScrollView>

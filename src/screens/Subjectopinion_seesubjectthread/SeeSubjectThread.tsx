@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import { Animated, Modal, TouchableOpacity, ScrollView, View } from "react-native";
+import {
+  Animated,
+  Modal,
+  TouchableOpacity,
+  ScrollView,
+  View,
+} from "react-native";
 import {
   Box,
   Button,
@@ -17,7 +23,7 @@ import {
 import { SwipeablePanel } from "rn-swipeable-panel";
 import { Entypo } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from "react-native-ratings";
 
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
@@ -54,10 +60,10 @@ function SeeSubjectThread({ route, navigation }) {
   const [searchText, setSearchText] = useState("");
   const [limit, setLimit] = useState(0);
   const [chairs, setChairs] = useState(null);
-  const [showChairsFilters, setShowChairsFilters] = useState(false)
-  const [showRatings, setShowRatings] = useState(false)
-  const [selectedChair, setSelectedChair] = useState()
-  const [subjects, setSubjects] = useState([])
+  const [showChairsFilters, setShowChairsFilters] = useState(false);
+  const [showRatings, setShowRatings] = useState(false);
+  const [selectedChair, setSelectedChair] = useState();
+  const [subjects, setSubjects] = useState([]);
   const [changeFilt, setChangeFilt] = useState(true);
   const [form, setForm] = useState<any>({ tags: [] });
   const dispatch = useDispatch();
@@ -73,12 +79,14 @@ function SeeSubjectThread({ route, navigation }) {
   useFocusEffect(
     useCallback(() => {
       try {
-        const chairs = [...new Set(allOpinions.map(opinion => opinion.professor))];
+        const chairs = [
+          ...new Set(allOpinions.map((opinion) => opinion.professor)),
+        ];
         if (chairs.length > 0 && chairs[0] !== "") {
           setChairs(chairs);
         }
       } catch (error) {
-        console.error('Error al obtener cátedras', error);
+        console.error("Error al obtener cátedras", error);
       }
     }, [allOpinions])
   );
@@ -115,12 +123,12 @@ function SeeSubjectThread({ route, navigation }) {
     } else {
       const filtered = allOpinions.filter(
         (opinion) =>
-        (opinion.professor &&
-          opinion.professor.toLowerCase().includes(text.toLowerCase()))
+          opinion.professor &&
+          opinion.professor.toLowerCase().includes(text.toLowerCase())
       );
       setFilteredOpinions(filtered);
     }
-  }
+  };
 
   useEffect(() => {
     setFilteredOpinions(allOpinions);
@@ -178,32 +186,47 @@ function SeeSubjectThread({ route, navigation }) {
 
     getServices(`subject/${id}`)
       .then(({ data }: any) => {
-        setSubjects(data.userSubject)
+        setSubjects(data.userSubject);
       })
       .catch((error) => {
         __DEV__ && console.log(error);
       })
       .finally(() => setLoading(false));
-
   };
 
   const calculateAverages = (subjectRatings, selectedChair) => {
-    const filteredRatings = subjectRatings.filter(rating => (
-      rating.practicalJobs !== null &&
-      rating.qualityOfTeachers !== null &&
-      rating.requirement !== null &&
-      rating.cost !== null &&
-      rating.chair === selectedChair
-    ));
+    const filteredRatings = subjectRatings.filter(
+      (rating) =>
+        rating.practicalJobs !== null &&
+        rating.qualityOfTeachers !== null &&
+        rating.requirement !== null &&
+        rating.cost !== null &&
+        rating.chair === selectedChair
+    );
 
-    const sumPracticalJobs = filteredRatings.reduce((sum, rating) => sum + rating.practicalJobs, 0);
-    const sumQualityOfTeachers = filteredRatings.reduce((sum, rating) => sum + rating.qualityOfTeachers, 0);
-    const sumRequirement = filteredRatings.reduce((sum, rating) => sum + rating.requirement, 0);
-    const sumCost = filteredRatings.reduce((sum, rating) => sum + rating.cost, 0);
+    const sumPracticalJobs = filteredRatings.reduce(
+      (sum, rating) => sum + rating.practicalJobs,
+      0
+    );
+    const sumQualityOfTeachers = filteredRatings.reduce(
+      (sum, rating) => sum + rating.qualityOfTeachers,
+      0
+    );
+    const sumRequirement = filteredRatings.reduce(
+      (sum, rating) => sum + rating.requirement,
+      0
+    );
+    const sumCost = filteredRatings.reduce(
+      (sum, rating) => sum + rating.cost,
+      0
+    );
 
-    const averagePracticalJobs = Math.round(sumPracticalJobs / filteredRatings.length) || 0;
-    const averageQualityOfTeachers = Math.round(sumQualityOfTeachers / filteredRatings.length) || 0;
-    const averageRequirement = Math.round(sumRequirement / filteredRatings.length) || 0;
+    const averagePracticalJobs =
+      Math.round(sumPracticalJobs / filteredRatings.length) || 0;
+    const averageQualityOfTeachers =
+      Math.round(sumQualityOfTeachers / filteredRatings.length) || 0;
+    const averageRequirement =
+      Math.round(sumRequirement / filteredRatings.length) || 0;
     const averageCost = Math.round(sumCost / filteredRatings.length) || 0;
 
     setRatings({
@@ -217,7 +240,6 @@ function SeeSubjectThread({ route, navigation }) {
   useEffect(() => {
     calculateAverages(subjects, selectedChair);
   }, [subjects, selectedChair]);
-
 
   const CallBackByTags = (arr) => {
     getServices(
@@ -254,10 +276,10 @@ function SeeSubjectThread({ route, navigation }) {
   const FilterTags = () =>
     allTags.length > 0
       ? allTags.filter((it) =>
-        it.name
-          .toLowerCase()
-          .includes(searchText.toLowerCase().replace("#", ""))
-      )
+          it.name
+            .toLowerCase()
+            .includes(searchText.toLowerCase().replace("#", ""))
+        )
       : [];
 
   const byTags = () => {
@@ -440,16 +462,21 @@ function SeeSubjectThread({ route, navigation }) {
                   {title}
                 </Text>
               </Box>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, }}>
-
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 5,
+                }}
+              >
                 <TouchableOpacity
                   disabled={!chairs}
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    backgroundColor: '#F4F6F9',
-                    width: '77%',
+                    backgroundColor: "#F4F6F9",
+                    width: "77%",
                     paddingHorizontal: 10,
                     marginBottom: 10,
                     height: 60,
@@ -467,7 +494,9 @@ function SeeSubjectThread({ route, navigation }) {
                       >
                         {selectedChair}
                       </Text>
-                      <TouchableOpacity onPress={() => handleFilterByProfessor('')}>
+                      <TouchableOpacity
+                        onPress={() => handleFilterByProfessor("")}
+                      >
                         <Ionicons name="close" size={24} color="#9A9A9A" />
                       </TouchableOpacity>
                     </>
@@ -481,77 +510,168 @@ function SeeSubjectThread({ route, navigation }) {
                       >
                         Elegir cátedra
                       </Text>
-                      < Entypo name="chevron-down" size={25} color="#9A9A9A" />
+                      <Entypo name="chevron-down" size={25} color="#9A9A9A" />
                     </>
-                  )
-                  }
+                  )}
                 </TouchableOpacity>
-                <TouchableOpacity disabled={!chairs} onPress={() => setShowRatings(!showRatings)} style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: showRatings ? "#E85E29" : '#F4F6F9', width: '20%', height: 60, borderRadius: 4 }}>
-                  {showRatings ? <AntDesign name="star" size={24} color="white" /> : <AntDesign name="staro" size={24} color="#9A9A9A" />
-                  }
+                <TouchableOpacity
+                  disabled={!chairs}
+                  onPress={() => setShowRatings(!showRatings)}
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: showRatings ? "#E85E29" : "#F4F6F9",
+                    width: "20%",
+                    height: 60,
+                    borderRadius: 4,
+                  }}
+                >
+                  {showRatings ? (
+                    <AntDesign name="star" size={24} color="white" />
+                  ) : (
+                    <AntDesign name="staro" size={24} color="#9A9A9A" />
+                  )}
                 </TouchableOpacity>
               </View>
 
-              {showRatings && (
-                selectedChair ? (
-                  (ratings.averagePracticalJobs !== 0 &&
-                    ratings.averageQualityOfTeachers !== 0 &&
-                    ratings.averageRequirement !== 0 &&
-                    ratings.averageCost !== 0) ? (
-                    <View style={{ width: '100%', backgroundColor: '#F4F6F9', marginBottom: 20, padding: 15, borderRadius: 4 }}>
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Profesores</Text>
+              {showRatings &&
+                (selectedChair ? (
+                  ratings.averagePracticalJobs !== 0 &&
+                  ratings.averageQualityOfTeachers !== 0 &&
+                  ratings.averageRequirement !== 0 &&
+                  ratings.averageCost !== 0 ? (
+                    <View
+                      style={{
+                        width: "100%",
+                        backgroundColor: "#F4F6F9",
+                        marginBottom: 20,
+                        padding: 15,
+                        borderRadius: 4,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          color={"brand.primary"}
+                          style={[fontStyles.poppins400, { fontSize: 15 }]}
+                        >
+                          Profesores
+                        </Text>
                         <AirbnbRating
                           showRating={false}
                           isDisabled
                           size={25}
-                          selectedColor={'#E85E29'}
+                          selectedColor={"#E85E29"}
                           defaultRating={ratings?.averageQualityOfTeachers}
                         />
                       </View>
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>TPS</Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          color={"brand.primary"}
+                          style={[fontStyles.poppins400, { fontSize: 15 }]}
+                        >
+                          TPS
+                        </Text>
                         <AirbnbRating
                           showRating={false}
                           isDisabled
                           size={25}
-                          selectedColor={'#E85E29'}
+                          selectedColor={"#E85E29"}
                           defaultRating={ratings?.averagePracticalJobs}
                         />
                       </View>
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Exigencia</Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          color={"brand.primary"}
+                          style={[fontStyles.poppins400, { fontSize: 15 }]}
+                        >
+                          Exigencia
+                        </Text>
                         <AirbnbRating
                           showRating={false}
                           isDisabled
                           size={25}
-                          selectedColor={'#E85E29'}
+                          selectedColor={"#E85E29"}
                           defaultRating={ratings?.averageRequirement}
                         />
                       </View>
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Costo</Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          color={"brand.primary"}
+                          style={[fontStyles.poppins400, { fontSize: 15 }]}
+                        >
+                          Costo
+                        </Text>
                         <AirbnbRating
                           showRating={false}
                           isDisabled
                           size={25}
-                          selectedColor={'#E85E29'}
+                          selectedColor={"#E85E29"}
                           defaultRating={ratings.averageCost}
                         />
                       </View>
                     </View>
                   ) : (
-                    <View style={{ width: '100%', backgroundColor: '#F4F6F9', alignItems: 'center', marginBottom: 20, padding: 15, borderRadius: 4 }}>
-                      <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Datos insuficientes</Text>
+                    <View
+                      style={{
+                        width: "100%",
+                        backgroundColor: "#F4F6F9",
+                        alignItems: "center",
+                        marginBottom: 20,
+                        padding: 15,
+                        borderRadius: 4,
+                      }}
+                    >
+                      <Text
+                        color={"brand.primary"}
+                        style={[fontStyles.poppins400, { fontSize: 15 }]}
+                      >
+                        Datos insuficientes
+                      </Text>
                     </View>
                   )
                 ) : (
-                  <View style={{ width: '100%', backgroundColor: '#F4F6F9', alignItems: 'center', marginBottom: 20, padding: 15, borderRadius: 4 }}>
-                    <Text color={"brand.primary"} style={[fontStyles.poppins400, { fontSize: 15 }]}>Elige una cátedra primero</Text>
+                  <View
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#F4F6F9",
+                      alignItems: "center",
+                      marginBottom: 20,
+                      padding: 15,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <Text
+                      color={"brand.primary"}
+                      style={[fontStyles.poppins400, { fontSize: 15 }]}
+                    >
+                      Elegí una cátedra primero
+                    </Text>
                   </View>
-                )
-              )}
-
+                ))}
 
               <VStack space={2} alignItems="flex-start">
                 <Modal
@@ -569,8 +689,6 @@ function SeeSubjectThread({ route, navigation }) {
                       <ScrollView>
                         <View
                           style={{
-                            paddingRight: 27,
-                            paddingLeft: 30,
                             paddingVertical: 27,
                             paddingBottom: 54,
                             display: "flex",
@@ -582,15 +700,31 @@ function SeeSubjectThread({ route, navigation }) {
                             chairs.map((item, index) => (
                               <TouchableOpacity
                                 key={index}
-                                onPress={() =>
-                                  handleFilterByProfessor(item)
-                                }
+                                onPress={() => {
+                                  handleFilterByProfessor(item);
+                                  setShowChairsFilters(false);
+                                }}
                                 style={{
+                                  paddingRight: 27,
+                                  paddingLeft: 30,
                                   paddingVertical: 10,
+                                  backgroundColor:
+                                    item === selectedChair
+                                      ? "#DA673A"
+                                      : "transparent",
                                 }}
                               >
                                 <Text
-                                  style={[fontStyles.poppins400, { fontSize: 16 }]}
+                                  style={[
+                                    fontStyles.poppins400,
+                                    {
+                                      fontSize: 16,
+                                      color:
+                                        item === selectedChair
+                                          ? "white"
+                                          : "black",
+                                    },
+                                  ]}
                                 >
                                   {item}
                                 </Text>
@@ -604,39 +738,39 @@ function SeeSubjectThread({ route, navigation }) {
               </VStack>
               {filteredOpinions.length > 0
                 ? filteredOpinions.map((item) => (
-                  <SeeSubjectThread_Item
-                    key={item.id}
-                    idOpinion={item.id}
-                    navigation={navigation}
-                    title={item.title}
-                    description={item.description}
-                    currentSchoolYear={item.currentSchoolYear}
-                    created_at={item.created_at}
-                    opinionTags={item.opinionTags}
-                    anonymous={item.anonymous}
-                    student={item.student}
-                    answersCount={item.answersCount}
-                    tags={item.opinionTags}
-                    professor={item.professor}
-                  />
-                ))
+                    <SeeSubjectThread_Item
+                      key={item.id}
+                      idOpinion={item.id}
+                      navigation={navigation}
+                      title={item.title}
+                      description={item.description}
+                      currentSchoolYear={item.currentSchoolYear}
+                      created_at={item.created_at}
+                      opinionTags={item.opinionTags}
+                      anonymous={item.anonymous}
+                      student={item.student}
+                      answersCount={item.answersCount}
+                      tags={item.opinionTags}
+                      professor={item.professor}
+                    />
+                  ))
                 : allOpinions.map((item) => (
-                  <SeeSubjectThread_Item
-                    key={item.id}
-                    idOpinion={item.id}
-                    navigation={navigation}
-                    title={item.title}
-                    description={item.description}
-                    currentSchoolYear={item.currentSchoolYear}
-                    created_at={item.created_at}
-                    opinionTags={item.opinionTags}
-                    anonymous={item.anonymous}
-                    student={item.student}
-                    answersCount={item.answersCount}
-                    tags={item.opinionTags}
-                    professor={item.professor}
-                  />
-                ))}
+                    <SeeSubjectThread_Item
+                      key={item.id}
+                      idOpinion={item.id}
+                      navigation={navigation}
+                      title={item.title}
+                      description={item.description}
+                      currentSchoolYear={item.currentSchoolYear}
+                      created_at={item.created_at}
+                      opinionTags={item.opinionTags}
+                      anonymous={item.anonymous}
+                      student={item.student}
+                      answersCount={item.answersCount}
+                      tags={item.opinionTags}
+                      professor={item.professor}
+                    />
+                  ))}
             </>
           )}
 
@@ -655,7 +789,7 @@ function SeeSubjectThread({ route, navigation }) {
       </ScrollView>
 
       <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
-    </Container >
+    </Container>
   );
 }
 

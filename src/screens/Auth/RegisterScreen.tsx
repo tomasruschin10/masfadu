@@ -159,7 +159,7 @@ function RegisterScreen({ route, navigation }) {
     ) {
       dispatch(
         updateMessage({
-          body: "Por favor llena todos los campos para logearte.",
+          body: "Por favor llená todos los campos para logearte.",
           open: true,
           type: "danger",
         })
@@ -169,7 +169,7 @@ function RegisterScreen({ route, navigation }) {
     if (form.passwordError) {
       dispatch(
         updateMessage({
-          body: "La contraseña debe tener al menos 8 caracteres, una mayuscula y un número!",
+          body: "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.",
           open: true,
           type: "danger",
         })
@@ -398,7 +398,7 @@ function RegisterScreen({ route, navigation }) {
                 px={3}
                 placeholderTextColor="#797979"
                 focusOutlineColor={"transparent"}
-                type={showPassword ? "text" : "password"}
+                type={showRePassword ? "text" : "password"}
                 InputRightElement={
                   <TouchableOpacity
                     style={{ marginRight: 9 }}

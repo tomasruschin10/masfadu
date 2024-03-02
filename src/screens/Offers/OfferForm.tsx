@@ -8,10 +8,15 @@ import {
   TextArea,
   Image,
   Select,
+  VStack,
   CheckIcon,
 } from "native-base";
+import { TouchableOpacity, Modal, View } from "react-native";
+import { SwipeablePanel } from "rn-swipeable-panel";
+import { Entypo } from "@expo/vector-icons";
 import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import { useDispatch } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
 
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
@@ -20,8 +25,7 @@ import {
   getServices,
   publishOffer,
 } from "../../utils/hooks/services";
-
-import * as ImagePicker from "expo-image-picker";
+import { fontStyles } from "../../utils/colors/fontColors";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
 
 function OfferForm({ route, navigation }) {
@@ -34,11 +38,11 @@ function OfferForm({ route, navigation }) {
   const [imagen, setImagen] = useState(null);
   const [asunto, setAsunto] = useState("");
   const [email, setEmail] = useState("");
-  const [url, setUrl] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [categories, setCategories] = useState();
   const [categoryId, setCategoryId] = useState();
   const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [showSelectCategory, setShowSelectCategory] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const selectImage = async () => {
@@ -61,7 +65,7 @@ function OfferForm({ route, navigation }) {
   const compressImage = async (imageUri: any) => {
     try {
       const compressedImage = await manipulateAsync(
-        imagen.uri,
+        imageUri,
         [{ resize: { width: 800 } }],
         { format: SaveFormat.JPEG, compress: 0.7 }
       );
@@ -118,8 +122,8 @@ function OfferForm({ route, navigation }) {
       const response = await publishOffer({
         title: asunto,
         description: mensaje,
-        offer_category_id: categoryId,
-        url: url,
+        offer_category_id: categoryId?.id,
+        url: "",
         email: email,
         image: imagen,
       });
@@ -129,15 +133,12 @@ function OfferForm({ route, navigation }) {
           cause: "no se obtuvo el status 201",
         });
       }
-      console.log("RESPONSE", response.body);
-
       setLoading(false);
       setSuccessModalOpen(true);
       setTimeout(() => {
         cleanSuccessModal();
       }, 3000);
     } catch (error) {
-      console.log("Error al enviar la imagen al backend:", error);
       setErrorModalOpen(true);
       setLoading(false);
 
@@ -146,7 +147,7 @@ function OfferForm({ route, navigation }) {
   };
 
   const selectCategory = (item) => {
-    setCategoryId(item.id);
+    setCategoryId(item);
   };
 
   return (
@@ -157,7 +158,8 @@ function OfferForm({ route, navigation }) {
         title={`Publicá en el Mercado de Fadu`}
       >
         <ScrollView
-          contentContainerStyle={{paddingBottom: 110}}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 110 }}
           nestedScrollEnabled={true}
           keyboardShouldPersistTaps={"handled"}
         >
@@ -220,23 +222,6 @@ function OfferForm({ route, navigation }) {
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
-              <Box
-                mb={5}
-                alignItems={"center"}
-                justifyContent="center"
-                flexDir={"row"}
-              >
-                <Input
-                  onChangeText={(text) => setUrl(text)}
-                  type={"text"}
-                  px={3.5}
-                  borderColor={"transparent"}
-                  borderRadius={8}
-                  placeholder={"Enlace"}
-                  placeholderTextColor={"#797979"}
-                  backgroundColor={"#F7FAFC"}
-                />
-              </Box>
 
               <TextArea
                 onChangeText={(text) => setMensaje(text)}
@@ -252,38 +237,115 @@ function OfferForm({ route, navigation }) {
                 mb={5}
               />
 
-              <Box borderBottomWidth={1} borderBottomColor={"#EBEEF2"} mb={5}>
-                <Select
-                  backgroundColor={"#F7FAFC"}
-                  placeholderTextColor={"#C4C4C4"}
-                  selectedValue={categoryId}
-                  minWidth="335"
-                  accessibilityLabel="Elegir categoria"
-                  placeholder="Elegir categoria"
-                  _selectedItem={{
-                    bg: "teal.600",
-                    endIcon: <CheckIcon size="5" />,
+              <Box
+                mt={2}
+                borderBottomWidth={1}
+                borderBottomColor={"#EBEEF2"}
+                mb={5}
+              >
+                <TouchableOpacity
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#F7FAFC",
+                    paddingHorizontal: 10,
+                    height: 50,
+                    borderRadius: 8,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
-                  onValueChange={(itemId) => {
-                    const selectedItem = categories.find(
-                      (item) => item.id === itemId
-                    );
-                    if (selectedItem) {
-                      selectCategory(selectedItem);
-                    }
-                  }}
-                  textAlign={"left"}
+                  onPress={() => setShowSelectCategory(true)}
                 >
-                  {categories &&
-                    categories.map((item) => (
-                      <Select.Item
-                        label={item.name}
-                        value={item.id}
-                        key={item.id}
-                      />
-                    ))}
-                </Select>
+                  {categoryId ? (
+                    <Text
+                      bold={true}
+                      numberOfLines={2}
+                      style={[fontStyles.poppins400, { fontSize: 14 }]}
+                      color={"#171717"}
+                    >
+                      {categoryId.name}
+                    </Text>
+                  ) : (
+                    <Text
+                      bold={true}
+                      numberOfLines={2}
+                      style={[fontStyles.poppins400, { fontSize: 14 }]}
+                      color={"#C4C4C4"}
+                    >
+                      Elegir categoria
+                    </Text>
+                  )}
+                  <Entypo name="chevron-down" size={25} color="#797979" />
+                </TouchableOpacity>
               </Box>
+
+              <VStack space={2} alignItems="flex-start">
+                <Modal
+                  visible={!!showSelectCategory}
+                  transparent
+                  children={
+                    <SwipeablePanel
+                      style={{ height: 480 }}
+                      closeOnTouchOutside
+                      onClose={() => setShowSelectCategory(false)}
+                      fullWidth
+                      onlyLarge
+                      isActive={!!showSelectCategory}
+                    >
+                      <ScrollView>
+                        <View
+                          style={{
+                            paddingVertical: 27,
+                            paddingBottom: 54,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                          }}
+                        >
+                          {categories &&
+                            categories
+                              .slice()
+                              .sort((a, b) => a.name.localeCompare(b.name))
+                              .map((item, index) => (
+                                <TouchableOpacity
+                                  key={index}
+                                  onPress={() => {
+                                    selectCategory(item);
+                                    setShowSelectCategory(false);
+                                  }}
+                                  style={{
+                                    paddingRight: 27,
+                                    paddingLeft: 30,
+                                    paddingVertical: 10,
+                                    backgroundColor:
+                                      item === categoryId
+                                        ? "#DA673A"
+                                        : "transparent",
+                                  }}
+                                >
+                                  <Text
+                                    style={[
+                                      fontStyles.poppins400,
+                                      {
+                                        fontSize: 16,
+                                        color:
+                                          item === categoryId
+                                            ? "white"
+                                            : "black",
+                                      },
+                                    ]}
+                                  >
+                                    {item.name}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))}
+                        </View>
+                      </ScrollView>
+                    </SwipeablePanel>
+                  }
+                />
+              </VStack>
+
               <Box
                 mt={1}
                 mb={2}
@@ -296,22 +358,25 @@ function OfferForm({ route, navigation }) {
                     style={{ width: "100%", height: "100%" }}
                   />
                 )}
-                <Button
-                  fontSize={1}
-                  zIndex={99}
+                <TouchableOpacity
                   style={{
                     backgroundColor: "#d3d3d3",
                     width: "30%",
                     borderRadius: 50,
                     marginLeft: "30%",
                     marginTop: "13%",
+                    alignItems: "center",
+                    justifyContent: "center",
                     position: "absolute",
                     height: "20%",
+                    zIndex: 99,
                   }}
                   onPress={selectImage}
                 >
-                  Agregar Imagen
-                </Button>
+                  <Text style={{ fontSize: 14, color: "white" }}>
+                    Agregar Imagen
+                  </Text>
+                </TouchableOpacity>
               </Box>
             </Box>
 

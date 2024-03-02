@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Avatar, Box, Icon, IconButton, ScrollView, Text } from "native-base";
+import { useSelector } from "react-redux";
 
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
@@ -90,6 +91,8 @@ function OpinionThread({ route, navigation }) {
   const [reload, setReload] = useState(false);
   const [more, seeMore] = useState(null);
   const [menuShow, setMenu] = useState(false);
+  const user = useSelector((state: any) => state.user.userdata);
+  console.log(route.params.student, "||", user);
 
   useEffect(() => {
     getServices(`opinion-answer/all?opinion_id=${idOpinion}`)
@@ -125,7 +128,7 @@ function OpinionThread({ route, navigation }) {
       <HeaderBack
         title="Opiniones"
         headerWithIcon={
-          answersCount === 0 ? (
+          answersCount === 0 && student.id === user.id ? (
             <Ionicons name="trash-outline" size={27} color={"black"} />
           ) : undefined
         }

@@ -8,22 +8,21 @@ import {
   TextArea,
   Image,
 } from "native-base";
+import { TouchableOpacity } from "react-native";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
-import {
-  publishOffer,
-} from "../../utils/hooks/services";
+import { publishOffer } from "../../utils/hooks/services";
 
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { ErrorModal, SuccessModal } from "../AboutSubject/Modals";
-
 
 function OfferForm({ route, navigation }) {
   const [loading, setLoading] = useState(false);
 
   const [previewImage, setPreviewImage] = useState(null);
 
-  const [imagen, setImagen] = useState(null)
+  const [imagen, setImagen] = useState(null);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
@@ -36,13 +35,32 @@ function OfferForm({ route, navigation }) {
   const selectImage = async () => {
     try {
       const image = await ImagePicker.launchImageLibraryAsync();
-
+      console.log("image <>", image);
       if (!image.canceled && image.assets.length > 0) {
-        setImagen(image.assets[0])
-        setPreviewImage(image.assets[0].uri); // Guarda la URI de la imagen seleccionada para mostrarla en la vista previa
+        const imageUri = image.assets[0].uri;
+        const compressedImage = await compressImage(imageUri);
+
+        setImagen(compressedImage);
+
+        setPreviewImage(image.assets[0].uri);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const compressImage = async (imageUri: any) => {
+    try {
+      const compressedImage = await manipulateAsync(
+        imagen.uri,
+        [{ resize: { width: 800 } }],
+        { format: SaveFormat.JPEG, compress: 0.7 }
+      );
+
+      return compressedImage;
+    } catch (error) {
+      console.log("Error al comprimir la imagen:", error);
+      return { uri: imageUri };
     }
   };
 
@@ -51,12 +69,12 @@ function OfferForm({ route, navigation }) {
       setSuccessModalOpen(false);
       setErrorModalOpen(false);
     }, 30000);
-  }
-  
+  };
+
   const cleanSuccessModal = () => {
-    setSuccessModalOpen(false);    
-    navigation.navigate('Home');
-  }
+    setSuccessModalOpen(false);
+    navigation.navigate("Home");
+  };
 
   const uploadImage = async () => {
     try {
@@ -68,22 +86,24 @@ function OfferForm({ route, navigation }) {
         title: tituloEmpleo,
         description: descripcion,
         url: url,
-        image: imagen
-      })
+        image: imagen,
+      });
 
       if (response.status != 201) {
-        console.log(response)
-        throw new Error(JSON.stringify(response), { cause: 'no se obtuvo el status 201' });
+        console.log(response);
+        throw new Error(JSON.stringify(response), {
+          cause: "no se obtuvo el status 201",
+        });
       }
 
       setLoading(false);
-      setSuccessModalOpen(true);      
+      setSuccessModalOpen(true);
       setTimeout(() => {
-        cleanSuccessModal()
+        cleanSuccessModal();
       }, 30000);
     } catch (error) {
-      setErrorMessage("Error al publicar")
-      console.log('Error al enviar la imagen al backend:', error.message);
+      setErrorMessage("Error al publicar");
+      console.log("Error al enviar la imagen al backend:", error.message);
       setErrorModalOpen(true);
       setLoading(false);
 
@@ -100,6 +120,8 @@ function OfferForm({ route, navigation }) {
       >
         <ScrollView
           nestedScrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 110 }}
           keyboardShouldPersistTaps={"handled"}
         >
           <Box
@@ -111,7 +133,8 @@ function OfferForm({ route, navigation }) {
             pt={6}
           >
             <Text fontSize={15}>
-            Describí de la forma más detallada que puedas, así se entiende claro que estás publicando! Gracias :)
+              Describí de la forma más detallada que puedas, así se entiende
+              claro que estás publicando! Gracias :)
             </Text>
           </Box>
 
@@ -138,10 +161,12 @@ function OfferForm({ route, navigation }) {
                   backgroundColor={"#F7FAFC"}
                 />
               </Box>
-              <Box     alignItems={"center"}
+              <Box
+                alignItems={"center"}
                 justifyContent="center"
-                flexDir={"row"}>
-              <Input
+                flexDir={"row"}
+              >
+                <Input
                   onChangeText={(text) => setUrlEmpleo(text)}
                   type={"text"}
                   p={3.5}
@@ -179,11 +204,36 @@ function OfferForm({ route, navigation }) {
                 mb={5}
               />
 
-              <Box mt={1} mb={5} style={{ backgroundColor: "#F7FAFC", height: 150, }}>
-                {previewImage && <Image source={{ uri: previewImage }} style={{ width: "100%", height: "100%" }} />}
-                <Box position="absolute" h="100%" w="100%" zIndex={99} display="flex" alignItems="center" justifyContent="center">
-                  <Button fontSize={1}style={{ backgroundColor: "#d3d3d3", borderRadius: 50}} onPress={selectImage}>Agregar logo o imagen</Button>
-                </Box>
+              <Box
+                mt={1}
+                mb={5}
+                style={{ backgroundColor: "#F7FAFC", height: 150 }}
+              >
+                {previewImage && (
+                  <Image
+                    source={{ uri: previewImage }}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                )}
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#d3d3d3",
+                    width: "40%",
+                    borderRadius: 50,
+                    marginLeft: "25%",
+                    marginTop: "13%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "absolute",
+                    height: "20%",
+                    zIndex: 99,
+                  }}
+                  onPress={selectImage}
+                >
+                  <Text style={{ fontSize: 14, color: "white", textAlign: 'center', }}>
+                    Agregar logo o imagen
+                  </Text>
+                </TouchableOpacity>
               </Box>
             </Box>
 
@@ -201,8 +251,18 @@ function OfferForm({ route, navigation }) {
             </Box>
           </Box>
         </ScrollView>
-        <ErrorModal message={errorMessage} isOpen={errorModalOpen} setOpen={setErrorModalOpen} />
-        <SuccessModal message={"Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"} isOpen={successModalOpen} setOpen={cleanSuccessModal} />
+        <ErrorModal
+          message={errorMessage}
+          isOpen={errorModalOpen}
+          setOpen={setErrorModalOpen}
+        />
+        <SuccessModal
+          message={
+            "Gracias! Vamos a subir tu publicación una vez que la hayamos revisado. No nos va a llevar mucho tiempo.😃"
+          }
+          isOpen={successModalOpen}
+          setOpen={cleanSuccessModal}
+        />
       </Layout>
     </Container>
   );

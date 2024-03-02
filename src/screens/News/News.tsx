@@ -35,10 +35,10 @@ function News({ route, navigation }) {
         )}
       </Box>
       <Box>
-        <Box bg={"blue.900"}>
+        <Box bg={"white"}>
           <Image
             source={{ uri: image }}
-            resizeMode={"cover"}
+            resizeMode={"contain"}
             w={"100%"}
             h={"100%"}
             alt="news1"

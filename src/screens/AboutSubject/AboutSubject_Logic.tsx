@@ -200,8 +200,6 @@ function AboutSubject_Logic({
                   <ScrollView>
                     <View
                       style={{
-                        paddingRight: 27,
-                        paddingLeft: 30,
                         paddingVertical: 27,
                         paddingBottom: 54,
                         display: "flex",
@@ -210,24 +208,42 @@ function AboutSubject_Logic({
                       }}
                     >
                       {selectiveSubjectsData &&
-                        selectiveSubjectsData.map((item) => (
-                          <TouchableOpacity
-                            key={item.value}
-                            onPress={() => {
-                              selectSelectiveSubject(item);
-                              setShowSelectiveSubject(null);
-                            }}
-                            style={{
-                              paddingVertical: 10,
-                            }}
-                          >
-                            <Text
-                              style={[fontStyles.poppins400, { fontSize: 16 }]}
+                        selectiveSubjectsData
+                          .slice()
+                          .sort((a, b) => a.label.localeCompare(b.label))
+                          .map((item) => (
+                            <TouchableOpacity
+                              key={item.value}
+                              onPress={() => {
+                                selectSelectiveSubject(item);
+                                setShowSelectiveSubject(null);
+                              }}
+                              style={{
+                                paddingVertical: 10,
+                                paddingRight: 27,
+                                paddingLeft: 30,
+                                backgroundColor:
+                                  item.label === selectiveSubject
+                                    ? "#DA673A"
+                                    : "transparent",
+                              }}
                             >
-                              {item.label}
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
+                              <Text
+                                style={[
+                                  fontStyles.poppins400,
+                                  {
+                                    fontSize: 16,
+                                    color:
+                                      item.label === selectiveSubject
+                                        ? "white"
+                                        : "black",
+                                  },
+                                ]}
+                              >
+                                {item.label}
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
                     </View>
                   </ScrollView>
                 </SwipeablePanel>
