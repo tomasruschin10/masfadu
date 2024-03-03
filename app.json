@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Mas Fadu",
+    "name": "MuyFadu",
     "slug": "masfaduapp",
     "version": "1.0.19",
     "orientation": "portrait",
@@ -21,7 +21,7 @@
     "ios": {
       "bundleIdentifier": "dev.millionsolutions.faduapp",
       "supportsTablet": true,
-      "buildNumber": "19",
+      "buildNumber": "20",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
