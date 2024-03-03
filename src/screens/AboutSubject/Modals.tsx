@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Alert, PixelRatio, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  PixelRatio,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Modal as RNModal,
+} from "react-native";
 
 import {
   Box,
@@ -19,6 +26,7 @@ import {
   Flex,
 } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
+import { SwipeablePanel } from "rn-swipeable-panel";
 import {
   Entypo,
   AntDesign,
@@ -42,7 +50,7 @@ import {
   screenWidth,
   horizontalScale,
 } from "../../utils/media.screens";
-import { AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from "react-native-ratings";
 
 function RenderArrow() {
   return (
@@ -150,39 +158,39 @@ export function ModalNotes({
                 onPress={() =>
                   form.extra_score && form.extra_score.length === 0
                     ? Alert.alert(
-                      "Importante",
-                      "¿Deseas eliminar la nota final?",
-                      [
-                        {
-                          text: "Cancelar",
-                          onPress: () => console.log(""),
-                          style: "cancel",
-                        },
-                        {
-                          text: "Aceptar",
-                          onPress: () =>
-                            deleteNote(
-                              setLoading,
-                              setUpdater,
-                              updater,
-                              setShowNotes,
-                              infoUserSubj,
-                              dispatch
-                            ),
-                        },
-                      ]
-                    )
+                        "Importante",
+                        "¿Deseas eliminar la nota final?",
+                        [
+                          {
+                            text: "Cancelar",
+                            onPress: () => console.log(""),
+                            style: "cancel",
+                          },
+                          {
+                            text: "Aceptar",
+                            onPress: () =>
+                              deleteNote(
+                                setLoading,
+                                setUpdater,
+                                updater,
+                                setShowNotes,
+                                infoUserSubj,
+                                dispatch
+                              ),
+                          },
+                        ]
+                      )
                     : Alert.alert(
-                      "Importante",
-                      "Primero debes eliminar las notas parciales para eliminar la nota final!",
-                      [
-                        {
-                          text: "Ok, genial!",
-                          onPress: () => console.log(""),
-                          style: "cancel",
-                        },
-                      ]
-                    )
+                        "Importante",
+                        "Primero debes eliminar las notas parciales para eliminar la nota final!",
+                        [
+                          {
+                            text: "Ok, genial!",
+                            onPress: () => console.log(""),
+                            style: "cancel",
+                          },
+                        ]
+                      )
                 }
               />
               <TouchableOpacity
@@ -334,27 +342,27 @@ export function ModalNotes({
                   onPress={() =>
                     showModal2?.placeholder
                       ? updateOrCreateScorePartial(
-                        showModal2?.extra_id,
-                        setLoading,
-                        showModal2,
-                        infoUserSubj,
-                        setUpdater,
-                        updater,
-                        setShowModal2,
-                        setShowNotes,
-                        dispatch
-                      )
+                          showModal2?.extra_id,
+                          setLoading,
+                          showModal2,
+                          infoUserSubj,
+                          setUpdater,
+                          updater,
+                          setShowModal2,
+                          setShowNotes,
+                          dispatch
+                        )
                       : updateOrCreateScorePartial(
-                        showModal2?.extra_id,
-                        setLoading,
-                        showModal2,
-                        infoUserSubj,
-                        setUpdater,
-                        updater,
-                        setShowModal2,
-                        setShowNotes,
-                        dispatch
-                      )
+                          showModal2?.extra_id,
+                          setLoading,
+                          showModal2,
+                          infoUserSubj,
+                          setUpdater,
+                          updater,
+                          setShowModal2,
+                          setShowNotes,
+                          dispatch
+                        )
                   }
                 >
                   <Text color={"white"}>Guardar</Text>
@@ -614,10 +622,9 @@ export function ModalWarning({
                   _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
                   _text={{ fontSize: 14, fontWeight: "600" }}
                   onPress={() => {
-                    showModal(true)
-                    setShowWarning(false)
-                  }
-                  }
+                    showModal(true);
+                    setShowWarning(false);
+                  }}
                 >
                   Si
                 </Button>
@@ -640,7 +647,7 @@ export function ModalWarning({
           </Button.Group>
         </Modal.Body>
       </Modal.Content>
-    </Modal >
+    </Modal>
   );
 }
 
@@ -990,11 +997,13 @@ export function AddChairModal({
   isOpen: boolean;
   setOpen: Function;
   onConfirm: Function;
-  infoUserSubj: any,
-  setInfoUserSubj: Function,
+  infoUserSubj: any;
+  setInfoUserSubj: Function;
   chairs: any;
   onCancel: Function;
 }) {
+  const [showSelectChair, setShowSelectChair] = useState(false);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -1003,8 +1012,16 @@ export function AddChairModal({
       animationPreset={"fade"}
     >
       <Modal.Content backgroundColor={"white"} paddingTop={5}>
-        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
-          <TouchableOpacity style={{ marginLeft: 20, marginRight: 25, }} onPress={() => onCancel(false)}>
+        <Flex
+          direction="row"
+          alignItems="center"
+          justifyContent={"flex-start"}
+          mb={4}
+        >
+          <TouchableOpacity
+            style={{ marginLeft: 20, marginRight: 25 }}
+            onPress={() => onCancel(false)}
+          >
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
           <Text fontSize={18} ml={2}>
@@ -1013,48 +1030,122 @@ export function AddChairModal({
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
-            <Box
-              mx="5"
-              borderBottomWidth={1}
-              borderBottomColor={"#EBEEF2"}
-              mt={5}
-              mb={10}
-            >
-              <Select
-                backgroundColor={"#F7FAFC"}
-                placeholderTextColor={"#C4C4C4"}
-                textAlign={"left"}
-                selectedValue={infoUserSubj?.chair}
-                minWidth="200"
-                accessibilityLabel="Elegir cátedra"
-                placeholder="Elegir cátedra"
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                  borderRadius: 10,
+            <Box mx="5" mt={2} mb={5}>
+              <TouchableOpacity
+                style={{
+                  width: "100%",
+                  backgroundColor: "#F7FAFC",
+                  paddingHorizontal: 10,
+                  height: 50,
+                  borderRadius: 8,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
-                mt={1}
-                onValueChange={(itemValue) => setInfoUserSubj({ ...infoUserSubj, chair: itemValue })}
+                onPress={() => setShowSelectChair(true)}
               >
-                {chairs?.map((chair, index) => (
-                  <Select.Item
-                    label={chair}
-                    value={chair}
-                    key={index}
-                  />
-                ))}
-              </Select>
+                {infoUserSubj?.chair ? (
+                  <Text
+                    bold={true}
+                    numberOfLines={2}
+                    style={[fontStyles.poppins400, { fontSize: 14 }]}
+                    color={"#171717"}
+                  >
+                    {infoUserSubj?.chair}
+                  </Text>
+                ) : (
+                  <Text
+                    bold={true}
+                    numberOfLines={2}
+                    style={[fontStyles.poppins400, { fontSize: 14 }]}
+                    color={"#C4C4C4"}
+                  >
+                    Elegir cátedra
+                  </Text>
+                )}
+                <Entypo name="chevron-down" size={25} color="#797979" />
+              </TouchableOpacity>
             </Box>
+            <VStack space={2} alignItems="flex-start">
+              <RNModal
+                visible={!!showSelectChair}
+                transparent
+                children={
+                  <SwipeablePanel
+                    style={{ height: 480 }}
+                    closeOnTouchOutside
+                    onClose={() => setShowSelectChair(null)}
+                    fullWidth
+                    onlyLarge
+                    isActive={!!showSelectChair}
+                  >
+                    <ScrollView>
+                      <View
+                        style={{
+                          paddingVertical: 27,
+                          paddingBottom: 54,
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-start",
+                        }}
+                      >
+                        {chairs
+                          ?.slice()
+                          .sort((a, b) => a.localeCompare(b))
+                          .map((chair, index) => (
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                setInfoUserSubj({
+                                  ...infoUserSubj,
+                                  chair: chair,
+                                });
 
+                                setShowSelectChair(false);
+                              }}
+                              style={{
+                                paddingVertical: 10,
+                                paddingRight: 27,
+                                paddingLeft: 30,
+                                backgroundColor:
+                                  chair === infoUserSubj?.chair
+                                    ? "#DA673A"
+                                    : "transparent",
+                              }}
+                            >
+                              <Text
+                                style={[
+                                  fontStyles.poppins400,
+                                  {
+                                    fontSize: 16,
+                                    color:
+                                      chair === infoUserSubj?.chair
+                                        ? "white"
+                                        : "black",
+                                  },
+                                ]}
+                              >
+                                {chair}
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
+                      </View>
+                    </ScrollView>
+                  </SwipeablePanel>
+                }
+              />
+            </VStack>
           </FormControl>
         </Modal.Body>
         <HStack pr={5} pl={5} mb={5}>
           <Button
             w="100%"
             isDisabled={infoUserSubj?.chair.length === 0}
-            backgroundColor={'#DA673A'}
-            _text={{ fontSize: 14, fontWeight: "600", color: 'white' }}
-            onPress={() => { onConfirm(true), setOpen(false) }}
+            backgroundColor={"#DA673A"}
+            _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
+            onPress={() => {
+              onConfirm(true), setOpen(false);
+            }}
             borderRadius={moderateScale(8)}
             py={4}
             fontWeight="bold"
@@ -1082,7 +1173,7 @@ export function AddScore({
   setInfoUserSubj: Function;
   onCancel: Function;
 }) {
-  const [score, setScore] = useState(1)
+  const [score, setScore] = useState(1);
   return (
     <Modal
       isOpen={isOpen}
@@ -1091,8 +1182,18 @@ export function AddScore({
       animationPreset={"fade"}
     >
       <Modal.Content backgroundColor={"white"} paddingTop={5}>
-        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
-          <TouchableOpacity style={{ marginLeft: 20, marginRight: 50, }} onPress={() => { setOpen(false), onCancel(true) }}>
+        <Flex
+          direction="row"
+          alignItems="center"
+          justifyContent={"flex-start"}
+          mb={4}
+        >
+          <TouchableOpacity
+            style={{ marginLeft: 20, marginRight: 50 }}
+            onPress={() => {
+              setOpen(false), onCancel(true);
+            }}
+          >
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
           <Text fontSize={18} ml={2}>
@@ -1101,12 +1202,9 @@ export function AddScore({
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
-
-            <HStack alignItems={"center"} justifyContent={'center'} mb={10}>
+            <HStack alignItems={"center"} justifyContent={"center"} mb={10}>
               <TouchableOpacity
-                onPress={() =>
-                  setScore(Math.max(1, score - 1))
-                }
+                onPress={() => setScore(Math.max(1, score - 1))}
               >
                 <AntDesign name="minuscircleo" size={40} color="#DA673A" />
               </TouchableOpacity>
@@ -1114,9 +1212,7 @@ export function AddScore({
                 {score || 1}
               </Text>
               <TouchableOpacity
-                onPress={() =>
-                  setScore(Math.min(10, score + 1))
-                }
+                onPress={() => setScore(Math.min(10, score + 1))}
               >
                 <AntDesign name="pluscircleo" size={40} color="#DA673A" />
               </TouchableOpacity>
@@ -1137,9 +1233,14 @@ export function AddScore({
             marginTop: verticalScale(10),
           }}
           title="Siguiente"
-          callBack={() => { onConfirm(true), setOpen(false), setInfoUserSubj({ ...infoUserSubj, score: score }) }} />
-      </Modal.Content >
-    </Modal >
+          callBack={() => {
+            onConfirm(true),
+              setOpen(false),
+              setInfoUserSubj({ ...infoUserSubj, score: score });
+          }}
+        />
+      </Modal.Content>
+    </Modal>
   );
 }
 
@@ -1158,13 +1259,12 @@ export function AddStarsModal({
   setInfoUserSubj: Function;
   onCancel: Function;
 }) {
-
   const [starsForm, setStarsForm] = useState({
     qualityOfTeachers: 0,
     practicalJobs: 0,
     requirement: 0,
     cost: 0,
-  })
+  });
 
   return (
     <Modal
@@ -1174,8 +1274,18 @@ export function AddStarsModal({
       animationPreset={"fade"}
     >
       <Modal.Content backgroundColor={"white"} paddingTop={5}>
-        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
-          <TouchableOpacity style={{ marginLeft: 20, marginRight: 80, }} onPress={() => { setOpen(false), onCancel(true) }}>
+        <Flex
+          direction="row"
+          alignItems="center"
+          justifyContent={"flex-start"}
+          mb={4}
+        >
+          <TouchableOpacity
+            style={{ marginLeft: 20, marginRight: 80 }}
+            onPress={() => {
+              setOpen(false), onCancel(true);
+            }}
+          >
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
           <Text fontSize={18} ml={2}>
@@ -1184,40 +1294,89 @@ export function AddStarsModal({
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
-            <HStack alignItems={"center"} flexDirection={'column'} justifyContent={'center'} mb={10}>
-              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Calidad de profesores</Text>
+            <HStack
+              alignItems={"center"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              mb={10}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "gray",
+                  marginTop: 15,
+                  marginBottom: 10,
+                }}
+              >
+                Calidad de profesores
+              </Text>
               <AirbnbRating
                 showRating={false}
                 size={25}
-                selectedColor={'#DA673A'}
-                onFinishRating={(rating) => setStarsForm({ ...starsForm, qualityOfTeachers: rating })}
+                selectedColor={"#DA673A"}
+                onFinishRating={(rating) =>
+                  setStarsForm({ ...starsForm, qualityOfTeachers: rating })
+                }
                 starContainerStyle={{ marginHorizontal: 7 }}
                 defaultRating={starsForm?.qualityOfTeachers}
               />
-              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Trabajos prácticos</Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "gray",
+                  marginTop: 15,
+                  marginBottom: 10,
+                }}
+              >
+                Trabajos prácticos
+              </Text>
               <AirbnbRating
                 showRating={false}
                 size={25}
-                selectedColor={'#DA673A'}
-                onFinishRating={(rating) => setStarsForm({ ...starsForm, practicalJobs: rating })}
+                selectedColor={"#DA673A"}
+                onFinishRating={(rating) =>
+                  setStarsForm({ ...starsForm, practicalJobs: rating })
+                }
                 starContainerStyle={{ marginHorizontal: 7 }}
                 defaultRating={starsForm?.practicalJobs}
               />
-              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Que tan exigente es?</Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "gray",
+                  marginTop: 15,
+                  marginBottom: 10,
+                }}
+              >
+                Que tan exigente es?
+              </Text>
               <AirbnbRating
                 showRating={false}
                 size={25}
-                selectedColor={'#DA673A'}
-                onFinishRating={(rating) => setStarsForm({ ...starsForm, requirement: rating })}
+                selectedColor={"#DA673A"}
+                onFinishRating={(rating) =>
+                  setStarsForm({ ...starsForm, requirement: rating })
+                }
                 starContainerStyle={{ marginHorizontal: 7 }}
                 defaultRating={starsForm?.requirement}
               />
-              <Text style={{ fontSize: 20, color: 'gray', marginTop: 15, marginBottom: 10 }}>Que tan cara es?</Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "gray",
+                  marginTop: 15,
+                  marginBottom: 10,
+                }}
+              >
+                Que tan cara es?
+              </Text>
               <AirbnbRating
                 showRating={false}
                 size={25}
-                selectedColor={'#DA673A'}
-                onFinishRating={(rating) => setStarsForm({ ...starsForm, cost: rating })}
+                selectedColor={"#DA673A"}
+                onFinishRating={(rating) =>
+                  setStarsForm({ ...starsForm, cost: rating })
+                }
                 starContainerStyle={{ marginHorizontal: 7 }}
                 defaultRating={starsForm?.cost}
               />
@@ -1227,13 +1386,24 @@ export function AddStarsModal({
         <HStack pr={6} pl={6} mb={5}>
           <Button
             w="100%"
-            isDisabled={starsForm.qualityOfTeachers === 0 || starsForm.practicalJobs === 0 || starsForm.requirement === 0 || starsForm.cost === 0}
-            backgroundColor={'#DA673A'}
-            _text={{ fontSize: 14, fontWeight: "600", color: 'white' }}
+            isDisabled={
+              starsForm.qualityOfTeachers === 0 ||
+              starsForm.practicalJobs === 0 ||
+              starsForm.requirement === 0 ||
+              starsForm.cost === 0
+            }
+            backgroundColor={"#DA673A"}
+            _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
             onPress={() => {
               onConfirm(true),
                 setOpen(false),
-                setInfoUserSubj({ ...infoUserSubj, qualityOfTeachers: starsForm.qualityOfTeachers, practicalJobs: starsForm.practicalJobs, requirement: starsForm.requirement, cost: starsForm.cost })
+                setInfoUserSubj({
+                  ...infoUserSubj,
+                  qualityOfTeachers: starsForm.qualityOfTeachers,
+                  practicalJobs: starsForm.practicalJobs,
+                  requirement: starsForm.requirement,
+                  cost: starsForm.cost,
+                });
             }}
             borderRadius={moderateScale(8)}
             py={3}
@@ -1261,7 +1431,7 @@ export function ModalSummary({
   isOpen: boolean;
   setOpen: Function;
   onConfirm: Function;
-  infoUserSubj: any,
+  infoUserSubj: any;
   setInfoUserSubj: Function;
   setUpdater: Function;
   updater: any;
@@ -1278,8 +1448,18 @@ export function ModalSummary({
       animationPreset={"fade"}
     >
       <Modal.Content backgroundColor={"white"} paddingTop={5}>
-        <Flex direction="row" alignItems="center" justifyContent={'flex-start'} mb={4}>
-          <TouchableOpacity style={{ marginLeft: 20, marginRight: 80, }} onPress={() => { setOpen(false), onCancel(true) }}>
+        <Flex
+          direction="row"
+          alignItems="center"
+          justifyContent={"flex-start"}
+          mb={4}
+        >
+          <TouchableOpacity
+            style={{ marginLeft: 20, marginRight: 80 }}
+            onPress={() => {
+              setOpen(false), onCancel(true);
+            }}
+          >
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
           <Text fontSize={18} ml={2}>
@@ -1288,59 +1468,153 @@ export function ModalSummary({
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
-            <HStack flexDirection={'column'} justifyContent={'space-between'} mb={10}>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
-                <Text style={{ fontSize: 15, color: 'gray' }}>Materia</Text>
-                <Text style={{ fontSize: 20, color: '#DA673A' }} >{currentSubj?.prefix}</Text>
+            <HStack
+              flexDirection={"column"}
+              justifyContent={"space-between"}
+              mb={10}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 15,
+                  marginBottom: 5,
+                }}
+              >
+                <Text style={{ fontSize: 15, color: "gray" }}>Materia</Text>
+                <Text fontSize={19} color={"#DA673A"}>
+                  {currentSubj?.prefix}
+                </Text>
               </View>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
-                <Text style={{ fontSize: 15, color: 'gray', }}>Nota</Text>
-                <Text style={{ fontSize: 20, color: '#DA673A', textAlign: 'center' }} >{infoUserSubj?.score}</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 15,
+                  marginBottom: 5,
+                }}
+              >
+                <Text style={{ fontSize: 15, color: "gray" }}>Nota</Text>
+                <Text fontSize={19} color={"#DA673A"}>
+                  {infoUserSubj?.score}
+                </Text>
               </View>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
-                <Text style={{ fontSize: 15, color: 'gray' }}>Cátedra</Text>
-                <Text style={{ fontSize: 20, color: '#DA673A' }} >{infoUserSubj?.chair}</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 15,
+                  marginBottom: 5,
+                }}
+              >
+                <Text style={{ fontSize: 15, color: "gray" }}>Cátedra</Text>
+                <Text fontSize={19} color={"#DA673A"}>
+                  {infoUserSubj?.chair}
+                </Text>
               </View>
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 10 }}>
-                <Text style={{ fontSize: 15, color: 'gray' }}>Profesores</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 15,
+                  marginBottom: 10,
+                }}
+              >
+                <Text style={{ fontSize: 15, color: "gray" }}>Profesores</Text>
                 <AirbnbRating
                   isDisabled
                   showRating={false}
                   size={15}
-                  selectedColor={'#DA673A'}
+                  selectedColor={"#DA673A"}
                   defaultRating={infoUserSubj?.qualityOfTeachers}
                 />
               </View>
 
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>TPS</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: "gray",
+                    marginTop: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  TPS
+                </Text>
                 <AirbnbRating
                   isDisabled
                   showRating={false}
                   size={15}
-                  selectedColor={'#DA673A'}
+                  selectedColor={"#DA673A"}
                   defaultRating={infoUserSubj?.practicalJobs}
                 />
               </View>
 
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Exigencia</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: "gray",
+                    marginTop: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  Exigencia
+                </Text>
                 <AirbnbRating
                   isDisabled
                   showRating={false}
                   size={15}
-                  selectedColor={'#DA673A'}
+                  selectedColor={"#DA673A"}
                   defaultRating={infoUserSubj?.requirement}
                 />
               </View>
 
-              <View style={{ flexDirection: 'row', marginLeft: 19, alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 15, color: 'gray', marginTop: 15, marginBottom: 10 }}>Costo</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 19,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: "gray",
+                    marginTop: 15,
+                    marginBottom: 10,
+                  }}
+                >
+                  Costo
+                </Text>
                 <AirbnbRating
                   isDisabled
                   showRating={false}
                   size={15}
-                  selectedColor={'#DA673A'}
+                  selectedColor={"#DA673A"}
                   defaultRating={infoUserSubj?.cost}
                 />
               </View>
@@ -1350,9 +1624,9 @@ export function ModalSummary({
         <HStack pr={5} pl={5} mb={5}>
           <Button
             w="100%"
-            backgroundColor={'#DA673A'}
+            backgroundColor={"#DA673A"}
             isLoading={loading}
-            _text={{ fontSize: 14, fontWeight: "600", color: 'white' }}
+            _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
             onPress={() => {
               createNote(
                 setLoading,
@@ -1360,11 +1634,10 @@ export function ModalSummary({
                 infoUserSubj,
                 currentSubj,
                 updater,
-                setUpdater,
+                setUpdater
               );
               setOpen(false);
             }}
-
             borderRadius={moderateScale(8)}
             py={4}
             fontWeight="bold"
@@ -1376,7 +1649,6 @@ export function ModalSummary({
     </Modal>
   );
 }
-
 
 export function ModalDeleteOpinion({
   showWarning,

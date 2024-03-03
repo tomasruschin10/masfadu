@@ -21,7 +21,7 @@
     "ios": {
       "bundleIdentifier": "dev.millionsolutions.faduapp",
       "supportsTablet": true,
-      "buildNumber": "17",
+      "buildNumber": "19",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
