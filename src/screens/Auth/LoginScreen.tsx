@@ -169,6 +169,34 @@ function LoginScreen({ route, navigation }) {
       });
   };
 
+  const loginVisit = () => {
+    setLoading(true);
+    postServices("auth/login", {
+      userOrEmail: 'alumno@erickcampas.com',
+      password: 'alumno',
+    })
+      .then((res: any) => {
+        showAlert("success", "Has ingresado como invitado!");
+        dispatch(updatetoken(res.data.token));
+        const { userData }: any = jwtDecode(res.data.token);
+        userData.userRole[0].role.name = 'Visit' // Make visit
+        dispatch(updateUserdata(userData));
+        navigation.navigate("Home");
+      })
+      .catch((e) => {
+        dispatch(
+          updateMessage({
+            body: "Ha ocurrido un error al ingresar como invitado.",
+            open: true,
+            type: "danger",
+          })
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
   return (
     <Container>
       <NoHeader />
@@ -255,6 +283,40 @@ function LoginScreen({ route, navigation }) {
                 ]}
               >
                 Iniciar Sesión
+              </Text>
+            </Button>
+            <Text
+              style={[
+                fontStyles.poppins400,
+                {
+                  color: "#797979",
+                  fontSize: moderateScale(14),
+                  marginVertical: 20
+                },
+              ]}
+            >
+              o podes
+            </Text>
+            <Button
+              width={500}
+              maxWidth={contentWidth}
+              borderRadius={moderateScale(8)}
+              height={verticalScale(55)}
+              onPress={() => loginVisit()}
+              isLoading={loading}
+              backgroundColor={"#DA673A"}
+            >
+              <Text
+                style={[
+                  fontStyles.poppins400,
+                  {
+                    color: "white",
+                    fontWeight: "600",
+                    fontSize: moderateScale(14),
+                  },
+                ]}
+              >
+                Iniciar Sesión como invitado
               </Text>
             </Button>
             <Button

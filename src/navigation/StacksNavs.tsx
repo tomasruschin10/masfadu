@@ -41,6 +41,7 @@ import On3Screen from "../screens/Onboarding/On3Screen";
 import On4Screen from "../screens/Onboarding/On4Screen";
 import On5Screen from "../screens/Onboarding/On5Screen";
 import On6Screen from "../screens/Onboarding/On6Screen";
+import ModalRestriction from "../screens/modal/ModalRestriction";
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,7 @@ export function NavStack() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="GoogleLogin" component={GoogleAuth} />
           <Stack.Screen name="GoogleRegister" component={GoogleRegister} />
@@ -72,6 +74,9 @@ export function NavStack() {
           <Stack.Screen name="ChooseAnOption" component={ChooseAnOption} />
           <Stack.Screen name="NewPassword" component={NewPassword} />
           <Stack.Screen name="UpdatedPassword" component={UpdatedPassword} />
+
+          <Stack.Screen name="Modal" component={ModalRestriction} />
+
         </Stack.Group>
       ) : (
         <Stack.Group
@@ -79,6 +84,9 @@ export function NavStack() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="Registro" component={RegisterScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+
           <Stack.Screen name="Onboarding1" component={On1Screen} />
           <Stack.Screen name="Onboarding2" component={On2Screen} />
           <Stack.Screen name="Onboarding3" component={On3Screen} />

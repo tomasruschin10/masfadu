@@ -1,6 +1,8 @@
 import { Box, Text, Image, Avatar, Pressable } from 'native-base';
 import { StyleProp, TextStyle, TouchableHighlight } from 'react-native';
 import { fontStyles } from '../colors/fontColors';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateModal } from '../../redux/actions/user';
 
 export const RenderItem = ({ title, id, setIdCopy, idCopy }) => (
   <TouchableHighlight underlayColor='white' onPress={() => setIdCopy(id)}>
@@ -17,8 +19,17 @@ export const RenderItem = ({ title, id, setIdCopy, idCopy }) => (
 )
 
 export const RenderOffer = ({ firstLetter, redirect_to, title, text, time, hours, method, rating, navigation, mainTitle, buttonValue, border, image, url, subject_id, id, name, phone, company }) => {
+  const user = useSelector((state: any) => state.user.userdata);
+    const dispatch = useDispatch()
+    const handleNavigate = (route: string, additional?: any) => {
+      if (user?.userRole[0]?.role?.name === "Visit") {
+        dispatch(updateModal(true))
+        return
+      }
+      navigation.navigate(route, additional)
+    }
   return (
-    <TouchableHighlight underlayColor='none' onPress={() => navigation.navigate(
+    <TouchableHighlight underlayColor='none' onPress={() => handleNavigate(
       redirect_to, { mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time, name, phone, company }
     )}
     >

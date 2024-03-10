@@ -16,6 +16,9 @@ function SplashScreen({ route, navigation }) {
         .then(({ data }: any) => {
           dispatch(updatetoken(data.token));
           const { userData }: any = jwtDecode(data.token);
+          if (userData.email === 'alumno@erickcampas.com') {
+            userData.userRole[0].role.name = 'Visit' // Make visit
+          }
           dispatch(updateUserdata(userData));
           if (userData.career) {
             navigation.navigate("Home");
