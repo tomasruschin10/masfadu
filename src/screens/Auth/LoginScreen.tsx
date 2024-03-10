@@ -14,7 +14,7 @@ import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
 import { postServices } from "../../utils/hooks/services";
 import { getUserDataWithToken } from "../../utils/storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
 
@@ -54,6 +54,8 @@ function LoginScreen({ route, navigation }) {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+
+  const token = useSelector((state: any) => state.token);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId:
@@ -285,40 +287,47 @@ function LoginScreen({ route, navigation }) {
                 Iniciar Sesión
               </Text>
             </Button>
-            <Text
-              style={[
-                fontStyles.poppins400,
-                {
-                  color: "#797979",
-                  fontSize: moderateScale(14),
-                  marginVertical: 20
-                },
-              ]}
-            >
-              o podes
-            </Text>
-            <Button
-              width={500}
-              maxWidth={contentWidth}
-              borderRadius={moderateScale(8)}
-              height={verticalScale(55)}
-              onPress={() => loginVisit()}
-              isLoading={loading}
-              backgroundColor={"#DA673A"}
-            >
-              <Text
-                style={[
-                  fontStyles.poppins400,
-                  {
-                    color: "white",
-                    fontWeight: "600",
-                    fontSize: moderateScale(14),
-                  },
-                ]}
-              >
-                Iniciar Sesión como invitado
-              </Text>
-            </Button>
+            
+            {
+              !token && (
+                <>
+                  <Text
+                    style={[
+                      fontStyles.poppins400,
+                      {
+                        color: "#797979",
+                        fontSize: moderateScale(14),
+                        marginVertical: 20
+                      },
+                    ]}
+                  >
+                    o podes
+                  </Text>
+                  <Button
+                    width={500}
+                    maxWidth={contentWidth}
+                    borderRadius={moderateScale(8)}
+                    height={verticalScale(55)}
+                    onPress={() => loginVisit()}
+                    isLoading={loading}
+                    backgroundColor={"#DA673A"}
+                  >
+                    <Text
+                      style={[
+                        fontStyles.poppins400,
+                        {
+                          color: "white",
+                          fontWeight: "600",
+                          fontSize: moderateScale(14),
+                        },
+                      ]}
+                    >
+                      Iniciar Sesión como invitado
+                    </Text>
+                  </Button>
+                </>
+              )
+            }
             <Button
               onPress={() => navigation.navigate("RecoveryPassword")}
               variant="link"
