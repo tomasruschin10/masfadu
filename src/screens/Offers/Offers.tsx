@@ -41,6 +41,16 @@ function Offers({ route, navigation }) {
   const { width } = Dimensions.get("window");
   const cardWidth = width * 0.44;
 
+  const user = useSelector((state: any) => state.user.userdata);
+    const dispatch = useDispatch()
+    const handleNavigate = (route: string, additional?: any) => {
+      if (user?.userRole[0]?.role?.name === "Visit") {
+        dispatch(updateModal(true))
+        return
+      }
+      navigation.navigate(route, additional)
+    }
+
   const renderNews = ({ item }) => {
     return (
       <Box
@@ -54,7 +64,7 @@ function Offers({ route, navigation }) {
       >
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("News", {
+            handleNavigate("News", {
               url: item.url,
               image: item.image.url,
             })
@@ -161,16 +171,6 @@ function Offers({ route, navigation }) {
     const {
       userdata: { id },
     } = state.user;
-
-    const user = useSelector((state: any) => state.user.userdata);
-    const dispatch = useDispatch()
-    const handleNavigate = (route: string, additional?: any) => {
-      if (user?.userRole[0]?.role?.name === "Visit") {
-        dispatch(updateModal(true))
-        return
-      }
-      navigation.navigate(route, additional)
-    }
 
     return (
       <TouchableOpacity
