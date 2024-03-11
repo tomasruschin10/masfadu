@@ -26,6 +26,7 @@ export default function BottomTab({ route, navigation, setMenu }) {
 
   const user = useSelector((state: any) => state.user.userdata);
   const dispatch = useDispatch()
+  const isVisit = user?.userRole[0]?.role?.name === "Visit"
   const handleNavigate = (route: string, additional?: any) => {
     if (user?.userRole[0]?.role?.name === "Visit") {
       setMenuView(false);
@@ -33,6 +34,10 @@ export default function BottomTab({ route, navigation, setMenu }) {
       return
     }
     navigation.navigate(route, additional)
+  }
+
+  const handleRestriction = () => {
+    dispatch(updateModal(true))
   }
 
   const MenuPublica = () => {
@@ -387,8 +392,11 @@ export default function BottomTab({ route, navigation, setMenu }) {
 
           <TouchableOpacity
             onPress={() => {
+              if (isVisit) {
+                handleRestriction()
+                return
+              }
               setEvent("menu");
-
               setMenu(true);
             }}
             style={{
