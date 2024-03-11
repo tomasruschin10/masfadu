@@ -105,6 +105,23 @@ function OpinionThread({ route, navigation }) {
       });
   }, [reload, value]);
 
+  const dispatch = useDispatch()
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true))
+      return
+    }
+    navigation.navigate(route, additional)
+  }
+
+  const handleModal = () => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true))
+      return
+    }
+    setShowWarning(true)
+  }
+
   const deleteOpinion = () => {
     try {
       setLoading(true);
@@ -124,15 +141,6 @@ function OpinionThread({ route, navigation }) {
     }
   };
 
-  const dispatch = useDispatch()
-  const handleNavigate = (route: string, additional?: any) => {
-    if (user?.userRole[0]?.role?.name === "Visit") {
-      dispatch(updateModal(true))
-      return
-    }
-    navigation.navigate(route, additional)
-  }
-
   return (
     <Container>
       <HeaderBack
@@ -143,7 +151,7 @@ function OpinionThread({ route, navigation }) {
           ) : undefined
         }
         onPressIcon={
-          answersCount === 0 ? () => setShowWarning(true) : undefined
+          answersCount === 0 ? () => handleModal() : undefined
         }
       />
       <ScrollView>

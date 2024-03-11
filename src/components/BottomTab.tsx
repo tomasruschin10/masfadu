@@ -24,9 +24,8 @@ export default function BottomTab({ route, navigation, setMenu }) {
   const [menuView, setMenuView] = useState(false);
   const { name } = route;
 
-  const user = useSelector((state: any) => state.user.userdata);
+  const user = useSelector((state: any) => state?.user?.userdata);
   const dispatch = useDispatch()
-  const isVisit = user?.userRole[0]?.role?.name === "Visit"
   const handleNavigate = (route: string, additional?: any) => {
     if (user?.userRole[0]?.role?.name === "Visit") {
       setMenuView(false);

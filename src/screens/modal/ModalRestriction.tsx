@@ -87,6 +87,7 @@ export default function ModalRestriction ({navigation}) {
             px={"1%"}
             justifyContent={"center"}
             flexDirection={"column"}
+            marginBottom={'5%'}
             >
               <Box
                 display={"flex"}
@@ -101,7 +102,7 @@ export default function ModalRestriction ({navigation}) {
                   background={"#DA673A"}
                 />
                 <Text textAlign={"left"} ml={2}>
-                  Necesitás iniciar sesión o registrarte primero!.
+                  Necesitás iniciar sesión o registrarte primero!
                 </Text>
               </Box>
 

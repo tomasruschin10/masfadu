@@ -103,7 +103,6 @@ function HomeScreen({ route, navigation }) {
       getServices("offer/all/work")
         .then(({ data }: any) => {
           setAllOffers(data);
-          console.log(data)
         })
         .catch(handleError);
 

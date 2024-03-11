@@ -64,7 +64,6 @@ export function NavStack() {
             headerShown: false,
           }}
         >
-          <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="GoogleLogin" component={GoogleAuth} />
           <Stack.Screen name="GoogleRegister" component={GoogleRegister} />
@@ -74,8 +73,6 @@ export function NavStack() {
           <Stack.Screen name="ChooseAnOption" component={ChooseAnOption} />
           <Stack.Screen name="NewPassword" component={NewPassword} />
           <Stack.Screen name="UpdatedPassword" component={UpdatedPassword} />
-
-          <Stack.Screen name="Modal" component={ModalRestriction} />
 
         </Stack.Group>
       ) : (

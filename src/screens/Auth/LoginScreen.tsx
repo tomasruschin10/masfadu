@@ -55,8 +55,6 @@ function LoginScreen({ route, navigation }) {
   const [email, setEmail] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  const token = useSelector((state: any) => state.token);
-
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId:
       "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
