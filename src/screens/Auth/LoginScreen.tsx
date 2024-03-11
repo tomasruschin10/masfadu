@@ -287,47 +287,6 @@ function LoginScreen({ route, navigation }) {
                 Iniciar Sesión
               </Text>
             </Button>
-            
-            {
-              !token && (
-                <>
-                  <Text
-                    style={[
-                      fontStyles.poppins400,
-                      {
-                        color: "#797979",
-                        fontSize: moderateScale(14),
-                        marginVertical: 20
-                      },
-                    ]}
-                  >
-                    o podes
-                  </Text>
-                  <Button
-                    width={500}
-                    maxWidth={contentWidth}
-                    borderRadius={moderateScale(8)}
-                    height={verticalScale(55)}
-                    onPress={() => loginVisit()}
-                    isLoading={loading}
-                    backgroundColor={"#DA673A"}
-                  >
-                    <Text
-                      style={[
-                        fontStyles.poppins400,
-                        {
-                          color: "white",
-                          fontWeight: "600",
-                          fontSize: moderateScale(14),
-                        },
-                      ]}
-                    >
-                      Iniciar Sesión como invitado
-                    </Text>
-                  </Button>
-                </>
-              )
-            }
             <Button
               onPress={() => navigation.navigate("RecoveryPassword")}
               variant="link"
@@ -342,6 +301,22 @@ function LoginScreen({ route, navigation }) {
                 ]}
               >
                 ¿Te olvidaste la contraseña?
+              </Text>
+            </Button>
+            <Button
+              onPress={() => loginVisit()}
+              variant="link"
+            >
+              <Text
+                style={[
+                  fontStyles.poppins400,
+                  {
+                    color: "#DA673A",
+                    fontSize: moderateScale(14),
+                  },
+                ]}
+              >
+                Ingresar como invitado
               </Text>
             </Button>
           </Box>

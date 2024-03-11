@@ -29,7 +29,7 @@ export const RenderOffer = ({ firstLetter, redirect_to, title, text, time, hours
       navigation.navigate(route, additional)
     }
   return (
-    <TouchableHighlight underlayColor='none' onPress={() => handleNavigate(
+    <TouchableHighlight underlayColor='none' onPress={() => navigation.navigate(
       redirect_to, { mainTitle: mainTitle, image: image, title: title, buttonValue: buttonValue, url: url, description: text, time: time, hours: hours, method: method, subject_id: subject_id, id: id, partner: time, name, phone, company }
     )}
     >

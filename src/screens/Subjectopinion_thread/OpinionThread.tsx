@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Avatar, Box, Icon, IconButton, ScrollView, Text } from "native-base";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
 import { HeaderBack } from "../../components/Header";
 import { getServices, deleteServices } from "../../utils/hooks/services";
 import { ModalDeleteOpinion } from "../AboutSubject/Modals";
+import { updateModal } from "../../redux/actions/user";
 
 const Resp = ({
   description,
@@ -123,6 +124,15 @@ function OpinionThread({ route, navigation }) {
     }
   };
 
+  const dispatch = useDispatch()
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true))
+      return
+    }
+    navigation.navigate(route, additional)
+  }
+
   return (
     <Container>
       <HeaderBack
@@ -220,7 +230,7 @@ function OpinionThread({ route, navigation }) {
       >
         <TouchableHighlight
           onPress={() =>
-            navigation.navigate("ReplyToTheThread", {
+            handleNavigate("ReplyToTheThread", {
               student: student,
               idOpinion: idOpinion,
               anonymous: anonymous,

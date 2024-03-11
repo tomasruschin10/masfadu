@@ -36,10 +36,6 @@ export default function BottomTab({ route, navigation, setMenu }) {
     navigation.navigate(route, additional)
   }
 
-  const handleRestriction = () => {
-    dispatch(updateModal(true))
-  }
-
   const MenuPublica = () => {
     return (
       <Box
@@ -392,10 +388,6 @@ export default function BottomTab({ route, navigation, setMenu }) {
 
           <TouchableOpacity
             onPress={() => {
-              if (isVisit) {
-                handleRestriction()
-                return
-              }
               setEvent("menu");
               setMenu(true);
             }}
