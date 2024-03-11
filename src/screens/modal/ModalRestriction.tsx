@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Modal, StyleSheet, Pressable, View} from 'react-native';
+import {Alert, Modal, StyleSheet, Pressable, View, TouchableOpacity} from 'react-native';
 import { ScrollView, Text } from "native-base";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateModal } from '../../redux/actions/user';
@@ -31,35 +31,38 @@ export default function ModalRestriction ({navigation}) {
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
         handleModal()
       }}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text
-          w="auto"
-          fontWeight={700}
-          fontFamily="Manrope"
-          fontSize={24}
-          mb={30}
-          style={styles.textModal}
-          >
-            Acción no permitida para visitantes
-          </Text>
-          <View style={styles.contBtn} >
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => handleModal('Registro')}>
-              <Text style={styles.textStyle}>Registrarse</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => handleModal('Login')}>
-              <Text style={styles.textStyle}>Iniciar sesión</Text>
-            </Pressable>
+      <TouchableOpacity
+      style={styles.centeredView}
+      onPressOut={() => handleModal()}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text
+            w="auto"
+            fontWeight={700}
+            fontFamily="Manrope"
+            fontSize={24}
+            mb={30}
+            style={styles.textModal}
+            >
+              Acción no permitida para visitantes
+            </Text>
+            <View style={styles.contBtn} >
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => handleModal('Registro')}>
+                <Text style={styles.textStyle}>Registrarse</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => handleModal('Login')}>
+                <Text style={styles.textStyle}>Iniciar sesión</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };

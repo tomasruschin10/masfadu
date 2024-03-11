@@ -64,7 +64,7 @@ function Offers({ route, navigation }) {
       >
         <TouchableOpacity
           onPress={() =>
-            handleNavigate("News", {
+            navigation.navigate("News", {
               url: item.url,
               image: item.image.url,
             })
@@ -178,7 +178,7 @@ function Offers({ route, navigation }) {
           if (item.user_id === id) {
             handleNavigate("OfferEditForm", { data: item });
           } else {
-            handleNavigate("MarketDetail", { data: item });
+            navigation.navigate("MarketDetail", { data: item });
           }
         }}
         style={{

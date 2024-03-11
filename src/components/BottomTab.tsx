@@ -10,6 +10,8 @@ import {
   InicioOpiniones,
   MenuInicio,
 } from "././iconsMenu/inicio-menu";
+import { useDispatch, useSelector } from "react-redux";
+import { updateModal } from "../redux/actions/user";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +23,17 @@ const styles = StyleSheet.create({
 export default function BottomTab({ route, navigation, setMenu }) {
   const [menuView, setMenuView] = useState(false);
   const { name } = route;
+
+  const user = useSelector((state: any) => state.user.userdata);
+  const dispatch = useDispatch()
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      setMenuView(false);
+      dispatch(updateModal(true))
+      return
+    }
+    navigation.navigate(route, additional)
+  }
 
   const MenuPublica = () => {
     return (
@@ -65,10 +78,10 @@ export default function BottomTab({ route, navigation, setMenu }) {
             setEvent("opiniones");
 
             name !== "Subsections"
-              ? navigation.navigate("CreateNewThread", {
+              ? handleNavigate("CreateNewThread", {
                   title: "Opiniones de materias",
                 })
-              : navigation.navigate("CreateNewThread", {
+              : handleNavigate("CreateNewThread", {
                   title: "Opiniones de materias",
                 });
 
@@ -152,7 +165,7 @@ export default function BottomTab({ route, navigation, setMenu }) {
             alignItems: "center",
           }}
           onPress={() => {
-            navigation.navigate("OfferForm");
+            handleNavigate("OfferForm");
           }}
         >
           <IconButton

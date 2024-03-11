@@ -161,7 +161,7 @@ function HomeScreen({ route, navigation }) {
     >
       <TouchableOpacity
         onPress={() =>
-          handleNavigate("News", { url: item.url, image: item.image.url })
+          navigation.navigate("News", { url: item.url, image: item.image.url })
         }
         style={{ backgroundColor: "white", borderRadius: 30 }}
       >
@@ -246,7 +246,7 @@ function HomeScreen({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          handleNavigate("Anoffer", {
+          navigation.navigate("Anoffer", {
             mainTitle: "Ofertas Laborales",
             image: image.url,
             title: title,
@@ -326,7 +326,7 @@ function HomeScreen({ route, navigation }) {
     const { title, description, image } = item;
     return (
       <TouchableOpacity
-        onPress={() => handleNavigate("MarketDetail", item)}
+        onPress={() => navigation.navigate("MarketDetail", item)}
         style={{
           width: cardWidth,
           marginRight: 5,
@@ -389,7 +389,7 @@ function HomeScreen({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          handleNavigate("Anoffer", {
+          navigation.navigate("Anoffer", {
             mainTitle: "Cursos & Workshops",
             title: item.title,
             url: item.url,
@@ -460,7 +460,6 @@ function HomeScreen({ route, navigation }) {
 
   return (
     <Container>
-      {/* {modalShow && <ModalRestriction closeModal={closeModal} />} */}
       {menuShow ? (
         <Menu navigation={navigation} route={route} setMenu={setMenu} />
       ) : null}
