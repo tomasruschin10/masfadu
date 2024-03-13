@@ -19,6 +19,8 @@ import useSearchOfferts from "../../utils/hooks/userSearchOffers";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 import { store } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { updateModal } from "../../redux/actions/user";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -38,6 +40,16 @@ function Offers({ route, navigation }) {
 
   const { width } = Dimensions.get("window");
   const cardWidth = width * 0.44;
+
+  const user = useSelector((state: any) => state.user.userdata);
+    const dispatch = useDispatch()
+    const handleNavigate = (route: string, additional?: any) => {
+      if (user?.userRole[0]?.role?.name === "Visit") {
+        dispatch(updateModal(true))
+        return
+      }
+      navigation.navigate(route, additional)
+    }
 
   const renderNews = ({ item }) => {
     return (
@@ -164,7 +176,7 @@ function Offers({ route, navigation }) {
       <TouchableOpacity
         onPress={() => {
           if (item.user_id === id) {
-            navigation.navigate("OfferEditForm", { data: item });
+            handleNavigate("OfferEditForm", { data: item });
           } else {
             navigation.navigate("MarketDetail", { data: item });
           }

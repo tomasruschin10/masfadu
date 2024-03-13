@@ -6,7 +6,7 @@ import { Alert, Linking, TouchableHighlight } from "react-native";
 import Container from "../../components/Container";
 import { updateMessage } from "../../redux/actions/message";
 import { updatetoken } from "../../redux/actions/token";
-import { updateUserdata } from "../../redux/actions/user";
+import { updateModal, updateUserdata } from "../../redux/actions/user";
 import * as RootNavigation from "../../navigation/RootNavigation";
 import { store } from "../../redux/store";
 import BottomTab from "../../components/BottomTab";
@@ -15,7 +15,7 @@ import Constants from "expo-constants";
 import * as StoreReview from "expo-store-review";
 import { removemenu } from "../../redux/actions/menu";
 import Menu from "../Menu/Menu";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FORGET_NOTICE, forgetNotice } from "../../redux/actions/notice";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
@@ -37,6 +37,15 @@ function Config({ route, navigation, value }) {
   const dispatch = useDispatch();
   const version = Constants?.manifest?.version || "1.0.0";
 
+  const user = useSelector((state: any) => state?.user?.userdata);
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true))
+      return
+    }
+    navigation.navigate(route, additional)
+  }
+
   const logout = async () => {
     store.dispatch(
       updateMessage({
@@ -45,10 +54,10 @@ function Config({ route, navigation, value }) {
         open: true,
       })
     );
-    store.dispatch(updatetoken(""));
     store.dispatch(updateUserdata({}));
+    store.dispatch(updatetoken(""));
     store.dispatch(removemenu());
-    RootNavigation.reset("SplashScreen");
+    RootNavigation.reset("Login");
   };
 
   const reviewApp = async () => {
@@ -84,7 +93,7 @@ function Config({ route, navigation, value }) {
                 ])
               : title == "Calificar la App"
               ? reviewApp()
-              : navigation.navigate("RedirectTo", { title: title });
+              : handleNavigate("RedirectTo", { title: title });
             dispatch(forgetNotice({ type: FORGET_NOTICE, value: false }));
           }}
         >

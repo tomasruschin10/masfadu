@@ -16,6 +16,8 @@ import * as Font from "expo-font";
 
 import { useEventNavigation } from "../../context";
 import { fontStyles } from "../../utils/colors/fontColors";
+import { useDispatch, useSelector } from "react-redux";
+import { updateModal } from "../../redux/actions/user";
 
 function AboutSubject_Logic({
   index,
@@ -47,6 +49,13 @@ function AboutSubject_Logic({
   const [FontsLoaded, setFontsLoaded] = useState(false);
   const [showSelectiveSubject, setShowSelectiveSubject] = useState(false);
   const [selectiveSubject, setSelectiveSubject] = useState();
+
+  const dispatch = useDispatch()
+  const user = useSelector((state: any) => state.user.userdata);
+  const isVisit = user?.userRole[0]?.role?.name === "Visit";
+  const handleRestriction = () => {
+    dispatch(updateModal(true))
+  }
 
   const getSelectiveSubject = async () => {
     try {
@@ -259,6 +268,10 @@ function AboutSubject_Logic({
           justifyContent: "center",
         }}
         onPress={() => {
+          if (isVisit) {
+            handleRestriction()
+            return
+          }
           setInfoUserSubj({
             ...infoUserSubj,
             score: userSubject?.score,
@@ -306,6 +319,10 @@ function AboutSubject_Logic({
       ) : available && !userSubject ? (
         <TouchableOpacity
           onPress={() => {
+            if (isVisit) {
+              handleRestriction()
+              return
+            }
             setShowWarning(true);
             setCurrentSubj({ ...subject, dis: 1 });
           }}
@@ -326,6 +343,10 @@ function AboutSubject_Logic({
             justifyContent: "center",
           }}
           onPress={() => {
+            if (isVisit) {
+              handleRestriction()
+              return
+            }
             setShowWarning(true);
             setCurrentSubj({ ...subject, dis: 0 });
           }}

@@ -29,6 +29,9 @@ import {
   moderateScale,
   verticalScale,
 } from "../../utils/media.screens";
+import { useDispatch, useSelector } from "react-redux";
+import ModalRestriction from "../modal/ModalRestriction";
+import { updateModal } from "../../redux/actions/user";
 
 const handleError = (error) => {
   if (__DEV__) {
@@ -48,6 +51,7 @@ function HomeScreen({ route, navigation }) {
   }, [isFocused]);
 
   const [menuShow, setMenu] = useState(false);
+  const [modalShow, setModalShow] = useState(false)
 
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
@@ -63,6 +67,8 @@ function HomeScreen({ route, navigation }) {
   const cardWidth = width * 0.41;
   const cardHeight = height * 0.27;
   const imageHeight = height * 0.14
+
+  const user = useSelector((state: any) => state.user.userdata);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -97,7 +103,6 @@ function HomeScreen({ route, navigation }) {
       getServices("offer/all/work")
         .then(({ data }: any) => {
           setAllOffers(data);
-          console.log(data)
         })
         .catch(handleError);
 
@@ -114,6 +119,15 @@ function HomeScreen({ route, navigation }) {
         .catch(handleError);
     }, [setAdvertisement, setTextNews, setOffer, setCourses])
   );
+
+  const dispatch = useDispatch()
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true))
+      return
+    }
+    navigation.navigate(route, additional)
+  }
 
   const renderTextNews = ({ item }) => (
     <Box
@@ -166,7 +180,7 @@ function HomeScreen({ route, navigation }) {
     item.subject.subjectId = item.subject.id;
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("SubjectContent", item.subject)}
+        onPress={() => handleNavigate("SubjectContent", item.subject)}
         style={{
           width: cardWidth,
           maxWidth: cardWidth,
@@ -448,7 +462,7 @@ function HomeScreen({ route, navigation }) {
       {menuShow ? (
         <Menu navigation={navigation} route={route} setMenu={setMenu} />
       ) : null}
-      <TouchableOpacity onPress={() => navigation.navigate("Config")}>
+      <TouchableOpacity onPress={() => handleNavigate('Config')}>
         <HeaderPerfil
           showICon={true}
           statusBarColor="#e8eef4"
@@ -557,7 +571,7 @@ function HomeScreen({ route, navigation }) {
               >
                 <DefaultButton
                   callBack={() =>
-                    navigation.navigate("SearchCourse", {
+                    handleNavigate("SearchCourse", {
                       title: "Buscar curso",
                       url: "https://aulas.fadu.uba.ar/aulas.php",
                     })

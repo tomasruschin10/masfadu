@@ -12,9 +12,10 @@ import {
 } from "native-base";
 import React from "react";
 import { Platform, SafeAreaView, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fontStyles } from "../utils/colors/fontColors";
 import { moderateScale } from "../utils/media.screens";
+import { updateModal } from "../redux/actions/user";
 
 export function HeaderBack({ ...props }) {
   const navigation: any = useNavigation();
@@ -23,6 +24,16 @@ export function HeaderBack({ ...props }) {
   const handleGoBack = () => {
     navigation.goBack();
   };
+
+  const user = useSelector((state: any) => state.user.userdata);
+  const dispatch = useDispatch()
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true))
+      return
+    }
+    navigation.navigate(route, additional)
+  }
 
   return (
     <>
@@ -76,13 +87,13 @@ export function HeaderBack({ ...props }) {
               backgroundColor="#E85E29"
               onPress={() => {
                 if (typeof props.addButtonUrl === "string") {
-                  navigation.navigate(props.addButtonUrl);
+                  handleNavigate(props.addButtonUrl);
                 } else if (
                   props.addButtonUrl &&
                   typeof props.addButtonUrl === "object"
                 ) {
                   const { name, props: additionalProps } = props.addButtonUrl;
-                  navigation.navigate(name, additionalProps);
+                  handleNavigate(name, additionalProps);
                 }
               }}
               size={"40px"}
@@ -122,7 +133,7 @@ export function HeaderPerfil(props) {
       />
       <Box safeAreaTop={Platform.OS === "ios" ? 2 : 4} />
       <Box justifyContent="space-between" px={4} flexDirection="row" pb={2}>
-        <Avatar bg="#e8eef4" source={{ uri: userdata.image.url }} size="md">
+        <Avatar bg="#e8eef4" source={{ uri: userdata?.image?.url }} size="md">
           BR
           <Avatar.Badge bg="#4fd441" />
         </Avatar>

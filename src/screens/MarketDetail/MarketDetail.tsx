@@ -9,6 +9,8 @@ import { TouchableOpacity } from "react-native";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { FontAwesome } from "@expo/vector-icons";
 import { ImageModal } from "../AboutSubject/Modals";
+import { useDispatch, useSelector } from "react-redux";
+import { updateModal } from "../../redux/actions/user";
 
 type RootStackParamList = {
   MarketDetail: { data: any };
@@ -34,6 +36,15 @@ const MarketDetail = ({ navigation }) => {
     setOpeModal(false);
     setShowImage(null);
   };
+
+  const user = useSelector((state: any) => state.user.userdata);
+  const isVisit = user?.userRole[0]?.role?.name === "Visit"
+  const dispatch = useDispatch()
+
+  const handleRestriction = () => {
+    dispatch(updateModal(true))
+    return
+  } 
 
   return (
     <Container>
@@ -119,7 +130,13 @@ const MarketDetail = ({ navigation }) => {
                 marginRight: "auto",
                 justifyContent: "center",
               }}
-              onPress={() => Linking.openURL(`mailto:${data.email}`)}
+              onPress={() => {
+                if (isVisit) {
+                  handleRestriction()
+                  return
+                }
+                Linking.openURL(`mailto:${data.email}`)
+              }}
             >
               <View
                 style={{

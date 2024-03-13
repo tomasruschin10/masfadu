@@ -61,6 +61,7 @@ import { persistor, store } from "./src/redux/store";
 import Message from "./src/components/Message";
 import { navigationRef } from "./src/navigation/RootNavigation";
 import { initializeApp } from "firebase/app";
+import ModalRestriction from "./src/screens/modal/ModalRestriction";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -160,6 +161,7 @@ export default ({ children }: any) => {
       <PersistGate persistor={persistor} loading={null}>
         <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
           <NavigationContainer ref={navigationRef}>
+            <ModalRestriction navigation={navigationRef} />
             <Navigator />
             <Message />
           </NavigationContainer>

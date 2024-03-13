@@ -18,6 +18,8 @@ import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Layout from "../../utils/LayoutHeader&BottomTab";
+import { useDispatch, useSelector } from "react-redux";
+import { updateModal } from "../../redux/actions/user";
 
 function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   const [courses, setCourses] = useState([]);
@@ -67,6 +69,16 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   useEffect(() => {
     byWords();
   }, [searchText]);
+
+  const user = useSelector((state: any) => state.user.userdata);
+    const dispatch = useDispatch()
+    const handleNavigate = (route: string, additional?: any) => {
+      if (user?.userRole[0]?.role?.name === "Visit") {
+        dispatch(updateModal(true))
+        return
+      }
+      navigation.navigate(route, additional)
+    }
 
   return (
     <Layout
