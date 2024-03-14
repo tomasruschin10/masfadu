@@ -1,5 +1,5 @@
-import { Box, Text, useTheme } from "native-base";
-import {  TouchableOpacity } from "react-native";
+import { Box, useTheme } from "native-base";
+import { TouchableOpacity, Text } from "react-native";
 import { fontStyles } from "../utils/colors/fontColors";
 import { moderateScale } from "../utils/media.screens";
 
@@ -11,7 +11,6 @@ interface SectionProps {
   to?: string;
   navigation: any; // TODO: Definir el tipo de `navigation`
 }
-
 
 export default function TitleSliders({
   navigateTo,
@@ -31,16 +30,27 @@ export default function TitleSliders({
       alignItems={"center"}
       flexDirection={"row"}
     >
-      <Text fontWeight={700} style={[fontStyles.poppins600,{ fontSize: moderateScale(16) }]}>
+      <Text
+        style={[
+          fontStyles.poppins600,
+          { fontSize: moderateScale(16), fontWeight: 700 },
+        ]}
+      >
         {title}
       </Text>
 
       {more ? (
-        <TouchableOpacity onPress={() => isSubsection ? navigation.navigate('Subsections', {title: navigateTo}) : navigation.navigate(navigateTo)}>
+        <TouchableOpacity
+          onPress={() =>
+            isSubsection
+              ? navigation.navigate("Subsections", { title: navigateTo })
+              : navigation.navigate(navigateTo)
+          }
+        >
           <Box
             flexDirection={"row"}
             alignItems={"center"}
-        /*     bg={"#f2fdfb"} */
+            /*     bg={"#f2fdfb"} */
             rounded={"full"}
             pl={3}
             pr={3}

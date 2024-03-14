@@ -1,14 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import {
-  Box,
-  Button,
-  Icon,
-  Image,
-  Input,
-  Text,
-  View,
-  VStack,
-} from "native-base";
+import { Box, Button, Icon, Image, Input, View, VStack } from "native-base";
 import * as React from "react";
 import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
@@ -25,6 +16,7 @@ import {
   PixelRatio,
   TouchableOpacity,
   StyleSheet,
+  Text,
 } from "react-native";
 import jwtDecode from "jwt-decode";
 
@@ -172,14 +164,14 @@ function LoginScreen({ route, navigation }) {
   const loginVisit = () => {
     setLoading(true);
     postServices("auth/login", {
-      userOrEmail: 'alumno@erickcampas.com',
-      password: 'alumno',
+      userOrEmail: "alumno@erickcampas.com",
+      password: "alumno",
     })
       .then((res: any) => {
         showAlert("success", "Has ingresado como invitado!");
         dispatch(updatetoken(res.data.token));
         const { userData }: any = jwtDecode(res.data.token);
-        userData.userRole[0].role.name = 'Visit' // Make visit
+        userData.userRole[0].role.name = "Visit"; // Make visit
         dispatch(updateUserdata(userData));
         navigation.navigate("Home");
       })
@@ -195,7 +187,7 @@ function LoginScreen({ route, navigation }) {
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   return (
     <Container>
@@ -235,7 +227,7 @@ function LoginScreen({ route, navigation }) {
               type={showPassword ? "text" : "password"}
               w={{
                 base: "100%",
-                md: "25%",
+                md: "100%",
               }}
               mb={4}
               h={verticalScale(55)}
@@ -301,10 +293,7 @@ function LoginScreen({ route, navigation }) {
                 ¿Te olvidaste la contraseña?
               </Text>
             </Button>
-            <Button
-              onPress={() => loginVisit()}
-              variant="link"
-            >
+            <Button onPress={() => loginVisit()} variant="link">
               <Text
                 style={[
                   fontStyles.poppins400,
@@ -351,7 +340,7 @@ function LoginScreen({ route, navigation }) {
 
             <Box flexDirection={"row"} justifyContent={"center"}>
               <Box justifyContent={"center"}>
-                <Text color="#797979">¿No tenés una cuenta?</Text>
+                <Text style={{ color: "#797979" }}>¿No tenés una cuenta?</Text>
               </Box>
               <Button
                 px={1.5}

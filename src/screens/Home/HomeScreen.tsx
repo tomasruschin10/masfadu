@@ -518,7 +518,7 @@ function HomeScreen({ route, navigation }) {
               style={{
                 flex: 1,
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 backgroundColor: "#F5F6FA",
                 paddingHorizontal: verticalScale(20),
                 paddingVertical: verticalScale(15),
@@ -531,7 +531,6 @@ function HomeScreen({ route, navigation }) {
                   style={[
                     {
                       flex: 1,
-                      // backgroundColor: "#b1b1b3",
                       alignItems: "center",
                       justifyContent: "center",
                       padding: 2,
@@ -547,7 +546,6 @@ function HomeScreen({ route, navigation }) {
                   style={[
                     {
                       flex: 1,
-                      // backgroundColor: "#3A71E1",
                       alignItems: "center",
                       color: "#797979",
                       fontSize: moderateScale(14),
@@ -562,11 +560,9 @@ function HomeScreen({ route, navigation }) {
               </View>
               <View
                 style={{
-                  flex: 1,
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginRight: verticalScale(-50),
                 }}
               >
                 <DefaultButton
@@ -579,7 +575,6 @@ function HomeScreen({ route, navigation }) {
                   textStyle={{
                     ...fontStyles.poppins500,
                     color: "#F5F5F5",
-                    marginTop: verticalScale(6),
                     fontWeight: "500",
                   }}
                   buttonStyle={{

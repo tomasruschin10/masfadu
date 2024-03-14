@@ -64,12 +64,15 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
         addButtonUrl={"CreateNewThread"}
       >
         <ScrollView keyboardShouldPersistTaps={"handled"}>
-          <HStack
-            mt={0}
-            mb={3}
-            pr={4}
-            alignItems={"center"}
-            justifyContent="center"
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 0,
+              marginBottom: 10,
+              paddingRight: 4,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             <MaterialIcons
               name={"search"}
@@ -77,22 +80,22 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               color="gray"
               style={{
                 position: "absolute",
-                left: "8.8%",
+                left: "6%",
                 zIndex: 1,
                 marginRight: 4,
               }}
             />
             <Input
-              style={{ marginLeft: "8%", borderRadius: 8 }}
+              style={{ marginLeft: "4%", borderRadius: 8 }}
               onChangeText={(text) => setSearch(text)}
               value={search}
               isDisabled={allSubjects.length > 0 ? false : true}
               rounded={8}
-              w={{ base: "80%", md: "25%" }}
+              w={{ base: "90%", md: "88%" }}
               pb="1"
               type={"text"}
               ml={4}
-              placeholder="Buscar "
+              placeholder="Buscar"
               placeholderTextColor="#666666"
             />
             <IconButton
@@ -110,7 +113,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
                 />
               }
             />
-          </HStack>
+          </View>
 
           {filteredSubjects.length === 0 && loading === false && (
             <Box mx={8}>

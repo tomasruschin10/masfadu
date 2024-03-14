@@ -1,4 +1,4 @@
-import { Box, Text } from "native-base";
+import { Box } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -7,6 +7,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
+  Text,
   ViewStyle,
 } from "react-native";
 import Collapsible from "react-native-collapsible";
@@ -71,7 +72,6 @@ const SimpleAccordion = ({
             <View>
               <Text
                 allowFontScaling={false}
-                bold={true}
                 style={{
                   fontSize: moderateScale(14),
                   fontWeight: "bold",
@@ -109,12 +109,12 @@ const SimpleAccordion = ({
               alignItems={"center"}
             >
               <Text
-                color={"#797979"}
                 style={{
                   padding: 3,
                   marginHorizontal: 5,
+                  color: "#797979",
+                  fontSize: 12,
                 }}
-                fontSize={12}
               >
                 {isCollapsed ? "Ver más" : "Ver menos"}
               </Text>
@@ -148,7 +148,6 @@ const SimpleAccordion = ({
 };
 
 const styles = StyleSheet.create({
-  nothing: {},
   arrows: {
     height: 32,
     width: 32,

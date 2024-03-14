@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import { Box, Text, HStack } from "native-base";
+import { Box, HStack } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
+import { Text } from "react-native";
 
 import { SimpleAccordion } from "../../components/SimpleAccordion";
-import { ModalIcon, ModalNotes, ModalWarning, AddChairModal, AddScore, AddStarsModal, ModalSummary } from "./Modals";
+import {
+  ModalIcon,
+  ModalNotes,
+  ModalWarning,
+  AddChairModal,
+  AddScore,
+  AddStarsModal,
+  ModalSummary,
+} from "./Modals";
 import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,10 +20,10 @@ import { moderateScale } from "../../utils/media.screens";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
-  const [showChairModal, setShowChairModal] = useState(false)
-  const [showSummaryModal, setShowSummayModal] = useState(false)
-  const [showStarsModal, setShowStarsModal] = useState(false)
-  const [showScoreModal, setShowScoreModal] = useState(false)
+  const [showChairModal, setShowChairModal] = useState(false);
+  const [showSummaryModal, setShowSummayModal] = useState(false);
+  const [showStarsModal, setShowStarsModal] = useState(false);
+  const [showScoreModal, setShowScoreModal] = useState(false);
   const userdata = useSelector((state: any) => state.user.userdata);
   const materias = [];
   subjCategory.data.forEach((item) => {
@@ -146,11 +155,15 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               Materias aprobadas
             </Text>
             <Text
-              style={fontStyles.poppins600}
-              color={"#171717"}
-              fontSize={moderateScale(26)}
-              mt={2}
-              py={3}
+              style={[
+                fontStyles.poppins600,
+                {
+                  color: "#171717",
+                  fontSize: moderateScale(26),
+                  marginTop: 2,
+                  paddingVertical: 3,
+                },
+              ]}
             >
               {`${subjCategory.on}/${subjCategory.total}`}
             </Text>
@@ -179,11 +192,11 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                       {
                         color: "#646464",
                         fontSize: 25,
+                        textAlign: "center",
+                        marginTop: 3,
+                        paddingVertical: 3,
                       },
                     ]}
-                    textAlign={"center"}
-                    mt={3}
-                    py={3}
                   >
                     {subjCategory.prom}
                   </Text>
@@ -200,10 +213,11 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
               colors={["#CCCED1", "#B8B8B8", "#A4A4A4", "#E5E91F"]}
               style={{
                 height: "100%",
-                width: `${subjCategory.total !== 0
-                  ? (100 / subjCategory.total) * subjCategory.on
-                  : (100 / 1) * subjCategory.on
-                  }%`,
+                width: `${
+                  subjCategory.total !== 0
+                    ? (100 / subjCategory.total) * subjCategory.on
+                    : (100 / 1) * subjCategory.on
+                }%`,
                 borderRadius: 8,
               }}
             />

@@ -358,7 +358,7 @@ function RegisterScreen({ route, navigation }) {
             >
               <Input
                 onChangeText={(text) => setPassword(text)}
-                w={{ base: "100%", md: "75%" }}
+                w={{ base: "100%", md: "100%" }}
                 h={verticalScale(55)}
                 px={3}
                 placeholderTextColor="#797979"
@@ -393,7 +393,7 @@ function RegisterScreen({ route, navigation }) {
               }}
             >
               <Input
-                w={{ base: "100%", md: "75%" }}
+                w={{ base: "100%", md: "100%" }}
                 h={verticalScale(55)}
                 px={3}
                 placeholderTextColor="#797979"

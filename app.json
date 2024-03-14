@@ -21,12 +21,13 @@
     "ios": {
       "bundleIdentifier": "dev.millionsolutions.faduapp",
       "supportsTablet": true,
-      "buildNumber": "20",
+      "buildNumber": "23",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
         "ASAuthorizationAppleIDButton": "Continuar con apple",
-        "jsEngine": "hermes"
+        "jsEngine": "hermes",
+        "UIRequiredDeviceCapabilities": ["armv7", "arm64"]
       }
     },
     "android": {
@@ -59,6 +60,11 @@
         }
       ]
     ],
-    "runtimeVersion": "1.0.0"
+    "runtimeVersion": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "34582600-811f-4183-b0a0-861c46c64826"
+      }
+    }
   }
 }

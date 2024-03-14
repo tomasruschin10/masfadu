@@ -567,7 +567,7 @@ function CreateNewThread({ route, navigation }) {
               </>
             )}
           </Box> */}
-          <HStack space={3} mx={6} my={5} alignItems={"center"}>
+          {/* <HStack space={3} mx={6} my={5} alignItems={"center"}>
             {form.anonymous === 0 ? (
               <TouchableOpacity
                 onPress={() => setForm({ ...form, anonymous: 1 })}
@@ -596,7 +596,7 @@ function CreateNewThread({ route, navigation }) {
             >
               <FontAwesome5 name="question-circle" size={15} color="#EEEEEE" />
             </TouchableOpacity>
-          </HStack>
+          </HStack> */}
 
           <Box alignItems="center" mb={"32"}>
             <Button
