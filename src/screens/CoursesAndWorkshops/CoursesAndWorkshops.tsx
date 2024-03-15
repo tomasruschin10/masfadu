@@ -99,14 +99,14 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
               name={"search"}
               size={17}
               color="gray"
-              style={{ position: "absolute", left: "3%", zIndex: 1 }}
+              style={{ position: "absolute", left: "2%", zIndex: 1 }}
             />
             <Input
               rounded={8}
-              style={{ marginLeft: "8%" }}
+              style={{ marginLeft: "5%" }}
               fontSize={12.27}
               onChangeText={(text) => setSearchText(text)}
-              w={{ base: "87%", md: "25%" }}
+              w={{ base: "87%", md: "93%" }}
               pb="1"
               type={"text"}
               placeholder={"Buscar"}

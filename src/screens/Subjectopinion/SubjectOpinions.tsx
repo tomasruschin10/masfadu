@@ -82,7 +82,6 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
                 position: "absolute",
                 left: "6%",
                 zIndex: 1,
-                marginRight: 4,
               }}
             />
             <Input
@@ -91,7 +90,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               value={search}
               isDisabled={allSubjects.length > 0 ? false : true}
               rounded={8}
-              w={{ base: "90%", md: "88%" }}
+              w={{ base: "80%", md: "88%" }}
               pb="1"
               type={"text"}
               ml={4}

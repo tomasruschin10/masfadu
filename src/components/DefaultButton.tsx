@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(14),
     paddingHorizontal: "5%",
     alignItems: "center",
+    justifyContent: 'center',
     alignContent: "center",
     fontWeight: "300",
   },
@@ -75,8 +76,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 13,
     textAlign: "center",
-    marginTop: 13,
-    fontWeight: "semibold",
+    fontWeight: "500",
     letterSpacing: 0.5,
   },
 });

@@ -598,7 +598,7 @@ function CreateNewThread({ route, navigation }) {
             </TouchableOpacity>
           </HStack> */}
 
-          <Box alignItems="center" mb={"32"}>
+          <Box alignItems="center" mb={"32"} px={5}>
             <Button
               _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
               _text={{ fontSize: 14, fontWeight: "600" }}
@@ -613,7 +613,7 @@ function CreateNewThread({ route, navigation }) {
               }
               isLoading={loading}
               onPress={() => setShowModal(true)}
-              w="90%"
+              w="100%"
               rounded={8}
             >
               Publicar

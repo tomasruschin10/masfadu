@@ -575,14 +575,16 @@ function HomeScreen({ route, navigation }) {
                   textStyle={{
                     ...fontStyles.poppins500,
                     color: "#F5F5F5",
+                    fontSize: moderateScale(12),
                     fontWeight: "500",
                   }}
                   buttonStyle={{
                     height: horizontalScale(30),
                     width: "100%",
                     alignItems: "center",
+                    justifyContent: 'center',
                     borderRadius: moderateScale(8),
-                    paddingHorizontal: horizontalScale(35),
+                    paddingHorizontal: horizontalScale(30),
                   }}
                   title="Buscar"
                 />

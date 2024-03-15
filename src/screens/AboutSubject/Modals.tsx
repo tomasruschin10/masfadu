@@ -806,9 +806,6 @@ export function ModalWarning2({ showWarning, setShowWarning }) {
                 alignItems: "center",
                 borderRadius: moderateScale(8),
               }}
-              textStyle={{
-                marginTop: verticalScale(10),
-              }}
               title="Entiendo, voy a respetar"
               callBack={() => closeModal()}
             />
@@ -950,31 +947,24 @@ export function DiscardDraftModal({
         <Modal.Footer justifyContent="center">
           <DefaultButton
             buttonStyle={{
-              height: horizontalScale(40),
+              height: horizontalScale(30),
               backgroundColor: "#797979",
               marginBottom: 20,
-              paddingHorizontal: horizontalScale(45),
-              width: 300,
-              alignItems: "center",
+              paddingHorizontal: horizontalScale(20),
+              width: 280,
               borderRadius: moderateScale(8),
-            }}
-            textStyle={{
-              marginTop: verticalScale(10),
             }}
             title="Cancelar"
             callBack={() => onCancel()}
           />
           <DefaultButton
             buttonStyle={{
-              height: horizontalScale(40),
+              height: horizontalScale(30),
               backgroundColor: "#DA673A",
-              paddingHorizontal: horizontalScale(45),
-              width: 300,
+              paddingHorizontal: horizontalScale(20),
+              width: 280,
               alignItems: "center",
               borderRadius: moderateScale(8),
-            }}
-            textStyle={{
-              marginTop: verticalScale(10),
             }}
             title="Confirmar y Perder Borrador"
             callBack={() => onConfirm()}

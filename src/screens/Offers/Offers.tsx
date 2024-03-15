@@ -263,14 +263,14 @@ function Offers({ route, navigation }) {
           name={"search"}
           size={17}
           color="gray"
-          style={{ position: "absolute", left: "8.8%", zIndex: 1 }}
+          style={{ position: "absolute", left: "5%", zIndex: 1 }}
         />
 
         <Input
-          style={{ marginLeft: "10%" }}
+          style={{ marginLeft: "6%" }}
           onChangeText={(text) => setSearch(text)}
           value={search}
-          w={{ base: "80%", md: "25%" }}
+          w={{ base: "80%", md: "85%" }}
           pb="1"
           type={"text"}
           placeholder="Buscar"

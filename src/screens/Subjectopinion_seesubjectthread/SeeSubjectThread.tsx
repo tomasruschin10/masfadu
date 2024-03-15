@@ -379,17 +379,16 @@ function SeeSubjectThread({ route, navigation }) {
                   color="gray"
                   style={{
                     position: "absolute",
-                    left: "8.8%",
+                    left: "6.5%",
                     zIndex: 1,
-                    marginRight: 4,
                   }}
                 />
                 <Input
-                  style={{ marginLeft: "8%", borderRadius: 8 }}
+                  style={{ marginLeft: "4%", borderRadius: 8 }}
                   onChangeText={(text) => handleSearch(text)}
                   value={searchText}
                   rounded={8}
-                  w={{ base: "80%", md: "25%" }}
+                  w={{ base: "82%", md: "91%" }}
                   pb="1"
                   type={"text"}
                   ml={4}
