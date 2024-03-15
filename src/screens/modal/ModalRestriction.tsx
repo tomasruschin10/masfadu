@@ -120,9 +120,6 @@ export default function ModalRestriction ({navigation}) {
                 alignItems: "center",
                 borderRadius: moderateScale(8),
               }}
-              textStyle={{
-                marginTop: verticalScale(10),
-              }}
               title="Iniciar sesión"
               callBack={() => handleModal('Login')}
             />
@@ -143,7 +140,6 @@ export default function ModalRestriction ({navigation}) {
                   borderWidth: 2
                 }}
                 textStyle={{
-                  marginTop: verticalScale(10),
                   color: "#DA673A",
                 }}
                 title="Registrarse"
