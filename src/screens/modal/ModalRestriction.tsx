@@ -50,7 +50,6 @@ export default function ModalRestriction ({navigation}) {
     dispatch(updateModal(false))
   }
   const isActive = useSelector((state:any) => state.modal)
-  console.log(isActive)
 
   useEffect(() => {
     if (isActive !== modalVisible) {
@@ -110,18 +109,19 @@ export default function ModalRestriction ({navigation}) {
             <Button.Group style={{
               display: 'flex',
               flexDirection: 'column'
-            }} space={2} my={"1%"}>
+            }} space={0} my={"1%"}>
             <DefaultButton
               buttonStyle={{
                 height: horizontalScale(40),
                 backgroundColor: "#DA673A",
                 paddingHorizontal: horizontalScale(45),
-                width: 300,
+                minWidth: '100%',
                 alignItems: "center",
                 borderRadius: moderateScale(8),
               }}
               textStyle={{
                 marginTop: verticalScale(10),
+                with: '100%'
               }}
               title="Iniciar sesión"
               callBack={() => handleModal('Login')}
@@ -130,17 +130,17 @@ export default function ModalRestriction ({navigation}) {
             <Button.Group style={{
               display: 'flex',
               flexDirection: 'column'
-            }} space={2} my={"1%"}>
+            }} space={1} my={"1%"}>
               <DefaultButton
                 buttonStyle={{
                   height: horizontalScale(40),
                   backgroundColor: "#FFF",
                   paddingHorizontal: horizontalScale(45),
-                  width: 300,
+                  minWidth: '100%',
                   alignItems: "center",
                   borderRadius: moderateScale(8),
                   borderColor: "#DA673A",
-                  borderWidth: 2
+                  borderWidth: 2,
                 }}
                 textStyle={{
                   marginTop: verticalScale(10),

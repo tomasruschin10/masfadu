@@ -233,10 +233,6 @@ function LoginScreen({ route, navigation }) {
               value={password}
               variant="unstyled"
               type={showPassword ? "text" : "password"}
-              w={{
-                base: "100%",
-                md: "25%",
-              }}
               mb={4}
               h={verticalScale(55)}
               rounded={8}
