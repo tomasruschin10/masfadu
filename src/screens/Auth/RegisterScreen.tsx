@@ -1,10 +1,17 @@
 import * as React from "react";
 import { Box, Button, Icon, Image, Input, VStack } from "native-base";
-import { ScrollView, TouchableWithoutFeedback } from "react-native";
+import {
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+  Platform,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
-import { MaterialIcons } from "@expo/vector-icons";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import Container from "../../components/Container";
 import { HeaderBack } from "../../components/Header";
@@ -17,9 +24,9 @@ import { getUserDataWithToken } from "../../utils/storage";
 import { postServices } from "../../utils/hooks/services";
 import { isValidEmail, isValidPassword } from "../../utils/validators";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 import * as WebBrowser from "expo-web-browser";
+import * as AppleAuthentication from "expo-apple-authentication";
 import * as Google from "expo-auth-session/providers/google";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -231,10 +238,71 @@ function RegisterScreen({ route, navigation }) {
     }
   };
 
+  const handleAppleLogin = async () => {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        ],
+      });
+      try {
+        const { email } = jwtDecode(credential.identityToken);
+        setIsLoading(true);
+        const { data, status } = await postServices("auth/register", {
+          email: email,
+          emailError: null,
+          password: credential.user,
+          passwordError: null,
+          name: credential.fullName.givenName,
+          lastname: credential.fullName.familyName,
+          apple_user: true,
+          role_id: 2,
+          username: generateUsername(
+            credential.fullName.givenName,
+            credential.fullName.familyName
+          ),
+        });
+        if (status === 200) {
+          dispatch(updatetoken(data.token));
+          getUserDataWithToken(data.token);
+          let userData: any = jwtDecode(data.token);
+          if (userData.userData.career) {
+            navigation.navigate("Home");
+          } else {
+            navigation.navigate("Onboarding1");
+          }
+          dispatch(
+            updateMessage({
+              body: "Registro completado con éxito",
+              open: true,
+              type: "success",
+            })
+          );
+        }
+      } catch (error) {
+        dispatch(
+          updateMessage({
+            body:
+              (error.response.data ? error.response.data.message : "") +
+              ", por favor elegí otro",
+            open: true,
+            type: "danger",
+          })
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Container>
       <HeaderBack />
-      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
         extraScrollHeight={30}
       >
         <VStack px={5} pb={5}>
@@ -250,7 +318,7 @@ function RegisterScreen({ route, navigation }) {
             <Box
               mb={4}
               style={{
-                borderColor: 'transparent',
+                borderColor: "transparent",
                 borderWidth: 1,
                 borderRadius: moderateScale(8),
                 flexDirection: "row",
@@ -269,11 +337,10 @@ function RegisterScreen({ route, navigation }) {
               />
             </Box>
 
-
             <Box
               mb={4}
               style={{
-                borderColor: 'transparent',
+                borderColor: "transparent",
                 borderWidth: 1,
                 borderRadius: moderateScale(8),
                 flexDirection: "row",
@@ -295,7 +362,7 @@ function RegisterScreen({ route, navigation }) {
             <Box
               mb={4}
               style={{
-                borderColor: 'transparent',
+                borderColor: "transparent",
                 borderWidth: 1,
                 borderRadius: moderateScale(8),
                 flexDirection: "row",
@@ -320,8 +387,8 @@ function RegisterScreen({ route, navigation }) {
                   form.emailError === true
                     ? "red"
                     : form.email
-                      ? "green"
-                      : "transparent",
+                    ? "green"
+                    : "transparent",
                 borderWidth: 1,
                 borderRadius: moderateScale(8),
                 flexDirection: "row",
@@ -346,8 +413,8 @@ function RegisterScreen({ route, navigation }) {
                   form.passwordError === true
                     ? "red"
                     : form.password
-                      ? "green"
-                      : "transparent",
+                    ? "green"
+                    : "transparent",
                 borderWidth: 1,
                 height: verticalScale(55),
                 borderRadius: moderateScale(8),
@@ -383,7 +450,7 @@ function RegisterScreen({ route, navigation }) {
             <Box
               mb={4}
               style={{
-                borderColor: 'transparent',
+                borderColor: "transparent",
                 borderWidth: 1,
                 height: verticalScale(55),
                 borderRadius: moderateScale(8),
@@ -431,32 +498,64 @@ function RegisterScreen({ route, navigation }) {
           <Box py={2} px={5}>
             <Hr text={"ó"} />
           </Box>
-          <Box alignItems="center">
+          <View style={{ flexDirection: "row", justifyContent: 'space-between'}}>
             <Button
               mb={5}
-              onPress={() => promptAsync()}
-              w="100%"
-              backgroundColor={"#FFFFFF"}
-              isLoading={isLoading}
+              w="48%"
               h={verticalScale(55)}
               rounded={moderateScale(8)}
+              backgroundColor={"#FFFFFF"}
+              onPress={() => promptAsync()}
+              _spinner={{ color: "black" }}
+              _text={{
+                color: "#797979",
+                fontSize: moderateScale(13),
+                fontWeight: "400",
+              }}
+              colorScheme={"ligth"}
+              color={"darkText"}
               leftIcon={
                 <TouchableWithoutFeedback>
                   <Image
                     source={require("../../../assets/icons/google.png")}
                     size={5}
-                    mr="2"
                     alt={"logo de google"}
                   />
                 </TouchableWithoutFeedback>
               }
-              _text={{ color: "darkText" }}
-              colorScheme={"ligth"}
-              color={"darkText"}
             >
-              Registrate con Google
+              Iniciar sesión
             </Button>
-          </Box>
+            {Platform.OS === "ios" && (
+              <TouchableOpacity
+                style={{
+                  width: "48%",
+                  height: verticalScale(55),
+                  backgroundColor: "black",
+                  borderRadius: moderateScale(8),
+                  alignItems: "center",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  paddingHorizontal: 10,
+                }}
+                onPress={handleAppleLogin}
+              >
+                <AntDesign name="apple1" size={20} color="white" />
+                <Text
+                  style={{
+                    color: "white",
+                    marginLeft: 5,
+                    fontSize: moderateScale(14),
+                    fontWeight: "400",
+                    alignItems: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  Iniciar sesión
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </VStack>
       </KeyboardAwareScrollView>
     </Container>

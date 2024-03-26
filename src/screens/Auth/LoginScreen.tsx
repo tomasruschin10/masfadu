@@ -8,6 +8,7 @@ import { getUserDataWithToken } from "../../utils/storage";
 import { useDispatch, useSelector } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
+import { AntDesign } from "@expo/vector-icons";
 
 import {
   ScrollView,
@@ -16,9 +17,11 @@ import {
   PixelRatio,
   TouchableOpacity,
   StyleSheet,
+  Platform,
   Text,
 } from "react-native";
 import jwtDecode from "jwt-decode";
+import * as AppleAuthentication from "expo-apple-authentication";
 
 import { fontStyles } from "../../utils/colors/fontColors";
 import { moderateScale, verticalScale } from "../../utils/media.screens";
@@ -189,6 +192,44 @@ function LoginScreen({ route, navigation }) {
       });
   };
 
+  const handleAppleLogin = async () => {
+    const credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+      ],
+    });
+    const { email } = jwtDecode(credential.identityToken);
+    setLoading(true);
+    postServices("auth/login", {
+      userOrEmail: email,
+      password: credential.user,
+    })
+      .then((res: any) => {
+        showAlert("success", "Inicio correcto!");
+        dispatch(updatetoken(res.data.token));
+        getUserDataWithToken(res.data.token);
+        let data: any = jwtDecode(res.data.token);
+        if (data.userData.career) {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Onboarding1");
+        }
+      })
+      .catch((e) => {
+        dispatch(
+          updateMessage({
+            body: "No existe una cuenta con este Apple id.",
+            open: true,
+            type: "danger",
+          })
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <Container>
       <NoHeader />
@@ -308,35 +349,67 @@ function LoginScreen({ route, navigation }) {
             </Button>
           </Box>
 
-          <Box pt={PixelRatio.roundToNearestPixel(50)}>
-            <Button
-              mb={5}
-              w="100%"
-              h={verticalScale(55)}
-              rounded={moderateScale(8)}
-              backgroundColor={"#FFFFFF"}
-              onPress={() => promptAsync()}
-              _spinner={{ color: "black" }}
-              _text={{
-                color: "#797979",
-                fontSize: moderateScale(14),
-                fontWeight: "400",
-              }}
-              colorScheme={"ligth"}
-              color={"darkText"}
-              leftIcon={
-                <TouchableWithoutFeedback>
-                  <Image
-                    source={require("../../../assets/icons/google.png")}
-                    size={5}
-                    mr="2"
-                    alt={"logo de google"}
-                  />
-                </TouchableWithoutFeedback>
-              }
+          <Box pt={PixelRatio.roundToNearestPixel(5)}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              Iniciar Sesión con Google
-            </Button>
+              <Button
+                mb={5}
+                w="48%" // Ajusta el ancho según sea necesario
+                h={verticalScale(55)}
+                rounded={moderateScale(8)}
+                backgroundColor={"#FFFFFF"}
+                onPress={() => promptAsync()}
+                _spinner={{ color: "black" }}
+                _text={{
+                  color: "#797979",
+                  fontSize: moderateScale(13),
+                  fontWeight: "400",
+                }}
+                colorScheme={"ligth"}
+                color={"darkText"}
+                leftIcon={
+                  <TouchableWithoutFeedback>
+                    <Image
+                      source={require("../../../assets/icons/google.png")}
+                      size={5}
+                      alt={"logo de google"}
+                    />
+                  </TouchableWithoutFeedback>
+                }
+              >
+                Iniciar sesión
+              </Button>
+              {Platform.OS === "ios" && (
+                <TouchableOpacity
+                  style={{
+                    width: "48%",
+                    height: verticalScale(55),
+                    backgroundColor: "black",
+                    borderRadius: moderateScale(8),
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    paddingHorizontal: 10,
+                  }}
+                  onPress={handleAppleLogin}
+                >
+                  <AntDesign name="apple1" size={20} color="white" />
+                  <Text
+                    style={{
+                      color: "white",
+                      marginLeft: 5,
+                      fontSize: moderateScale(14),
+                      fontWeight: "400",
+                      alignItems: "center",
+                      alignSelf: "center",
+                    }}
+                  >
+                    Iniciar sesión
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
 
             <Box flexDirection={"row"} justifyContent={"center"}>
               <Box justifyContent={"center"}>
