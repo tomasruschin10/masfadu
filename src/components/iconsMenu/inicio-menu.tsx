@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 
 //Importamos los componentes del package
-import Svg, { G, Path, SvgCss } from "react-native-svg";
+import Svg, { G, Path, SvgCss } from "react-native-svg/css";
 
 const xmlInicio = (color) => {
-	return `
+  return `
   <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
   <path d="M7.03467 21.8141L28.1023 5.42822L49.1699 21.8141V47.5635C49.1699 48.8051 48.6767 49.9959 47.7987 50.8739C46.9207 51.7519 45.7299 52.2452 44.4882 52.2452H11.7164C10.4747 52.2452 9.28389 51.7519 8.4059 50.8739C7.52792 49.9959 7.03467 48.8051 7.03467 47.5635V21.8141Z" stroke=${color} stroke-width="4.01288" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M21.0796 52.2449V28.8364H35.1247V52.2449" stroke=${color} stroke-width="4.01288" stroke-linecap="round" stroke-linejoin="round"/>
@@ -14,7 +14,7 @@ const xmlInicio = (color) => {
 };
 
 const xmlMateria = (color) => {
-	return `
+  return `
   <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
   <path d="M5.11865 7.76855H19.1637C21.6471 7.76855 24.0287 8.75505 25.7846 10.511C27.5406 12.267 28.5271 14.6486 28.5271 17.1319V49.9038C28.5271 48.0413 27.7872 46.2551 26.4703 44.9381C25.1533 43.6211 23.3671 42.8812 21.5046 42.8812H5.11865V7.76855Z" stroke=${color} stroke-width="4.01288" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M51.9358 7.76855H37.8907C35.4074 7.76855 33.0258 8.75505 31.2698 10.511C29.5138 12.267 28.5273 14.6486 28.5273 17.1319V49.9038C28.5273 48.0413 29.2672 46.2551 30.5842 44.9381C31.9012 43.6211 33.6874 42.8812 35.5499 42.8812H51.9358V7.76855Z" stroke=${color} stroke-width="4.01288" stroke-linecap="round" stroke-linejoin="round"/>
@@ -23,7 +23,7 @@ const xmlMateria = (color) => {
 };
 
 const xmlPublica = (color) => {
-	return `
+  return `
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 25.6 25.6" style="enable-background:new 0 0 25.6 25.6;" xml:space="preserve">
 <style type="text/css">
@@ -227,7 +227,7 @@ const xmlPublica = (color) => {
 };
 
 const xmlOpiniones = (color) => {
-	return `
+  return `
   <svg xmlns="http://www.w3.org/2000/svg" width="58" height="57" viewBox="0 0 58 57" fill="none">
   <path d="M29.0318 52.2452C41.9599 52.2452 52.4402 41.7648 52.4402 28.8367C52.4402 15.9085 41.9599 5.42822 29.0318 5.42822C16.1036 5.42822 5.62329 15.9085 5.62329 28.8367C5.62329 41.7648 16.1036 52.2452 29.0318 52.2452Z" stroke=${color} stroke-width="4.01288" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M19.6685 33.5181C19.6685 33.5181 23.1797 38.1998 29.0318 38.1998C34.884 38.1998 38.3952 33.5181 38.3952 33.5181" stroke=${color} stroke-width="4.01288" stroke-linecap="round" stroke-linejoin="round"/>
@@ -237,9 +237,8 @@ const xmlOpiniones = (color) => {
     `;
 };
 
-
 const xmlMenu = (color) => {
-	return `
+  return `
     <svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" fill="none">
       <rect  y="10" width="57" height="6" rx="3" fill=${color}/>
       <rect y="25" width="57" height="6" rx="3" fill=${color}/>
@@ -248,20 +247,45 @@ const xmlMenu = (color) => {
   `;
 };
 export const InicioMenu = ({ color }) => (
-	<SvgCss style={{ marginBottom: 3 }} xml={xmlInicio(color)} width="90%" height="90%" />
+  <SvgCss
+    style={{ marginBottom: 3 }}
+    xml={xmlInicio(color)}
+    width="90%"
+    height="90%"
+  />
 );
 
 export const InicioMateria = ({ color }) => (
-	<SvgCss style={{ marginBottom: 3 }} xml={xmlMateria(color)} width="90%" height="90%" />
+  <SvgCss
+    style={{ marginBottom: 3 }}
+    xml={xmlMateria(color)}
+    width="90%"
+    height="90%"
+  />
 );
 
 export const InicioPublica = ({ color }) => (
-	<SvgCss style={{ marginBottom: 3 }} xml={xmlPublica(color)} width="90%" height="90%" />
+  <SvgCss
+    style={{ marginBottom: 3 }}
+    xml={xmlPublica(color)}
+    width="90%"
+    height="90%"
+  />
 );
 
 export const InicioOpiniones = ({ color }) => (
-	<SvgCss style={{ marginBottom: 3 }} xml={xmlOpiniones(color)} width="90%" height="90%" />
-)
+  <SvgCss
+    style={{ marginBottom: 3 }}
+    xml={xmlOpiniones(color)}
+    width="90%"
+    height="90%"
+  />
+);
 export const MenuInicio = ({ color }) => (
-	<SvgCss style={{ marginBottom: 3 }} xml={xmlMenu(color)} width="90%" height="90%" />
-) 
+  <SvgCss
+    style={{ marginBottom: 3 }}
+    xml={xmlMenu(color)}
+    width="90%"
+    height="90%"
+  />
+);
