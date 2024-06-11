@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, HStack } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import { Text } from "react-native";
@@ -82,15 +82,9 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
     <>
       <ModalIcon showIcon={showIcon} setShowIcon={setShowIcon} />
       <ModalWarning
-        updater={updater}
-        setUpdater={setUpdater}
-        showModal={setShowChairModal}
         currentSubj={currentSubj}
         showWarning={showWarning}
-        setShowNotes={setShowNotes}
         setShowWarning={setShowWarning}
-        infoUserSubj={infoUserSubj}
-        setInfoUserSubj={setInfoUserSubj}
       />
       <AddChairModal
         isOpen={showChairModal}
@@ -198,7 +192,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                       },
                     ]}
                   >
-                    {subjCategory.prom}
+                    {subjCategory.prom > 0 ? subjCategory.prom : "-"}
                   </Text>
                 </Box>
               ) : null}
@@ -262,7 +256,9 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 setShowNotes={setShowNotes}
                 setShowWarning={setShowWarning}
                 setCurrentSubj={setCurrentSubj}
+                currentSubj={currentSubj}
                 infoUserSubj={infoUserSubj}
+                setShowChairModal={setShowChairModal}
                 setInfoUserSubj={setInfoUserSubj}
               />
             ))}

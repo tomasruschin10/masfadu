@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Text, HStack, Select, CheckIcon, VStack } from "native-base";
 import {
   Image,
@@ -24,6 +24,8 @@ function AboutSubject_Logic({
   subject,
   nav,
   setShowWarning,
+  currentSubj,
+  setShowChairModal,
   setCurrentSubj,
   infoUserSubj,
   setInfoUserSubj,
@@ -50,12 +52,12 @@ function AboutSubject_Logic({
   const [showSelectiveSubject, setShowSelectiveSubject] = useState(false);
   const [selectiveSubject, setSelectiveSubject] = useState();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.userdata);
-  const isVisit = user?.userRole[0]?.role?.name === "Visit";
+  const isVisit = user?.userRole?.[0]?.role?.name === "Visit";
   const handleRestriction = () => {
-    dispatch(updateModal(true))
-  }
+    dispatch(updateModal(true));
+  };
 
   const getSelectiveSubject = async () => {
     try {
@@ -269,8 +271,8 @@ function AboutSubject_Logic({
         }}
         onPress={() => {
           if (isVisit) {
-            handleRestriction()
-            return
+            handleRestriction();
+            return;
           }
           setInfoUserSubj({
             ...infoUserSubj,
@@ -320,10 +322,10 @@ function AboutSubject_Logic({
         <TouchableOpacity
           onPress={() => {
             if (isVisit) {
-              handleRestriction()
-              return
+              handleRestriction();
+              return;
             }
-            setShowWarning(true);
+            setShowChairModal(true);
             setCurrentSubj({ ...subject, dis: 1 });
           }}
         >
@@ -344,8 +346,8 @@ function AboutSubject_Logic({
           }}
           onPress={() => {
             if (isVisit) {
-              handleRestriction()
-              return
+              handleRestriction();
+              return;
             }
             setShowWarning(true);
             setCurrentSubj({ ...subject, dis: 0 });

@@ -459,13 +459,7 @@ export function ModalNotes({
 export function ModalWarning({
   showWarning,
   setShowWarning,
-  showModal,
   currentSubj,
-  setInfoUserSubj,
-  infoUserSubj,
-  setShowNotes,
-  setUpdater,
-  updater,
 }) {
   const [loading, setLoading] = useState(false);
   const userdata = useSelector((state: any) => state.user.userdata);
@@ -575,75 +569,29 @@ export function ModalWarning({
                   anterior
                 </Text>
               </Box>
-            ) : (
-              <Box
-                display={"flex"}
-                flexDirection={"row"}
-                justifyContent={"center"}
-                w={"100%"}
-              >
-                <Text fontSize={15}>
-                  ¿Querés agregar una nota en esta materia?
-                </Text>
-              </Box>
-            )}
+            ) : null}
           </FormControl>
           <Button.Group space={2} mt={2}>
-            {!currentSubj?.available ? (
-              <DefaultButton
-                buttonStyle={{
-                  backgroundColor: "#DA673A",
-                  borderRadius: moderateScale(8),
-                  height: verticalScale(45),
-                  width: 500,
-                  maxWidth: screenWidth - screenWidth / 5,
-                  // paddingTop: verticalScale(2)
-                }}
-                textStyle={{
-                  fontSize: moderateScale(14),
-                  fontWeight: "500",
-                  color: "white",
-                }}
-                containerStyle={{
-                  marginBottom: PixelRatio.roundToNearestPixel(15),
-                }}
-                title="Entiendo"
-                callBack={hideModal}
-              />
-            ) : (
-              <VStack space={3} w="full" px={6} mt={6}>
-                <Button
-                  borderRadius={8}
-                  py={4}
-                  px={6}
-                  w="100%"
-                  isLoading={loading}
-                  bg={"#DA673A"}
-                  _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
-                  _text={{ fontSize: 14, fontWeight: "600" }}
-                  onPress={() => {
-                    showModal(true);
-                    setShowWarning(false);
-                  }}
-                >
-                  Si
-                </Button>
-                <Button
-                  px={5}
-                  w="100%"
-                  variant={"outline"}
-                  colorScheme="gray"
-                  isLoading={loading}
-                  _text={{ fontSize: 14, fontWeight: "600" }}
-                  onPress={() => hideModal()}
-                  borderRadius={8}
-                  py={4}
-                  fontWeight="bold"
-                >
-                  No
-                </Button>
-              </VStack>
-            )}
+            <DefaultButton
+              buttonStyle={{
+                backgroundColor: "#DA673A",
+                borderRadius: moderateScale(8),
+                height: verticalScale(45),
+                width: 500,
+                maxWidth: screenWidth - screenWidth / 5,
+                // paddingTop: verticalScale(2)
+              }}
+              textStyle={{
+                fontSize: moderateScale(14),
+                fontWeight: "500",
+                color: "white",
+              }}
+              containerStyle={{
+                marginBottom: PixelRatio.roundToNearestPixel(15),
+              }}
+              title="Entiendo"
+              callBack={hideModal}
+            />
           </Button.Group>
         </Modal.Body>
       </Modal.Content>
@@ -1187,7 +1135,7 @@ export function AddScore({
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
           <Text fontSize={18} ml={2}>
-            Nota de cursada
+            Nota final
           </Text>
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
