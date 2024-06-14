@@ -117,6 +117,7 @@ function SeeSubjectThread({ route, navigation }) {
   const handleFilterByProfessor = (text) => {
     setSelectedChair(text);
     setShowChairsFilters(false);
+    setShowRatings(!showRatings);
 
     if (text.trim() === "") {
       setFilteredOpinions(allOpinions);
@@ -475,7 +476,7 @@ function SeeSubjectThread({ route, navigation }) {
                     alignItems: "center",
                     justifyContent: "space-between",
                     backgroundColor: "#F4F6F9",
-                    width: "77%",
+                    width: "100%",
                     paddingHorizontal: 10,
                     marginBottom: 10,
                     height: 60,
@@ -511,24 +512,6 @@ function SeeSubjectThread({ route, navigation }) {
                       </Text>
                       <Entypo name="chevron-down" size={25} color="#9A9A9A" />
                     </>
-                  )}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  disabled={!chairs}
-                  onPress={() => setShowRatings(!showRatings)}
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: showRatings ? "#E85E29" : "#F4F6F9",
-                    width: "20%",
-                    height: 60,
-                    borderRadius: 4,
-                  }}
-                >
-                  {showRatings ? (
-                    <AntDesign name="star" size={24} color="white" />
-                  ) : (
-                    <AntDesign name="staro" size={24} color="#9A9A9A" />
                   )}
                 </TouchableOpacity>
               </View>

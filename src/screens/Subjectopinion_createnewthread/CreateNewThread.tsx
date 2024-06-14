@@ -651,6 +651,18 @@ function CreateNewThread({ route, navigation }) {
                 >
                   <Button
                     isLoading={loading}
+                    _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+                    _text={{ fontSize: 14, fontWeight: "600" }}
+                    bg={"#DA673A"}
+                    onPress={sendForm}
+                    borderRadius={8}
+                    py={4}
+                    px={6}
+                  >
+                    Publicar
+                  </Button>
+                  <Button
+                    isLoading={loading}
                     _text={{ fontSize: 14, fontWeight: "600" }}
                     variant="outline"
                     colorScheme="gray"
@@ -662,18 +674,6 @@ function CreateNewThread({ route, navigation }) {
                     px={6}
                   >
                     Cancelar
-                  </Button>
-                  <Button
-                    isLoading={loading}
-                    _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
-                    _text={{ fontSize: 14, fontWeight: "600" }}
-                    bg={"#DA673A"}
-                    onPress={sendForm}
-                    borderRadius={8}
-                    py={4}
-                    px={6}
-                  >
-                    Publicar!
                   </Button>
                 </Button.Group>
               </Modal.Body>

@@ -51,13 +51,14 @@ function Anoffer({ route, navigation }) {
               }
               <Image
                 style={{
-                  height: 140,
+                  height: 180,
+                  maxHeight: 200,
                   width: "100%",
-                  // marginLeft: "25%",
                   borderRadius: 8,
                   marginBottom: "10%"
                 }}
                 alt="LOGO"
+                resizeMode={"cover"}
                 source={{
                   uri: image,
                 }}
