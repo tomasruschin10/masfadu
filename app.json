@@ -2,7 +2,7 @@
   "expo": {
     "name": "MuyFadu",
     "slug": "masfaduapp",
-    "version": "1.0.19",
+    "version": "1.0.21",
     "orientation": "portrait",
     "privacy": "unlisted",
     "scheme": "muyfaduapp",
@@ -23,7 +23,7 @@
       "supportsTablet": true,
       "deploymentTarget": "14.0",
       "usesAppleSignIn": true,
-      "buildNumber": "26",
+      "buildNumber": "29",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
