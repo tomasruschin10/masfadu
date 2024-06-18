@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Heading, HStack, ScrollView, Spinner, Text } from "native-base";
 import { useSelector } from "react-redux";
 
@@ -23,7 +23,11 @@ function AboutSubject({ route, navigation, value }) {
   const [menuShow, setMenu] = useState(false);
 
   useEffect(() => {
-    if ((user.userRole[0]?.role?.name === "Student" || user.userRole[0]?.role?.name === "Visit") && user.career) {
+    if (
+      (user.userRole[0]?.role?.name === "Student" ||
+        user.userRole[0]?.role?.name === "Visit") &&
+      user.career
+    ) {
       setLoading(true);
       getServices(`subject-category/all/${user.career.id}`)
         .then(({ data }: any) => {

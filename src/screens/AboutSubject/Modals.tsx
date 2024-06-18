@@ -456,11 +456,7 @@ export function ModalNotes({
   );
 }
 
-export function ModalWarning({
-  showWarning,
-  setShowWarning,
-  currentSubj,
-}) {
+export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
   const [loading, setLoading] = useState(false);
   const userdata = useSelector((state: any) => state.user.userdata);
   let dataItems: string[] = currentSubj?.subjectParents;
@@ -520,7 +516,7 @@ export function ModalWarning({
                   justifyContent={"center"}
                   p={2}
                   flexWrap={"wrap"}
-                  flexDirection={"column"} // Cambia la dirección del flujo a vertical
+                  flexDirection={"column"}
                 >
                   {arrSinDuplicaciones &&
                     arrSinDuplicaciones?.map((item, i) => (
@@ -533,7 +529,6 @@ export function ModalWarning({
                         <Text>-</Text>
                         <Text fontSize={10} textAlign={"left"}>
                           {" "}
-                          {/* Alinea el texto a la izquierda */}
                           {item.name}
                         </Text>
                       </Box>
@@ -953,11 +948,11 @@ export function AddChairModal({
         <Flex
           direction="row"
           alignItems="center"
-          justifyContent={"flex-start"}
+          justifyContent={"space-between"}
           mb={4}
         >
           <TouchableOpacity
-            style={{ marginLeft: 20, marginRight: 25 }}
+            style={{ marginLeft: 20 }}
             onPress={() => onCancel(false)}
           >
             <Entypo name="chevron-left" size={24} color="gray" />
@@ -965,6 +960,7 @@ export function AddChairModal({
           <Text fontSize={18} ml={2}>
             Qué cátedra cursaste?
           </Text>
+          <View width={"15%"} />
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
@@ -1123,20 +1119,21 @@ export function AddScore({
         <Flex
           direction="row"
           alignItems="center"
-          justifyContent={"flex-start"}
+          justifyContent={"space-between"}
           mb={4}
         >
           <TouchableOpacity
-            style={{ marginLeft: 20, marginRight: 50 }}
+            style={{ marginLeft: 20 }}
             onPress={() => {
               setOpen(false), onCancel(true);
             }}
           >
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
-          <Text fontSize={18} ml={2}>
+          <Text textAlign="center" fontSize={18} ml={2}>
             Nota final
           </Text>
+          <View width={"15%"} />
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
@@ -1215,11 +1212,11 @@ export function AddStarsModal({
         <Flex
           direction="row"
           alignItems="center"
-          justifyContent={"flex-start"}
+          justifyContent={"space-between"}
           mb={4}
         >
           <TouchableOpacity
-            style={{ marginLeft: 20, marginRight: 80 }}
+            style={{ marginLeft: 20 }}
             onPress={() => {
               setOpen(false), onCancel(true);
             }}
@@ -1229,6 +1226,7 @@ export function AddStarsModal({
           <Text fontSize={18} ml={2}>
             Cursada
           </Text>
+          <View width={"15%"} />
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
@@ -1389,11 +1387,11 @@ export function ModalSummary({
         <Flex
           direction="row"
           alignItems="center"
-          justifyContent={"flex-start"}
+          justifyContent="space-between"
           mb={4}
         >
           <TouchableOpacity
-            style={{ marginLeft: 20, marginRight: 80 }}
+            style={{ marginLeft: 20 }}
             onPress={() => {
               setOpen(false), onCancel(true);
             }}
@@ -1403,6 +1401,7 @@ export function ModalSummary({
           <Text fontSize={18} ml={2}>
             Cursada
           </Text>
+          <View width={"15%"} />
         </Flex>
         <Modal.Body alignItems={"flex-start"}>
           <FormControl>
@@ -1575,6 +1574,7 @@ export function ModalSummary({
                 setUpdater
               );
               setOpen(false);
+              onConfirm(true);
             }}
             borderRadius={moderateScale(8)}
             py={4}
@@ -1583,6 +1583,73 @@ export function ModalSummary({
             Guardar
           </Button>
         </HStack>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function ModalLeaveAnOpinion({
+  setShowModal,
+  showModal,
+  onConfirm,
+}: {
+  setShowModal: Function;
+  showModal: any;
+  onConfirm: Function;
+}) {
+  function hideModal() {
+    setShowModal(false);
+  }
+
+  return (
+    <Modal isOpen={showModal} size={"xl"} onClose={hideModal} mt={5}>
+      <Modal.Content>
+        <Modal.Body alignItems={"center"}>
+          <FormControl alignItems={"center"} mb={4}>
+            <AntDesign name="questioncircle" size={45} color="#DA673A" />
+          </FormControl>
+          <FormControl>
+            <Text fontSize={17} textAlign={"center"} fontWeight={700}>
+              Querés dejar una opinión?
+            </Text>
+          </FormControl>
+          <FormControl mb={6}>
+            <Text fontSize={15} textAlign={"center"}>
+              Ya que cursaste en esta cátedra, que te parece sumar una opinión?
+            </Text>
+          </FormControl>
+
+          <Button.Group
+            space={3}
+            direction="column"
+            textAlign="center"
+            w="full"
+            px={6}
+          >
+            <Button
+              _pressed={{ bgColor: "rgba(218, 103, 58, .5)" }}
+              _text={{ fontSize: 14, fontWeight: "600" }}
+              bg={"#DA673A"}
+              onPress={() => (onConfirm(), hideModal())}
+              borderRadius={8}
+              py={4}
+              px={6}
+            >
+              Dale!
+            </Button>
+            <Button
+              _text={{ fontSize: 14, fontWeight: "600" }}
+              variant="outline"
+              colorScheme="gray"
+              onPress={hideModal}
+              borderRadius={8}
+              py={4}
+              px={6}
+            >
+              Ahora no
+            </Button>
+          </Button.Group>
+        </Modal.Body>
       </Modal.Content>
     </Modal>
   );
@@ -1603,7 +1670,7 @@ export function ModalDeleteOpinion({
       isOpen={showWarning}
       animationPreset={"slide"}
       size={"xl"}
-      onClose={() => setShowWarning(false)}
+      onClose={hideModal}
       mt={5}
     >
       <Modal.Content rounded={"2xl"}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, HStack } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import { Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { SimpleAccordion } from "../../components/SimpleAccordion";
 import {
@@ -12,6 +13,7 @@ import {
   AddScore,
   AddStarsModal,
   ModalSummary,
+  ModalLeaveAnOpinion,
 } from "./Modals";
 import * as Font from "expo-font";
 import AboutSubject_Logic from "./AboutSubject_Logic";
@@ -24,6 +26,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   const [showSummaryModal, setShowSummayModal] = useState(false);
   const [showStarsModal, setShowStarsModal] = useState(false);
   const [showScoreModal, setShowScoreModal] = useState(false);
+  const [showLeaveOpinion, setShowLeaveOpinion] = useState(false);
   const userdata = useSelector((state: any) => state.user.userdata);
   const materias = [];
   subjCategory.data.forEach((item) => {
@@ -36,6 +39,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
       });
     }
   });
+  const navigation: any = useNavigation();
 
   const [showIcon, setShowIcon] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
@@ -114,7 +118,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
       <ModalSummary
         isOpen={showSummaryModal}
         setOpen={setShowSummayModal}
-        onConfirm={setShowStarsModal}
+        onConfirm={setShowLeaveOpinion}
         setUpdater={setUpdater}
         updater={updater}
         onCancel={setShowStarsModal}
@@ -129,7 +133,11 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         setShowNotes={setShowNotes}
         infoUserSubj={infoUserSubj}
       />
-
+      <ModalLeaveAnOpinion
+        setShowModal={setShowLeaveOpinion}
+        showModal={showLeaveOpinion}
+        onConfirm={() => navigation.navigate("CreateNewThread")}
+      />
       <Box
         bg={"white"}
         borderColor={"transparent"}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, IconButton, Text, View, Image } from "native-base";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { TouchableOpacity, StyleSheet } from "react-native";

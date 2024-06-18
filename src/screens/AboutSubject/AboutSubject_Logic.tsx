@@ -22,9 +22,7 @@ import { updateModal } from "../../redux/actions/user";
 function AboutSubject_Logic({
   index,
   subject,
-  nav,
   setShowWarning,
-  currentSubj,
   setShowChairModal,
   setCurrentSubj,
   infoUserSubj,
@@ -42,10 +40,9 @@ function AboutSubject_Logic({
     available,
     id,
     name,
-    subjects,
-    chairs,
     userSubject,
     selective,
+    subjectParents,
     selectiveSubjects,
   } = subject;
   const [FontsLoaded, setFontsLoaded] = useState(false);
@@ -318,7 +315,7 @@ function AboutSubject_Logic({
             {userSubject?.score}
           </Text>
         </TouchableOpacity>
-      ) : available && !userSubject ? (
+      ) : !userSubject && subjectParents.length === 0 ? (
         <TouchableOpacity
           onPress={() => {
             if (isVisit) {
@@ -338,7 +335,7 @@ function AboutSubject_Logic({
             +
           </Text>
         </TouchableOpacity>
-      ) : !available ? (
+      ) : (
         <TouchableOpacity
           style={{
             alignItems: "center",
@@ -360,7 +357,7 @@ function AboutSubject_Logic({
             color="#C4C4C4"
           />
         </TouchableOpacity>
-      ) : null}
+      )}
     </HStack>
   );
 }
