@@ -890,7 +890,7 @@ export function DiscardDraftModal({
         <Modal.Footer justifyContent="center">
           <DefaultButton
             buttonStyle={{
-              height: horizontalScale(30),
+              height: horizontalScale(37),
               backgroundColor: "#797979",
               marginBottom: 20,
               paddingHorizontal: horizontalScale(20),
@@ -902,7 +902,7 @@ export function DiscardDraftModal({
           />
           <DefaultButton
             buttonStyle={{
-              height: horizontalScale(30),
+              height: horizontalScale(37),
               backgroundColor: "#DA673A",
               paddingHorizontal: horizontalScale(20),
               width: 280,

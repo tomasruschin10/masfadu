@@ -66,6 +66,12 @@ function CreateNewThread({ route, navigation }) {
     setSelectedCareerId(route.params.career_id);
   }
 
+  useEffect(() => {
+    if (route.params && route.params.selectedSubject) {
+      setSelectedSubject(route.params.selectedSubject);
+    }
+  }, [route.params?.selectedSubject]);
+
   const handleSubjectChange = (itemValue) => {
     setSelectedSubject(itemValue);
     setForm({ ...form, subject_id: itemValue });

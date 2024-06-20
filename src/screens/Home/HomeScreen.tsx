@@ -51,7 +51,7 @@ function HomeScreen({ route, navigation }) {
   }, [isFocused]);
 
   const [menuShow, setMenu] = useState(false);
-  const [modalShow, setModalShow] = useState(false)
+  const [modalShow, setModalShow] = useState(false);
 
   const [advertisement, setAdvertisement] = useState([]);
   const [textNews, setTextNews] = useState([]);
@@ -66,7 +66,8 @@ function HomeScreen({ route, navigation }) {
   const { width, height } = Dimensions.get("window");
   const cardWidth = width * 0.41;
   const cardHeight = height * 0.27;
-  const imageHeight = height * 0.14
+  const imageWidth = width + 0.14
+  const imageHeight = height * 0.14;
 
   const user = useSelector((state: any) => state.user.userdata);
 
@@ -120,14 +121,14 @@ function HomeScreen({ route, navigation }) {
     }, [setAdvertisement, setTextNews, setOffer, setCourses])
   );
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleNavigate = (route: string, additional?: any) => {
     if (user?.userRole[0]?.role?.name === "Visit") {
-      dispatch(updateModal(true))
-      return
+      dispatch(updateModal(true));
+      return;
     }
-    navigation.navigate(route, additional)
-  }
+    navigation.navigate(route, additional);
+  };
 
   const renderTextNews = ({ item }) => (
     <Box
@@ -210,8 +211,8 @@ function HomeScreen({ route, navigation }) {
               image?.url.endsWith(".pdf")
                 ? "file-pdf-o"
                 : /\.(jpe?g|png|gif|bmp)$/i.test(image?.url)
-                  ? "file-image-o"
-                  : "file-o"
+                ? "file-image-o"
+                : "file-o"
             }
           />
           <Box pt={1} pb={3} px={4} pl={2}>
@@ -285,10 +286,10 @@ function HomeScreen({ route, navigation }) {
             <Image
               alt={"logo"}
               style={{
-                width: cardWidth,
+                width: imageWidth,
+                height: imageHeight,
               }}
               resizeMethod="auto"
-              h={imageHeight}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
@@ -348,10 +349,10 @@ function HomeScreen({ route, navigation }) {
             <Image
               alt={"logo"}
               style={{
-                width: cardWidth,
+                width: imageWidth,
+                height: imageHeight,
               }}
               resizeMethod="scale"
-              h={imageHeight}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
@@ -421,11 +422,10 @@ function HomeScreen({ route, navigation }) {
             <Image
               alt={"logo"}
               style={{
-                width: cardWidth,
-                maxWidth: cardWidth,
+                width: imageWidth,
+                height: imageHeight,
               }}
               resizeMethod="auto"
-              h={imageHeight}
               resizeMode="cover"
               source={{ uri: image.url }}
             />
@@ -462,7 +462,7 @@ function HomeScreen({ route, navigation }) {
       {menuShow ? (
         <Menu navigation={navigation} route={route} setMenu={setMenu} />
       ) : null}
-      <TouchableOpacity onPress={() => handleNavigate('Config')}>
+      <TouchableOpacity onPress={() => handleNavigate("Config")}>
         <HeaderPerfil
           showICon={true}
           statusBarColor="#e8eef4"
@@ -582,7 +582,7 @@ function HomeScreen({ route, navigation }) {
                     height: horizontalScale(30),
                     width: "100%",
                     alignItems: "center",
-                    justifyContent: 'center',
+                    justifyContent: "center",
                     borderRadius: moderateScale(8),
                     paddingHorizontal: horizontalScale(30),
                   }}

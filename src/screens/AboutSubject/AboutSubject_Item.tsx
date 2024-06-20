@@ -136,7 +136,11 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
       <ModalLeaveAnOpinion
         setShowModal={setShowLeaveOpinion}
         showModal={showLeaveOpinion}
-        onConfirm={() => navigation.navigate("CreateNewThread")}
+        onConfirm={() =>
+          navigation.navigate("CreateNewThread", {
+            selectedSubject: currentSubj,
+          })
+        }
       />
       <Box
         bg={"white"}

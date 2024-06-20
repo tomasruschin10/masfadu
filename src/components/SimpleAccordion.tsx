@@ -47,10 +47,7 @@ const SimpleAccordion = ({
 
   return (
     <View>
-      <TouchableOpacity
-        activeOpacity={10}
-        onPress={() => setIsCollapsed(!isCollapsed)}
-      >
+      <Box activeOpacity={10}>
         <Box style={[styles.defaultBannerStyle]}>
           <View
             style={{
@@ -142,7 +139,7 @@ const SimpleAccordion = ({
             {viewInside}
           </View>
         </Collapsible>
-      </TouchableOpacity>
+      </Box>
     </View>
   );
 };
