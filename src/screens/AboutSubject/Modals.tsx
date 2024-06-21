@@ -888,30 +888,32 @@ export function DiscardDraftModal({
           </FormControl>
         </Modal.Body>
         <Modal.Footer justifyContent="center">
-          <DefaultButton
-            buttonStyle={{
-              height: horizontalScale(37),
-              backgroundColor: "#797979",
-              marginBottom: 20,
-              paddingHorizontal: horizontalScale(20),
-              width: 280,
-              borderRadius: moderateScale(8),
-            }}
-            title="Cancelar"
-            callBack={() => onCancel()}
-          />
-          <DefaultButton
-            buttonStyle={{
-              height: horizontalScale(37),
-              backgroundColor: "#DA673A",
-              paddingHorizontal: horizontalScale(20),
-              width: 280,
-              alignItems: "center",
-              borderRadius: moderateScale(8),
-            }}
-            title="Confirmar y Perder Borrador"
-            callBack={() => onConfirm()}
-          />
+          <HStack pr={5} pl={5} mb={5}>
+            <Button
+              w="100%"
+              backgroundColor={"#797979"}
+              _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
+              onPress={() => onCancel()}
+              borderRadius={moderateScale(8)}
+              py={4}
+              fontWeight="bold"
+            >
+              Cancelar
+            </Button>
+          </HStack>
+          <HStack pr={5} pl={5} mb={5}>
+            <Button
+              w="100%"
+              backgroundColor={"#DA673A"}
+              _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
+              onPress={() => onConfirm()}
+              borderRadius={moderateScale(8)}
+              py={4}
+              fontWeight="bold"
+            >
+              Confirmar y Perder Borrador
+            </Button>
+          </HStack>
         </Modal.Footer>
       </Modal.Content>
     </Modal>
@@ -925,6 +927,7 @@ export function AddChairModal({
   onCancel,
   setInfoUserSubj,
   infoUserSubj,
+  setSelectedChair,
   chairs,
 }: {
   isOpen: boolean;
@@ -932,6 +935,7 @@ export function AddChairModal({
   onConfirm: Function;
   infoUserSubj: any;
   setInfoUserSubj: Function;
+  setSelectedChair: Function;
   chairs: any;
   onCancel: Function;
 }) {
@@ -1034,7 +1038,7 @@ export function AddChairModal({
                                   ...infoUserSubj,
                                   chair: chair,
                                 });
-
+                                setSelectedChair(chair);
                                 setShowSelectChair(false);
                               }}
                               style={{

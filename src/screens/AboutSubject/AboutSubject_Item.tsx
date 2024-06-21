@@ -27,6 +27,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   const [showStarsModal, setShowStarsModal] = useState(false);
   const [showScoreModal, setShowScoreModal] = useState(false);
   const [showLeaveOpinion, setShowLeaveOpinion] = useState(false);
+  const [selectedChair, setSelectedChair] = useState("");
   const userdata = useSelector((state: any) => state.user.userdata);
   const materias = [];
   subjCategory.data.forEach((item) => {
@@ -97,6 +98,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         onCancel={setShowChairModal}
         infoUserSubj={infoUserSubj}
         setInfoUserSubj={setInfoUserSubj}
+        setSelectedChair={setSelectedChair}
         chairs={currentSubj?.chairs}
       />
       <AddScore
@@ -139,6 +141,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         onConfirm={() =>
           navigation.navigate("CreateNewThread", {
             selectedSubject: currentSubj,
+            selectedChair: selectedChair,
           })
         }
       />

@@ -67,14 +67,31 @@ function CreateNewThread({ route, navigation }) {
   }
 
   useEffect(() => {
-    if (route.params && route.params.selectedSubject) {
-      setSelectedSubject(route.params.selectedSubject);
+    if (route.params?.selectedSubject) {
+      handleSubjectChange(route.params.selectedSubject);
     }
   }, [route.params?.selectedSubject]);
 
+  useEffect(() => {
+    if (route.params?.selectedChair) {
+      handleProfessorChange(route.params.selectedChair);
+    }
+  }, [route.params?.selectedChair]);
+
   const handleSubjectChange = (itemValue) => {
     setSelectedSubject(itemValue);
-    setForm({ ...form, subject_id: itemValue });
+    setForm((prevForm) => ({
+      ...prevForm,
+      subject_id: itemValue,
+    }));
+  };
+
+  const handleProfessorChange = (itemValue) => {
+    setSelectedProfessor(itemValue);
+    setForm((prevForm) => ({
+      ...prevForm,
+      professor: itemValue,
+    }));
   };
 
   const [form, setForm] = useState<any>({
@@ -84,7 +101,7 @@ function CreateNewThread({ route, navigation }) {
     currentSchoolYear: "",
     subject_id: selectedSubject.id,
     tags: [],
-    professor: "",
+    professor: selectedProfessor,
   });
 
   const dispatch = useDispatch();
@@ -473,7 +490,7 @@ function CreateNewThread({ route, navigation }) {
                           <TouchableOpacity
                             key={index}
                             onPress={() => {
-                              setSelectedProfessor(chair);
+                              handleProfessorChange(chair);
                               setShowSelectProfessor(null);
                             }}
                             style={{

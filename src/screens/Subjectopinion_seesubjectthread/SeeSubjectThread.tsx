@@ -185,7 +185,7 @@ function SeeSubjectThread({ route, navigation }) {
       })
       .finally(() => setLoading(false));
 
-    getServices(`subject/${id}`)
+    getServices(`subject/${subject_id}`)
       .then(({ data }: any) => {
         setSubjects(data.userSubject);
       })

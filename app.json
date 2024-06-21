@@ -23,7 +23,7 @@
       "supportsTablet": true,
       "deploymentTarget": "14.0",
       "usesAppleSignIn": true,
-      "buildNumber": "31",
+      "buildNumber": "32",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
