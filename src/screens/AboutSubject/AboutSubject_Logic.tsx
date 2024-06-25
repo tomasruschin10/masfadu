@@ -131,6 +131,26 @@ function AboutSubject_Logic({
       value: index.toString(),
     }));
 
+  const areAllParentsCompleted = (parents) => {
+    return parents.every((parent) => parent.completed);
+  };
+
+  const allParentsCompleted = areAllParentsCompleted(subjectParents);
+
+  const handlePress = () => {
+    if (isVisit) {
+      handleRestriction();
+      return;
+    }
+    if (allParentsCompleted) {
+      setShowChairModal(true);
+      setCurrentSubj({ ...subject, dis: 1 });
+    } else {
+      setShowWarning(true);
+      setCurrentSubj({ ...subject, dis: 0 });
+    }
+  };
+
   return (
     <HStack
       mt={margginTop}
@@ -315,47 +335,31 @@ function AboutSubject_Logic({
             {userSubject?.score}
           </Text>
         </TouchableOpacity>
-      ) : !userSubject && subjectParents.length === 0 ? (
-        <TouchableOpacity
-          onPress={() => {
-            if (isVisit) {
-              handleRestriction();
-              return;
-            }
-            setShowChairModal(true);
-            setCurrentSubj({ ...subject, dis: 1 });
-          }}
-        >
-          <Text
-            color={"brand.primary"}
-            textAlign={"center"}
-            fontSize={38}
-            style={{ marginRight: 10 }}
-          >
-            +
-          </Text>
-        </TouchableOpacity>
       ) : (
         <TouchableOpacity
           style={{
             alignItems: "center",
             justifyContent: "center",
           }}
-          onPress={() => {
-            if (isVisit) {
-              handleRestriction();
-              return;
-            }
-            setShowWarning(true);
-            setCurrentSubj({ ...subject, dis: 0 });
-          }}
+          onPress={handlePress}
         >
-          <AntDesign
-            name="warning"
-            size={24}
-            style={{ marginRight: 10 }}
-            color="#C4C4C4"
-          />
+          {allParentsCompleted ? (
+            <Text
+              color={"brand.primary"}
+              textAlign={"center"}
+              fontSize={38}
+              style={{ marginRight: 10 }}
+            >
+              +
+            </Text>
+          ) : (
+            <AntDesign
+              name="warning"
+              size={24}
+              style={{ marginRight: 10 }}
+              color="#C4C4C4"
+            />
+          )}
         </TouchableOpacity>
       )}
     </HStack>
