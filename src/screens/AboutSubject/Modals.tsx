@@ -15,14 +15,11 @@ import {
   FormControl,
   HStack,
   Input,
-  Select,
-  CheckIcon,
   KeyboardAvoidingView,
   Modal,
   Text,
   VStack,
   Image,
-  Overlay,
   Flex,
 } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,21 +48,6 @@ import {
   horizontalScale,
 } from "../../utils/media.screens";
 import { AirbnbRating } from "react-native-ratings";
-
-function RenderArrow() {
-  return (
-    <View
-      style={{
-        backgroundColor: "#486b8a",
-        borderRadius: 6,
-        padding: 5,
-        height: 25,
-      }}
-    >
-      <Entypo name="arrow-right" size={13} color="white" />
-    </View>
-  );
-}
 
 const ExclamationComponent = () => {
   return (
@@ -496,20 +478,14 @@ export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
             {currentSubj?.available === false ? (
               <>
                 <Text
-                  ml={"13.5%"}
                   fontWeight={"bold"}
                   textAlign={"center"}
-                  w={"80%"}
+                
                   fontSize={21}
                 >
                   No podés anotarte a esta materia :(
                 </Text>
-                <Text
-                  marginTop={"5%"}
-                  marginLeft={"6.5%"}
-                  fontSize={12}
-                  textAlign={"center"}
-                >
+                <Text marginTop={"5%"} fontSize={12} textAlign={"center"}>
                   Primero tenés que aprobar:
                 </Text>
                 <HStack
@@ -519,20 +495,21 @@ export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
                   flexDirection={"column"}
                 >
                   {arrSinDuplicaciones &&
-                    arrSinDuplicaciones?.map((item, i) => (
-                      <Box
-                        p={1}
-                        style={{ display: "flex", flexDirection: "row" }}
-                        key={item.name}
-                        px={2}
-                      >
-                        <Text>-</Text>
-                        <Text fontSize={10} textAlign={"left"}>
-                          {" "}
-                          {item.name}
-                        </Text>
-                      </Box>
-                    ))}
+                    arrSinDuplicaciones?.map(
+                      (item, i) =>
+                        !item.completed && (
+                          <Box
+                            p={1}
+                            style={{ display: "flex", flexDirection: "row" }}
+                            key={item.name}
+                            px={2}
+                          >
+                            <Text fontSize={10} textAlign={"left"}>
+                              {`- ${item.name}`}
+                            </Text>
+                          </Box>
+                        )
+                    )}
                 </HStack>
               </>
             ) : !currentSubj?.available ? (
