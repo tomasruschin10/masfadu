@@ -25,15 +25,15 @@ export default function BottomTab({ route, navigation, setMenu }) {
   const { name } = route;
 
   const user = useSelector((state: any) => state?.user?.userdata);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleNavigate = (route: string, additional?: any) => {
     if (user?.userRole[0]?.role?.name === "Visit") {
       setMenuView(false);
-      dispatch(updateModal(true))
-      return
+      dispatch(updateModal(true));
+      return;
     }
-    navigation.navigate(route, additional)
-  }
+    navigation.navigate(route, additional);
+  };
 
   const MenuPublica = () => {
     return (
@@ -51,7 +51,7 @@ export default function BottomTab({ route, navigation, setMenu }) {
         <TouchableOpacity
           style={{
             marginTop: 30,
-            marginLeft: 36,
+            marginLeft: 30,
             flexDirection: "row",
             alignItems: "center",
           }}
@@ -89,42 +89,12 @@ export default function BottomTab({ route, navigation, setMenu }) {
           }}
           style={{
             marginTop: 20,
-            marginRight: 35,
-            flexDirection: "row-reverse",
+            marginRight: 5,
+            marginLeft: 30,
+            flexDirection: "row",
             alignItems: "center",
           }}
         >
-          <IconButton
-            marginRight={35}
-            size={3.5}
-            icon={
-              <Box
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  alt="imagen"
-                  source={require("../../assets/icons/menuArrow.png")}
-                  resizeMode="contain" // Ajustar imagen al contenedor
-                  style={{ width: "100%", height: "100%" }} // Reducir el tamaño de la imagen
-                />
-              </Box>
-            }
-          />
-          <View style={{ flex: 1 }}>
-            <Box>
-              <Text color={"#838487"} fontWeight={"medium"} fontSize={15}>
-                Un hilo sobre una materia
-              </Text>
-              <Text color={"#84869A"} fontWeight={"medium"} fontSize={9}>
-                Compartí tu experiencia con los demás
-              </Text>
-            </Box>
-          </View>
           <IconButton
             marginRight={2}
             size={8}
@@ -146,28 +116,17 @@ export default function BottomTab({ route, navigation, setMenu }) {
               </Box>
             }
           />
-        </TouchableOpacity>
-        <View
-          style={{
-            width: "83%",
-            marginLeft: "8%",
+          <View style={{ flex: 1 }}>
+            <Box>
+              <Text color={"#838487"} fontWeight={"medium"} fontSize={15}>
+                Un hilo sobre una materia
+              </Text>
+              <Text color={"#84869A"} fontWeight={"medium"} fontSize={9}>
+                Compartí tu experiencia con los demás
+              </Text>
+            </Box>
+          </View>
 
-            borderBottomWidth: 0.5,
-            marginTop: 10,
-            borderBottomColor: "#84869A",
-          }}
-        />
-        <TouchableOpacity
-          style={{
-            marginTop: 20,
-            marginRight: 32,
-            flexDirection: "row-reverse",
-            alignItems: "center",
-          }}
-          onPress={() => {
-            handleNavigate("OfferForm");
-          }}
-        >
           <IconButton
             marginRight={35}
             size={3.5}
@@ -183,6 +142,50 @@ export default function BottomTab({ route, navigation, setMenu }) {
                 <Image
                   alt="imagen"
                   source={require("../../assets/icons/menuArrow.png")}
+                  resizeMode="contain" // Ajustar imagen al contenedor
+                  style={{ width: "100%", height: "100%" }} // Reducir el tamaño de la imagen
+                />
+              </Box>
+            }
+          />
+        </TouchableOpacity>
+        <View
+          style={{
+            width: "83%",
+            marginLeft: "8%",
+
+            borderBottomWidth: 0.5,
+            marginTop: 10,
+            borderBottomColor: "#84869A",
+          }}
+        />
+        <TouchableOpacity
+          style={{
+            marginTop: 20,
+            marginRight: 5,
+            marginLeft: 30,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+          onPress={() => {
+            handleNavigate("OfferForm");
+          }}
+        >
+          <IconButton
+            marginRight={2}
+            size={8}
+            icon={
+              <Box
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  alt="imagen"
+                  source={require("../../assets/icons/menuMercado.png")}
                   resizeMode="contain"
                   style={{ width: "100%", height: "100%" }}
                 />
@@ -199,9 +202,10 @@ export default function BottomTab({ route, navigation, setMenu }) {
               </Text>
             </Box>
           </View>
+
           <IconButton
-            marginRight={2}
-            size={8}
+            marginRight={35}
+            size={3.5}
             icon={
               <Box
                 style={{
@@ -213,7 +217,7 @@ export default function BottomTab({ route, navigation, setMenu }) {
               >
                 <Image
                   alt="imagen"
-                  source={require("../../assets/icons/menuMercado.png")}
+                  source={require("../../assets/icons/menuArrow.png")}
                   resizeMode="contain"
                   style={{ width: "100%", height: "100%" }}
                 />

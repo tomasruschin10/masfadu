@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, ScrollView, Text } from "native-base";
-import { Alert, Linking, TouchableHighlight } from "react-native";
+import { Alert, Linking, TouchableHighlight, Platform } from "react-native";
 
 import Container from "../../components/Container";
 import { updateMessage } from "../../redux/actions/message";
@@ -12,7 +12,6 @@ import { store } from "../../redux/store";
 import BottomTab from "../../components/BottomTab";
 import { HeaderBack } from "../../components/Header";
 import Constants from "expo-constants";
-import * as StoreReview from "expo-store-review";
 import { removemenu } from "../../redux/actions/menu";
 import Menu from "../Menu/Menu";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,11 +39,14 @@ function Config({ route, navigation, value }) {
   const user = useSelector((state: any) => state?.user?.userdata);
   const handleNavigate = (route: string, additional?: any) => {
     if (user?.userRole[0]?.role?.name === "Visit") {
-      dispatch(updateModal(true))
-      return
+      dispatch(updateModal(true));
+      return;
     }
-    navigation.navigate(route, additional)
-  }
+    navigation.navigate(route, additional);
+  };
+
+  const itunesItemId = 1642521024;
+  const androidPackageName = "dev.millionsolutions.faduapp";
 
   const logout = async () => {
     store.dispatch(
@@ -61,8 +63,14 @@ function Config({ route, navigation, value }) {
   };
 
   const reviewApp = async () => {
-    if (await StoreReview.hasAction()) {
-      StoreReview.requestReview();
+    if (Platform.OS === "android") {
+      Linking.openURL(
+        `market://details?id=${androidPackageName}&showAllReviews=true`
+      );
+    } else {
+      Linking.openURL(
+        `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${itunesItemId}?action=write-review`
+      );
     }
   };
 
