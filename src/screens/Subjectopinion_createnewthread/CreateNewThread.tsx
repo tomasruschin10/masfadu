@@ -39,11 +39,12 @@ import Layout from "../../utils/LayoutHeader&BottomTab";
 import RecommendedTags from "../../utils/RecommendedTags";
 import { getServices, postServices } from "../../utils/hooks/services";
 import { baseApi } from "../../utils/api";
-import { DiscardDraftModal } from "../AboutSubject/Modals";
+import { DiscardDraftModal, ConfirmEmailModal } from "../AboutSubject/Modals";
 import { fontStyles } from "../../utils/colors/fontColors";
 
 function CreateNewThread({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmEmailModal, setShowConfirmEmailModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [showModalIcon, setShowModalIcon] = useState(false);
   const [allTags, setAllTags] = useState([{}]);
@@ -157,6 +158,10 @@ function CreateNewThread({ route, navigation }) {
         setCareers(res.data);
       })
       .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!state.user.userdata.isConfirm) setShowConfirmEmailModal(true);
   }, []);
 
   useEffect(() => {
@@ -766,7 +771,16 @@ function CreateNewThread({ route, navigation }) {
             </Modal.Content>
           </Modal>
         </KeyboardAwareScrollView>
-
+        <ConfirmEmailModal
+          isOpen={showConfirmEmailModal}
+          setOpen={setShowConfirmEmailModal}
+          onCancel={() =>
+            navigation.navigate("Subsections", {
+              title: "Opiniones de materias",
+            })
+          }
+          onConfirm={() => navigation.navigate("ConfirmEmailStepOne")}
+        />
         <DiscardDraftModal
           message={"¿Descartar Borrador? Vas a perder lo que escribiste"}
           isOpen={modalOpen}

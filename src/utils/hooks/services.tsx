@@ -76,7 +76,7 @@ export const postTags = (url, body) => {
   return tags;
 };
 
-export const putServices = (url, body, ContentType?) => {
+export const putServices = (url, body?, ContentType?) => {
   const state: any = store.getState();
   const authToken = state.token;
 

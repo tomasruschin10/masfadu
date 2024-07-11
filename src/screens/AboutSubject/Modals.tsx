@@ -477,12 +477,7 @@ export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
           <FormControl>
             {currentSubj?.available === false ? (
               <>
-                <Text
-                  fontWeight={"bold"}
-                  textAlign={"center"}
-                
-                  fontSize={21}
-                >
+                <Text fontWeight={"bold"} textAlign={"center"} fontSize={21}>
                   No podés anotarte a esta materia :(
                 </Text>
                 <Text marginTop={"5%"} fontSize={12} textAlign={"center"}>
@@ -828,6 +823,66 @@ export function SuccessModal({
             </Text>
           </FormControl>
         </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  );
+}
+
+export function ConfirmEmailModal({
+  isOpen,
+  setOpen,
+  onConfirm,
+  onCancel,
+}: {
+  isOpen: boolean;
+  setOpen: Function;
+  onConfirm: Function;
+  onCancel: Function;
+}) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      size={"xl"}
+      onClose={() => setOpen(false)}
+      animationPreset={"fade"}
+    >
+      <Modal.Content backgroundColor={"white"} paddingTop={5}>
+        <ExclamationComponent />
+        <Modal.Body alignItems={"center"}>
+          <FormControl>
+            <Text fontSize={14} textAlign={"center"}>
+              Confirmá tu email para poder publicar hilos
+            </Text>
+          </FormControl>
+        </Modal.Body>
+        <Modal.Footer justifyContent="center">
+          <HStack pr={5} pl={5} mb={5}>
+            <Button
+              w="100%"
+              backgroundColor={"#797979"}
+              _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
+              onPress={() => (setOpen(false), onCancel())}
+              borderRadius={moderateScale(8)}
+              py={4}
+              fontWeight="bold"
+            >
+              Mejor después
+            </Button>
+          </HStack>
+          <HStack pr={5} pl={5} mb={5}>
+            <Button
+              w="100%"
+              backgroundColor={"#DA673A"}
+              _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
+              onPress={() => (setOpen(false), onConfirm())}
+              borderRadius={moderateScale(8)}
+              py={4}
+              fontWeight="bold"
+            >
+              Confirmar Email
+            </Button>
+          </HStack>
+        </Modal.Footer>
       </Modal.Content>
     </Modal>
   );

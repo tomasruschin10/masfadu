@@ -1,8 +1,10 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
+import ConfirmEmailStepOne from "../screens/ConfirmEmail/ConfirmEmailStepOne";
+import ConfirmEmailStepTwo from "../screens/ConfirmEmail/ConfirmEmailStepTwo";
 import On1Screen from "../screens/Onboarding/On1Screen";
 import On2Screen from "../screens/Onboarding/On2Screen";
 import Home from "../screens/Home";
@@ -45,7 +47,6 @@ import ModalRestriction from "../screens/modal/ModalRestriction";
 
 const Stack = createStackNavigator();
 
-
 //We create stacks for each screen, Stacks can have various screens inside them.
 export function NavStack() {
   const token = useSelector((state: any) => state.token);
@@ -55,7 +56,6 @@ export function NavStack() {
         options={{ headerShown: false }}
         name="SplashScreen"
         component={SplashScreen}
-        
       />
 
       {!token ? (
@@ -73,7 +73,6 @@ export function NavStack() {
           <Stack.Screen name="ChooseAnOption" component={ChooseAnOption} />
           <Stack.Screen name="NewPassword" component={NewPassword} />
           <Stack.Screen name="UpdatedPassword" component={UpdatedPassword} />
-
         </Stack.Group>
       ) : (
         <Stack.Group
@@ -83,6 +82,14 @@ export function NavStack() {
         >
           <Stack.Screen name="Registro" component={RegisterScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen
+            name="ConfirmEmailStepOne"
+            component={ConfirmEmailStepOne}
+          />
+          <Stack.Screen
+            name="ConfirmEmailStepTwo"
+            component={ConfirmEmailStepTwo}
+          />
 
           <Stack.Screen name="Onboarding1" component={On1Screen} />
           <Stack.Screen name="Onboarding2" component={On2Screen} />
@@ -101,7 +108,10 @@ export function NavStack() {
 
           <Stack.Screen name="CoursesForm" component={CoursesForm} />
           <Stack.Screen name="JobOfferForm" component={JobOfferForm} />
-          <Stack.Screen name="JobOfferFormMedia" component={JobOfferFormMedia} />
+          <Stack.Screen
+            name="JobOfferFormMedia"
+            component={JobOfferFormMedia}
+          />
           <Stack.Screen name="Menu" component={Menu} />
 
           <Stack.Screen name="Subsections" component={SubSections} />

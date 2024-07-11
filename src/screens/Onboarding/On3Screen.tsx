@@ -154,7 +154,7 @@ const On3Screen = ({ navigation }) => {
           >
             Siguiente
           </Button>
-          <TouchableOpacity style={{ marginBottom: 30 }} onPress={() => navigation.navigate("Home")}>
+          <TouchableOpacity style={{ marginBottom: 30 }} onPress={() => navigation.navigate("ConfirmEmailStepOne")}>
             <Text style={{ fontSize: 14, color: "black" }}>Omitir</Text>
           </TouchableOpacity>
         </View>
