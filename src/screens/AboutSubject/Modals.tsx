@@ -438,17 +438,46 @@ export function ModalNotes({
   );
 }
 
-export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
+export function ModalWarning({
+  showWarning,
+  setShowWarning,
+  currentSubj,
+  allSubjects,
+}) {
   const [loading, setLoading] = useState(false);
   const userdata = useSelector((state: any) => state.user.userdata);
-  let dataItems: string[] = currentSubj?.subjectParents;
+
+  let dataItems = currentSubj?.subjectParents || [];
 
   let arrSinDuplicaciones = [];
-
   if (dataItems && dataItems.length > 0) {
     let set = new Set(dataItems.map(JSON.stringify));
     arrSinDuplicaciones = Array.from(set).map(JSON.parse);
   }
+
+  const findSubjectNameById = (id) => {
+    console.log(id, "id");
+    for (let level of allSubjects) {
+      console.log(level, "level");
+      const subject = level.subject.find((subj) => subj.id === id);
+      console.log(subject, "hola");
+      if (subject) {
+        return subject.name;
+      }
+    }
+    return "Materia no encontrada";
+  };
+
+  const getParentDisplayName = (parent) => {
+    if (parent.orCorrelative && parent.orCorrelative.length > 0) {
+      const orCorNames = parent.orCorrelative.map((cor) =>
+        findSubjectNameById(+cor.id)
+      );
+      return `${parent.name} o ${orCorNames.join(" o ")}`;
+    } else {
+      return parent.name;
+    }
+  };
 
   function hideModal() {
     setShowWarning(false);
@@ -490,7 +519,7 @@ export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
                   flexDirection={"column"}
                 >
                   {arrSinDuplicaciones &&
-                    arrSinDuplicaciones?.map(
+                    arrSinDuplicaciones.map(
                       (item, i) =>
                         !item.completed && (
                           <Box
@@ -500,7 +529,7 @@ export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
                             px={2}
                           >
                             <Text fontSize={10} textAlign={"left"}>
-                              {`- ${item.name}`}
+                              {`- ${getParentDisplayName(item)}`}
                             </Text>
                           </Box>
                         )
@@ -546,7 +575,6 @@ export function ModalWarning({ showWarning, setShowWarning, currentSubj }) {
                 height: verticalScale(45),
                 width: 500,
                 maxWidth: screenWidth - screenWidth / 5,
-                // paddingTop: verticalScale(2)
               }}
               textStyle={{
                 fontSize: moderateScale(14),

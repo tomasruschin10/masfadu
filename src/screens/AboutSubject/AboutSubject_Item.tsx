@@ -90,6 +90,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         currentSubj={currentSubj}
         showWarning={showWarning}
         setShowWarning={setShowWarning}
+        allSubjects={subjCategory.data}
       />
       <AddChairModal
         isOpen={showChairModal}

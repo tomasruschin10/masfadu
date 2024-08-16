@@ -132,7 +132,12 @@ function AboutSubject_Logic({
     }));
 
   const areAllParentsCompleted = (parents) => {
-    return parents.every((parent) => parent.completed);
+    return parents.every((parent) => {
+      return (
+        parent.completed ||
+        parent.orCorrelative.some((orCor) => orCor.completed)
+      );
+    });
   };
 
   const allParentsCompleted = areAllParentsCompleted(subjectParents);
