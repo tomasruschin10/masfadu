@@ -57,8 +57,6 @@ function RegisterScreen({ route, navigation }) {
       "1044573282337-clqfcumlk8g4ih4hplta6v88lcn72cks.apps.googleusercontent.com",
     iosClientId:
       "1044573282337-l2n519m10p7bp6aka5eusa0gomh9u720.apps.googleusercontent.com",
-    expoClientId:
-      "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
   });
 
   React.useEffect(() => {
@@ -498,10 +496,17 @@ function RegisterScreen({ route, navigation }) {
           <Box py={2} px={5}>
             <Hr text={"ó"} />
           </Box>
-          <View style={{ flexDirection: "row", justifyContent: 'space-between'}}>
+          <View
+            style={{
+              flexDirection: Platform.OS === "ios" ? "row" : "column",
+              justifyContent:
+                Platform.OS === "ios" ? "space-between" : "center",
+              alignItems: Platform.OS === "ios" ? "stretch" : "center",
+            }}
+          >
             <Button
               mb={5}
-              w="48%"
+              w={Platform.OS === "ios" ? "48%" : "100%"} // Ajuste del ancho según la plataforma
               h={verticalScale(55)}
               rounded={moderateScale(8)}
               backgroundColor={"#FFFFFF"}
@@ -512,7 +517,7 @@ function RegisterScreen({ route, navigation }) {
                 fontSize: moderateScale(13),
                 fontWeight: "400",
               }}
-              colorScheme={"ligth"}
+              colorScheme={"light"}
               color={"darkText"}
               leftIcon={
                 <TouchableWithoutFeedback>
@@ -526,6 +531,7 @@ function RegisterScreen({ route, navigation }) {
             >
               Iniciar sesión
             </Button>
+
             {Platform.OS === "ios" && (
               <TouchableOpacity
                 style={{

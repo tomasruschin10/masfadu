@@ -57,8 +57,6 @@ function LoginScreen({ route, navigation }) {
       "1044573282337-clqfcumlk8g4ih4hplta6v88lcn72cks.apps.googleusercontent.com",
     iosClientId:
       "1044573282337-l2n519m10p7bp6aka5eusa0gomh9u720.apps.googleusercontent.com",
-    expoClientId:
-      "1044573282337-t0too7vkon8iaf2dhulhsbcrrmq59vt9.apps.googleusercontent.com",
   });
 
   React.useEffect(() => {
@@ -75,19 +73,32 @@ function LoginScreen({ route, navigation }) {
         postServices("auth/login", {
           userOrEmail: userData.email,
           password: userData.id,
-        }).then((res: any) => {
-          showAlert("success", "Inicio correcto!");
-          dispatch(updatetoken(res.data.token));
-          getUserDataWithToken(res.data.token);
-          let data: any = jwtDecode(res.data.token);
-          if (data.userData.career) {
-            navigation.navigate("Home");
-          } else {
-            navigation.navigate("Onboarding1");
-          }
-        });
+        })
+          .then((res: any) => {
+            dispatch(updatetoken(res.data.token));
+            getUserDataWithToken(res.data.token);
+            let data: any = jwtDecode(res.data.token);
+            if (data.userData.career) {
+              navigation.navigate("Home");
+            } else {
+              navigation.navigate("Onboarding1");
+            }
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              dispatch(
+                updateMessage({
+                  body: "No existe una cuenta con este email, primero registrate.",
+                  open: true,
+                  type: "danger",
+                })
+              );
+            }
+          });
       } catch (error) {
         console.error("Error al autenticar con Google:", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -351,11 +362,16 @@ function LoginScreen({ route, navigation }) {
 
           <Box pt={PixelRatio.roundToNearestPixel(5)}>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: Platform.OS === "ios" ? "row" : "column",
+                justifyContent:
+                  Platform.OS === "ios" ? "space-between" : "center",
+                alignItems: Platform.OS !== "ios" ? "center" : "stretch",
+              }}
             >
               <Button
                 mb={5}
-                w="48%" // Ajusta el ancho según sea necesario
+                w={Platform.OS === "ios" ? "48%" : "100%"}
                 h={verticalScale(55)}
                 rounded={moderateScale(8)}
                 backgroundColor={"#FFFFFF"}
@@ -366,7 +382,7 @@ function LoginScreen({ route, navigation }) {
                   fontSize: moderateScale(13),
                   fontWeight: "400",
                 }}
-                colorScheme={"ligth"}
+                colorScheme={"light"}
                 color={"darkText"}
                 leftIcon={
                   <TouchableWithoutFeedback>
@@ -380,6 +396,7 @@ function LoginScreen({ route, navigation }) {
               >
                 Iniciar sesión
               </Button>
+
               {Platform.OS === "ios" && (
                 <TouchableOpacity
                   style={{
