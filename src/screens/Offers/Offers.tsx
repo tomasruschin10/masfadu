@@ -42,14 +42,14 @@ function Offers({ route, navigation }) {
   const cardWidth = width * 0.44;
 
   const user = useSelector((state: any) => state.user.userdata);
-    const dispatch = useDispatch()
-    const handleNavigate = (route: string, additional?: any) => {
-      if (user?.userRole[0]?.role?.name === "Visit") {
-        dispatch(updateModal(true))
-        return
-      }
-      navigation.navigate(route, additional)
+  const dispatch = useDispatch();
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true));
+      return;
     }
+    navigation.navigate(route, additional);
+  };
 
   const renderNews = ({ item }) => {
     return (
@@ -347,12 +347,11 @@ function Offers({ route, navigation }) {
         style={{
           height: 2,
           backgroundColor: "#DEE8EE",
-          marginBottom: 20,
           marginLeft: 17,
           marginRight: 17,
         }}
       />
-      <Box alignContent={"center"} mt={3} mb={1}>
+      <Box alignContent={"center"} mt={3}>
         <FlatList
           alignSelf={"center"}
           showsHorizontalScrollIndicator={false}
@@ -366,32 +365,23 @@ function Offers({ route, navigation }) {
         style={{
           flexDirection: "row",
           alignItems: "center",
+          width: "100%",
           height: 50,
-          marginTop: -20,
-          marginBottom: 10,
-          paddingHorizontal: "3%",
+          marginBottom: 15,
         }}
       >
         <ScrollView
           contentContainerStyle={{
-            alignSelf: "flex-start",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            paddingHorizontal: "3%",
           }}
-          paddingTop={"10%"}
-          paddingBottom={"20%"}
-          showsVerticalScrollIndicator={false}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
         >
-          <FlatList
-            contentContainerStyle={{
-              justifyContent: "flex-start",
-              width: "100%",
-            }}
-            horizontal={true}
-            keyExtractor={(item) => item.id}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            data={offerCategory}
-            renderItem={HeaderFilters}
-          />
+          {offerCategory.map((item) => (
+            <HeaderFilters key={item.id} item={item} />
+          ))}
         </ScrollView>
       </View>
 

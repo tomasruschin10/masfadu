@@ -46,7 +46,7 @@ function AboutSubject({ route, navigation, value }) {
           setLoading(false);
         });
     }
-  }, [updater]);
+  }, [updater, setUpdater]);
 
   return (
     <Container>
@@ -56,7 +56,7 @@ function AboutSubject({ route, navigation, value }) {
         ) : null}
 
         <ScrollView backgroundColor={"#e8eef3"}>
-          {!loading ? null : (
+          {loading ? (
             <HStack space={2} justifyContent="center">
               <Spinner
                 accessibilityLabel="Loading posts"
@@ -66,29 +66,30 @@ function AboutSubject({ route, navigation, value }) {
                 Cargando
               </Heading>
             </HStack>
-          )}
-
-          {subjCategory.data.length ? (
+          ) : (
             <>
-              <AboutSubject_Item
-                subjCategory={subjCategory}
-                nav={navigation}
-                updater={updater}
-                setUpdater={setUpdater}
-              />
+              {subjCategory.data.length > 0 ? (
+                <AboutSubject_Item
+                  subjCategory={subjCategory}
+                  nav={navigation}
+                  updater={updater}
+                  setUpdater={setUpdater}
+                />
+              ) : (
+                <Text
+                  mx={8}
+                  fontWeight={"bold"}
+                  color={"brand.primary"}
+                  fontSize={20}
+                >
+                  No hay materias para mostrar
+                </Text>
+              )}
+              <Box mb={32} />
             </>
-          ) : !subjCategory.data.length && loading === false ? (
-            <Text
-              mx={8}
-              fontWeight={"bold"}
-              color={"brand.primary"}
-              fontSize={20}
-            >
-              No Hay materias para mostrar
-            </Text>
-          ) : null}
-          <Box mb={32} />
+          )}
         </ScrollView>
+
         {!value && (
           <BottomTab setMenu={setMenu} route={route} navigation={navigation} />
         )}

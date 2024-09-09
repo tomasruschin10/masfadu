@@ -23,9 +23,6 @@ const MarketDetail = ({ navigation }) => {
   const [openModal, setOpeModal] = useState<boolean>(false);
   const route = useRoute<MarketDetailRouteProp>();
   const data = route.params?.data ? route.params.data : route.params;
-  console.log(data, 'hola')
-
-  console.log(data?.url, JSON.stringify(data, null, 2));
 
   const handleShowImage = (image) => {
     setShowImage(image);

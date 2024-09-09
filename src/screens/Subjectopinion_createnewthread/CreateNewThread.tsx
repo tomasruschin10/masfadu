@@ -42,6 +42,12 @@ import { baseApi } from "../../utils/api";
 import { DiscardDraftModal, ConfirmEmailModal } from "../AboutSubject/Modals";
 import { fontStyles } from "../../utils/colors/fontColors";
 
+const years = [
+  1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+  2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015,
+  2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024,
+];
+
 function CreateNewThread({ route, navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmEmailModal, setShowConfirmEmailModal] = useState(false);
@@ -53,6 +59,7 @@ function CreateNewThread({ route, navigation }) {
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [showSelectSubject, setShowSelectSubject] = useState(false);
+  const [showSelectYear, setShowSelectYear] = useState(false);
   const [showSelectProfessor, setShowSelectProfessor] = useState(false);
   const [selectedProfessor, setSelectedProfessor] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
@@ -404,15 +411,58 @@ function CreateNewThread({ route, navigation }) {
             borderBottomColor={"#EBEEF2"}
             mb={5}
           >
-            <Input
-              backgroundColor={"#F7FAFC"}
-              onChangeText={(text) =>
-                setForm({ ...form, currentSchoolYear: text })
-              }
-              placeholder="Año de cursada"
-              placeholderTextColor={"#C4C4C4"}
-            />
+            <TouchableOpacity
+              onPress={() => setShowSelectYear(true)}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: "#F7FAFC",
+                paddingVertical: 12,
+                paddingHorizontal: 10,
+              }}
+            >
+              <Text
+                style={{ color: form.currentSchoolYear ? "#000" : "#C4C4C4" }}
+              >
+                {form.currentSchoolYear || "Año de cursada"}
+              </Text>
+              <Entypo name="chevron-down" size={25} color="#797979" />
+            </TouchableOpacity>
           </Box>
+          <RNModal visible={!!showSelectYear} transparent>
+            <SwipeablePanel
+              style={{ height: 480 }}
+              closeOnTouchOutside
+              onClose={() => setShowSelectYear(false)}
+              fullWidth
+              onlyLarge
+              isActive={!!showSelectYear}
+            >
+              <ScrollView>
+                <View style={{ padding: 20 }}>
+                  {years
+                    .map((year) => (
+                      <TouchableOpacity
+                        key={year}
+                        onPress={() => {
+                          setForm({ ...form, currentSchoolYear: year.toString() });
+                          setShowSelectYear(false);
+                        }}
+                        style={{
+                          paddingVertical: 10,
+                          borderBottomWidth: 1,
+                          borderBottomColor: "#EBEEF2",
+                        }}
+                      >
+                        <Text style={{ fontSize: 16 }}>{year}</Text>
+                      </TouchableOpacity>
+                    ))
+                    .reverse()}
+                </View>
+              </ScrollView>
+            </SwipeablePanel>
+          </RNModal>
 
           <Box
             mx="5"

@@ -52,6 +52,13 @@ function AboutSubject_Logic({
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.userdata);
   const isVisit = user?.userRole?.[0]?.role?.name === "Visit";
+
+  useEffect(() => {
+    if (isVisit) {
+      handleRestriction(); 
+    }
+  }, [isVisit]); 
+
   const handleRestriction = () => {
     dispatch(updateModal(true));
   };
@@ -202,7 +209,7 @@ function AboutSubject_Logic({
                   style={[fontStyles.poppins400, { fontSize: 14 }]}
                   color={"#171717"}
                 >
-                  {`${name} (${selectiveSubjects.length})`}
+                  {`${name} (${selectiveSubjects?.length})`}
                 </Text>
               )}
             </TouchableOpacity>
@@ -217,6 +224,7 @@ function AboutSubject_Logic({
               {name}
             </Text>
           )}
+
           <VStack space={2} alignItems="flex-start">
             <Modal
               visible={!!showSelectiveSubject}
@@ -240,6 +248,33 @@ function AboutSubject_Logic({
                         justifyContent: "flex-start",
                       }}
                     >
+                      <TouchableOpacity
+                        onPress={() => {
+                          setSelectiveSubject(null);
+                          setShowSelectiveSubject(null);
+                        }}
+                        style={{
+                          paddingVertical: 10,
+                          paddingRight: 27,
+                          paddingLeft: 30,
+                          backgroundColor: !selectiveSubject
+                            ? "#DA673A"
+                            : "transparent",
+                        }}
+                      >
+                        <Text
+                          style={[
+                            fontStyles.poppins400,
+                            {
+                              fontSize: 16,
+                              color: !selectiveSubject ? "white" : "black",
+                            },
+                          ]}
+                        >
+                          {`${name} (${selectiveSubjects?.length})`}
+                        </Text>
+                      </TouchableOpacity>
+
                       {selectiveSubjectsData &&
                         selectiveSubjectsData
                           .slice()
@@ -286,35 +321,6 @@ function AboutSubject_Logic({
         </HStack>
       </Box>
 
-      <TouchableOpacity
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        onPress={() => {
-          if (isVisit) {
-            handleRestriction();
-            return;
-          }
-          setInfoUserSubj({
-            ...infoUserSubj,
-            score: userSubject?.score,
-            USERSUBJECT: userSubject?.id,
-            user_id: userSubject?.user_id,
-            subject_id: userSubject?.subject_id,
-            extra_score: userSubject?.extra_score,
-            finish: userSubject?.finish == true ? 1 : 0,
-          });
-          setShowNotes(true);
-        }}
-      >
-        <Entypo
-          name="dots-three-vertical"
-          size={22}
-          style={{ marginRight: 6, padding: 2 }}
-          color="#454545"
-        />
-      </TouchableOpacity>
       {available && userSubject?.score ? (
         <TouchableOpacity
           style={{
@@ -323,6 +329,22 @@ function AboutSubject_Logic({
             justifyContent: "center",
             overflow: "visible",
             height: 70,
+          }}
+          onPress={() => {
+            if (isVisit) {
+              handleRestriction();
+              return;
+            }
+            setInfoUserSubj({
+              ...infoUserSubj,
+              score: userSubject?.score,
+              USERSUBJECT: userSubject?.id,
+              user_id: userSubject?.user_id,
+              subject_id: userSubject?.subject_id,
+              extra_score: userSubject?.extra_score,
+              finish: userSubject?.finish == true ? 1 : 0,
+            });
+            setShowNotes(true);
           }}
         >
           <Text

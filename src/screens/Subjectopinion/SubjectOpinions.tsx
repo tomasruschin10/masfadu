@@ -26,8 +26,8 @@ import SeeSubjectThread_Item from "../Subjectopinion_seesubjectthread/SeeSubject
 import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function SubjectOpinions({ route, navigation, mainTitle }) {
-  const { search, setSearch, filteredSubjects, allSubjects, loading } =
-    useSearchSubject();
+  const { search, setSearch, filteredLevels, allLevels, loading } =
+    useSearchSubject(); // Ahora tenemos filteredLevels
   const [showWarning, setShowWarning] = useState(true);
   const [selectedButton, setSelectedButton] = useState("Todo");
   const [allOpinions, setAllOpinions] = useState([]);
@@ -88,7 +88,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               style={{ marginLeft: "4%", borderRadius: 8 }}
               onChangeText={(text) => setSearch(text)}
               value={search}
-              isDisabled={allSubjects.length > 0 ? false : true}
+              isDisabled={allLevels.length > 0 ? false : true}
               rounded={8}
               w={{ base: "80%", md: "88%" }}
               pb="1"
@@ -113,14 +113,6 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               }
             />
           </View>
-
-          {filteredSubjects.length === 0 && loading === false && (
-            <Box mx={8}>
-              <Text fontWeight={"bold"} color={"primary.100"} fontSize={20}>
-                No hay hilos para mostrar
-              </Text>
-            </Box>
-          )}
 
           <View
             style={{
@@ -174,6 +166,7 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               </Text>
             </TouchableOpacity>
           </View>
+
           {!loading ? (
             <Button display={"none"} />
           ) : (
@@ -187,30 +180,49 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               </Heading>
             </HStack>
           )}
+
           {selectedButton === "Todo" ? (
-            filteredSubjects.length > 0 &&
-            filteredSubjects
-              .map((item) => (
-                <RenderOpinion
-                  key={item.id}
-                  border={false}
-                  text={``}
-                  title={item.name}
-                  navigation={navigation}
-                  mainTitle={mainTitle}
-                  subject_id={item.id}
-                  id={item.id}
-                  redirect_to={"SeeSubjectThread"}
-                  time={item.info}
-                  hours={""}
-                  method={""}
-                  rating={item.opinionsCount}
-                  firstLetter={item?.prefix || ""}
-                  color={colores[Math.floor(Math.random() * colores.length)]}
-                  // color={colores[Math.floor(Math.random() * colores.length)]}
-                />
-              ))
-              .reverse()
+            filteredLevels.length > 0 &&
+            filteredLevels.map((level) => (
+              <View key={level.id}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    marginLeft: 20,
+                    marginVertical: 10,
+                  }}
+                >
+                  {level.name}
+                </Text>
+
+                {level.subject.length > 0 ? (
+                  level.subject.map((item) => (
+                    <RenderOpinion
+                      key={item.id}
+                      border={false}
+                      text={``}
+                      title={item.name}
+                      navigation={navigation}
+                      mainTitle={mainTitle}
+                      subject_id={item.id}
+                      id={item.id}
+                      redirect_to={"SeeSubjectThread"}
+                      time={item.info}
+                      hours={""}
+                      method={""}
+                      rating={item.opinionsCount}
+                      firstLetter={item?.prefix || ""}
+                      color={
+                        colores[Math.floor(Math.random() * colores.length)]
+                      }
+                    />
+                  ))
+                ) : (
+                  <Text>No hay materias para este nivel</Text>
+                )}
+              </View>
+            ))
           ) : (
             <Box mx={5} mb={32}>
               {allOpinions.map((item) => (

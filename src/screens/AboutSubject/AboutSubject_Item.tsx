@@ -60,6 +60,8 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   });
 
   const [FontsLoaded, setFontsLoaded] = useState(false);
+  const isVisit = userdata?.userRole[0]?.role?.name === "Visit";
+
   useEffect(() => {
     if (!FontsLoaded) {
       const loadAsync = async () => {
@@ -116,6 +118,9 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
         onConfirm={setShowSummayModal}
         onCancel={setShowScoreModal}
         infoUserSubj={infoUserSubj}
+        setUpdater={setUpdater}
+        updater={updater}
+        currentSubj={currentSubj}
         setInfoUserSubj={setInfoUserSubj}
       />
       <ModalSummary
@@ -146,6 +151,7 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
           })
         }
       />
+
       <Box
         bg={"white"}
         borderColor={"transparent"}

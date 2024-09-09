@@ -61,7 +61,6 @@ export default function ModalRestriction ({navigation}) {
 
   return (
     <Modal
-      animationType="slide"
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView: {
     margin: 20,

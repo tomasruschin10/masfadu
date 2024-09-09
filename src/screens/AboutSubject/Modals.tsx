@@ -1172,6 +1172,7 @@ export function AddScore({
   onCancel: Function;
 }) {
   const [score, setScore] = useState(1);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -1250,6 +1251,9 @@ export function AddStarsModal({
   onCancel,
   setInfoUserSubj,
   infoUserSubj,
+  setUpdater,
+  updater,
+  currentSubj,
 }: {
   isOpen: boolean;
   setOpen: Function;
@@ -1257,6 +1261,9 @@ export function AddStarsModal({
   infoUserSubj: any;
   setInfoUserSubj: Function;
   onCancel: Function;
+  setUpdater: Function;
+  updater: any;
+  currentSubj: any;
 }) {
   const [starsForm, setStarsForm] = useState({
     qualityOfTeachers: 0,
@@ -1264,6 +1271,7 @@ export function AddStarsModal({
     requirement: 0,
     cost: 0,
   });
+  const [loading, setLoading] = useState(false);
 
   return (
     <Modal
@@ -1411,6 +1419,32 @@ export function AddStarsModal({
           >
             Siguiente
           </Button>
+        </HStack>
+
+        <HStack
+          pr={6}
+          pl={6}
+          mb={5}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <TouchableOpacity
+            onPress={() => {
+              createNote(
+                setLoading,
+                setInfoUserSubj,
+                infoUserSubj,
+                currentSubj,
+                updater,
+                setUpdater
+              );
+              setOpen(false);
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "600", color: "#DA673A" }}>
+              Omitir
+            </Text>
+          </TouchableOpacity>
         </HStack>
       </Modal.Content>
     </Modal>
