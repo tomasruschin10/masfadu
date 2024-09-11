@@ -60,7 +60,6 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
   });
 
   const [FontsLoaded, setFontsLoaded] = useState(false);
-  const isVisit = userdata?.userRole[0]?.role?.name === "Visit";
 
   useEffect(() => {
     if (!FontsLoaded) {

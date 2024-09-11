@@ -1017,7 +1017,13 @@ export function AddChairModal({
         >
           <TouchableOpacity
             style={{ marginLeft: 20 }}
-            onPress={() => onCancel(false)}
+            onPress={() => (
+              onCancel(false),
+              setInfoUserSubj({
+                ...infoUserSubj,
+                chair: "",
+              })
+            )}
           >
             <Entypo name="chevron-left" size={24} color="gray" />
           </TouchableOpacity>
@@ -1171,7 +1177,13 @@ export function AddScore({
   setInfoUserSubj: Function;
   onCancel: Function;
 }) {
-  const [score, setScore] = useState(1);
+  const [localScore, setLocalScore] = useState(infoUserSubj.score || 1);
+
+  useEffect(() => {
+    if (isOpen) {
+      setLocalScore(infoUserSubj.score || 1);
+    }
+  }, [isOpen, infoUserSubj.score]);
 
   return (
     <Modal
@@ -1204,15 +1216,15 @@ export function AddScore({
           <FormControl>
             <HStack alignItems={"center"} justifyContent={"center"} mb={10}>
               <TouchableOpacity
-                onPress={() => setScore(Math.max(1, score - 1))}
+                onPress={() => setLocalScore(Math.max(1, localScore - 1))}
               >
                 <AntDesign name="minuscircleo" size={40} color="#DA673A" />
               </TouchableOpacity>
               <Text color="#DA673A" mx={20} fontSize={45} fontWeight={"600"}>
-                {score || 1}
+                {localScore || 1}
               </Text>
               <TouchableOpacity
-                onPress={() => setScore(Math.min(10, score + 1))}
+                onPress={() => setLocalScore(Math.min(10, localScore + 1))}
               >
                 <AntDesign name="pluscircleo" size={40} color="#DA673A" />
               </TouchableOpacity>
@@ -1234,9 +1246,9 @@ export function AddScore({
           }}
           title="Siguiente"
           callBack={() => {
-            onConfirm(true),
-              setOpen(false),
-              setInfoUserSubj({ ...infoUserSubj, score: score });
+            setInfoUserSubj({ ...infoUserSubj, score: localScore });
+            onConfirm(true);
+            setOpen(false);
           }}
         />
       </Modal.Content>
@@ -1265,12 +1277,6 @@ export function AddStarsModal({
   updater: any;
   currentSubj: any;
 }) {
-  const [starsForm, setStarsForm] = useState({
-    qualityOfTeachers: 0,
-    practicalJobs: 0,
-    requirement: 0,
-    cost: 0,
-  });
   const [loading, setLoading] = useState(false);
 
   return (
@@ -1323,10 +1329,13 @@ export function AddStarsModal({
                 size={25}
                 selectedColor={"#DA673A"}
                 onFinishRating={(rating) =>
-                  setStarsForm({ ...starsForm, qualityOfTeachers: rating })
+                  setInfoUserSubj({
+                    ...infoUserSubj,
+                    qualityOfTeachers: rating,
+                  })
                 }
                 starContainerStyle={{ marginHorizontal: 7 }}
-                defaultRating={starsForm?.qualityOfTeachers}
+                defaultRating={infoUserSubj?.qualityOfTeachers}
               />
               <Text
                 style={{
@@ -1343,10 +1352,13 @@ export function AddStarsModal({
                 size={25}
                 selectedColor={"#DA673A"}
                 onFinishRating={(rating) =>
-                  setStarsForm({ ...starsForm, practicalJobs: rating })
+                  setInfoUserSubj({
+                    ...infoUserSubj,
+                    practicalJobs: rating,
+                  })
                 }
                 starContainerStyle={{ marginHorizontal: 7 }}
-                defaultRating={starsForm?.practicalJobs}
+                defaultRating={infoUserSubj?.practicalJobs}
               />
               <Text
                 style={{
@@ -1356,17 +1368,20 @@ export function AddStarsModal({
                   marginBottom: 10,
                 }}
               >
-                Que tan exigente es?
+                Qué tan exigente es?
               </Text>
               <AirbnbRating
                 showRating={false}
                 size={25}
                 selectedColor={"#DA673A"}
                 onFinishRating={(rating) =>
-                  setStarsForm({ ...starsForm, requirement: rating })
+                  setInfoUserSubj({
+                    ...infoUserSubj,
+                    requirement: rating,
+                  })
                 }
                 starContainerStyle={{ marginHorizontal: 7 }}
-                defaultRating={starsForm?.requirement}
+                defaultRating={infoUserSubj?.requirement}
               />
               <Text
                 style={{
@@ -1376,17 +1391,20 @@ export function AddStarsModal({
                   marginBottom: 10,
                 }}
               >
-                Que tan cara es?
+                Qué tan cara es?
               </Text>
               <AirbnbRating
                 showRating={false}
                 size={25}
                 selectedColor={"#DA673A"}
                 onFinishRating={(rating) =>
-                  setStarsForm({ ...starsForm, cost: rating })
+                  setInfoUserSubj({
+                    ...infoUserSubj,
+                    cost: rating,
+                  })
                 }
                 starContainerStyle={{ marginHorizontal: 7 }}
-                defaultRating={starsForm?.cost}
+                defaultRating={infoUserSubj?.cost}
               />
             </HStack>
           </FormControl>
@@ -1395,23 +1413,15 @@ export function AddStarsModal({
           <Button
             w="100%"
             isDisabled={
-              starsForm.qualityOfTeachers === 0 ||
-              starsForm.practicalJobs === 0 ||
-              starsForm.requirement === 0 ||
-              starsForm.cost === 0
+              infoUserSubj.qualityOfTeachers === 0 ||
+              infoUserSubj.practicalJobs === 0 ||
+              infoUserSubj.requirement === 0 ||
+              infoUserSubj.cost === 0
             }
             backgroundColor={"#DA673A"}
             _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
             onPress={() => {
-              onConfirm(true),
-                setOpen(false),
-                setInfoUserSubj({
-                  ...infoUserSubj,
-                  qualityOfTeachers: starsForm.qualityOfTeachers,
-                  practicalJobs: starsForm.practicalJobs,
-                  requirement: starsForm.requirement,
-                  cost: starsForm.cost,
-                });
+              onConfirm(true), setOpen(false);
             }}
             borderRadius={moderateScale(8)}
             py={3}

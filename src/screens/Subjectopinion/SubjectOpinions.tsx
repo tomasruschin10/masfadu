@@ -27,7 +27,7 @@ import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function SubjectOpinions({ route, navigation, mainTitle }) {
   const { search, setSearch, filteredLevels, allLevels, loading } =
-    useSearchSubject(); // Ahora tenemos filteredLevels
+    useSearchSubject(); 
   const [showWarning, setShowWarning] = useState(true);
   const [selectedButton, setSelectedButton] = useState("Todo");
   const [allOpinions, setAllOpinions] = useState([]);

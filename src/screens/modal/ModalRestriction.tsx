@@ -91,7 +91,7 @@ export default function ModalRestriction({ navigation }) {
               style={fontStyles.poppins500}
               textAlign={"center"}
             >
-              Ingresaste como invitado
+              Ingresaste como invitado/a
             </Text>
             <HStack
               maxWidth={"100%"}
@@ -106,14 +106,8 @@ export default function ModalRestriction({ navigation }) {
                 mb={1.5}
                 alignItems={"center"}
               >
-                <Box
-                  height={moderateScale(8)}
-                  width={moderateScale(8)}
-                  borderRadius="full"
-                  background={"#DA673A"}
-                />
                 <Text textAlign={"center"} ml={2}>
-                  Los datos son simulados para demostración. Regístrate o iniciá
+                  Los datos son simulados para demostración. Registrate o iniciá
                   sesión para acceder a información real.
                 </Text>
               </Box>
@@ -165,7 +159,6 @@ export default function ModalRestriction({ navigation }) {
                 callBack={() => handleModal("Registro")}
               />
             </Button.Group>
-        
           </View>
         </View>
       </TouchableOpacity>
