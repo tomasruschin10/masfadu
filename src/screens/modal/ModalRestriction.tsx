@@ -1,8 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, Modal, StyleSheet, Pressable, View, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Pressable,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { ScrollView, Text, HStack, Box, Button } from "native-base";
-import { useDispatch, useSelector } from 'react-redux';
-import { updateModal } from '../../redux/actions/user';
+import { useDispatch, useSelector } from "react-redux";
+import { updateModal } from "../../redux/actions/user";
 import DefaultButton from "../../components/DefaultButton";
 
 import {
@@ -11,8 +18,12 @@ import {
   MaterialCommunityIcons,
   EvilIcons,
 } from "@expo/vector-icons";
-import { fontStyles } from '../../utils/colors/fontColors';
-import { horizontalScale, moderateScale, verticalScale } from '../../utils/media.screens';
+import { fontStyles } from "../../utils/colors/fontColors";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../../utils/media.screens";
 
 const ExclamationComponent = () => {
   return (
@@ -38,55 +49,56 @@ const ExclamationComponent = () => {
   );
 };
 
-export default function ModalRestriction ({navigation}) {
+export default function ModalRestriction({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const handleModal = (route?: string ) => {
-    setModalVisible(!modalVisible)
+  const handleModal = (route?: string) => {
+    setModalVisible(!modalVisible);
     if (route) {
-      navigation.navigate(route)
+      navigation.navigate(route);
     }
-    dispatch(updateModal(false))
-  }
-  const isActive = useSelector((state:any) => state.modal)
-  console.log(isActive)
+    dispatch(updateModal(false));
+  };
+  const isActive = useSelector((state: any) => state.modal);
+  console.log(isActive);
 
   useEffect(() => {
     if (isActive !== modalVisible) {
-      setModalVisible(isActive)
+      setModalVisible(isActive);
     }
-  }, [isActive]) 
-
+  }, [isActive]);
 
   return (
     <Modal
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        handleModal()
-      }}>
+        handleModal();
+      }}
+    >
       <TouchableOpacity
-      style={styles.centeredView}
-      onPressOut={() => handleModal()}>
+        style={styles.centeredView}
+        onPressOut={() => handleModal()}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <ExclamationComponent />
             <Text
-            fontSize={20}
-            mt={3}
-            mb={"4%"}
-            style={fontStyles.poppins500}
-            textAlign={"center"}
+              fontSize={20}
+              mt={3}
+              mb={"4%"}
+              style={fontStyles.poppins500}
+              textAlign={"center"}
             >
-              Advertencias
+              Ingresaste como invitado
             </Text>
             <HStack
-            maxWidth={"100%"}
-            px={"1%"}
-            justifyContent={"center"}
-            flexDirection={"column"}
-            marginBottom={'5%'}
+              maxWidth={"100%"}
+              px={"1%"}
+              justifyContent={"center"}
+              flexDirection={"column"}
+              marginBottom={"5%"}
             >
               <Box
                 display={"flex"}
@@ -100,33 +112,41 @@ export default function ModalRestriction ({navigation}) {
                   borderRadius="full"
                   background={"#DA673A"}
                 />
-                <Text textAlign={"left"} ml={2}>
-                  Necesitás iniciar sesión o registrarte primero!
+                <Text textAlign={"center"} ml={2}>
+                  Los datos son simulados para demostración. Regístrate o iniciá
+                  sesión para acceder a información real.
                 </Text>
               </Box>
-
             </HStack>
-            <Button.Group style={{
-              display: 'flex',
-              flexDirection: 'column'
-            }} space={2} my={"1%"}>
-            <DefaultButton
-              buttonStyle={{
-                height: horizontalScale(40),
-                backgroundColor: "#DA673A",
-                paddingHorizontal: horizontalScale(45),
-                width: 300,
-                alignItems: "center",
-                borderRadius: moderateScale(8),
+            <Button.Group
+              style={{
+                display: "flex",
+                flexDirection: "column",
               }}
-              title="Iniciar sesión"
-              callBack={() => handleModal('Login')}
-            />
+              space={2}
+              my={"1%"}
+            >
+              <DefaultButton
+                buttonStyle={{
+                  height: horizontalScale(40),
+                  backgroundColor: "#DA673A",
+                  paddingHorizontal: horizontalScale(45),
+                  width: 300,
+                  alignItems: "center",
+                  borderRadius: moderateScale(8),
+                }}
+                title="Iniciar sesión"
+                callBack={() => handleModal("Login")}
+              />
             </Button.Group>
-            <Button.Group style={{
-              display: 'flex',
-              flexDirection: 'column'
-            }} space={2} my={"1%"}>
+            <Button.Group
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+              space={2}
+              my={"1%"}
+            >
               <DefaultButton
                 buttonStyle={{
                   height: horizontalScale(40),
@@ -136,48 +156,37 @@ export default function ModalRestriction ({navigation}) {
                   alignItems: "center",
                   borderRadius: moderateScale(8),
                   borderColor: "#DA673A",
-                  borderWidth: 2
+                  borderWidth: 2,
                 }}
                 textStyle={{
                   color: "#DA673A",
                 }}
                 title="Registrarse"
-                callBack={() => handleModal('Registro')}
+                callBack={() => handleModal("Registro")}
               />
             </Button.Group>
-            {/* <View style={styles.contBtn} >
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => handleModal('Registro')}>
-                <Text style={styles.textStyle}>Registrarse</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => handleModal('Login')}>
-                <Text style={styles.textStyle}>Iniciar sesión</Text>
-              </Pressable>
-            </View> */}
+        
           </View>
         </View>
       </TouchableOpacity>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    maxWidth:'90%',
+    alignItems: "center",
+    shadowColor: "#000",
+    maxWidth: "90%",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -193,24 +202,24 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: '#EB5E29',
+    backgroundColor: "#EB5E29",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   textModal: {
-    textAlign: 'center'
+    textAlign: "center",
   },
   contBtn: {
-    width: '90%',
+    width: "90%",
     padding: 5,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  }
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });

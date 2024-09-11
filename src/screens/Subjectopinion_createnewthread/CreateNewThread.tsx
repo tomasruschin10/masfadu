@@ -259,6 +259,8 @@ function CreateNewThread({ route, navigation }) {
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           extraScrollHeight={30}
+          enableOnAndroid={true}
+          enableAutomaticScroll
         >
           <Box mx={5} mt={3} borderTopWidth={1} borderTopColor={"#EBEEF2"}>
             <Text fontSize={15}>Información</Text>

@@ -2,7 +2,7 @@
   "expo": {
     "name": "MuyFadu",
     "slug": "masfaduapp",
-    "version": "1.0.27",
+    "version": "1.0.28",
     "orientation": "portrait",
     "privacy": "unlisted",
     "scheme": "muyfaduapp",
@@ -23,7 +23,7 @@
       "supportsTablet": true,
       "deploymentTarget": "14.0",
       "usesAppleSignIn": true,
-      "buildNumber": "39",
+      "buildNumber": "40",
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
@@ -37,7 +37,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 21,
+      "versionCode": 22,
       "googleServicesFile": "./google-services.json",
       "jsEngine": "hermes"
     },

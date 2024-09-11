@@ -115,16 +115,18 @@ export const publishOffer = async ({
     userdata: { career_id, id },
   } = state.user;
 
+  let newPartnerId = partner_id;
+
   const parameters: any = {
     title,
     description,
-    career_id,
-    offer_category_id,
+    career_id: career_id.toString(),
+    offer_category_id: offer_category_id.toString(),
     name,
     phone,
     email,
-    userId: id,
-    image,
+    userId: id.toString(),
+    image: image.uri,
   };
 
   if (url) {
@@ -146,10 +148,16 @@ export const publishOffer = async ({
       );
 
       const responseData = await response.json();
-      parameters.partner_id = responseData.id;
+      newPartnerId = responseData.id;
+      parameters.partner_id = newPartnerId.toString();
     } catch (error) {
       console.error("Error al crear el partner:", error);
+      return;
     }
+  }
+
+  if (newPartnerId) {
+    parameters.partner_id = newPartnerId.toString();
   }
 
   const uploadUrl = baseApi.defaults.baseURL + "/offer/create";
@@ -165,7 +173,13 @@ export const publishOffer = async ({
 
   console.log("PARAMETERS <>", parameters);
 
-  return await FileSystem.uploadAsync(uploadUrl, image.uri, options);
+  try {
+    const result = await FileSystem.uploadAsync(uploadUrl, image.uri, options);
+    return result;
+  } catch (error) {
+    console.error("Error al publicar la oferta:", error);
+    throw error;
+  }
 };
 
 export const updateOffer = async ({
@@ -187,17 +201,18 @@ export const updateOffer = async ({
     userdata: { career_id },
   } = state.user;
 
+  // Asegúrate de convertir a string solo si los valores no son undefined o null
   const parameters: any = {
     title,
     description,
-    career_id,
-    offer_category_id,
+    career_id: career_id ? career_id.toString() : "", // Convertir a string o usar un valor vacío si es undefined
+    offer_category_id: offer_category_id ? offer_category_id.toString() : "", // Convertir a string o usar un valor vacío
     name,
     phone,
     email,
-    partner_id,
+    partner_id: partner_id ? partner_id.toString() : null, // Convertir a string si existe, o null si no
     url,
-    image,
+    image: image?.uri, // Asegúrate de pasar solo la URI
   };
 
   const uploadUrl = baseApi.defaults.baseURL + `/offer/update/${id}`;
