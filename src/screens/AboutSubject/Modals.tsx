@@ -1241,9 +1241,6 @@ export function AddScore({
             alignItems: "center",
             borderRadius: moderateScale(8),
           }}
-          textStyle={{
-            marginTop: verticalScale(10),
-          }}
           title="Siguiente"
           callBack={() => {
             setInfoUserSubj({ ...infoUserSubj, score: localScore });
@@ -1723,7 +1720,8 @@ export function ModalLeaveAnOpinion({
           </FormControl>
           <FormControl mb={6}>
             <Text fontSize={15} textAlign={"center"}>
-              Ya que cursaste en esta cátedra, que te parece sumar una opinión?
+              Ya que cursaste esta materia, que te parece dejar una opinión
+              escrita?
             </Text>
           </FormControl>
 
