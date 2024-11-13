@@ -9,11 +9,14 @@ import {
   ScrollView,
   Text,
 } from "native-base";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { putServices } from "../../utils/hooks/services";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { store } from "../../redux/store";
 import { updateUserdata } from "../../redux/actions/user";
 import * as DocumentPicker from "expo-document-picker";
@@ -26,9 +29,9 @@ import { Octicons } from "@expo/vector-icons";
 import Container from "../../components/Container";
 
 function EditProfile({ route, navigation }) {
-  const [phoneDisabled, setPhoneDisabled] = useState<boolean>(true)
-  const [emailDisabled, setEmailDisabled] = useState<boolean>(true)
-  const [userDisabled, setUserDisabled] = useState<boolean>(true)
+  const [phoneDisabled, setPhoneDisabled] = useState<boolean>(true);
+  const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
+  const [userDisabled, setUserDisabled] = useState<boolean>(true);
   const userdata = useSelector((state: any) => state.user.userdata);
   const [form, setForm] = useState({
     image: userdata.image.url,
@@ -43,6 +46,14 @@ function EditProfile({ route, navigation }) {
   const closeAlert = () => {
     setAlert(null);
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Editar Perfil",
+      });
+    }, [])
+  );
 
   const sendForm = () => {
     const img: any = {
@@ -165,16 +176,16 @@ function EditProfile({ route, navigation }) {
                 backgroundColor={"#F7FAFC"}
               />
               <IconButton
-                  position={'absolute'}
-                  right={0}
-                  top={'50%'}
-                  onPress={() => setPhoneDisabled(!phoneDisabled)}
-                    mr={2}
-                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-                    bgColor={"#FBF0EB"}
-                    rounded={"full"}
-                    size={8}
-                  />
+                position={"absolute"}
+                right={0}
+                top={"50%"}
+                onPress={() => setPhoneDisabled(!phoneDisabled)}
+                mr={2}
+                icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+                bgColor={"#FBF0EB"}
+                rounded={"full"}
+                size={8}
+              />
             </Box>
 
             <Box
@@ -193,7 +204,7 @@ function EditProfile({ route, navigation }) {
                 Email
               </Text>
               <Input
-              isDisabled={emailDisabled}
+                isDisabled={emailDisabled}
                 onChangeText={(text) => setForm({ ...form, email: text })}
                 rounded={8}
                 value={form.email}
@@ -204,16 +215,16 @@ function EditProfile({ route, navigation }) {
                 placeholder={"correo@gmail.com"}
               />
               <IconButton
-                  position={'absolute'}
-                  right={0}
-                  top={'50%'}
-                  onPress={() => setEmailDisabled(!emailDisabled)}
-                    mr={2}
-                    icon={<Octicons name="pencil" size={16} color="#DA673A" />}
-                    bgColor={"#FBF0EB"}
-                    rounded={"full"}
-                    size={8}
-                  />
+                position={"absolute"}
+                right={0}
+                top={"50%"}
+                onPress={() => setEmailDisabled(!emailDisabled)}
+                mr={2}
+                icon={<Octicons name="pencil" size={16} color="#DA673A" />}
+                bgColor={"#FBF0EB"}
+                rounded={"full"}
+                size={8}
+              />
             </Box>
 
             <Box
@@ -232,7 +243,7 @@ function EditProfile({ route, navigation }) {
                 Usuario
               </Text>
               <Input
-              isDisabled={userDisabled}
+                isDisabled={userDisabled}
                 onChangeText={(text) => setForm({ ...form, username: text })}
                 rounded={8}
                 value={form.username}
@@ -243,10 +254,10 @@ function EditProfile({ route, navigation }) {
                 placeholder={"tomasruschin"}
               />
               <IconButton
-                  position={'absolute'}
-                  right={0}
-                  top={'50%'}
-              onPress={() => setUserDisabled(!userDisabled)}
+                position={"absolute"}
+                right={0}
+                top={"50%"}
+                onPress={() => setUserDisabled(!userDisabled)}
                 mr={2}
                 icon={<Octicons name="pencil" size={16} color="#DA673A" />}
                 bgColor={"#FBF0EB"}

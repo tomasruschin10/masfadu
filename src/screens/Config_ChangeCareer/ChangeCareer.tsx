@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback} from "react";
 import { Box, Button, CheckIcon, Input, Select, Text } from "native-base";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Alert from "../../components/alert/Alert";
 
@@ -17,6 +19,15 @@ function ChangeCareer({ route, navigation }) {
   const [career, setCareer] = React.useState([]);
   const dispatch = useDispatch();
   const [alert, setAlert] = React.useState(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Cambiar de carrera",
+      });
+    }, [])
+  );
+
 
   const showAlert = (type, message) => {
     setAlert({ type, message });

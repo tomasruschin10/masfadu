@@ -1,9 +1,10 @@
-import {} from "native-base";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { TouchableOpacity, Text, View, ScrollView } from "react-native";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { updateMessage } from "../../redux/actions/message";
 import { store } from "../../redux/store";
@@ -15,6 +16,14 @@ import { deleteServices } from "../../utils/hooks/services";
 function DeleteAccount({ route, navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.userdata);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Eliminar Cuenta",
+      });
+    }, [])
+  );
 
   const deleteUserAccount = () => {
     const url = `user/${user.id}`;

@@ -1,3 +1,4 @@
+import React, { useCallback } from "react";
 import {
   Box,
   FlatList,
@@ -9,6 +10,9 @@ import {
   Text,
 } from "native-base";
 import { Image } from "react-native";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { getServices } from "../../utils/hooks/services";
 import { AntDesign } from "@expo/vector-icons";
@@ -50,6 +54,14 @@ function Offers({ route, navigation }) {
     }
     navigation.navigate(route, additional);
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "El Mercado de Fadu",
+      });
+    }, [])
+  );
 
   const renderNews = ({ item }) => {
     return (

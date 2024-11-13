@@ -12,7 +12,9 @@ import {
   Spinner,
   Text,
 } from "native-base";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { RenderOffer } from "../../utils/hooks/useMultiple";
 import { useEffect } from "react";
@@ -28,6 +30,14 @@ function JobOffers({ route, navigation, mainTitle }) {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Ofertas Laborales",
+      });
+    }, [])
+  );
 
   useEffect(() => {
     setLoading(true);

@@ -1,7 +1,9 @@
 import { Box, Button, ScrollView, TextArea } from "native-base";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { KeyboardAvoidingView } from 'react-native';
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import {  KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 
 import { updateMessage } from "../../redux/actions/message";
@@ -10,6 +12,14 @@ import { postServices } from "../../utils/hooks/services";
 function Suggestions({ route, navigation }) {
   const [text, useText] = useState("");
   const dispatch = useDispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Escribinos tu sugerencia",
+      });
+    }, [])
+  );
 
   const submitSuggestion = () => {
     const url = "suggestion/submit";

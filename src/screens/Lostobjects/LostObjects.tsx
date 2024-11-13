@@ -8,7 +8,9 @@ import {
   Spinner,
   Text,
 } from "native-base";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { TouchableHighlight, Linking, StyleSheet } from "react-native";
 import { getServices } from "../../utils/hooks/services";
 
@@ -47,6 +49,14 @@ function LostObjects({ route, navigation }) {
   const [objects, setObjects] = useState([]);
   const [idPress, setIdPress] = useState(90000);
   const [loading, setLoading] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Objetos perdidos",
+      });
+    }, [])
+  );
 
   useEffect(() => {
     setLoading(true);

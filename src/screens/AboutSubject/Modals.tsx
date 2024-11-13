@@ -7,6 +7,7 @@ import {
   ScrollView,
   Modal as RNModal,
 } from "react-native";
+import * as amplitude from "@amplitude/analytics-react-native";
 
 import {
   Box,
@@ -1680,6 +1681,7 @@ export function ModalSummary({
               );
               setOpen(false);
               onConfirm(true);
+              amplitude.logEvent("Agrego nota de materia", { materia: currentSubj.name });
             }}
             borderRadius={moderateScale(8)}
             py={4}

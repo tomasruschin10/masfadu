@@ -1,6 +1,9 @@
 import { View, Linking, Dimensions, Platform } from "react-native";
 import { ScrollView, Text } from "native-base";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -24,6 +27,14 @@ const MarketDetail = ({ navigation }) => {
   const route = useRoute<MarketDetailRouteProp>();
   const data = route.params?.data ? route.params.data : route.params;
 
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Click en un producto", {
+        title: data?.title,
+      });
+    }, [])
+  );
+
   const handleShowImage = (image) => {
     setShowImage(image);
     setOpeModal(true);
@@ -35,13 +46,13 @@ const MarketDetail = ({ navigation }) => {
   };
 
   const user = useSelector((state: any) => state.user.userdata);
-  const isVisit = user?.userRole[0]?.role?.name === "Visit"
-  const dispatch = useDispatch()
+  const isVisit = user?.userRole[0]?.role?.name === "Visit";
+  const dispatch = useDispatch();
 
   const handleRestriction = () => {
-    dispatch(updateModal(true))
-    return
-  } 
+    dispatch(updateModal(true));
+    return;
+  };
 
   return (
     <Container>
@@ -129,10 +140,10 @@ const MarketDetail = ({ navigation }) => {
               }}
               onPress={() => {
                 if (isVisit) {
-                  handleRestriction()
-                  return
+                  handleRestriction();
+                  return;
                 }
-                Linking.openURL(`mailto:${data.email}`)
+                Linking.openURL(`mailto:${data.email}`);
               }}
             >
               <View

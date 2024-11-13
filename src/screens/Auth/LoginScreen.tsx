@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Box, Button, Icon, Image, Input, View, VStack } from "native-base";
-import * as React from "react";
+import React, { useEffect, useCallback } from "react";
 import Container from "../../components/Container";
 import { NoHeader } from "../../components/Header";
 import { postServices } from "../../utils/hooks/services";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { updateMessage } from "../../redux/actions/message";
 import { AntDesign } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 
 import {
   ScrollView,
@@ -36,6 +37,7 @@ import { baseApi } from "../../utils/api";
 import { updateUserdata } from "../../redux/actions/user";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
+import * as amplitude from "@amplitude/analytics-react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -59,9 +61,15 @@ function LoginScreen({ route, navigation }) {
       "1044573282337-l2n519m10p7bp6aka5eusa0gomh9u720.apps.googleusercontent.com",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleSignInWithGoogle();
   }, [response]);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", { screen: "Login" });
+    }, [])
+  );
 
   const handleSignInWithGoogle = async () => {
     if (response?.type === "success") {

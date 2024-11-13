@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Dimensions } from "react-native";
 import {
   Box,
@@ -12,6 +12,8 @@ import {
   Spinner,
   Text,
 } from "native-base";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { getServices } from "../../utils/hooks/services";
 import { RenderOffer } from "../../utils/hooks/useMultiple";
@@ -28,6 +30,15 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   const [searchText, setSearchText] = useState("");
   const SLIDER_WIDTH = (Dimensions.get("window").width - 45) / 2;
   const [menuShow, setMenu] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Cursos & Workshops",
+      });
+    }, [])
+  );
+
   useEffect(() => {
     setLoading(true);
 
@@ -71,14 +82,14 @@ function CoursesAndWorkshops({ route, navigation, mainTitle }) {
   }, [searchText]);
 
   const user = useSelector((state: any) => state.user.userdata);
-    const dispatch = useDispatch()
-    const handleNavigate = (route: string, additional?: any) => {
-      if (user?.userRole[0]?.role?.name === "Visit") {
-        dispatch(updateModal(true))
-        return
-      }
-      navigation.navigate(route, additional)
+  const dispatch = useDispatch();
+  const handleNavigate = (route: string, additional?: any) => {
+    if (user?.userRole[0]?.role?.name === "Visit") {
+      dispatch(updateModal(true));
+      return;
     }
+    navigation.navigate(route, additional);
+  };
 
   return (
     <Layout

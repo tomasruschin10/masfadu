@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback} from "react";
 import { TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { AntDesign, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Avatar, Box, Icon, IconButton, ScrollView, Text } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import BottomTab from "../../components/BottomTab";
 import Container from "../../components/Container";
@@ -94,6 +96,13 @@ function OpinionThread({ route, navigation }) {
   const [menuShow, setMenu] = useState(false);
   const user = useSelector((state: any) => state.user.userdata);
   console.log(route.params.student, "||", user);
+
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Click en opinion", { opinion: title });
+    }, [])
+  );
 
   useEffect(() => {
     getServices(`opinion-answer/all?opinion_id=${idOpinion}`)

@@ -6,9 +6,11 @@ import {
   ScrollView,
   Text,
   VStack,
-  Pressable
+  Pressable,
 } from "native-base";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { useEffect } from "react";
 import Layout from "../../utils/LayoutHeader&BottomTab";
@@ -16,10 +18,10 @@ import Container from "../../components/Container";
 import { getServices } from "../../utils/hooks/services";
 interface Notification {
   body: string;
-  value: boolean,
-  title: string,
-  opinionsCount: number,
-  id: number,
+  value: boolean;
+  title: string;
+  opinionsCount: number;
+  id: number;
   date: string;
   datetime: number;
   image: string;
@@ -32,6 +34,15 @@ function Notificaciones({ route, navigation }) {
       console.log(res.data);
     });
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Notificaciones",
+      });
+    }, [])
+  );
+
   useEffect(() => {
     getDataNotifications();
   }, []);
@@ -50,12 +61,12 @@ function Notificaciones({ route, navigation }) {
                 renderItem={({ item }: { item: Notification }) => (
                   <Pressable
                     onPress={() => {
-                      navigation.navigate('SeeSubjectThread', {
+                      navigation.navigate("SeeSubjectThread", {
                         value: item?.value ? false : true,
                         subject_id: item.id,
                         title: item.title,
-                        rating: item.opinionsCount
-                      })
+                        rating: item.opinionsCount,
+                      });
                     }}
                   >
                     <Box

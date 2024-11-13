@@ -8,8 +8,11 @@ import {
   Spinner,
   Text,
 } from "native-base";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { StyleSheet, TouchableHighlight } from "react-native";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { getServices } from "../../utils/hooks/services";
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
@@ -62,6 +65,14 @@ export const Item = ({
 function ResourcesAndTools({ route, navigation, mainTitle }) {
   const [career, setCareer] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Recursos y herramientas",
+      });
+    }, [])
+  );
 
   useEffect(() => {
     setLoading(true);

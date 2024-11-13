@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, ScrollView, Text } from "native-base";
+import { useFocusEffect } from "@react-navigation/native";
+import * as amplitude from "@amplitude/analytics-react-native";
 import { Alert, Linking, TouchableHighlight, Platform } from "react-native";
 
 import Container from "../../components/Container";
@@ -47,6 +49,12 @@ function Config({ route, navigation, value }) {
 
   const itunesItemId = 1642521024;
   const androidPackageName = "dev.millionsolutions.faduapp";
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", { screen: "Configuración" });
+    }, [])
+  );
 
   const logout = async () => {
     store.dispatch(

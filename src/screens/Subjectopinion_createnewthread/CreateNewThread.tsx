@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Box,
   Button,
@@ -14,6 +14,9 @@ import {
   TextArea,
   VStack,
 } from "native-base";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import {
   FontAwesome5,
   Ionicons,
@@ -69,6 +72,14 @@ function CreateNewThread({ route, navigation }) {
   );
 
   const [subjects, setSubjects] = useState([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Crear hilo",
+      });
+    }, [])
+  );
 
   if (route.params && route.params?.career_id) {
     setSelectedCareerId(route.params.career_id);
@@ -448,7 +459,10 @@ function CreateNewThread({ route, navigation }) {
                       <TouchableOpacity
                         key={year}
                         onPress={() => {
-                          setForm({ ...form, currentSchoolYear: year.toString() });
+                          setForm({
+                            ...form,
+                            currentSchoolYear: year.toString(),
+                          });
                           setShowSelectYear(false);
                         }}
                         style={{

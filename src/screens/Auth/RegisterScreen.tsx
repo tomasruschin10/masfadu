@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useCallback } from "react";
 import { Box, Button, Icon, Image, Input, VStack } from "native-base";
 import {
   ScrollView,
@@ -11,6 +11,7 @@ import {
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import Container from "../../components/Container";
@@ -28,6 +29,7 @@ import { moderateScale, verticalScale } from "../../utils/media.screens";
 import * as WebBrowser from "expo-web-browser";
 import * as AppleAuthentication from "expo-apple-authentication";
 import * as Google from "expo-auth-session/providers/google";
+import * as amplitude from "@amplitude/analytics-react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -59,9 +61,15 @@ function RegisterScreen({ route, navigation }) {
       "1044573282337-l2n519m10p7bp6aka5eusa0gomh9u720.apps.googleusercontent.com",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleRegisterWithGoogle();
   }, [response]);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", { screen: "Registro" });
+    }, [])
+  );
 
   const generateUsername = (firstName, lastName) => {
     const combinedName = `${firstName}${lastName}`.toLowerCase();

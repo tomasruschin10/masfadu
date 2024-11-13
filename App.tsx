@@ -55,14 +55,13 @@ import {
 } from "@expo-google-fonts/manrope";
 import { Theme } from "./src/utils/Theme";
 
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as amplitude from "@amplitude/analytics-react-native";
 import { persistor, store } from "./src/redux/store";
 import Message from "./src/components/Message";
 import { navigationRef } from "./src/navigation/RootNavigation";
 import { initializeApp } from "firebase/app";
 import ModalRestriction from "./src/screens/modal/ModalRestriction";
-
 
 SplashScreen.preventAutoHideAsync();
 
@@ -73,7 +72,7 @@ const firebaseConfig = {
   storageBucket: "muy-fadu.appspot.com",
   messagingSenderId: "306204851546",
   appId: "1:306204851546:web:c96a2f48279e16a3408763",
-  measurementId: "G-0K1LQY8PR1"
+  measurementId: "G-0K1LQY8PR1",
 };
 
 initializeApp(firebaseConfig);
@@ -117,8 +116,8 @@ export default ({ children }: any) => {
     SourceSansPro_900Black,
     SourceSansPro_900Black_Italic,
   });
-/*   const [appIsReady, setAppIsReady] = React.useState(false);
- */
+  /*   const [appIsReady, setAppIsReady] = React.useState(false);
+   */
   // 	LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   // LogBox.ignoreAllLogs();//Ignore all log notifications
   const theme = extendTheme(Theme);
@@ -141,6 +140,7 @@ export default ({ children }: any) => {
   };
   Update();
   React.useEffect(() => {
+    amplitude.init("4d36681a6f63af74279031f7e817a436");
     onLayoutRootView();
   }, [fontsLoaded]);
   const onLayoutRootView = React.useCallback(async () => {
@@ -153,9 +153,6 @@ export default ({ children }: any) => {
     return null;
   }
 
-
-  
-
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
@@ -165,7 +162,6 @@ export default ({ children }: any) => {
             <Navigator />
             <Message />
           </NavigationContainer>
-
         </NativeBaseProvider>
       </PersistGate>
     </Provider>

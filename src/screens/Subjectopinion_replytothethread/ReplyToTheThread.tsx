@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Box, Button, ScrollView, Text, TextArea } from "native-base";
-import { KeyboardAvoidingView } from 'react-native';
-import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
+import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAccessoryNavigation } from "react-native-keyboard-accessory";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as amplitude from "@amplitude/analytics-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Container from "../../components/Container";
 import Layout from "../../utils/LayoutHeader&BottomTab";
@@ -28,6 +30,12 @@ function ReplyToTheThread({ route, navigation }) {
   const { canGoBack, goBack } = useNavigation();
 
   const [alert, setAlert] = React.useState(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Responder una opinion", { opinion: title });
+    }, [])
+  );
 
   const closeAlert = () => {
     setAlert(null);
@@ -101,8 +109,15 @@ function ReplyToTheThread({ route, navigation }) {
             closeAlert={closeAlert}
           />
         )}
-        <Layout route={route} navigation={navigation} title={"Responder al hilo"}>
-          <ScrollView keyboardShouldPersistTaps={"handled"} showsVerticalScrollIndicator={false}>
+        <Layout
+          route={route}
+          navigation={navigation}
+          title={"Responder al hilo"}
+        >
+          <ScrollView
+            keyboardShouldPersistTaps={"handled"}
+            showsVerticalScrollIndicator={false}
+          >
             <Box mx={5} mt={3} borderTopWidth={1} borderTopColor={"#EBEEF2"}>
               <Text></Text>
               {anonymous ? (
@@ -137,7 +152,9 @@ function ReplyToTheThread({ route, navigation }) {
                   backgroundColor={"#F7FAFC"}
                   borderWidth={0}
                   placeholderTextColor={"#C4C4C4"}
-                  onChangeText={(text) => setForm({ ...form, description: text })}
+                  onChangeText={(text) =>
+                    setForm({ ...form, description: text })
+                  }
                 />
               </Box>
 
@@ -155,7 +172,6 @@ function ReplyToTheThread({ route, navigation }) {
               </Box>
             </Box>
           </ScrollView>
-
         </Layout>
       </Container>
       <KeyboardAccessoryNavigation
@@ -163,7 +179,6 @@ function ReplyToTheThread({ route, navigation }) {
         previousHidden
         doneButtonStyle={{ marginBottom: 5 }}
       />
-
     </KeyboardAvoidingView>
   );
 }

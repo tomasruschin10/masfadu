@@ -11,6 +11,7 @@ import { Box, HStack, Icon, Image, ScrollView, Text } from "native-base";
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
+import * as amplitude from "@amplitude/analytics-react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
 import BottomTab from "../../components/BottomTab";
@@ -83,6 +84,7 @@ function HomeScreen({ route, navigation }) {
 
   useFocusEffect(
     useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", { screen: "Inicio" });
       getServices("notice/all")
         .then(({ data }: any) => {
           setTextNews(data);

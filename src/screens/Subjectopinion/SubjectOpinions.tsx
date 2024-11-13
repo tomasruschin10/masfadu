@@ -10,6 +10,7 @@ import {
   Spinner,
   Heading,
 } from "native-base";
+import * as amplitude from "@amplitude/analytics-react-native";
 import { TouchableOpacity, View, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
@@ -27,7 +28,7 @@ import Layout from "../../utils/LayoutHeader&BottomTab";
 
 function SubjectOpinions({ route, navigation, mainTitle }) {
   const { search, setSearch, filteredLevels, allLevels, loading } =
-    useSearchSubject(); 
+    useSearchSubject();
   const [showWarning, setShowWarning] = useState(true);
   const [selectedButton, setSelectedButton] = useState("Todo");
   const [allOpinions, setAllOpinions] = useState([]);
@@ -38,6 +39,9 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   useFocusEffect(
     useCallback(() => {
       getData();
+      amplitude.logEvent("Pantalla visitada", {
+        screen: "Opiniones de materias",
+      });
     }, [])
   );
 
@@ -144,7 +148,10 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setSelectedButton("Mis Opiniones")}
+              onPress={() => {
+                setSelectedButton("Mis Opiniones");
+                amplitude.logEvent("Click en mis opiniones");
+              }}
               style={{
                 borderRadius: 0,
                 borderBottomLeftRadius: 2,

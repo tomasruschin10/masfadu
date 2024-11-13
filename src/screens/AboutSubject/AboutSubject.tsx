@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback} from "react";
 import { Box, Heading, HStack, ScrollView, Spinner, Text } from "native-base";
+import { useFocusEffect } from "@react-navigation/native";
+import * as amplitude from "@amplitude/analytics-react-native";
 import { useSelector } from "react-redux";
 
 import AboutSubject_Item from "./AboutSubject_Item";
@@ -21,6 +23,12 @@ function AboutSubject({ route, navigation, value }) {
   });
   const [updater, setUpdater] = useState(false);
   const [menuShow, setMenu] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      amplitude.logEvent("Pantalla visitada", { screen: "Materias" });
+    }, [])
+  );
 
   useEffect(() => {
     if (

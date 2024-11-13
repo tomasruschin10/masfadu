@@ -8,6 +8,8 @@ import {
   ScrollView,
   View,
 } from "react-native";
+import * as amplitude from "@amplitude/analytics-react-native";
+
 import {
   Box,
   Button,
@@ -78,6 +80,7 @@ function SeeSubjectThread({ route, navigation }) {
 
   useFocusEffect(
     useCallback(() => {
+      amplitude.logEvent("Click en opiniones de materia", { materia: title });
       try {
         const chairs = [
           ...new Set(allOpinions.map((opinion) => opinion.professor)),
