@@ -76,7 +76,7 @@ function AboutSubject({ route, navigation, value }) {
             </HStack>
           )}
           <>
-            {subjCategory.data.length > 0 ? (
+            {subjCategory?.data && subjCategory?.data.length > 0 ? (
               <AboutSubject_Item
                 subjCategory={subjCategory}
                 nav={navigation}

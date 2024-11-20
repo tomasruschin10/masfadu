@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updatetoken } from "../../redux/actions/token";
 import { getUserDataWithToken } from "../../utils/storage";
+import * as amplitude from "@amplitude/analytics-react-native";
 
 function On2Screen({ route, navigation }) {
   const [carrier, setCarrier] = React.useState(0);
@@ -27,6 +28,7 @@ function On2Screen({ route, navigation }) {
   }, [setCareer]);
 
   const applyCareer = () => {
+    amplitude.logEvent("Eligió carrera", { carrera: carrier });
     putServices(`auth/update/${userdata.uid}`, { career_id: carrier })
       .then((res: any) => {
         setCareer(res.data);

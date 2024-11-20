@@ -8,9 +8,10 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo } from "@expo/vector-icons";
+
 import { SwipeablePanel } from "rn-swipeable-panel";
 import * as Font from "expo-font";
 
@@ -18,6 +19,7 @@ import { useEventNavigation } from "../../context";
 import { fontStyles } from "../../utils/colors/fontColors";
 import { useDispatch, useSelector } from "react-redux";
 import { updateModal } from "../../redux/actions/user";
+import { createNote } from "./ModalFunctions";
 
 function AboutSubject_Logic({
   index,
@@ -25,8 +27,11 @@ function AboutSubject_Logic({
   setShowWarning,
   setShowChairModal,
   setCurrentSubj,
+  currentSubj,
   infoUserSubj,
   setInfoUserSubj,
+  updater,
+  setUpdater,
   setShowNotes,
 }) {
   const { navigationEvent } = useEventNavigation();
@@ -48,6 +53,8 @@ function AboutSubject_Logic({
   const [FontsLoaded, setFontsLoaded] = useState(false);
   const [showSelectiveSubject, setShowSelectiveSubject] = useState(false);
   const [selectiveSubject, setSelectiveSubject] = useState();
+  const [loading, setLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.userdata);
@@ -55,9 +62,9 @@ function AboutSubject_Logic({
 
   useEffect(() => {
     if (isVisit) {
-      handleRestriction(); 
+      handleRestriction();
     }
-  }, [isVisit]); 
+  }, [isVisit]);
 
   const handleRestriction = () => {
     dispatch(updateModal(true));
@@ -157,6 +164,27 @@ function AboutSubject_Logic({
     if (allParentsCompleted) {
       setShowChairModal(true);
       setCurrentSubj({ ...subject, dis: 1 });
+    } else {
+      setShowWarning(true);
+      setCurrentSubj({ ...subject, dis: 0 });
+    }
+  };
+
+  const handlePressCheck = () => {
+    setIsChecked(true);
+    if (isVisit) {
+      handleRestriction();
+      return;
+    }
+    if (allParentsCompleted) {
+      createNote(
+        setLoading,
+        setInfoUserSubj,
+        { ...infoUserSubj, score: 4 },
+        { ...currentSubj, ...subject, dis: 1 },
+        updater,
+        setUpdater
+      );
     } else {
       setShowWarning(true);
       setCurrentSubj({ ...subject, dis: 0 });
@@ -344,7 +372,8 @@ function AboutSubject_Logic({
               extra_score: userSubject?.extra_score,
               finish: userSubject?.finish == true ? 1 : 0,
             });
-            setShowNotes(true);
+            setCurrentSubj({ ...subject, dis: 1 });
+            setShowChairModal(true);
           }}
         >
           <Text
@@ -363,31 +392,55 @@ function AboutSubject_Logic({
           </Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onPress={handlePress}
-        >
-          {allParentsCompleted ? (
-            <Text
-              color={"brand.primary"}
-              textAlign={"center"}
-              fontSize={38}
-              style={{ marginRight: 10 }}
-            >
-              +
-            </Text>
-          ) : (
-            <AntDesign
-              name="warning"
-              size={24}
-              style={{ marginRight: 10 }}
-              color="#C4C4C4"
-            />
-          )}
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onPress={handlePress}
+          >
+            {allParentsCompleted ? (
+              <Text
+                color={"brand.primary"}
+                textAlign={"center"}
+                fontSize={38}
+                style={{ marginRight: 10 }}
+              >
+                +
+              </Text>
+            ) : (
+              <AntDesign
+                name="warning"
+                size={24}
+                style={{ marginRight: 10 }}
+                color="#C4C4C4"
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 5,
+            }}
+            onPress={() => handlePressCheck()}
+          >
+            {isChecked ? (
+              <MaterialCommunityIcons
+                name="checkbox-marked"
+                size={32}
+                color="#DA673A"
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name="checkbox-blank-outline"
+                size={32}
+                color="#DA673A"
+              />
+            )}
+          </TouchableOpacity>
+        </>
       )}
     </HStack>
   );

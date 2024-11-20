@@ -60,12 +60,12 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
   };
 
   return (
-    <Container>
+    <Container style={{ flex: 1 }}>
       <Layout
         route={route}
         navigation={navigation}
         title={`Opiniones de materias`}
-        addButtonUrl={"CreateNewThread"}
+        // addButtonUrl={"CreateNewThread"}
       >
         <ScrollView keyboardShouldPersistTaps={"handled"}>
           <View
@@ -254,6 +254,36 @@ function SubjectOpinions({ route, navigation, mainTitle }) {
 
           <Box mb={"24"} />
         </ScrollView>
+        <View
+          style={{
+            position: "absolute",
+            bottom: 75,
+            left: 0,
+            right: 0,
+            backgroundColor: "#ffffff",
+            paddingHorizontal: 16,
+            paddingBottom: 30,
+            paddingTop: 10,
+            elevation: 5,
+            borderTopWidth: 1,
+            borderColor: "#ddd",
+          }}
+        >
+          <Button
+            w="100%"
+            backgroundColor={"#DA673A"}
+            isLoading={loading}
+            _text={{ fontSize: 14, fontWeight: "600", color: "white" }}
+            onPress={() => {
+              navigation.navigate("CreateNewThread");
+            }}
+            borderRadius={10}
+            py={4}
+            fontWeight="bold"
+          >
+            Agregar opinión
+          </Button>
+        </View>
         <ModalWarning2
           showWarning={showWarning && notice?.value !== true}
           setShowWarning={setShowWarning}

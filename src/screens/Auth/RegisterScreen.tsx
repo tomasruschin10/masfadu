@@ -78,6 +78,11 @@ function RegisterScreen({ route, navigation }) {
     return `${cleanedName}${randomNumber}`;
   };
 
+  const generateUsernameApple = (username) => {
+    const randomNumber = Math.floor(Math.random() * 1000);
+    return `${username}${randomNumber}`;
+  };
+
   const handleRegisterWithGoogle = async () => {
     if (response?.type === "success") {
       try {
@@ -254,20 +259,20 @@ function RegisterScreen({ route, navigation }) {
       });
       try {
         const { email } = jwtDecode(credential.identityToken);
+        const username = email.split("@")[0];
+        const name = credential.fullName?.givenName || username;
+        const lastname = credential.fullName?.familyName || "";
         setIsLoading(true);
         const { data, status } = await postServices("auth/register", {
           email: email,
           emailError: null,
           password: credential.user,
           passwordError: null,
-          name: credential.fullName.givenName,
-          lastname: credential.fullName.familyName,
+          name: name,
+          lastname: lastname,
           apple_user: true,
           role_id: 2,
-          username: generateUsername(
-            credential.fullName.givenName,
-            credential.fullName.familyName
-          ),
+          username: generateUsernameApple(username),
         });
         if (status === 200) {
           dispatch(updatetoken(data.token));

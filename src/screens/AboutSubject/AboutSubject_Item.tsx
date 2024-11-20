@@ -278,6 +278,8 @@ function AboutSubject_Item({ subjCategory, nav, updater, setUpdater }) {
                 setShowWarning={setShowWarning}
                 setCurrentSubj={setCurrentSubj}
                 currentSubj={currentSubj}
+                updater={updater}
+                setUpdater={setUpdater}
                 infoUserSubj={infoUserSubj}
                 setShowChairModal={setShowChairModal}
                 setInfoUserSubj={setInfoUserSubj}
