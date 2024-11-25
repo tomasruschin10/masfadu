@@ -418,28 +418,30 @@ function AboutSubject_Logic({
               />
             )}
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 5,
-            }}
-            onPress={() => handlePressCheck()}
-          >
-            {isChecked ? (
-              <MaterialCommunityIcons
-                name="checkbox-marked"
-                size={32}
-                color="#DA673A"
-              />
-            ) : (
-              <MaterialCommunityIcons
-                name="checkbox-blank-outline"
-                size={32}
-                color="#DA673A"
-              />
-            )}
-          </TouchableOpacity>
+          {allParentsCompleted && (
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 5,
+              }}
+              onPress={() => handlePressCheck()}
+            >
+              {isChecked ? (
+                <MaterialCommunityIcons
+                  name="checkbox-marked"
+                  size={32}
+                  color="#DA673A"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="checkbox-blank-outline"
+                  size={32}
+                  color="#DA673A"
+                />
+              )}
+            </TouchableOpacity>
+          )}
         </>
       )}
     </HStack>
